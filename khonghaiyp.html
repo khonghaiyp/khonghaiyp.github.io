@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Trang cá nhân - Thầy A</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-color: #2c3e50;
+      color: white;
+      padding: 20px;
+      text-align: center;
+    }
+    nav {
+      background-color: #34495e;
+      display: flex;
+      justify-content: center;
+    }
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 14px 20px;
+      display: block;
+    }
+    nav a:hover {
+      background-color: #1abc9c;
+    }
+    section {
+      padding: 20px;
+      display: none;
+    }
+    section.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>Thầy A - Trang cá nhân</h1>
+</header>
+
+<nav>
+  <a href="#" onclick="showTab('gioithieu')">Giới thiệu</a>
+  <a href="#" onclick="showTab('nghiencuu')">Nghiên cứu</a>
+  <a href="#" onclick="showTab('giangday')">Giảng dạy</a>
+  <a href="#" onclick="showTab('linhtinh')">Linh tinh</a>
+</nav>
+
+<main>
+  <section id="gioithieu" class="active">
+    <h2>Giới thiệu</h2>
+    <p>Tôi là giảng viên tại ...</p>
+  </section>
+
+  <section id="nghiencuu">
+    <h2>Nghiên cứu</h2>
+    <p>Lĩnh vực nghiên cứu: Machine Learning, Toán ứng dụng...</p>
+  </section>
+
+  <section id="giangday">
+    <h2>Giảng dạy</h2>
+    <p>Các môn đang giảng dạy: Xác suất thống kê, Tối ưu...</p>
+  </section>
+
+  <section id="linhtinh">
+    <h2>Linh tinh</h2>
+    <p>Sở thích, blog, liên kết hữu ích...</p>
+  </section>
+</main>
+
+<script>
+  function showTab(tabId) {
+    document.querySelectorAll('section').forEach(section => {
+      section.classList.remove('active');
+    });
+    document.getElementById(tabId).classList.add('active');
+  }
+</script>
+
+</body>
+</html>
+
