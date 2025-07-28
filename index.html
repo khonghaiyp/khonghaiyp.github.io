@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<!-- saved from url=(0061)file:///Users/khonghaiyp/Nextcloud/Linh%20tinh/Pages_Hai.html -->
+<html lang="vi"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khổng Văn Hải</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-top: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .header {
+            background: linear-gradient(45deg, #2c3e50, #3498db);
+            color: white;
+            text-align: center;
+            padding: 3rem 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: shimmer 6s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg); }
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 1;
+        }
+
+        .nav-menu {
+            background: #2c3e50;
+            padding: 0;
+        }
+
+        .nav-menu ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-menu li {
+            margin: 0;
+        }
+
+        .nav-menu a {
+            display: block;
+            color: white;
+            text-decoration: none;
+            padding: 1rem 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .nav-menu a.active {
+            background: #3498db;
+            transform: translateY(-2px);
+        }
+
+        .nav-menu a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .nav-menu a:hover::before {
+            left: 100%;
+        }
+
+        .nav-menu a:hover {
+            background: #3498db;
+            transform: translateY(-2px);
+        }
+
+        .content {
+            padding: 3rem;
+            min-height: 400px;
+        }
+
+        .tab-content {
+            display: none;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.8s ease forwards;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section h2 {
+            color: #2c3e50;
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 3px solid #3498db;
+            position: relative;
+        }
+
+        .section h2::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: #e74c3c;
+        }
+
+        .research-interests {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .research-card {
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            border-left: 5px solid #3498db;
+        }
+
+        .research-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+        }
+
+        .research-card h3 {
+            color: #2c3e50;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .research-card p {
+            color: #666;
+            line-height: 1.7;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .info-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid #e74c3c;
+            transition: transform 0.3s ease;
+        }
+
+        .info-item:hover {
+            transform: scale(1.02);
+        }
+
+        .info-item strong {
+            color: #2c3e50;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Teaching Section Styles */
+        .teaching-section {
+            margin-top: 2rem;
+        }
+
+        .academic-year {
+            margin-bottom: 3rem;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            border-left: 5px solid #e74c3c;
+        }
+
+        .academic-year h3 {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .courses-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .course-item {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            border-top: 3px solid #3498db;
+        }
+
+        .course-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .course-item strong {
+            color: #2c3e50;
+            font-size: 1.2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .course-item p {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+        }
+
+        .course-link {
+            display: inline-block;
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border: 2px solid #3498db;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .course-link:hover {
+            background: #3498db;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .social-links {
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: #3498db;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #e74c3c;
+        }
+
+        .welcome-message {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: #666;
+        }
+
+        .welcome-message h2 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            border: none;
+        }
+
+        .welcome-message h2::after {
+            display: none;
+        }
+
+        .welcome-message p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .content {
+                padding: 2rem 1.5rem;
+            }
+            
+            .nav-menu ul {
+                flex-direction: column;
+            }
+            
+            .nav-menu a {
+                padding: 0.8rem 1rem;
+            }
+        }
+
+        /* Particle animation background */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 0.5s; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 1s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 1.5s; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 2s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 2.5s; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 3s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 3.5s; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 4s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(100vh) scale(0); }
+            50% { transform: translateY(-10px) scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <div class="particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1>Khổng Văn Hải</h1>
+            <p class="subtitle">Lecturer at Faculty of Mathematcics and Informatics, HUST</p>
+        </header>
+
+        <nav class="nav-menu">
+            <ul>
+                <li><a onclick="showTab(&#39;home&#39;)" class="active">Home</a></li>
+                <li><a onclick="showTab(&#39;research&#39;)" class="">Research</a></li>
+                <li><a onclick="showTab(&#39;publications&#39;)" class="">Publications</a></li>
+                <li><a onclick="showTab(&#39;teaching&#39;)" class="">Teaching</a></li>
+                <li><a onclick="showTab(&#39;cv&#39;)" class="">CV</a></li>
+                <li><a onclick="showTab(&#39;contact&#39;)" class="">Contact</a></li>
+            </ul>
+        </nav>
+
+        <main class="content">
+            <!-- Home Tab -->
+            <div id="home" class="tab-content active">
+            <img src="./khongvanhaiV4_files/HaiV3.png" alt="Ảnh căn trái" width="300">                             
+                <div class="welcome-message">
+                    <h2>About me ...!  </h2>
+                    <p>I'm lecturer and researcher in Faculty of Mathematics and Informatics <a href="https://fami.hust.edu.vn/don-vi/nhom-chuyen-mon-xac-suat-thong-ke-va-ung-dung/gioi-thieu/" target="_blank">(FaMI)</a>, Hanoi University of Science and Technology <a href="https://hust.edu.vn/" target="_blank">(HUST)</a> </p>
+                    <p>I defended my PhD theis in 2023 under the joint supervision of   <a href="https://philcarmona.github.io/" target="_blank"> Profesor Philippe Carmona </a>  and <a href="https://evolepid.cefe.cnrs.fr/people.php?name=gandon" target="_blank"> Director de recherche Sylvain Gandon </a> . The title of my dissertation was <a href="https://theses.fr/2023NANU4059" target="_blank">"Epidemiology and evolution of infectious diseases in a periodic environment" </a> </p>
+                </div>
+            </div>
+
+            <!-- Research Tab -->
+            <div id="research" class="tab-content">
+                <div class="section">
+                    <h2>Lĩnh vực Nghiên cứu</h2>
+                    <div class="research-interests">
+                        <div class="research-card" style="transform: translateY(-5px) scale(1);">
+                            <h3>Mô hình Ngẫu nhiên Quần thể</h3>
+                            <p>Nghiên cứu các mô hình toán học mô tả sự phát triển và tương tác của các quần thể trong môi trường ngẫu nhiên, ứng dụng trong sinh học và sinh thái học.</p>
+                        </div>
+                        
+                        
+                        <div class="research-card" style="transform: translateY(-5px) scale(1);">
+                            <h3>Lý thuyết Xác suất Ứng dụng</h3>
+                            <p>Phát triển các công cụ xác suất để giải quyết các bài toán thực tế trong kinh tế, tài chính và khoa học dữ liệu.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Publications Tab -->
+            <div id="publications" class="tab-content">
+                <div class="section">
+                    <h2>Publications</h2>
+                    <div class="info-grid">
+                        <ul>
+                            <li>2023 <a href="https://royalsocietypublishing.org/doi/10.1098/rsif.2023.0470" target="_blank">Seasonality and the persistence of vector-borne pathogens  </a> - Journal of the Royal Society Interface </li>
+                        </ul>
+                    </div>
+
+                    <h2>Preprints and Publications</h2>
+                    <div class="info-grid">
+                        <ul>
+                            <li>
+                                Timing infectious disease control to minimize the risk of pathogen emergence (In preparation) </li>
+                            <li>Evolution of pathogen dormancy in fluctuating environment (In preparation) </li>
+                        </ul>
+                    </div>
+
+                    <h2>Talks</h2>
+
+                        <ul>
+                            <li>July 15, 2024, <em>Epidemiology and evolution of infectious diseases in a periodic environment</em>, HUST (talk)
+                            </li>
+                            <li>Juin 19-23,2023:<i>Timing infectious disease control to minimize the risk of pathogen emergence</i> Journées de Probabilités, Angers, France (Talk)</li>
+                            <li>Sept 3-5,2022: Workshop in Montpellier, France (Talk)</li>
+                            <li>July 2-14,2022: Probability Summer School, Sain-Flour, France</li>
+                            <li> Jan 5,2022 : Seminar Ph.D. group, Nantes University, France (Talk)</li>
+                        </ul>
+                </div>
+            </div>
+
+            <!-- Teaching Tab -->
+            <div id="teaching" class="tab-content">
+                <div class="section">
+                    <h2>Giảng dạy: Đại học</h2>
+                        <div class="academic-year">
+                            <h3>Năm học 2024-2025</h3>
+                            <div class="courses-grid">
+                                <ul>
+                                    <li> Đại số </li>
+                                    <li> Giải tích 3 </li>
+                                    <li> Xác suất thống kê</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="academic-year">
+                            <h3>Năm học 2023-2024</h3>
+                            <div class="courses-grid">
+                                <ul>
+                                    <li> Analysis 1</li>
+                                    <li> Giải tích 3 </li>
+                                    <li> Xác suất thống kê</li>
+                                    <li> MAS202- Xác suất thống kê toán doanh nghiệp (FPT University) </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                        <div class="academic-year">
+                            <h3>Tài liệu: </h3>
+                            <div class="courses-grid">
+                                <div class="course-item">
+                                    <strong>Analysis 1</strong>
+                                    <p>Kiến thức của môn Giải tích 1 ( bằng tiếng Anh) </p>
+                                    <a href="https://drive.google.com/file/d/1n2yd9keupMmetb1cBwCLge3mF6oW_V5s/view?usp=drive_link" class="course-link">Bài tập</a>
+                                    <a href="https://drive.google.com/file/d/1-rSZ8X-yqo5ltQ6bpoafCOz5gQ4UWv8p/view?usp=drive_link" class="course-link">Đề cương</a>
+                                </div>
+                                <div class="course-item">
+                                    <strong>Xác suất thống kê</strong>
+                                    <p>Lý thuyết xác suất cơ bản và thống kê ứng dụng</p>
+                                    <a href="file:///Users/khonghaiyp/Downloads/academic_portfolio%20(2).html#" class="course-link">Tài liệu môn học</a>
+                                </div>
+                                <div class="course-item">
+                                    <strong>Giải tích 3</strong>
+                                    <p>Chuỗi, phương trình vi phân và phép biến đổi Laplace</p>
+                                    <a href="file:///Users/khonghaiyp/Downloads/academic_portfolio%20(2).html#" class="course-link">Tài liệu môn học</a>
+                                </div>
+                                <div class="course-item">
+                                    <strong>Đại số</strong>
+                                    <p>Các khái niệm không gian vector, </p>
+                                    <a href="file:///Users/khonghaiyp/Downloads/academic_portfolio%20(2).html#" class="course-link">Tài liệu môn học</a>
+                                </div>                                                                
+                            </div>
+                        </div>   
+                    <h2> Giảng dạy: Phổ thông ( THPT Chuyên Bắc Ninh) </h2>
+                       <div class="academic-year">
+                            <h3>Năm học 2017-2018</h3>
+                            <div class="courses-grid">
+                                <ul>
+                                    <li> Toán 10, 11, 12</li>
+                                    <li> Tin học (đội tuyển) </li>
+                                </ul>
+
+                            </div>
+                        </div>
+                </div>             
+            </div>
+
+            <!-- CV Tab -->
+            <div id="cv" class="tab-content">
+                <div class="section">
+                    <h2>Curriculum Vitae</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>Current position</strong>Lecturer and Researcher<br>Hanoi University of Science and Technology</div>
+                        <div class="info-item">
+                            <strong>Education:</strong>-2020-2023 Ph.D in Applied Mathematics, Universite de Nantes <br>-2018-2020 Master in Probability, Universite de Rennes 1</div>
+                        <div class="info-item">
+                            <strong>Expertise:</strong>Probability Theory and Statistics<br>Epidemiological models</div>
+                        
+                        
+                        
+                    </div>
+                </div>
+            </div>
+
+            <!-- Contact Tab -->
+            <div id="contact" class="tab-content">
+                <div class="section">
+                    <h2>Thông tin Liên hệ</h2>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <strong>Address:</strong>Faculty of Mathematics and Informatics  ,<br>Hanoi University Scicence and Technology<br>1 Dai Co Viet, Bachmai, Hanoi</div>
+                        <div class="info-item">
+                            <strong>Email:</strong> <a href="mailto:hai.khongvan@hust.edu.vn">hai.khongvan@hust.edu.vn</a> <br>  <a href="mailto:khonghaiyp@gmail.com">khonghaiyp@gmail.com</a> </div>
+                        <div class="info-item">
+                            <strong>Điện thoại:</strong>+84 362 88 24 95<br></div>
+                        <div class="info-item">
+                            <strong>Office: </strong>120 C1<br>Office hours: Tuesday (2:00 PM -4:00PM)</div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>© 2025 Khổng Văn Hải. Copyright belongs to the author.</p>
+            <div class="social-links">
+                <a href="mailto:hai.khongvan@hust.edu.vn">Email</a>
+                <a href="https://www.researchgate.net/profile/Khong-Hai?ev=hdr_xprf">ResearchGate</a>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function showTab(tabName) {
+            // Ẩn tất cả tab content
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Bỏ active class khỏi tất cả nav links
+            const navLinks = document.querySelectorAll('.nav-menu a');
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+            });
+
+            // Hiển thị tab được chọn
+            document.getElementById(tabName).classList.add('active');
+            
+            // Thêm active class cho nav link được chọn
+            event.target.classList.add('active');
+        }
+
+        // Add hover effects to research cards
+        document.addEventListener('DOMContentLoaded', function() {
+            const researchCards = document.querySelectorAll('.research-card');
+            researchCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-5px) scale(1.02)';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(-5px) scale(1)';
+                });
+            });
+        });
+    </script>
+
+</body></html>
