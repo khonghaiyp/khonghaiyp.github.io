@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài trắc nghiệm nhiều đáp án đúng</title>
+<style>
+  body { font-family: sans-serif; padding: 20px; max-width: 700px; margin: auto; }
+  .question { margin-bottom: 25px; }
+  .question p { font-weight: bold; }
+  .result { font-weight: bold; color: blue; margin-top: 20px; }
+  button { padding: 8px 16px; font-size: 16px; border-radius: 6px; }
+</style>
+<style>
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background: #f6f8fb;
+      color: #111;
+      margin: 20px;
+      line-height: 1.5;
+    }
+    .container {max-width: 960px; margin: 0 auto;}
+    header {text-align:left; margin-bottom:16px;}
+    h1 {font-size:1.3rem; margin:0 0 6px 0;}
+    .info-box {
+      background:#fff;
+      padding:12px 16px;
+      border-radius:8px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.06);
+      margin-bottom:16px;
+    }
+    label {display:block; margin:8px 0;}
+    input[type=text] {
+      width:280px;
+      padding:6px 8px;
+      border:1px solid #ccc;
+      border-radius:6px;
+    }
+    .question {
+      background: #fff;
+      border: 1px solid #e3e8ef;
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 14px rgba(20,30,50,0.03);
+    }
+    .qtitle {font-weight:600; margin-bottom:6px;}
+    .choices label {display:block; margin:6px 0; cursor:pointer;}
+    .actions {margin: 18px 0; display:flex; gap:10px; align-items:center;}
+    button {
+      background:#2563eb;color:white;border:0;padding:8px 14px;
+      border-radius:8px;cursor:pointer;
+      box-shadow:0 6px 12px rgba(37,99,235,0.12);
+    }
+    button.secondary {background:#6b7280;}
+    .result {
+      margin-top:12px;font-weight:600;
+      background:#f1f5f9;border-radius:6px;padding:8px 10px;
+    }
+    .answer-key {
+      margin-top:14px;background:#f8fafc;
+      border:1px dashed #cbd5e1;padding:10px;border-radius:6px;
+    }
+  </style>
+  
+</head>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<!-- Nhap -->
+  <!-- MathJax để hiển thị công thức toán -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #222;
+      margin: 40px;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+    }
+    h2 {
+      color: #0055aa;
+      margin-top: 40px;
+    }
+    button {
+      background-color: #0055aa;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #003f7f;
+    }
+    .section-content {
+      display: none;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .author {
+      text-align: right;
+      font-style: italic;
+      margin-top: 30px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    body{font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:#f7f7fb; padding:20px}
+    .card{background:white;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);max-width:900px;margin:0 auto}
+    label{margin-right:6px}
+    input[type=number]{width:80px;padding:4px;margin-right:10px}
+    button{padding:6px 12px;border:0;background:#2563eb;color:white;border-radius:8px;cursor:pointer}
+    button:active{transform:translateY(1px)}
+  </style>
+
+<!-- Phan bảng -->
+   <style>
+    body {
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: #f7f9fc;
+      margin: 40px;
+      line-height: 1.6;
+    }
+    h2 {
+      color: #1f4e79;
+      margin-bottom: 10px;
+    }
+
+    /* Container có bóng nhẹ */
+    .table-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      padding: 16px 20px;
+      max-width: 600px;
+      margin: auto;
+      overflow-x: auto;
+    }
+
+    /* Bảng chính */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    th, td {
+      border: 1px solid #e2e8f0;
+      padding: 8px 12px;
+    }
+
+    th {
+      background-color: #f0f7ff;
+      color: #003366;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #fafafa;
+    }
+
+    tr:hover td {
+      background-color: #fef7e7;
+      transition: background 0.3s;
+    }
+
+    caption {
+      caption-side: top;
+      text-align: left;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 8px;
+    }
+
+    .note {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #374151;
+      text-align: center;
+    }
+  </style>
+
+<body>
+
+<!-- Thông tin tác giả -->
+<!-- <div class="author">
+  <p>Ts. Khổng Văn Hải</p>
+  <p>Khoa Toán - Tin, Trường Đại học Bách khoa Hà Nội</p>
+</div>     -->
+
+<h1>Biến ngẫu nhiên liên tục</h1>
+
+<form id="quizForm">
+      <div class="question" data-qid="q1">
+        <strong>Câu 01.</strong> Cho hàm mật độ 
+        \( f(x) = \begin{cases} 
+        k(x^2-1) & x \in [2,3]\\
+        0 & x \notin [2,3]
+        \end{cases} \). Tìm $E(g(X))$ với \(g(X)=2X\).  <br>
+        <label><input type="checkbox" name="q1" value="A"> A. 7.1235</label>
+        <label><input type="checkbox" name="q1" value="B"> B. 5.2350</label>
+        <label><input type="checkbox" name="q1" value="C"> C. 6.1506</label>
+        <label><input type="checkbox" name="q1" value="D"> D. 5.1563</label>
+        <label><input type="checkbox" name="q1" value="E"> E. 4.1560</label>
+      </div>
+
+      <div class="question" data-qid="q2">
+        <strong>Câu 02.</strong> $X \sim  U[0,12]$. Tính kì vọng và phương sai. <br>  
+        <label><input type="checkbox" name="q2" value="A"> A. 6 và 6</label>
+        <label><input type="checkbox" name="q2" value="B"> B. 12 và 12</label>
+        <label><input type="checkbox" name="q2" value="C"> C. 7,5 và 6</label>
+        <label><input type="checkbox" name="q2" value="D"> D. 6 và 12</label>
+        <label><input type="checkbox" name="q2" value="E"> E. 7,5 và 12</label>
+      </div>
+
+      <div class="question" data-qid="q3">
+        <strong>Câu 03.</strong> Cho hàm phân phối $F(x) = 
+        \begin{cases} 
+        0 & \text{ nếu } x \leq 1\\
+        \dfrac{x+1}{4} & \text{ nếu }  1 < x \leq 3 \\
+        1 & \text{ nếu } x > 3 
+        \end{cases}.$  Tính $P(0 < X < 1).$  <br>
+        <label><input type="checkbox" name="q3" value="A"> A. 0,1</label>
+        <label><input type="checkbox" name="q3" value="B"> B. 0,25</label>
+        <label><input type="checkbox" name="q3" value="C"> C. 0,15</label>
+        <label><input type="checkbox" name="q3" value="D"> D. 0,2</label>
+        <label><input type="checkbox" name="q3" value="E"> E. 0,3</label>
+      </div>
+
+      <div class="question" data-qid="q4">
+        <strong>Câu 04.</strong> Thời dài chi tiết máy có mật độ $f(x)=k e^{-(x-12+8x^2)/8}$. Tính kỳ vọng và phương sai của $X$? <br>
+        <label><input type="checkbox" name="q4" value="A"> A. 8 và 4</label>
+        <label><input type="checkbox" name="q4" value="B"> B. 4 và 4</label>
+        <label><input type="checkbox" name="q4" value="C"> C. 4 và 8</label>
+        <label><input type="checkbox" name="q4" value="D"> D. 4 và 6</label>
+        <label><input type="checkbox" name="q4" value="E"> E. 6 và 4</label>
+      </div>
+
+      <div class="question" data-qid="q5">
+        <strong>Câu 05.</strong> Tuổi thọ một loại bóng đèn X (năm) có mật độ $f(x)=k x^2(4 - x)$ trên $[0,4]$. Tính $E(X)$. <br>
+        <label><input type="checkbox" name="q5" value="A"> A. 7,2</label>
+        <label><input type="checkbox" name="q5" value="B"> B. 2,4</label>
+        <label><input type="checkbox" name="q5" value="C"> C. 9,6</label>
+        <label><input type="checkbox" name="q5" value="D"> D. 4,8</label>
+        <label><input type="checkbox" name="q5" value="E"> E. 3,6</label>
+      </div>
+
+      <div class="question" data-qid="q6">
+        <strong>Câu 06.</strong> X có mật độ $f(x)=k x(4 - x^2)$ trên $[0,2]$. Tính xác suất: sau 3 lần lặp độc lập có đúng 1 lần X nhận giá trị trong khoảng (0, 1/2).<br>
+        <label><input type="checkbox" name="q6" value="A"> A. 0.1632</label>
+        <label><input type="checkbox" name="q6" value="B"> B. 0.2523</label>
+        <label><input type="checkbox" name="q6" value="C"> C. 0.3260</label>
+        <label><input type="checkbox" name="q6" value="D"> D. 0.4256</label>
+        <label><input type="checkbox" name="q6" value="E"> E. 0.2806</label>
+      </div>
+
+<div class="question" data-qid="q65">
+  <strong>Câu 07.</strong> Cho BNN liên tục $X$ có hàm phân phối xác suất $F(x) = \begin{cases} 0, & \text{khi } x \le 0 \\ x^4, & \text{khi } 0 < x < 1 \\ 1, & \text{khi } 1 \le x \end{cases}$.<br>
+  Hàm mật độ của $X$ là<br>
+  <label><input type="checkbox" name="q65" value="A"> A. $f(x) = \begin{cases} 4x^3, & x \in (0; 1) \\ 0, & x \notin (0; 1) \end{cases}$</label>
+  <label><input type="checkbox" name="q65" value="B"> B. $f(x) = \begin{cases} \frac{x^5}{5}, & x \in (0; 1) \\ 0, & x \notin (0; 1) \end{cases}$</label>
+  <label><input type="checkbox" name="q65" value="C"> C. $f(x) = \begin{cases} 4x^3, & x \notin (0; 1) \\ 0, & x \in (0; 1) \end{cases}$</label>
+  <label><input type="checkbox" name="q65" value="D"> D. $f(x) = \begin{cases} \frac{x^5}{5}, & x \notin (0; 1) \\ 0, & x \in (0; 1) \end{cases}$</label>
+</div>
+
+<div class="question" data-qid="q66">
+  <strong>Câu 08.</strong> Cho BNN liên tục $X$ có hàm mật độ xác suất $f(x) = \begin{cases} \frac{2}{3}x, & x \in [-1; 2] \\ 0, & x \notin [-1; 2] \end{cases}$.<br>
+  Hàm phân phối xác suất $F(x) = P(X < x)$ của $X$ là:<br>
+  <label><input type="checkbox" name="q66" value="A"> A. $F(x) = \begin{cases} 0 & \text{khi } x < -1 \\ \frac{1}{3}(x^2 - 1) & \text{khi } -1 \le x \le 2 \\ 1 & \text{khi } 2 < x \end{cases}$</label>
+  <label><input type="checkbox" name="q66" value="B"> B. $F(x) = \begin{cases} 0 & \text{khi } x < -1 \\ \frac{1}{3}(x^2 + 1) & \text{khi } -1 \le x \le 2 \\ 1 & \text{khi } 2 < x \end{cases}$</label>
+  <label><input type="checkbox" name="q66" value="C"> C. $F(x) = \begin{cases} 0 & \text{khi } x < -1 \\ \frac{1}{3}x^2 & \text{khi } -1 \le x \le 2 \\ 1 & \text{khi } 2 < x \end{cases}$</label>
+  <label><input type="checkbox" name="q66" value="D"> D. $F(x) = \begin{cases} 0 & \text{khi } x \le -1 \\ \frac{1}{3}x^2 & \text{khi } -1 < x \le 2 \\ 1 & \text{khi } 2 < x \end{cases}$</label>
+</div>
+
+<div class="question" data-qid="q67">
+  <strong>Câu 09.</strong> Biến ngẫu nhiên $X$ có hàm mật độ xác suất $f(x) = \begin{cases} \frac{3}{16}x^2, & x \in (-2; 2) \\ 0, & x \notin (-2; 2) \end{cases}$.<br>
+  Giá trị của $P(\sqrt{2} < Y < \sqrt{5})$ với $Y = \sqrt{x^2 + 1}$ là:<br>
+  <label><input type="checkbox" name="q67" value="A"> A. 0.3125</label>
+  <label><input type="checkbox" name="q67" value="B"> B. 0.4375</label>
+  <label><input type="checkbox" name="q67" value="B"> C. 0.875</label>
+  <label><input type="checkbox" name="q67" value="B"> D. 0.625</label>
+  </div>
+
+<div class="question" data-qid="q68">
+  <strong>Câu 10.</strong> Cho BNN liên tục $X$ có hàm mật độ xác suất $f(x) = \begin{cases} \frac{1}{9}(3x - x^2), & 0 \le x \le 3 \\ 0, & x \notin [0; 3] \end{cases}$.<br>
+  Giá trị trung bình của $Y$ với $Y = 3X^2$ là<br>
+  <label><input type="checkbox" name="q68" value="A"> A. $EY = 8,1$</label>
+  <label><input type="checkbox" name="q68" value="B"> B. $EY = 7,9$</label>
+  <label><input type="checkbox" name="q68" value="C"> C. $EY = 4,5$</label>
+  <label><input type="checkbox" name="q68" value="D"> D. $EY = 5,4$</label>
+</div>
+
+<div class="question" data-qid="q69">
+  <strong>Câu 11.</strong> Cho BNN liên tục $X$ có hàm mật độ xác suất $f(x) = \begin{cases} \frac{1}{9}(3x - x^2), & 0 \le x \le 3 \\ 0, & x \notin [0; 3] \end{cases}$.<br>
+  Giá trị phương sai của $Y$ với $Y = 3X^2$ là<br>
+  <label><input type="checkbox" name="q69" value="A"> A. $\text{Var}Y = 38,0329$</label>
+  <label><input type="checkbox" name="q69" value="B"> B. $\text{Var}Y = 38,5329$</label>
+  <label><input type="checkbox" name="q69" value="C"> C. $\text{Var}Y = 38,9672$</label>
+  <label><input type="checkbox" name="q69" value="D"> D. $\text{Var}Y = 38,0075$</label>
+</div>
+
+<div class="question" data-qid="q70">
+  <strong>Câu 12.</strong> Cho BNN liên tục $X$ có hàm phân phối xác suất $F(x) = \begin{cases} 0, & x \le 1 \\ \frac{x-1}{2}, & 1 < x \le 3 \\ 1, & 3 < x \end{cases}$.<br>
+  Giá trị phương sai của $X$ là<br>
+  <label><input type="checkbox" name="q70" value="A"> A. $\text{Var}Y = \frac{1}{4}$</label>
+  <label><input type="checkbox" name="q70" value="B"> B. $\text{Var}Y = \frac{1}{6}$</label>
+  <label><input type="checkbox" name="q70" value="C"> C. $\text{Var}Y = \frac{1}{2}$</label>
+  <label><input type="checkbox" name="q70" value="D"> D. $\text{Var}Y = \frac{1}{3}$</label>
+</div>
+
+<div class="question" data-qid="q71">
+  <strong>Câu 13.</strong> Thời gian học rành nghề là BNN $X$ (đơn vị: năm) có hàm phân phối $F(x) = \begin{cases} 0, & x \le 0 \\ \frac{3}{40}x^3 + \frac{1}{5}x, & 0 < x < 2 \\ 1, & x \ge 2 \end{cases}$.<br>
+  Tính xác suất để học rành nghề dưới $6$ tháng.<br>
+  <label><input type="checkbox" name="q71" value="A"> A. $0,8906$</label>
+  <label><input type="checkbox" name="q71" value="B"> B. $0,1094$</label>
+  <label><input type="checkbox" name="q71" value="C"> C. $0,0262$</label>
+  <label><input type="checkbox" name="q71" value="D"> D. $0,9738$</label>
+</div>
+
+<div class="question" data-qid="q72">
+  <strong>Câu 14.</strong> Tuổi thọ $X$ (tuổi) của người dân ở một địa phương là BNN có hàm phân phối $F(x) = \begin{cases} 0, & \text{khi } x \le 0 \\ 1 - e^{-0,013x}, & \text{khi } x > 0 \end{cases}$.<br>
+  Tỷ lệ dân thọ trên $60$ tuổi là<br>
+  <label><input type="checkbox" name="q72" value="A"> A. $0,013$</label>
+  <label><input type="checkbox" name="q72" value="B"> B. $0,1361$</label>
+  <label><input type="checkbox" name="q72" value="C"> C. $0,4055$</label>
+  <label><input type="checkbox" name="q72" value="D"> D. $0,4584$</label>
+</div>
+
+<div class="question" data-qid="q73">
+  <strong>Câu 15.</strong> Thời gian học rành nghề là BNN $X$ (đơn vị: năm) có hàm phân phối $F(x) = \begin{cases} 0, & x \le 0 \\ \frac{3}{40}x^3 + \frac{1}{5}x, & 0 < x < 2 \\ 1, & x \ge 2 \end{cases}$.<br>
+  Tính xác suất để học rành nghề trên $6$ tháng.<br>
+  <label><input type="checkbox" name="q73" value="A"> A. $0,8906$</label>
+  <label><input type="checkbox" name="q73" value="B"> B. $0,1094$</label>
+  <label><input type="checkbox" name="q73" value="C"> C. $0,0262$</label>
+  <label><input type="checkbox" name="q73" value="D"> D. $0,9738$</label>
+</div>
+
+<div class="question" data-qid="q74">
+  <strong>Câu 16.</strong> BNN $X$ có hàm mật độ $f(x) = \begin{cases} \frac{x - x^3}{4}, & x \in (0; 2) \\ 0, & x \notin (0; 2) \end{cases}$.<br>
+  $\text{Mod}(X)$ là<br>
+  <label><input type="checkbox" name="q74" value="A"> A. $0$</label>
+  <label><input type="checkbox" name="q74" value="B"> B. $2$</label>
+  <label><input type="checkbox" name="q74" value="C"> C. $\frac{\sqrt{3}}{3}$</label>
+  <label><input type="checkbox" name="q74" value="D"> D. $\frac{2\sqrt{3}}{3}$</label>
+</div>
+
+<div class="question" data-qid="q75">
+  <strong>Câu 17.</strong> Cho BNN liên tục $X$ có hàm mật độ xác suất $f(x) = \begin{cases} a(3x - x^2), & x \in (0; 3) \\ 0, & x \notin (0; 3) \end{cases}$.<br>
+  Giá trị trung bình của $X$ là<br>
+  <label><input type="checkbox" name="q75" value="A"> A. $E(X) = 1,2$</label>
+  <label><input type="checkbox" name="q75" value="B"> B. $E(X) = 1,4$</label>
+  <label><input type="checkbox" name="q75" value="C"> C. $E(X) = 1,5$</label>
+  <label><input type="checkbox" name="q75" value="D"> D. $E(X) = 2,4$</label>
+</div>
+
+<div class="question" data-qid="q76">
+  <strong>Câu 18.</strong> Cho BNN liên tục $X$ có hàm mật độ xác suất $f(x) = \begin{cases} a(3x - x^2), & x \in (0; 3) \\ 0, & x \notin (0; 3) \end{cases}$.<br>
+  Giá trị phương sai của $X$ là<br>
+  <label><input type="checkbox" name="q76" value="A"> A. $\text{Var}(X) = 0,64$</label>
+  <label><input type="checkbox" name="q76" value="B"> B. $\text{Var}(X) = 1,5$</label>
+  <label><input type="checkbox" name="q76" value="C"> C. $\text{Var}(X) = 2,7$</label>
+  <label><input type="checkbox" name="q76" value="D"> D. $\text{Var}(X) = 0,45$</label>
+</div>
+
+<div class="question" data-qid="q77">
+  <strong>Câu 19.</strong> Cho BNN liên tục $X$ có hàm mật độ xác suất $f(x) = \begin{cases} a(3x - x^2), & x \in (0; 3) \\ 0, & x \notin (0; 3) \end{cases}$.<br>
+  Giá trị $\text{Mod}(X)$ là<br>
+  <label><input type="checkbox" name="q77" value="A"> A. $1,5$</label>
+  <label><input type="checkbox" name="q77" value="B"> B. $0$</label>
+  <label><input type="checkbox" name="q77" value="C"> C. $1$</label>
+  <label><input type="checkbox" name="q77" value="D"> D. $3$</label>
+</div>
+
+<div class="question" data-qid="q78">
+  <strong>Câu 20.</strong> Cho BNN liên tục $X$ có hàm mật độ xác suất $f(x) = \begin{cases} a(3x - x^2), & x \in (0; 3) \\ 0, & x \notin (0; 3) \end{cases}$.<br>
+  Giá trị xác suất $P(1 < X \le 2)$ là<br>
+  <label><input type="checkbox" name="q78" value="A"> A. $0,4815$</label>
+  <label><input type="checkbox" name="q78" value="B"> B. $0,4915$</label>
+  <label><input type="checkbox" name="q78" value="C"> C. $0,5015$</label>
+  <label><input type="checkbox" name="q78" value="D"> D. $0,5115$</label>
+</div>
+
+<div class="question" data-qid="q79">
+  <strong>Câu 21.</strong> Biến ngẫu nhiên $X$ có bảng phân phối xác suất
+  <table border="1" style="border-collapse: collapse; margin: 10px 0;">
+    <tr><th>$X$</th><th>$-1$</th><th>$0$</th><th>$1$</th><th>$2$</th></tr>
+    <tr><th>$P$</th><td>$3k$</td><td>$2k$</td><td>$0,4$</td><td>$0,1$</td></tr>
+  </table>
+  trong đó $k$ là hằng số. Kỳ vọng của $X$ là:<br>
+  <label><input type="checkbox" name="q79" value="A"> A. $0,2$</label>
+  <label><input type="checkbox" name="q79" value="B"> B. $0,1$</label>
+  <label><input type="checkbox" name="q79" value="C"> C. $0,5$</label>
+  <label><input type="checkbox" name="q79" value="D"> D. $0,3$</label>
+</div>
+
+<div class="question" data-qid="q80">
+  <strong>Câu 22.</strong> Biến ngẫu nhiên $X$ có bảng phân phối xác suất
+  <table border="1" style="border-collapse: collapse; margin: 10px 0;">
+    <tr><th>$X$</th><th>$-1$</th><th>$0$</th><th>$1$</th><th>$2$</th></tr>
+    <tr><th>$P$</th><td>$3k$</td><td>$2k$</td><td>$0,4$</td><td>$0,1$</td></tr>
+  </table>
+  trong đó $k$ là hằng số. Tính $P(X \le 1/2)$.<br>
+  <label><input type="checkbox" name="q80" value="A"> A. $0,2$</label>
+  <label><input type="checkbox" name="q80" value="B"> B. $0,1$</label>
+  <label><input type="checkbox" name="q80" value="C"> C. $0,5$</label>
+  <label><input type="checkbox" name="q80" value="D"> D. $0,3$</label>
+</div>
+
+<div class="question" data-qid="q81">
+  <strong>Câu 23.</strong> Số khách vào một cửa hàng trong $1$ giờ là biến ngẫu nhiên $X$ với $P(X = k) = \frac{2k + 1}{25}$, $k = 0; 1; 2; 3; 4$.<br>
+  Tính xác suất trong một giờ có từ $2$ đến $4$ người vào cửa hàng.<br>
+  <label><input type="checkbox" name="q81" value="A"> A. $1/25$</label>
+  <label><input type="checkbox" name="q81" value="B"> B. $5/25$</label>
+  <label><input type="checkbox" name="q81" value="C"> C. $21/25$</label>
+  <label><input type="checkbox" name="q81" value="D"> D. $14/25$</label>
+</div>
+
+<div class="question" data-qid="q82">
+  <strong>Câu 24.</strong> Số khách vào một cửa hàng trong $1$ giờ là biến ngẫu nhiên $X$ với $P(X = k) = \frac{2k + 1}{25}$, $k = 0; 1; 2; 3; 4$.<br>
+  Tính số khách trung bình đến cửa hàng trong $1$ giờ.<br>
+  <label><input type="checkbox" name="q82" value="A"> A. $1/25$</label>
+  <label><input type="checkbox" name="q82" value="B"> B. $5/25$</label>
+  <label><input type="checkbox" name="q82" value="C"> C. $21/25$</label>
+  <label><input type="checkbox" name="q82" value="D"> D. $14/25$</label>
+</div>
+
+<div class="question" data-qid="q83">
+  <strong>Câu 25.</strong> Cho biến ngẫu nhiên rời rạc $X$ có bảng phân phối xác suất
+  <table border="1" style="border-collapse: collapse; margin: 10px 0;">
+    <tr><th>$X$</th><th>$a$</th><th>$0,1$</th><th>$0,3$</th><th>$0,4$</th><th>$2$</th></tr>
+    <tr><th>$P$</th><td>$0,3$</td><td>$0,2$</td><td>$0,2$</td><td>$0,2$</td><td>$0,1$</td></tr>
+  </table>
+  Giá trị của tham số $a$ để $EX = 0,3$ là:<br>
+  <label><input type="checkbox" name="q83" value="A"> A. $a = 0$</label>
+  <label><input type="checkbox" name="q83" value="B"> B. $a = 0,01$</label>
+  <label><input type="checkbox" name="q83" value="C"> C. $a = 0,1$</label>
+  <label><input type="checkbox" name="q83" value="D"> D. $a = -0,2$</label>
+</div>
+
+<div class="question" data-qid="q84">
+  <strong>Câu 26.</strong> Cho biến ngẫu nhiên rời rạc $X$ có bảng phân phối xác suất
+  <table border="1" style="border-collapse: collapse; margin: 10px 0;">
+    <tr><th>$X$</th><th>$ 0 $ </th><th>$0,1$</th><th>$0,3$</th><th>$0,4$</th><th>$0,7$</th></tr>
+    <tr><th>$P$</th><td>$a$</td><th>$0,2$</th><th>$b$</th><th>$0,2$</th><th>$0,1$</th></tr>
+  </table>
+  Giá trị của tham số $a$ và $b$ để $EX = 0,2$ là:<br>
+  <label><input type="checkbox" name="q84" value="A"> A. $a = 0, 1$; $b = 0, 4$</label>
+  <label><input type="checkbox" name="q84" value="B"> B. $a = 0, 4$; $b = 0, 1$</label>
+  <label><input type="checkbox" name="q84" value="C"> C. $a = 0, 2$; $b = 0, 3$</label>
+  <label><input type="checkbox" name="q84" value="D"> D. $a = 0, 3$; $b = 0, 2$</label>
+</div>
+
+<div class="question" data-qid="q85">
+  <strong>Câu 27.</strong> Cho biến ngẫu nhiên rời rạc $X$ có bảng phân phối xác suất
+  <table border="1" style="border-collapse: collapse; margin: 10px 0;">
+    <tr><th>$X$</th><th>$1$</th><th>$2$</th><th>$4$</th><th>$a$</th></tr>
+    <tr><th>$P$</th><td>$0,2$</td><td>$0,5$</td><td>$0,2$</td><td>$0,1$</td></tr>
+  </table>
+  Giá trị của tham số $a > 4$ để $\text{Var}X = 1,4225$ là:<br>
+  <label><input type="checkbox" name="q85" value="A"> A. $a = 5$</label>
+  <label><input type="checkbox" name="q85" value="B"> B. $a = 5,5$</label>
+  <label><input type="checkbox" name="q85" value="C"> C. $a = 4$</label>
+  <label><input type="checkbox" name="q85" value="D"> D. $a = 4,5$</label>
+</div>
+
+<div class="question" data-qid="q86">
+  <strong>Câu 28.</strong> Cho biến ngẫu nhiên rời rạc $X$ có bảng phân phối xác suất
+  <table border="1" style="border-collapse: collapse; margin: 10px 0;">
+    <tr><th>$X$</th><th>$1$</th><th>$2$</th><th>$3$</th><th>$4$</th></tr>
+    <tr><th>$P$</th><td>$0,15$</td><td>$a$</td><td>$0,35$</td><td>$b$</td></tr>
+  </table>
+  Giá trị của hai tham số $a$ và $b$ để $\text{Var}X = 1,01$ là:<br>
+  <label><input type="checkbox" name="q86" value="A"> A. $a = 0$; $b = 0,25$</label>
+  <label><input type="checkbox" name="q86" value="B"> B. $a = 0,15$; $b = 0,35$</label>
+  <label><input type="checkbox" name="q86" value="C"> C. $a = 0,35$; $b = 0,15$</label>
+  <label><input type="checkbox" name="q86" value="D"> D. $a = 0,45$; $b = 0,05$</label>
+</div>
+
+<div class="question" data-qid="q87">
+  <strong>Câu 29.</strong> Một nghệ nhân mỗi ngày làm hai loại sản phẩm độc lập $A$ và $B$ với xác suất hỏng tương ứng là $0,1$ và $0,2$. Biết rằng nếu thành công thì nghệ nhân sẽ kiếm lời từ sản phẩm $A$ là $300.000$ đồng và $B$ là $450.000$ đồng, nhưng nếu hỏng thì bị lỗ do sản phẩm $A$ là $190.000$ đồng và $B$ là $270.000$ đồng. Hãy tính xung trung bình nghệ nhân được bao nhiêu tiền mỗi ngày?<br>
+  <label><input type="checkbox" name="q87" value="A"> A. $557.000$ đồng</label>
+  <label><input type="checkbox" name="q87" value="B"> B. $545.000$ đồng</label>
+  <label><input type="checkbox" name="q87" value="C"> C. $475.000$ đồng</label>
+  <label><input type="checkbox" name="q87" value="D"> D. $290.000$ đồng</label> 
+</div>
+
+<div class="question" data-qid="q95">
+  <strong>Câu 30.</strong> Xác suất một bệnh nhân được chữa bệnh thành công với kỹ thuật mới là $p=0,8$. Giả sử có 10 bệnh nhân. Xác suất có từ 4 đến 5 bệnh nhân được chữa thành công với kỹ thuật này <br>
+  <label><input type="checkbox" name="q87" value="A"> A. $0,0881$ </label> 
+  <label><input type="checkbox" name="q87" value="B"> B. $0,2621$ </label>
+  <label><input type="checkbox" name="q87" value="C"> C. $0,0319$</label>
+  <label><input type="checkbox" name="q87" value="D"> D. $0,0055$</label> 
+</div>
+
+<!-- <button type="button" onclick="checkAnswers()">Nộp bài</button> -->
+</form>
+
+<div class="result" id="result"></div>
+
+<script>
+function checkAnswers() {
+  const correctAnswers = {
+    q1: ['A'],       // Chỉ A đúng
+    q2: ['D'], // Nhiều đáp án đúng
+    q3: ['A'],        // Chỉ A đúng
+    q4: ['D'],        // Chỉ A đúng
+    q5: ['B'],        // Chỉ A đúng
+    q6: ['B'],        // Chỉ A đúng
+    q7: ['B'],        // Chỉ A đúng
+    q8: ['E'],        // Chỉ A đúng
+    q9: ['E'],        // Chỉ A đúng
+    q10: ['C'],        // Chỉ A đúng
+    q11: ['A'],        // Chỉ A đúng
+    q12: ['C'],        // Chỉ A đúng
+    q13: ['B'],        // Chỉ A đúng
+    q14: ['A'],        // Chỉ A đúng
+    q15: ['A'],        // Chỉ A đúng
+  };
+
+  let score = 0;
+  const total = Object.keys(correctAnswers).length;
+
+  for (let qid in correctAnswers) {
+    const selected = Array.from(document.querySelectorAll(`input[name="${qid}"]:checked`)).map(el => el.value);
+    const correct = correctAnswers[qid];
+    // Kiểm tra: chọn đúng hết, không chọn sai
+    const isCorrect = selected.length === correct.length && selected.every(v => correct.includes(v));
+    if (isCorrect) score++;
+  }
+
+  document.getElementById('result').textContent = `✅ Bạn được ${score}/${total} điểm.`;
+}
+</script>
+
+</body>
+</html>

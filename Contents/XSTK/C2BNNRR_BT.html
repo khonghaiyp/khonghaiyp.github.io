@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài trắc nghiệm nhiều đáp án đúng</title>
+<style>
+  body { font-family: sans-serif; padding: 20px; max-width: 700px; margin: auto; }
+  .question { margin-bottom: 25px; }
+  .question p { font-weight: bold; }
+  .result { font-weight: bold; color: blue; margin-top: 20px; }
+  button { padding: 8px 16px; font-size: 16px; border-radius: 6px; }
+</style>
+<style>
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background: #f6f8fb;
+      color: #111;
+      margin: 20px;
+      line-height: 1.5;
+    }
+    .container {max-width: 960px; margin: 0 auto;}
+    header {text-align:left; margin-bottom:16px;}
+    h1 {font-size:1.3rem; margin:0 0 6px 0;}
+    .info-box {
+      background:#fff;
+      padding:12px 16px;
+      border-radius:8px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.06);
+      margin-bottom:16px;
+    }
+    label {display:block; margin:8px 0;}
+    input[type=text] {
+      width:280px;
+      padding:6px 8px;
+      border:1px solid #ccc;
+      border-radius:6px;
+    }
+    .question {
+      background: #fff;
+      border: 1px solid #e3e8ef;
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 14px rgba(20,30,50,0.03);
+    }
+    .qtitle {font-weight:600; margin-bottom:6px;}
+    .choices label {display:block; margin:6px 0; cursor:pointer;}
+    .actions {margin: 18px 0; display:flex; gap:10px; align-items:center;}
+    button {
+      background:#2563eb;color:white;border:0;padding:8px 14px;
+      border-radius:8px;cursor:pointer;
+      box-shadow:0 6px 12px rgba(37,99,235,0.12);
+    }
+    button.secondary {background:#6b7280;}
+    .result {
+      margin-top:12px;font-weight:600;
+      background:#f1f5f9;border-radius:6px;padding:8px 10px;
+    }
+    .answer-key {
+      margin-top:14px;background:#f8fafc;
+      border:1px dashed #cbd5e1;padding:10px;border-radius:6px;
+    }
+  </style>
+  
+</head>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<!-- Nhap -->
+  <!-- MathJax để hiển thị công thức toán -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #222;
+      margin: 40px;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+    }
+    h2 {
+      color: #0055aa;
+      margin-top: 40px;
+    }
+    button {
+      background-color: #0055aa;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #003f7f;
+    }
+    .section-content {
+      display: none;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .author {
+      text-align: right;
+      font-style: italic;
+      margin-top: 30px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    body{font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:#f7f7fb; padding:20px}
+    .card{background:white;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);max-width:900px;margin:0 auto}
+    label{margin-right:6px}
+    input[type=number]{width:80px;padding:4px;margin-right:10px}
+    button{padding:6px 12px;border:0;background:#2563eb;color:white;border-radius:8px;cursor:pointer}
+    button:active{transform:translateY(1px)}
+  </style>
+
+<!-- Phan bảng -->
+   <style>
+    body {
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: #f7f9fc;
+      margin: 40px;
+      line-height: 1.6;
+    }
+    h2 {
+      color: #1f4e79;
+      margin-bottom: 10px;
+    }
+
+    /* Container có bóng nhẹ */
+    .table-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      padding: 16px 20px;
+      max-width: 600px;
+      margin: auto;
+      overflow-x: auto;
+    }
+
+    /* Bảng chính */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    th, td {
+      border: 1px solid #e2e8f0;
+      padding: 8px 12px;
+    }
+
+    th {
+      background-color: #f0f7ff;
+      color: #003366;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #fafafa;
+    }
+
+    tr:hover td {
+      background-color: #fef7e7;
+      transition: background 0.3s;
+    }
+
+    caption {
+      caption-side: top;
+      text-align: left;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 8px;
+    }
+
+    .note {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #374151;
+      text-align: center;
+    }
+  </style>
+
+<body>
+
+<!-- Thông tin tác giả -->
+<div class="author">
+  <p>Ts. Khổng Văn Hải</p>
+  <p>Khoa Toán - Tin, Trường Đại học Bách khoa Hà Nội</p>
+</div>    
+
+<h1>Biến ngẫu nhiên rời rạc</h1>
+
+<form id="quizForm">
+        <div class="question" data-qid="q1">
+        <p><strong>Câu 01.</strong></p>  Cho X là biến ngẫu nhiên rời rạc với bảng:
+        <table class="dist">
+
+          <table class="dist">
+          <thead>
+            <tr>
+              <th scope="col">$X$</th>
+              <th scope="col">1</th>
+              <th scope="col">2</th>
+              <th scope="col">3</th>
+              <th scope="col">4</th>
+              <th scope="col">5</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">$P(X)$</th>
+              <td>0,10</td>
+              <td>0,15</td>
+              <td>0,30</td>
+              <td>0,15</td>
+              <td>k</td>
+            </tr>
+          </tbody>
+        </table>
+        Xác suất P(X nhận giá trị 1 hoặc 5) là:  <br>
+        <label><input type="checkbox" name="q1" value="A"> A. 0,40</label>
+        <label><input type="checkbox" name="q1" value="B"> B. 0,35</label>
+        <label><input type="checkbox" name="q1" value="C"> C. 0,60</label>
+        <label><input type="checkbox" name="q1" value="D"> D. 0,20</label>
+        <label><input type="checkbox" name="q1" value="E"> E. 0,25</label>
+      </div>
+
+      <div class="question" data-qid="q2">
+        <strong>Câu 02.</strong> Cho hàm mật độ 
+        \( f(x) = \begin{cases} 
+        k(x^2-1) & x \in [2,3]\\
+        0 & x \notin [2,3]
+        \end{cases} \). Tìm $E(g(X))$ với \(g(X)=2X\).  <br>
+        <label><input type="checkbox" name="q2" value="A"> A. 7.1235</label>
+        <label><input type="checkbox" name="q2" value="B"> B. 5.2350</label>
+        <label><input type="checkbox" name="q2" value="C"> C. 6.1506</label>
+        <label><input type="checkbox" name="q2" value="D"> D. 5.1563</label>
+        <label><input type="checkbox" name="q2" value="E"> E. 4.1560</label>
+      </div>
+
+      <div class="question" data-qid="q3">
+        <strong>Câu 03.</strong> Tỉ lệ sản phẩm loại A của lô hàng là 90%. Lấy ngẫu nhiên 50 sản phẩm, X = số sản phẩm loại A. Tính V(X), E(X) =? <br>
+        <label><input type="checkbox" name="q3" value="A"> A. 4,5 và 45</label>
+        <label><input type="checkbox" name="q3" value="B"> B. 45 và 4,5</label>
+        <label><input type="checkbox" name="q3" value="C"> C. 5,5 và 50</label>
+        <label><input type="checkbox" name="q3" value="D"> D. 50 và 4,5</label>
+        <label><input type="checkbox" name="q3" value="E"> E. 4,5 và 50</label>
+      </div>
+
+      <div class="question" data-qid="q4">
+        <strong>Câu 04.</strong> $X \sim  U[0,12]$. Tính kì vọng và phương sai. <br>  
+        <label><input type="checkbox" name="q4" value="A"> A. 6 và 6</label>
+        <label><input type="checkbox" name="q4" value="B"> B. 12 và 12</label>
+        <label><input type="checkbox" name="q4" value="C"> C. 7,5 và 6</label>
+        <label><input type="checkbox" name="q4" value="D"> D. 6 và 12</label>
+        <label><input type="checkbox" name="q4" value="E"> E. 7,5 và 12</label>
+      </div>
+
+      <div class="question" data-qid="q5">
+        <strong>Câu 05.</strong> Cho hàm phân phối $F(x) = 0 (x ≤ 1); (x+1)/4 (1 < x ≤ 3); 1 (x > 3).$ Tính $P(0 &lt; X &lt; 1).$  <br>
+        <label><input type="checkbox" name="q5" value="A"> A. 0,1</label>
+        <label><input type="checkbox" name="q5" value="B"> B. 0,25</label>
+        <label><input type="checkbox" name="q5" value="C"> C. 0,15</label>
+        <label><input type="checkbox" name="q5" value="D"> D. 0,2</label>
+        <label><input type="checkbox" name="q5" value="E"> E. 0,3</label>
+      </div>
+
+      <div class="question" data-qid="q6">
+        <strong>Câu 06.</strong> Thời dài chi tiết máy có mật độ $f(x)=k e^{-(x-12+8x^2)/8}$. Tính kỳ vọng và phương sai của $X$? <br>
+        <label><input type="checkbox" name="q6" value="A"> A. 8 và 4</label>
+        <label><input type="checkbox" name="q6" value="B"> B. 4 và 4</label>
+        <label><input type="checkbox" name="q6" value="C"> C. 4 và 8</label>
+        <label><input type="checkbox" name="q6" value="D"> D. 4 và 6</label>
+        <label><input type="checkbox" name="q6" value="E"> E. 6 và 4</label>
+      </div>
+
+      <div class="question" data-qid="q7">
+        <strong>Câu 07.</strong> Tuổi thọ một loại bóng đèn X (năm) có mật độ $f(x)=k x^2(4 - x)$ trên $[0,4]$. Tính $E(X)$. <br>
+        <label><input type="checkbox" name="q7" value="A"> A. 7,2</label>
+        <label><input type="checkbox" name="q7" value="B"> B. 2,4</label>
+        <label><input type="checkbox" name="q7" value="C"> C. 9,6</label>
+        <label><input type="checkbox" name="q7" value="D"> D. 4,8</label>
+        <label><input type="checkbox" name="q7" value="E"> E. 3,6</label>
+      </div>
+
+      <div class="question" data-qid="q8">
+        <strong>Câu 08.</strong> X có mật độ $f(x)=k x(4 - x^2)$ trên $[0,2]$. Tính xác suất: sau 3 lần lặp độc lập có đúng 1 lần X nhận giá trị trong khoảng (0, 1/2).<br>
+        <label><input type="checkbox" name="q8" value="A"> A. 0.1632</label>
+        <label><input type="checkbox" name="q8" value="B"> B. 0.2523</label>
+        <label><input type="checkbox" name="q8" value="C"> C. 0.3260</label>
+        <label><input type="checkbox" name="q8" value="D"> D. 0.4256</label>
+        <label><input type="checkbox" name="q8" value="E"> E. 0.2806</label>
+      </div>
+
+      <div class="question" data-qid="q9">
+        <strong>Câu 09.</strong> Một thiết bị A có thời gian hỏng tuân theo phân phối mũ với $\lambda = 0,001$, thời gian bảo hành là 800 giờ. Tính thời gian làm trung bình và xác suất hỏng trong thời gian bảo hành.<br>
+        <label><input type="checkbox" name="q9" value="A"> A. đáp án khác</label>
+        <label><input type="checkbox" name="q9" value="B"> B. 10 000 và 0.3214</label>
+        <label><input type="checkbox" name="q9" value="C"> C. 1 000 và 0.4493</label>
+        <label><input type="checkbox" name="q9" value="D"> D. 10 000 và 0.6785</label>
+        <label><input type="checkbox" name="q9" value="E"> E. 1 000 và 0.5507</label>
+      </div>
+
+      <div class="question" data-qid="q10">
+        <strong>Câu 10.</strong> Nếu xác suất $80\%$ sinh viên của một trường đại học là nam, thì với 5 sinh viên chọn ngẫu nhiên từ trường đó, xác suất có nhiều nhất một sinh viên nữ là? <br>
+        <label><input type="checkbox" name="q10" value="A"> A. 0,3333</label>
+        <label><input type="checkbox" name="q10" value="B"> B. 0,1235</label>
+        <label><input type="checkbox" name="q10" value="C"> C. 0,7373</label>
+        <label><input type="checkbox" name="q10" value="D"> D. 0,6667</label>
+        <label><input type="checkbox" name="q10" value="E"> E. 0,2627</label>
+      </div>
+
+      <div class="question" data-qid="q11">
+        <strong>Câu 11.</strong> Gieo 1 con xúc xắc đều 10 lần. Xác suất số lẻ xuất hiện một chẵn > lẻ là? <br>
+        <label><input type="checkbox" name="q11" value="A"> A. 0.3770</label>
+        <label><input type="checkbox" name="q11" value="B"> B. 0.4232</label>
+        <label><input type="checkbox" name="q11" value="C"> C. 0.6233</label>
+        <label><input type="checkbox" name="q11" value="D"> D. 0.2523</label>
+        <label><input type="checkbox" name="q11" value="E"> E. 0.6230</label>
+      </div>
+
+      <div class="question" data-qid="q12">
+        <strong>Câu 12.</strong> Tỉ lệ mắc bệnh A trong 1 vùng là 10%. Trong 100 người, số người bị bệnh A có khả năng nhất là?<br>
+        <label><input type="checkbox" name="q12" value="A"> A. 13</label>
+        <label><input type="checkbox" name="q12" value="B"> B. 11</label>
+        <label><input type="checkbox" name="q12" value="C"> C. 10</label>
+        <label><input type="checkbox" name="q12" value="D"> D. 14</label>
+        <label><input type="checkbox" name="q12" value="E"> E. 12</label>
+      </div>
+
+      <div class="question" data-qid="q13">
+        <strong>Câu 13.</strong> Cho X rời rạc có hàm phân phối (theo file gốc). Bảng phân phối xác suất của X là: <br>
+        <label><input type="checkbox" name="q13" value="A"> A. \begin{matrix}  X & 1 & 2 & 3\\
+          P(X) & 0,3 & 0,7 & 0
+          \end{matrix} </label>
+        <label><input type="checkbox" name="q13" value="B"> B.\begin{matrix}  X & 1 & 2 & 3\\
+          P(X) & 0,3 & 0,4 & 0,3
+          \end{matrix} </label>
+        <label><input type="checkbox" name="q13" value="C"> C. \begin{matrix}  X & 1 & 2 & 3\\
+          P(X) & 0 & 0,3 & 0,7
+          \end{matrix} </label>
+        <label><input type="checkbox" name="q13" value="D"> D. \begin{matrix}  X & 1 & 2 & 3\\
+          P(X) & 0,7 & 0,3 & 0
+          \end{matrix}</label>
+        <label><input type="checkbox" name="q13" value="E"> E. \begin{matrix}  X & 1 & 2 & 3\\
+          P(X) & 0,3 & 0,2 & 0,5
+          \end{matrix}</label>
+      </div>
+
+      <div class="question" data-qid="q14">
+        <strong>Câu 14.</strong> $X \sim \mathcal{P}(λ=2)$. Tính $P(X &lt; 7 | X &gt; 2)$ <br>
+        <label><input type="checkbox" name="q14" value="A"> A. $1 - e^{-10}$</label>
+        <label><input type="checkbox" name="q14" value="B"> B. $1 - e^{-14}$</label>
+        <label><input type="checkbox" name="q14" value="C"> C. $e^{-10}$</label>
+        <label><input type="checkbox" name="q14" value="D"> D. $1 - e^{-4}$</label>
+        <label><input type="checkbox" name="q14" value="E"> E. $e^{-4}$</label>
+      </div>
+
+      <div class="question" data-qid="q15">
+        <strong>Câu 15.</strong> Số máy A bán được trong ngày của một siêu thị $X \sim \mathcal{P}(\lambda)$. Biết xác suất bán được 1 máy trong ngày là $20\%$. Trong 30 ngày, số ngày bán 1 máy có khả năng nhất là:<br>
+        <label><input type="checkbox" name="q15" value="A"> A. 6</label>
+        <label><input type="checkbox" name="q15" value="B"> B. 5</label>
+        <label><input type="checkbox" name="q15" value="C"> C. 7</label>
+        <label><input type="checkbox" name="q15" value="D"> D. 3</label>
+        <label><input type="checkbox" name="q15" value="E"> E. 4</label>
+      </div>
+
+
+  <button type="button" onclick="checkAnswers()">Nộp bài</button>
+</form>
+
+<div class="result" id="result"></div>
+
+<script>
+function checkAnswers() {
+  const correctAnswers = {
+    q1: ['A'],       // Chỉ A đúng
+    q2: ['D'], // Nhiều đáp án đúng
+    q3: ['A'],        // Chỉ A đúng
+    q4: ['D'],        // Chỉ A đúng
+    q5: ['B'],        // Chỉ A đúng
+    q6: ['B'],        // Chỉ A đúng
+    q7: ['B'],        // Chỉ A đúng
+    q8: ['E'],        // Chỉ A đúng
+    q9: ['E'],        // Chỉ A đúng
+    q10: ['C'],        // Chỉ A đúng
+    q11: ['A'],        // Chỉ A đúng
+    q12: ['C'],        // Chỉ A đúng
+    q13: ['B'],        // Chỉ A đúng
+    q14: ['A'],        // Chỉ A đúng
+    q15: ['A'],        // Chỉ A đúng
+  };
+
+  let score = 0;
+  const total = Object.keys(correctAnswers).length;
+
+  for (let qid in correctAnswers) {
+    const selected = Array.from(document.querySelectorAll(`input[name="${qid}"]:checked`)).map(el => el.value);
+    const correct = correctAnswers[qid];
+    // Kiểm tra: chọn đúng hết, không chọn sai
+    const isCorrect = selected.length === correct.length && selected.every(v => correct.includes(v));
+    if (isCorrect) score++;
+  }
+
+  document.getElementById('result').textContent = `✅ Bạn được ${score}/${total} điểm.`;
+}
+</script>
+
+</body>
+</html>

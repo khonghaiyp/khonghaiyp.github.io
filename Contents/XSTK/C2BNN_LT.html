@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Mục lục học phần XSTK</title>
+
+  <!-- MathJax để hiển thị công thức toán -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #222;
+      margin: 40px;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+    }
+    h2 {
+      color: #0055aa;
+      margin-top: 40px;
+    }
+    button {
+      background-color: #0055aa;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #003f7f;
+    }
+    .section-content {
+      display: none;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .author {
+      text-align: right;
+      font-style: italic;
+      margin-top: 30px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    body{font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:#f7f7fb; padding:20px}
+    .card{background:white;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);max-width:900px;margin:0 auto}
+    label{margin-right:6px}
+    input[type=number]{width:80px;padding:4px;margin-right:10px}
+    button{padding:6px 12px;border:0;background:#2563eb;color:white;border-radius:8px;cursor:pointer}
+    button:active{transform:translateY(1px)}
+  </style>
+
+</head>
+<body>
+
+  <h1>📚 CHƯƠNG II: BIẾN NGẪU NHIÊN VÀ LUẬT PHÂN PHỐI XÁC SUẤT. </h1>
+  <p class="author">
+    Biên soạn: <strong>Ts. Khổng Văn Hải</strong><br>
+    Khoa Toán - Tin, Đại học Bách Khoa Hà Nội
+  </p>
+ 
+  <hr>
+
+  <!-- Phần I -->
+  <h2>I. Các đặc trưng của biến ngẫu nhiên</h2>
+  <button onclick="toggleSection('theory')">📘 Xem / Ẩn phần lý thuyết</button>
+
+  <div id="theory" class="section-content">
+    <h3> Kỳ vọng</h3>
+    <ul>
+        <li>Nếu X là biến ngẫu nhiên rời rạc thì </li> 
+            <ul>
+                <li> \(E[X]= \sum_{k} x_{k}p_{k} \)</li>
+
+                <li>\(E[h(X)]= \sum_{k} h(x_{k})p_{k} \).
+                    <p>Ví dụ \(E[X^2]= \sum_{k} (x_{k})^{2}p_{k}\) </p> 
+                </li>
+            </ul>
+        <li>Nếu X là biến ngẫu nhiên liên tục thì </li>
+            <ul>
+                <li> \(E[X]= \int_{-\infty}^{\infty}xf_{X}(x)dx \)</li>
+                <li>\(E[h(X)]= \int_{-\infty}^{\infty}h(x)f_{X}(x)dx \).
+                    <p> Ví dụ  \(E[X^2]= \int_{-\infty}^{\infty}x^2f_{X}(x)dx\)</p> </li>
+            </ul>
+        <li> Tính chất</li>
+            <ul>
+                <li> \(E(c)=c \) (với c là hằng số)</li>
+                <li> \(E(X+Y) = E(X) +E(Y) \)</li>
+                <li> \(E(aX) = aE(X)\)</li>
+                <li> Tổng quát \(E(ah(X)+bg(Y)) = aE(h(X)) +bE(g(Y)) \) với </li>
+            </ul>
+    </ul>
+
+      <h3>Phương sai</h3>
+  <ul>
+    <li>\(V(c)=0\) (c là hằng số)</li>
+    <li>\(V[X]=E[X^{2}]-\big(E[X]\big)^{2}\).</li>
+    <li>Tổng quát: \(V[h(X)]=E[h(X)^{2}]-\big(E[h(X)]\big)^{2}\).</li>
+    <li>Nếu \(X, Y\) độc lập thì \(V(X+Y)=V(X)+V(Y)\)</li>
+    <li>\(V(cX)=c^{2}\,V(X)\)</li>
+  </ul>
+
+  <h3>Độ lệch chuẩn</h3>
+  <p class="lead">Độ lệch chuẩn (standard deviation) của biến ngẫu nhiên \(X\), ký hiệu là \(\sigma(X)\), được định nghĩa như sau: \(\sigma(X)=\sqrt{V(X)}\).</p>
+
+  <h3>Mốt</h3>
+  <ul>
+    <li>Ký hiệu: \(\mathrm{mod}(X)\)</li>
+    <li>Nếu \(X\) là biến ngẫu nhiên <b> rời rạc </b> thì mốt là giá trị của \(X\) ứng với xác suất lớn nhất. Tức là \(P(X=\mathrm{X}) \geq P(X=k) \forall k \in S_{X}\)</li>
+    <li>Nếu \(X\) là biến ngẫu nhiên <b>liên tục </b>  thì mốt là giá trị làm hàm mật độ đạt max. Tức là \(f(\mathrm{X}) \geq f(x) \forall x \in S_{X} \)</li>
+  </ul>
+
+  <h3> Trung vị:</h3>
+  <p class="lead">
+    Trung vị của biến ngẫu nhiên \(X\), ký hiệu \(\mathrm{med}(X)\), là giá trị chia phân phối của \(X\) thành hai phần có xác suất bằng nhau.
+  </p>
+
+  <div class="eq">
+    \[
+      P\!\big(X<\mathrm{med}X\big)=P\!\big(X\ge \mathrm{med}X\big)=\tfrac{1}{2}
+    \]
+  </div>
+
+  <p class="note">
+    Với biến liên tục, điều kiện trên tương đương \(F_X(\mathrm{med}(X))=0.5\); với biến rời rạc, chọn \(m\) nhỏ nhất sao cho \(F_X(m)\ge 0.5\). 
+  </p>
+</div>    
+
+
+
+<h2>II. Các phân phối đặc biệt </h2> 
+<button onclick="toggleSection('ppdacbiet')">📘 Xem / Ẩn phần lý thuyết</button>
+
+<div id="ppdacbiet" class="section-content">
+    <h3>1. Phân phối đều rời rạc</h3>  
+        <button onclick="toggleSection('ppdeuroirac')">📘 Xem / Ẩn phần lý thuyết</button>
+        <div id="ppdeuroirac" class="section-content">
+
+            <p class="lead">Biến ngẫu nhiên rời rạc \(X\) được gọi là tuân theo luật phân phối đều rời rạc trên đoạn \(a,b\) ký hiệu \(X \sim U([a,b])\), nếu có: \(\;P(X=k)= \dfrac{1}{b-a+1} \forall k \in \left\{a,a+1, \ldots, b \right\} \). 
+            </p> 
+
+            <p class="lead">Tính chất:</p>
+            <ul class="bullet">
+                <li>Kỳ vọng: \(\;E[X]=\dfrac{a+b}{2}\).</li>
+                <li>Phương sai: \(\;V[X]=\dfrac{(b-a+1)^2-1}{12}\).</li>
+                <li>Mode: \(\mathrm{mode}(X) =k \quad \forall k \in  \left(a,a+1, \dots ,b \right) \). <br> 
+                    Chú ý: \(\lfloor x \rfloor \) là số nguyên lớn nhất không vượt quá x. Ví dụ \(\lfloor 2.1\rfloor= 2, \lfloor -0.5 \rfloor= -1 \) 
+                </li>   
+            </ul>
+        </div> 
+
+
+    <h3>2. Phân phối nhị thức</h3>
+        <button onclick="toggleSection('ppnhithuc')">📘 Xem / Ẩn phần lý thuyết</button>
+        <div id="ppnhithuc" class="section-content">
+            <p class="lead">Biến ngẫu nhiên rời rạc \(X\) được gọi là tuân theo luật phân phối nhị thức (binomial distribution) với tham số \(n,p\), ký hiệu \(X \sim B(n,p)\), nếu có: \(\;P(X=k)=C^{k}_{n}p^{k}q^{\,n-k},\; q=1-p,\; k\in\{0,1,\ldots,n\}\).</p> 
+
+            <p class="note">Trong đó \(q=1-p\), \(k\in\overline{0,n}=\{0,1,2,\ldots,n\} \).</p>  
+
+            <p class="lead">Tính chất:</p>
+            <ul class="bullet">
+                <li>Kỳ vọng: \(\;E(X)=np\).</li>
+                <li>Phương sai: \(\;V(X)=npq=np(1-p)\).</li>
+                <li>Mode: \(\mathrm{mode}(X) =
+                        \begin{cases}
+                            \lfloor (n+1)p\rfloor , & \text{nếu } (n+1)p \notin \mathbb{Z} \\
+                            (n+1)p-1 \text{ hoặc } (n+1)p, & \text{nếu } (n+1)p \in \mathbb{Z}.
+                        \end{cases}  \). <br>
+                    Chú ý: \(\lfloor x \rfloor \) là số nguyên lớn nhất không vượt quá x. Ví dụ \(\lfloor 2.1\rfloor= 2, \lfloor -0.5 \rfloor= -1 \) 
+                </li>   
+            </ul>
+        
+            <div class="card">
+                <h4>Đồ thị P(X = k) — Phân phối Nhị thức (dạng điểm)</h4>
+                <div>
+                <label for="n">n =</label>
+                <input id="n" type="number" value="10" min="0" step="1" />
+
+                <label for="p">p =</label>
+                <input id="p" type="number" value="0.3" min="0" max="1" step="0.01" />
+
+                <label for="maxk">Hiển thị k tới</label>
+                <input id="maxk" type="number" value="10" min="0" step="1" />
+
+                <button id="draw">Vẽ đồ thị</button>
+                </div>
+
+                <canvas id="pmfChart"></canvas>
+            </div>
+
+            <script>
+                function binomialCoeff(n, k){
+                if(k<0||k>n) return 0;
+                if(k===0||k===n) return 1;
+                k=Math.min(k,n-k);
+                let c=1;
+                for(let i=1;i<=k;i++) c=c*(n-(k-i))/i;
+                return c;
+                }
+
+                function binomialPMF(n,p,k){
+                if(k<0||k>n) return 0;
+                return binomialCoeff(n,k)*Math.pow(p,k)*Math.pow(1-p,n-k);
+                }
+
+                const ctx=document.getElementById('pmfChart').getContext('2d');
+                let chart=new Chart(ctx,{
+                type:'line',
+                data:{labels:[],datasets:[{label:'P(X=k)',data:[],borderColor:'rgba(54,162,235,1)',fill:false,showLine:false,pointRadius:5,pointBackgroundColor:'rgba(54,162,235,0.8)'}]},
+                options:{
+                    responsive:true,
+                    scales:{x:{title:{display:true,text:'k'}},y:{title:{display:true,text:'P(X=k)'},beginAtZero:true}},
+                    plugins:{legend:{display:false}}
+                }
+                });
+
+                function draw(){
+                const n=+document.getElementById('n').value;
+                const p=+document.getElementById('p').value;
+                const maxk=+document.getElementById('maxk').value;
+                const labels=[],data=[];
+                for(let k=0;k<=maxk;k++){
+                    labels.push(k);
+                    data.push(binomialPMF(n,p,k));
+                }
+                chart.data.labels=labels;
+                chart.data.datasets[0].data=data;
+                chart.update();
+                }
+
+                document.getElementById('draw').addEventListener('click',draw);
+                draw();
+            </script>
+        </div>
+    <h3>3. Phân phối Poisson</h3>
+        <button onclick="toggleSection('pppoisson')">📘 Xem / Ẩn phần lý thuyết</button>
+        <div id="pppoisson" class="section-content">
+
+            <p class="lead">Biến ngẫu nhiên rời rạc \(X\) được gọi là tuân theo luật phân phối Poisson với tham số \(\lambda\), ký hiệu \(X\sim P(\lambda)\), nếu có: \(\;P(X=k)=\dfrac{\lambda^{k}}{k!}\,e^{-\lambda},\; k\in\{0,1,2,\ldots\}\).</p>
+
+            <p>Trong đó \(\lambda\) là số kết quả trung bình trên mỗi đơn vị thời gian/không gian.</p>
+
+            <p class="lead">Tính chất:</p>
+                <ul class="bullet">
+                    <li>Các phép thử đếm số lần xảy ra sự kiện trong khoảng thời gian/không gian nhất định thường được mô hình hóa bằng Poisson.</li>
+                    <li>Kỳ vọng: \(\;E(X)=\lambda\). </li>
+                    <li>Phương sai: \(\;V(X)=\lambda\) và độ lệch chuẩn \(\sigma(X)=\sqrt{\lambda}\).</li>
+                    <li> \( \mathrm{mode}(X)= 
+                        \begin{cases}
+                            \lfloor \lambda \rfloor & \text{ nếu }  \lambda  \notin \mathbb{Z} \\
+                            \lambda \text{ hoặc } \lambda -1 & \text{ nếu }  \lambda  \in \mathbb{Z}
+                        \end{cases}
+                        \) </li>
+                    <li>Hàm phân phối tích lũy: \(\;F_X(x)=e^{-\lambda}\sum_{k=0}^{\lfloor x \rfloor}\dfrac{\lambda^{k}}{k!}\).</li>
+                </ul>
+            <h4> Xấp xỉ phân phối nhị thức bởi phân phối Poisson:</h4>
+            Cho \( X\sim \mathcal{B}(n,p)\), trong đó \( n \to \infty , p \to 0 \) miễn sao cho \(np \to \lambda  \) hữu hạn khi đó \(P(X=k) \approx P(Y= k)\) với \(Y \sim \mathcal{P}(\lambda ) \)
+        </div>
+
+ <h3>4. Phân phối hình học (Geometric distribution)</h3>
+         <button onclick="toggleSection('pphinhhoc')">📘 Xem / Ẩn phần lý thuyết</button>
+        <div id="pphinhhoc" class="section-content">
+            <p class="lead">Giả sử mỗi lần thử độc lập có xác suất thành công bằng \(p\) với \(0 < p\le 1\).</p>
+
+            <div class="box">
+                <p><strong>Định nghĩa 1 — Số lần thử đến thành công đầu tiên (\(k=1,2,\dots\)):</strong></p>
+
+                <div class="formula">
+                \[ P(X = k) = (1-p)^{\,k-1}\,p,\qquad k=1,2,\dots \]
+                </div>
+
+                <p class="small">Khi \(X\) đếm số lần thử (bao gồm lần thành công), thì</p>
+                <div class="formula">
+                \[ E(X)=\frac{1}{p},\qquad\mathrm{Var}(X)=\frac{1-p}{p^2}. \]
+                </div>
+            </div>
+
+            <div class="box">
+                <p><strong>Định nghĩa 2 — Số thất bại trước thành công đầu tiên ( \(k=0,1,2,\dots\)):</strong></p>
+
+                <div class="formula">
+                \[ P(Y = k) = (1-p)^{\,k}\,p,\qquad k=0,1,2,\dots \]
+                </div>
+
+                <p class="small">Khi \(Y\) đếm số thất bại trước lần thành công, thì</p>
+                <div class="formula">
+                \[ E(Y)=\frac{1-p}{p},\qquad\mathrm{Var}(Y)=\frac{1-p}{p^2}. \]
+                </div>
+            </div>
+
+            <p>Hai định nghĩa trên chỉ khác nhau bởi một dịch vị (nếu \(X\) theo định nghĩa 1 và \(Y\) theo định nghĩa 2 thì \(X=Y+1\)).</p>
+
+            <h4>Ví dụ nhanh</h4>
+            <ul>
+                <li>Nếu \(p=0.2\) và \(X\) theo định nghĩa 1: \(E(X)=1/0.2=5\).</li>
+                <li>Nếu \(p=0.2\) và \(Y\) theo định nghĩa 2: \(E(Y)=(1-0.2)/0.2=4\).</li>
+            </ul>
+
+            <hr>
+    </div>
+
+    <h3>5. Phân phối đều liên tục</h3>  
+         <button onclick="toggleSection('ppdeulientuc')">📘 Xem / Ẩn phần lý thuyết</button>
+        <div id="ppdeulientuc" class="section-content">    
+            <p class="lead">Biến ngẫu nhiên liên tục  \(X\) được gọi là tuân theo luật phân phối đều liên tục trên đoạn \( [a,b], (a < b) \) ký hiệu \(X \sim U([a,b])\), nếu  X có hàm mật độ xác suất: </p> 
+                \[ f_{X}(x) =\dfrac{1}{b-a} \mathbb{1}_{[a,b]}(x) =\begin{cases} 
+                        \dfrac{1}{b-a} , & \text{ nếu } x \in [a,b] \\
+                        0, & \text{ nếu } x \notin [a,b]. 
+                    \end{cases}  \]
+            <p class="lead">Tính chất:</p>
+            <ul class="bullet">
+                <li>Kỳ vọng: \(\;E[X]=\dfrac{a+b}{2}\).</li>
+                <li>Phương sai: \(\;V[X]=\dfrac{(b-a)^2}{12}\).</li>
+            </ul>
+        </div>
+
+  <h3>6. Phân phối chuẩn</h3>
+         <button onclick="toggleSection('ppchuan')">📘 Xem / Ẩn phần lý thuyết</button>
+        <div id="ppchuan" class="section-content">   
+            <p class="lead">
+                Biến ngẫu nhiên liên tục \(X\) có phân phối chuẩn với tham số \(\mu,\sigma^{2}\), ký hiệu \(X\sim N(\mu,\sigma^{2})\), nếu hàm mật độ có dạng:
+            </p>
+
+            <div class="center">
+                \[
+                f(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp\!\left(-\frac{(x-\mu)^{2}}{2\sigma^{2}}\right),\quad x\in\mathbb{R}.
+                \]
+            </div>
+
+            <p class="lead">Tính chất:</p>
+            <ul class="eq">
+                <li>\(E(X)=\mu\).</li>
+                <li>\(V(X)=\sigma^{2}\).</li>
+                <li>Nếu \(X\sim N(\mu,\sigma^{2})\) thì \(Z=\dfrac{X-\mu}{\sigma}\sim N(0,1)\) (chuẩn hóa).</li>
+            </ul>
+
+            <p class="lead">
+                Với \( Z \sim N(0,1)\) (phân phối chuẩn tắc), hàm mật độ là \(\varphi(x)=\dfrac{1}{\sqrt{2\pi}}e^{-x^{2}/2}\).
+            </p>
+
+            <p class="lead">
+                Hàm phân phối tích lũy chuẩn tắc: \(\Phi(x)=\dfrac{1}{\sqrt{2\pi}}\displaystyle\int_{-\infty}^{x} e^{-t^{2}/2}\,dt\).
+            </p>
+
+            <p class="lead"> Với \(X\sim N(\mu,\sigma^{2})\):</p>
+            <ul class="eq">
+                <li>\(P(X<\beta)=\Phi\!\left(\dfrac{\beta-\mu}{\sigma}\right)\).</li>
+                <li>\(P(X>\alpha)=1-\Phi\!\left(\dfrac{\alpha-\mu}{\sigma}\right)=\Phi\!\left(-\dfrac{\alpha-\mu}{\sigma}\right)\).</li>
+                <li>\( P(\alpha < X < \beta) = \Phi\!\left(\dfrac{\beta-\mu}{\sigma}\right) - \Phi\!\left(\dfrac{\alpha-\mu}{\sigma}\right)  \).</li>
+                <li>\( P( | X-\mu| < c) = 2 \Phi\!\left(\dfrac{c}{\sigma}  \right) -1 \). </li>
+                <li>\(\Phi(x) + \Phi(-1)=1 \forall x \in \mathbb{R}\)</li>
+                <li> <b> Chú ý: </b> \(\Phi(x) = 0.5 +\phi(x) \) trong đó \( \phi(x) = \int_{0}^{x} \dfrac{e^{-t^2}/2}{\sqrt{2\pi}}dt.\)</li>  
+            </ul>
+            
+            <h4> Tính \( P(a < X < b) = \int_{a}^{b}f(x) dx \) và biểu diễn trên trục tọa độ </h4>
+                <div id="canvasWrap">
+                    <canvas id="plot" width="820" height="360"></canvas>
+                    <div class="controls">
+                    <label>a = <input id="aVal" type="number" step="0.1" value="-0.5"></label>
+                    <label>b = <input id="bVal" type="number" step="0.1" value="1.0"></label>
+                    <label>μ = <input id="muVal" type="number" step="0.1" value="0"></label>
+                    <label>σ = <input id="sigmaVal" type="number" step="0.1" value="1"></label>
+                    <button id="redraw">Vẽ lại</button>
+                    </div>
+                </div>
+
+                <script>
+                (function(){
+                const canvas = document.getElementById('plot');
+                const ctx = canvas.getContext('2d');
+                const W = canvas.width, H = canvas.height;
+
+                const pad = {l:60, r:30, t:20, b:50};
+                const plotW = W - pad.l - pad.r; const plotH = H - pad.t - pad.b;
+
+                function pdf(x, mu, sigma){
+                    const s = sigma*Math.sqrt(2*Math.PI);
+                    return Math.exp(-0.5*((x-mu)/sigma)*((x-mu)/sigma))/s;
+                }
+
+                function clear(){ ctx.clearRect(0,0,W,H); ctx.fillStyle='white'; ctx.fillRect(0,0,W,H); }
+
+                function drawAxes(){
+                    ctx.strokeStyle = '#333'; ctx.lineWidth=1;
+                    // x axis
+                    ctx.beginPath(); ctx.moveTo(pad.l, H-pad.b); ctx.lineTo(W-pad.r, H-pad.b); ctx.stroke();
+                    // y axis
+                    ctx.beginPath(); ctx.moveTo(pad.l, pad.t); ctx.lineTo(pad.l, H-pad.b); ctx.stroke();
+                    // ticks on x
+                    ctx.font='12px sans-serif'; ctx.fillStyle='#222'; ctx.textAlign='center';
+                }
+
+                function mapX(x, xmin, xmax){
+                    return pad.l + (x - xmin)/(xmax - xmin) * plotW;
+                }
+                function mapY(y, ymax){
+                    // y in [0, ymax] -> map to [H-pad.b, pad.t]
+                    return H - pad.b - (y / ymax) * plotH;
+                }
+
+                function draw(mu, sigma, a, b){
+                    clear();
+                    // choose x range mu-4sigma .. mu+4sigma
+                    const xmin = mu - 4*sigma; const xmax = mu + 4*sigma;
+                    // compute max of pdf (at mu)
+                    const ymax = pdf(mu, mu, sigma) * 1.05;
+
+                    // draw filled curve base (light blue shading for full curve area)
+                    const samples = 500;
+                    const xs = new Array(samples);
+                    const ys = new Array(samples);
+                    for(let i=0;i<samples;i++){
+                    const x = xmin + (i/(samples-1))*(xmax-xmin);
+                    xs[i]=x; ys[i]=pdf(x, mu, sigma);
+                    }
+
+                    // fill the entire curve (very subtle)
+                    ctx.beginPath();
+                    ctx.moveTo(mapX(xs[0],xmin,xmax), mapY(0,ymax));
+                    for(let i=0;i<samples;i++) ctx.lineTo(mapX(xs[i],xmin,xmax), mapY(ys[i],ymax));
+                    ctx.lineTo(mapX(xs[samples-1],xmin,xmax), mapY(0,ymax));
+                    ctx.closePath();
+                    ctx.fillStyle = 'rgba(180,235,255,0.35)';
+                    ctx.fill();
+
+                    // highlight area between a and b
+                    const left = Math.max(a, xmin); const right = Math.min(b, xmax);
+                    // build path only between left..right
+                    const leftIndex = 0; const rightIndex = samples-1;
+                    ctx.beginPath();
+                    // move to left at y=0
+                    ctx.moveTo(mapX(left,xmin,xmax), mapY(0,ymax));
+                    for(let i=0;i<samples;i++){
+                    const x = xs[i]; if(x < left) continue; if(x > right) break;
+                    ctx.lineTo(mapX(x,xmin,xmax), mapY(pdf(x,mu,sigma),ymax));
+                    }
+                    ctx.lineTo(mapX(right,xmin,xmax), mapY(0,ymax));
+                    ctx.closePath();
+                    ctx.fillStyle = 'rgba(120,195,255,0.65)';
+                    ctx.fill();
+
+                    // draw the curve outline
+                    ctx.beginPath();
+                    for(let i=0;i<samples;i++){
+                    const x = xs[i]; const y = ys[i];
+                    const px = mapX(x,xmin,xmax); const py = mapY(y,ymax);
+                    if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+                    }
+                    ctx.strokeStyle = 'rgba(20,140,230,0.95)'; ctx.lineWidth=2.5; ctx.stroke();
+
+                    // axes and ticks
+                    ctx.strokeStyle='#333'; ctx.lineWidth=1; ctx.beginPath();
+                    // x axis already present - add ticks at integer positions near mu
+                    const step = 1; ctx.fillStyle='#333'; ctx.textAlign='center'; ctx.font='12px sans-serif';
+                    for(let xTick=Math.ceil(xmin); xTick<=Math.floor(xmax); xTick+=step){
+                    const px = mapX(xTick, xmin, xmax);
+                    ctx.beginPath(); ctx.moveTo(px, H-pad.b); ctx.lineTo(px, H-pad.b+6); ctx.stroke();
+                    ctx.fillText(xTick, px, H-pad.b+20);
+                    }
+
+                    // draw vertical lines at a and b
+                    function drawVert(xVal, label){
+                    const px = mapX(xVal, xmin, xmax);
+                    ctx.beginPath(); ctx.setLineDash([6,6]); ctx.moveTo(px, pad.t); ctx.lineTo(px, H-pad.b); ctx.strokeStyle='rgba(30,90,160,0.8)'; ctx.lineWidth=1.2; ctx.stroke(); ctx.setLineDash([]);
+                    // small filled rectangle at x axis
+                    ctx.fillStyle='rgba(30,90,160,0.9)'; ctx.fillRect(px-2, H-pad.b-1, 4, 8);
+                    // label
+                    ctx.font='13px sans-serif'; ctx.textAlign='center'; ctx.fillStyle='#0b3b6a';
+                    ctx.fillText(label, px, H-pad.b+36);
+                    }
+                    drawVert(a, 'a'); drawVert(b, 'b');
+
+                    // title / y label
+                    ctx.save(); ctx.translate(18, H/2); ctx.rotate(-Math.PI/2); ctx.textAlign='center'; ctx.fillStyle='#333'; ctx.font='13px sans-serif'; ctx.fillText('f(x)',0,0); ctx.restore();
+
+                    // x label
+                    ctx.font='13px sans-serif'; ctx.textAlign='right'; ctx.fillStyle='#333'; ctx.fillText('x', W-pad.r, H-pad.b+36);
+
+                    // show numeric probability approx (simple Riemann sum)
+                    let prob = 0; const dx = (xmax-xmin)/(samples-1);
+                    for(let i=0;i<samples;i++){ if(xs[i]>=left && xs[i]<=right) prob += pdf(xs[i],mu,sigma)*dx; }
+                    ctx.font='13px sans-serif'; ctx.textAlign='left'; ctx.fillStyle='#114066';
+                    ctx.fillText('P(a < X < b) ≈ ' + prob.toFixed(4), pad.l, pad.t+14);
+                }
+
+                // initial draw
+                const aInput = document.getElementById('aVal');
+                const bInput = document.getElementById('bVal');
+                const muInput = document.getElementById('muVal');
+                const sigmaInput = document.getElementById('sigmaVal');
+                function redraw(){
+                    const a = parseFloat(aInput.value);
+                    const b = parseFloat(bInput.value);
+                    const mu = parseFloat(muInput.value);
+                    const sigma = Math.max(0.0001, parseFloat(sigmaInput.value));
+                    draw(mu,sigma,a,b);
+                }
+                document.getElementById('redraw').addEventListener('click', redraw);
+                redraw();
+                })();
+                </script>
+
+              <script>
+                function bangppchuantac() {
+                  window.open("standard_normal_table.html", "_blank");
+                }
+              </script>
+              <button onclick="bangppchuantac()">Bảng tra cứu phân phối chuẩn tắc</button>
+
+
+
+        </div>
+ <h3>7. Phân phối mũ</h3>
+         <button onclick="toggleSection('ppmu')">📘 Xem / Ẩn phần lý thuyết</button>
+        <div id="ppmu" class="section-content">   
+            <p>Biến ngẫu nhiên \( X \) được gọi là tuân theo luật phân phối mũ 
+            (<em>exponential distribution</em>), với tham số \( \lambda \, (\lambda > 0) \) 
+            nếu nó có hàm mật độ xác suất có dạng:</p>
+
+            \[
+            f_X(x) =
+            \begin{cases}
+            \lambda e^{-\lambda x}, & \text{nếu } x \ge 0,\\
+            0, & \text{nếu } x < 0.
+            \end{cases}
+            \]
+
+            <p><strong>Tính chất:</strong></p>
+
+            <ul>
+                <li>
+                    Hàm phân phối xác suất:
+                    \[
+                    F_X(x) =
+                    \begin{cases}
+                    1 - e^{-\lambda x}, & \text{nếu } x \ge 0,\\
+                    0, & \text{nếu } x < 0.
+                    \end{cases}
+                    \]
+                </li>
+                <li> \( E[X] = \dfrac{1}{\lambda} \) </li>
+                <li> \( V[X] = \dfrac{1}{\lambda^2} \) </li>
+            </ul> 
+        </div>
+
+
+
+
+
+</div>
+
+
+
+
+
+
+  <!-- Phần II -->
+  <h2>III. Bài tập rèn luyện</h2>
+  <ul>
+    <li> <button onclick="btbnnroirac()">Bài tập biến ngẫu nhiên rời rạc</button>
+      <script>
+        function toggleSection(id) {
+          const section = document.getElementById(id);
+          section.style.display = (section.style.display === "none" || section.style.display === "") ? "block" : "none";
+        }
+
+        function btbnnroirac() {
+          window.open("C2BNNRR_BT.html", "_blank");
+        //   window.open("Contents/XSTK/C2BT.html", "_self");
+        }
+      </script>
+    </li>
+    <li>
+      <button onclick="btbnnlientuc()">Bài tập biến ngẫu nhiên liên tục</button>
+      <script>
+        function btbnnlientuc() {
+          window.open("C2BNNLT_BT.html", "_self");
+        }
+      </script> 
+    </li>
+    <li> 
+      <button onclick="ppthongdung()">Bài tập: Một số phân phối xác suất thông dung</button>
+      <script>
+        function ppthongdung() {
+          window.open("C2PPThongDung.html", "_self");
+        }
+      </script> 
+    </li>
+  </ul>
+  
+
+
+
+
+<script>
+  function backToHome() {
+    window.open("../../index.html", "_self");
+  }
+</script>
+
+<button onclick="backToHome()">⬅ Quay lại Trang chính</button>
+
+
+
+</body>
+</html>

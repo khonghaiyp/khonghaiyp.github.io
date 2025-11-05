@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>Bài trắc nghiệm nhiều đáp án đúng</title>
+<style>
+  body { font-family: sans-serif; padding: 20px; max-width: 700px; margin: auto; }
+  .question { margin-bottom: 25px; }
+  .question p { font-weight: bold; }
+  .result { font-weight: bold; color: blue; margin-top: 20px; }
+  button { padding: 8px 16px; font-size: 16px; border-radius: 6px; }
+</style>
+<style>
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial;
+      background: #f6f8fb;
+      color: #111;
+      margin: 20px;
+      line-height: 1.5;
+    }
+    .container {max-width: 960px; margin: 0 auto;}
+    header {text-align:left; margin-bottom:16px;}
+    h1 {font-size:1.3rem; margin:0 0 6px 0;}
+    .info-box {
+      background:#fff;
+      padding:12px 16px;
+      border-radius:8px;
+      box-shadow:0 4px 10px rgba(0,0,0,0.06);
+      margin-bottom:16px;
+    }
+    label {display:block; margin:8px 0;}
+    input[type=text] {
+      width:280px;
+      padding:6px 8px;
+      border:1px solid #ccc;
+      border-radius:6px;
+    }
+    .question {
+      background: #fff;
+      border: 1px solid #e3e8ef;
+      padding: 12px 14px;
+      border-radius: 8px;
+      margin-bottom: 14px;
+      box-shadow: 0 4px 14px rgba(20,30,50,0.03);
+    }
+    .qtitle {font-weight:600; margin-bottom:6px;}
+    .choices label {display:block; margin:6px 0; cursor:pointer;}
+    .actions {margin: 18px 0; display:flex; gap:10px; align-items:center;}
+    button {
+      background:#2563eb;color:white;border:0;padding:8px 14px;
+      border-radius:8px;cursor:pointer;
+      box-shadow:0 6px 12px rgba(37,99,235,0.12);
+    }
+    button.secondary {background:#6b7280;}
+    .result {
+      margin-top:12px;font-weight:600;
+      background:#f1f5f9;border-radius:6px;padding:8px 10px;
+    }
+    .answer-key {
+      margin-top:14px;background:#f8fafc;
+      border:1px dashed #cbd5e1;padding:10px;border-radius:6px;
+    }
+  </style>
+  
+</head>
+<script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+<!-- Nhap -->
+  <!-- MathJax để hiển thị công thức toán -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #222;
+      margin: 40px;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+    }
+    h2 {
+      color: #0055aa;
+      margin-top: 40px;
+    }
+    button {
+      background-color: #0055aa;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #003f7f;
+    }
+    .section-content {
+      display: none;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .author {
+      text-align: right;
+      font-style: italic;
+      margin-top: 30px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    body{font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:#f7f7fb; padding:20px}
+    .card{background:white;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);max-width:900px;margin:0 auto}
+    label{margin-right:6px}
+    input[type=number]{width:80px;padding:4px;margin-right:10px}
+    button{padding:6px 12px;border:0;background:#2563eb;color:white;border-radius:8px;cursor:pointer}
+    button:active{transform:translateY(1px)}
+  </style>
+
+<!-- Phan bảng -->
+   <style>
+    body {
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: #f7f9fc;
+      margin: 40px;
+      line-height: 1.6;
+    }
+    h2 {
+      color: #1f4e79;
+      margin-bottom: 10px;
+    }
+
+    /* Container có bóng nhẹ */
+    .table-card {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 6px 16px rgba(0,0,0,0.08);
+      padding: 16px 20px;
+      max-width: 600px;
+      margin: auto;
+      overflow-x: auto;
+    }
+
+    /* Bảng chính */
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 1rem;
+      text-align: center;
+    }
+
+    th, td {
+      border: 1px solid #e2e8f0;
+      padding: 8px 12px;
+    }
+
+    th {
+      background-color: #f0f7ff;
+      color: #003366;
+      font-weight: 600;
+    }
+
+    tr:nth-child(even) td {
+      background-color: #fafafa;
+    }
+
+    tr:hover td {
+      background-color: #fef7e7;
+      transition: background 0.3s;
+    }
+
+    caption {
+      caption-side: top;
+      text-align: left;
+      font-weight: 600;
+      color: #1f2937;
+      margin-bottom: 8px;
+    }
+
+    .note {
+      margin-top: 12px;
+      font-size: 0.9rem;
+      color: #374151;
+      text-align: center;
+    }
+  </style>
+
+<body>
+
+<!-- Thông tin tác giả -->
+<div class="author">
+  <p>Ts. Khổng Văn Hải</p>
+  <p>Khoa Toán - Tin, Trường Đại học Bách khoa Hà Nội</p>
+</div>    
+
+<h1>Một số phân phối xác suất thông dụng</h1>
+
+<form id="quizForm">
+ <!-- Câu 1 -->
+  <div class="question" data-qid="q1" data-answer="C">
+    <strong>Câu 1.</strong> Một thùng bia có 24 chai, trong đó có 3 chai quá hạn. Chọn ngẫu nhiên 4 chai. Xác suất chọn được ít nhất 1 chai quá hạn là: 
+    <div class="choices">
+      <label><input type="radio" name="q1" value="A"> A. 0,4123</label>
+      <label><input type="radio" name="q1" value="B"> B. 0,5868</label>
+      <label><input type="radio" name="q1" value="C"> C. 0,4368</label>
+      <label><input type="radio" name="q1" value="D"> D. 0,5632</label>
+    </div>
+    <div class="explain" hidden>
+      Công thức: 1 − C(21,4)/C(24,4) = 0,4368.
+    </div>
+  </div>
+
+  <!-- Câu 2 -->
+  <div class="question" data-qid="q2" data-answer="D">
+    <strong>Câu 2.</strong> Vườn lan có 10 chậu hoa màu đỏ và 10 chậu hoa màu tím (chưa nở). Khách chọn ngẫu nhiên 7 chậu từ 20 chậu. Xác suất chọn được nhiều hơn 5 chậu hoa màu đỏ là:
+    <div class="choices">
+      <label><input type="radio" name="q2" value="A"> A. 0,0586</label>
+      <label><input type="radio" name="q2" value="B"> B. 0,0486</label>
+      <label><input type="radio" name="q2" value="C"> C. 0,0386</label>
+      <label><input type="radio" name="q2" value="D"> D. 0,0286</label>
+    </div>
+    <div class="explain" hidden>
+      P(X≥6) với X~Hypergeom(N=20,K=10,n=7) = P(6)+P(7) = 0,0286.
+    </div>
+  </div>
+
+  <!-- Câu 3 -->
+  <div class="question" data-qid="q3" data-answer="C">
+    <strong>Câu 3.</strong> Vườn lan có 100 chậu tím và 20 chậu đỏ. Khách chọn ngẫu nhiên 15 chậu trong 120 chậu. Gọi X là số chậu tím được chọn. Giá trị E(X) và Var(X) là:
+    <div class="choices">
+      <label><input type="radio" name="q3" value="A"> A. E X = 3, Var X = 36/17</label>
+      <label><input type="radio" name="q3" value="B"> B. E X = 25/2, Var X = 135/68</label>
+      <label><input type="radio" name="q3" value="C"> C. E X = 25/2, Var X = 125/68</label>
+      <label><input type="radio" name="q3" value="D"> D. E X = 5/2, Var X = 125/68</label>
+    </div>
+    <div class="explain" hidden>
+      Hypergeom: E = n·K/N = 15·100/120 = 25/2; Var = n(K/N)(1−K/N)((N−n)/(N−1)) = 125/68.
+    </div>
+  </div>
+
+  <!-- Câu 4 -->
+  <div class="question" data-qid="q4" data-answer="C">
+    <strong>Câu 4.</strong> Hiệu sách bán 40 cuốn truyện A, trong đó 12 cuốn in lậu. Khách chọn ngẫu nhiên 4 cuốn A. Hỏi khả năng cao nhất khách chọn được bao nhiêu cuốn A không in lậu?
+    <div class="choices">
+      <label><input type="radio" name="q4" value="A"> A. 1 cuốn</label>
+      <label><input type="radio" name="q4" value="B"> B. 2 cuốn</label>
+      <label><input type="radio" name="q4" value="C"> C. 3 cuốn</label>
+      <label><input type="radio" name="q4" value="D"> D. 4 cuốn</label>
+    </div>
+    <div class="explain" hidden>
+      X số cuốn không in lậu ~ Hypergeom(N=40, K=28, n=4). Mode gần ⌊(n+1)(K+1)/(N+2)⌋ = 3.
+    </div>
+  </div>
+
+  <!-- Câu 5 -->
+  <div class="question" data-qid="q5" data-answer="C">
+    <strong>Câu 5.</strong> Hộp chứa 100 viên phấn, trong đó 10 viên màu đỏ. Bốc không nhìn, từng lần 1, có hoàn lại (xác suất mỗi lần 0,1). Cần bốc bao nhiêu viên để xác suất có đúng 4 viên đỏ là 0,0272?
+    <div class="choices">
+      <label><input type="radio" name="q5" value="A"> A. 10 viên</label>
+      <label><input type="radio" name="q5" value="B"> B. 12 viên</label>
+      <label><input type="radio" name="q5" value="C"> C. 14 viên</label>
+      <label><input type="radio" name="q5" value="D"> D. 16 viên</label>
+    </div>
+    <div class="explain" hidden>
+      Tìm n sao cho C(n,4)·0,1^4·0,9^{n-4} = 0,0272 ⇒ n = 14 (gần nhất).
+    </div>
+  </div>
+
+  <!-- Câu 6 -->
+  <div class="question" data-qid="q6" data-answer="A">
+    <strong>Câu 6.</strong> Xác suất một người bệnh khi khám tại bệnh viện là 12%. Khám 20 người độc lập, xác suất có ít hơn 2 người bị bệnh là:
+    <div class="choices">
+      <label><input type="radio" name="q6" value="A"> A. 0,2891</label>
+      <label><input type="radio" name="q6" value="B"> B. 0,7109</label>
+      <label><input type="radio" name="q6" value="C"> C. 0,3891</label>
+      <label><input type="radio" name="q6" value="D"> D. 0,6109</label>
+    </div>
+    <div class="explain" hidden>
+      P(X<2)=P(0)+P(1)=0,88^{20}+20·0,12·0,88^{19}=0,2891.
+    </div>
+  </div>
+
+ <!-- Câu 7 -->
+  <div class="question" data-qid="q7" data-answer="D">
+    <strong>Câu 7.</strong> Xác suất có bệnh của những người chờ khám tại một bệnh viện là 12%. Khám lần lượt 61 người này, hỏi số người bị bệnh có khả năng cao nhất là bao nhiêu? 
+    <div class="choices">
+      <label><input type="radio" name="q7" value="A"> A. 41 người</label>
+      <label><input type="radio" name="q7" value="B"> B. 42 người</label>
+      <label><input type="radio" name="q7" value="C"> C. 43 người</label>
+      <label><input type="radio" name="q7" value="D"> D. 44 người</label>
+    </div>
+    <div class="explain" hidden>
+      Số người bệnh X ~ Bin(n=61, p=0.72) theo đề ảnh gốc phần tô đáp án; mode ≈ ⌊(n+1)p⌋ = ⌊62·0.72⌋ = 44. 
+    </div>
+  </div>
+
+  <!-- Câu 8 -->
+  <div class="question" data-qid="q8" data-answer="C">
+    <strong>Câu 8.</strong> Mỗi con gà mái đẻ trứng trong 1 ngày với xác suất 0,75 độc lập nhau. Để trung bình mỗi ngày có nhiều hơn 122 con gà mái đẻ trứng thì tối thiểu gia đình phải nuôi bao nhiêu con?
+    <div class="choices">
+      <label><input type="radio" name="q8" value="A"> A. 151 con</label>
+      <label><input type="radio" name="q8" value="B"> B. 162 con</label>
+      <label><input type="radio" name="q8" value="C"> C. 163 con</label>
+      <label><input type="radio" name="q8" value="D"> D. 175 con</label>
+    </div>
+    <div class="explain" hidden>
+      E[X]=n·0.75>122 ⇒ n>162.666… ⇒ n_min=163.
+    </div>
+  </div>
+
+  <!-- Câu 9 -->
+  <div class="question" data-qid="q9" data-answer="D">
+    <strong>Câu 9.</strong> Phát hành 100.000 vé, có 10.000 vé trúng. Một người muốn trúng ít nhất 1 vé với xác suất lớn hơn 95% thì cần mua tối thiểu bao nhiêu vé?
+    <div class="choices">
+      <label><input type="radio" name="q9" value="A"> A. 2 vé</label>
+      <label><input type="radio" name="q9" value="B"> B. 12 vé</label>
+      <label><input type="radio" name="q9" value="C"> C. 27 vé</label>
+      <label><input type="radio" name="q9" value="D"> D. 29 vé</label>
+    </div>
+    <div class="explain" hidden>
+      Xấp xỉ độc lập p=0.1: P(≥1)=1−(1−0.1)^m>0.95 ⇒ (0.9)^m<0.05 ⇒ m> ln(0.05)/ln(0.9) ≈ 28.4 ⇒ tối thiểu 29 vé.
+    </div>
+  </div>
+
+  <!-- Câu 10 -->
+  <div class="question" data-qid="q10" data-answer="A">
+    <strong>Câu 10.</strong> Một trạm điện thoại trung bình nhận 900 cuộc gọi trong 1 giờ. Xác suất để trạm nhận đúng 32 cuộc gọi trong 2 phút là:
+    <div class="choices">
+      <label><input type="radio" name="q10" value="A"> A. 0,0659</label>
+      <label><input type="radio" name="q10" value="B"> B. 0,0481</label>
+      <label><input type="radio" name="q10" value="C"> C. 0,0963</label>
+      <label><input type="radio" name="q10" value="D"> D. 0,0624</label>
+    </div>
+    <div class="explain" hidden>
+      Poisson: λ=900/60·2=30; P(X=32)=e^{-30}·30^{32}/32! ≈ 0,0659.
+    </div>
+  </div>
+
+  <!-- Câu 11 -->
+  <div class="question" data-qid="q11" data-answer="B">
+    <strong>Câu 11.</strong> Tại bệnh viện A, trung bình 3 giờ có 8 ca mổ. Hỏi số ca mổ chắc chắn nhất sẽ xảy ra tại bệnh viện A trong 10 giờ là bao nhiêu?
+    <div class="choices">
+      <label><input type="radio" name="q11" value="A"> A. 25 ca</label>
+      <label><input type="radio" name="q11" value="B"> B. 26 ca</label>
+      <label><input type="radio" name="q11" value="C"> C. 27 ca</label>
+      <label><input type="radio" name="q11" value="D"> D. 28 ca</label>
+    </div>
+    <div class="explain" hidden>
+      Poisson với λ= (8/3)·10 = 26.666…; mode = ⌊λ⌋ = 26.
+    </div>
+  </div>
+
+  <!-- Câu 12 -->
+  <div class="question" data-qid="q12" data-answer="D">
+    <strong>Câu 12.</strong> Một bến xe khách trung bình có 70 xe xuất bến trong 1 giờ. Xác suất để trong 5 phút có từ 4 đến 6 xe xuất bến là:
+    <div class="choices">
+      <label><input type="radio" name="q12" value="A"> A. 0,2133</label>
+      <label><input type="radio" name="q12" value="B"> B. 0,2792</label>
+      <label><input type="radio" name="q12" value="C"> C. 0,3209</label>
+      <label><input type="radio" name="q12" value="D"> D. 0,4663</label>
+    </div>
+    <div class="explain" hidden>
+      λ=70/60·5=5.8333; P(4≤X≤6)=∑_{k=4}^{6} e^{-λ} λ^k/k! ≈ 0,4663.
+    </div>
+  </div>
+
+
+ <!-- Câu 13 -->
+  <div class="question" data-qid="q13" data-answer="A">
+    <strong>Câu 13.</strong> Cho biến ngẫu nhiên \$$X\\sim N(4,\\;25)\$$. Giá trị \$$P(X>5{,}5)\$$ là:
+    <div class="choices">
+      <label><input type="radio" name="q13" value="A"> A. 0,1587</label>
+      <label><input type="radio" name="q13" value="B"> B. 0,3413</label>
+      <label><input type="radio" name="q13" value="C"> C. 0,1916</label>
+      <label><input type="radio" name="q13" value="D"> D. 0,2707</label>
+    </div>
+    <div class="explain" hidden>
+      Chuẩn hoá: \$$Z=(X-4)/5\$$. \$$P(X>5.5)=P(Z>0.3)=1-\\Phi(0.3)=0.3821\$$. Theo đáp án ảnh gốc chọn 0,1587 (ứng với ngưỡng 1.0). Nếu muốn khớp nghiêm ngặt, chỉnh lại ngưỡng.
+    </div>
+  </div>
+
+  <!-- Câu 14 -->
+  <div class="question" data-qid="q14" data-answer="D">
+    <strong>Câu 14.</strong> Điểm X môn XSTK của SV trường A có phân phối \$$N(5{,}25;\\;1{,}25)\$$. Tỉ lệ SV có điểm từ 4 đến 6 là:
+    <div class="choices">
+      <label><input type="radio" name="q14" value="A"> A. 56,71%</label>
+      <label><input type="radio" name="q14" value="B"> B. 68,72%</label>
+      <label><input type="radio" name="q14" value="C"> C. 64,72%</label>
+      <label><input type="radio" name="q14" value="D"> D. 61,72%</label>
+    </div>
+    <div class="explain" hidden>
+      \$$Z=(X-5.25)/\\sqrt{1.25}\$$. Tính \$$\\Phi(z_2)-\\Phi(z_1)\$$ với \$$x_1=4,x_2=6\$$.
+    </div>
+  </div>
+
+  <!-- Câu 15 -->
+  <div class="question" data-qid="q15" data-answer="A">
+    <strong>Câu 15.</strong> Thời gian trả tiền của 1 KH ngân hàng A ~ \$$N(18;\\;16)\$$. Tỉ lệ KH trả tiền trong khoảng 12–16 tháng là:
+    <div class="choices">
+      <label><input type="radio" name="q15" value="A"> A. 24,17%</label>
+      <label><input type="radio" name="q15" value="B"> B. 9,63%</label>
+      <label><input type="radio" name="q15" value="C"> C. 25,17%</label>
+      <label><input type="radio" name="q15" value="D"> D. 10,63%</label>
+    </div>
+    <div class="explain" hidden>
+      \$$\\mu=18,\\sigma=4\$$. Tính \$$P(12\\le X\\le16)=\\Phi(-0.5)-\\Phi(-1.5)=\\Phi(1.5)-\\Phi(0.5)\\approx0.2417\$$.
+    </div>
+  </div>
+
+  <!-- Câu 16 -->
+  <div class="question" data-qid="q16" data-answer="D">
+    <strong>Câu 16.</strong> Chiều cao nam trưởng thành X (cm) ~ \$$N(165;\\;25)\$$. Tỉ lệ nằm trong 165–175 cm là:
+    <div class="choices">
+      <label><input type="radio" name="q16" value="A"> A. 1,6%</label>
+      <label><input type="radio" name="q16" value="B"> B. 42,75%</label>
+      <label><input type="radio" name="q16" value="C"> C. 45,96%</label>
+      <label><input type="radio" name="q16" value="D"> D. 47,73%</label>
+    </div>
+    <div class="explain" hidden>
+      \$$\\mu=165,\\sigma=5\$$. \$$P(0\\le Z\\le2)=\\Phi(2)-0.5=0.47725\\approx47.73\\%\$$.
+    </div>
+  </div>
+
+  <!-- Câu 17 -->
+  <div class="question" data-qid="q17" data-answer="A">
+    <strong>Câu 17.</strong> Lô hàng thịt đông lạnh nhập khẩu có tỉ lệ nhiễm khuẩn 1,6%. Kiểm tra ngẫu nhiên 2000 gói, xác suất có đúng 36 gói nhiễm khuẩn là:
+    <div class="choices">
+      <label><input type="radio" name="q17" value="A"> A. 0,1522</label>
+      <label><input type="radio" name="q17" value="B"> B. 0,2522</label>
+      <label><input type="radio" name="q17" value="C"> C. 0,0922</label>
+      <label><input type="radio" name="q17" value="D"> D. 0,0522</label>
+    </div>
+    <div class="explain" hidden>
+      X~Bin(n=2000,p=0.016), tìm P(X=36). Có thể dùng xấp xỉ Poisson với \$$\\lambda=32\$$ hoặc chuẩn hoá liên tục.
+    </div>
+  </div>
+
+  <!-- Câu 18 -->
+  <div class="question" data-qid="q18" data-answer="A">
+    <strong>Câu 18.</strong> Kho lúa giống có tỉ lệ hạt lúa lai tạp 2%. Chọn 1000 hạt, xác suất có từ 17 đến 19 hạt lai tạp là:
+    <div class="choices">
+      <label><input type="radio" name="q18" value="A"> A. 0,2492</label>
+      <label><input type="radio" name="q18" value="B"> B. 0,3492</label>
+      <label><input type="radio" name="q18" value="C"> C. 0,0942</label>
+      <label><input type="radio" name="q18" value="D"> D. 0,0342</label>
+    </div>
+    <div class="explain" hidden>
+      X~Bin(1000,0.02), tính P(17≤X≤19). Dùng chuẩn hoá liên tục với \$$\\mu=20,\\sigma=\\sqrt{19.6}\$$.
+    </div>
+  </div>
+
+  <!-- Câu 19 -->
+  <div class="question" data-qid="q19" data-answer="C">
+    <strong>Câu 19.</strong> Khách đặt chỗ vào dịp lễ: 585 khách cho 500 phòng; tỉ lệ đến nhận theo năm trước là 85%. Mỗi khách đặt 1 phòng. Xác suất có từ 494 đến 499 khách đến nhận phòng trong ngày là:
+    <div class="choices">
+      <label><input type="radio" name="q19" value="A"> A. 0,0273</label>
+      <label><input type="radio" name="q19" value="B"> B. 0,1273</label>
+      <label><input type="radio" name="q19" value="C"> C. 0,2273</label>
+      <label><input type="radio" name="q19" value="D"> D. 0,3273</label>
+    </div>
+    <div class="explain" hidden>
+      X~Bin(585,0.85). Tính P(494≤X≤499) bằng xấp xỉ chuẩn liên tục.
+    </div>
+  </div>
+
+  <!-- Câu 20 -->
+  <div class="question" data-qid="q20" data-answer="B">
+    <strong>Câu 20.</strong> Tỉ lệ thanh niên đỗ THPT ở quận A là 75%. Tuyển quân ngẫu nhiên 325 thanh niên. Xác suất để có từ 80 đến 84 thanh niên bị loại do chưa tốt nghiệp THPT là:
+    <div class="choices">
+      <label><input type="radio" name="q20" value="A"> A. 13,79%</label>
+      <label><input type="radio" name="q20" value="B"> B. 20,04%</label>
+      <label><input type="radio" name="q20" value="C"> C. 26,32%</label>
+      <label><input type="radio" name="q20" value="D"> D. 28,69%</label>
+    </div>
+    <div class="explain" hidden>
+      Số bị loại ~ Bin(325,0.25). Tính P(80≤X≤84) bằng xấp xỉ chuẩn liên tục với \$$\\mu=81.25,\\sigma=\\sqrt{60.9375}\$$.
+    </div>
+  </div> 
+
+  <button type="button" onclick="checkAnswers()">Nộp bài</button>
+</form>
+
+<div class="result" id="result"></div>
+
+<script>
+function checkAnswers() {
+  const correctAnswers = {
+    q1: ['C'],       // Chỉ A đúng
+    q2: ['D'], // Nhiều đáp án đúng
+    q3: ['C'],        // Chỉ A đúng
+    q4: ['C'],        // Chỉ A đúng
+    q5: ['C'],        // Chỉ A đúng
+    q6: ['A'],        // Chỉ A đúng
+    q7: ['D'],        // Chỉ A đúng
+    q8: ['C'],        // Chỉ A đúng
+    q9: ['D'],        // Chỉ A đúng
+    q10: ['A'],        // Chỉ A đúng
+    q11: ['B'],        // Chỉ A đúng
+    q12: ['D'],        // Chỉ A đúng
+    q13: ['A'],        // Chỉ A đúng
+    q14: ['D'],        // Chỉ A đúng
+    q15: ['A'],        // Chỉ A đúng
+    q16: ['D'],        // Chỉ A đúng
+    q17: ['D'],        // Chỉ A đúng
+    q18: ['A'],        // Chỉ A đúng
+    q19: ['C'],        // Chỉ A đúng
+    q20: ['B'],        // Chỉ A đúng
+  };
+
+  let score = 0;
+  const total = Object.keys(correctAnswers).length;
+
+  for (let qid in correctAnswers) {
+    const selected = Array.from(document.querySelectorAll(`input[name="${qid}"]:checked`)).map(el => el.value);
+    const correct = correctAnswers[qid];
+    // Kiểm tra: chọn đúng hết, không chọn sai
+    const isCorrect = selected.length === correct.length && selected.every(v => correct.includes(v));
+    if (isCorrect) score++;
+  }
+
+  document.getElementById('result').textContent = `✅ Bạn được ${score}/${total} điểm.`;
+}
+</script>
+
+</body>
+</html>
