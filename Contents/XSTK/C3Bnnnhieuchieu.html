@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Mục lục học phần XSTK</title>
+
+  <!-- MathJax để hiển thị công thức toán -->
+  <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #222;
+      margin: 40px;<ul>
+            <li>Bước 1: Nhận dạng bài toán (Ước lượng tham số cho kỳ vọng, phương sai, tỷ lệ) </li>
+            <li>Bước 2: Chọn thống kê và chỉ ra quy thuật phân phối của mẫu</li>
+            <li>Bước 3: Xác định các giá trị quan sát \(n, \alpha, t_{\alpha }^{n}, t_{\alpha/2}^{n},z_{\alpha }, z_{\alpha/2}\)</li>
+            <li>Bước 4: Xác định các khoảng tin cậy trái, phải, đối xứng tùy vào yêu cầu của đề bài.</li>
+        </ul> 
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+    }
+    h2 {
+      color: #0055aa;
+      margin-top: 40px;
+    }
+    button {
+      background-color: #0055aa;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #003f7f;
+    }
+    .section-content {
+      display: none;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .author {
+      text-align: right;
+      font-style: italic;
+      margin-top: 30px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    body{font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:#f7f7fb; padding:20px}
+    .card{background:white;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);max-width:900px;margin:0 auto}
+    label{margin-right:6px}
+    input[type=number]{width:80px;padding:4px;margin-right:10px}
+    button{padding:6px 12px;border:0;background:#2563eb;color:white;border-radius:8px;cursor:pointer}
+    button:active{transform:translateY(1px)}
+  </style>
+
+</head>
+<body>
+
+  <h1>📚 CHƯƠNG III: Biến ngẫu nhiên nhiều chiều</h1>
+  <p class="author">
+    Biên soạn: <strong>Ts. Khổng Văn Hải</strong><br>
+    Khoa Toán - Tin, Đại học Bách Khoa Hà Nội
+  </p>
+ 
+  <hr>
+
+    <button onclick="toggleSection('nhap')">📘1. Nháp</button>    
+    <div id="nhap" class="section-content">  
+Nội dung
+    </div>    <br> 
+
+  <!-- Phần I -->
+   <h2>I. Lý thuyết</h2>
+    <button onclick="toggleSection('bnnrr')">📘1. Biến ngẫu nhiên rời rạc</button>    
+    <div id="bnnrr" class="section-content">  
+    <ul>
+        <li>Hàm xác suất đồng thời của hai biến ngẫu nhiên rời rạc X,Y, ký hiệu là \(p(x,y)\) thỏa mãn  </li>
+        <ul>
+          <li> \(\displaystyle \sum_{x}\sum_{y} p(x,y) = 1\) </li>
+          <li> \(p(x,y) \geq 0\) với mọi cặp giá trị \(x,y\).<br> </li>
+        </ul>
+        
+        <li>Hàm phân phối đồng thời của hai biến ngẫu nhiên rời rạc X,Y, ký hiệu là \(F(x,y)\) được định nghĩa là \(F(x,y) = P(X \leq x, Y \leq y)= \displaystyle \sum_{x' \leq x} \sum_{y' \leq y} p(x',y')\). </li> <br> 
+        Tính chất 
+          <ul>
+            <li> \(F(x,y)\) là hàm không giảm theo cả hai biến \(x\) và \(y\).</li>
+            <li> \(\displaystyle \lim_{x \to \infty} F(x,y) = F(\infty, y) = P(Y \leq y)\) và \(\displaystyle \lim_{y \to \infty} F(x,y) = F(x, \infty) = P(X \leq x)\).</li>
+            <li> \(\displaystyle \lim_{x,y \to \infty} F(x,y) = F(\infty, \infty) = 1\).</li>     
+            <li> \(\displaystyle \lim_{x \to -\infty} F(x,y) = F(-\infty, y)= \lim_{y \to -\infty} F(x,y) = F(x, -\infty) = 0\).</li>
+            <li> \(F(x,y)\) là hàm liên tục tại mọi điểm \((x,y)\).</li>
+            <!-- <li> \(F(x,y) = \displaystyle \sum_{x' \leq x} \sum_{y' \leq y} p(x',y')\).</li> -->
+            <li> \(P(X = x) = \displaystyle \sum_{y} p(x,y)\) và \(P(Y = y) = \displaystyle \sum_{x} p(x,y)\).</li>
+           </ul>
+           <li> Hàm xác suất biên </li>
+              <ul>
+                <li> Hàm xác suất biên của \(X\) là \(p_X(x) = \displaystyle \sum_{y} p(x,y)\).</li>
+                <li> Hàm xác suất biên của \(Y\) là \(p_Y(y) = \displaystyle \sum_{x} p(x,y)\).</li> 
+              </ul>
+            <li> Xác suất có điều kiện </li>
+              <ul>
+                <li> Xác suất có điều kiện của \(X\) khi biết \(Y = y\) là \(p_{X|Y}(x|y) = \displaystyle \frac{p(x,y)}{p_Y(y)}\) với \(p_Y(y) > 0\).</li>
+                <li> Xác suất có điều kiện của \(Y\) khi biết \(X = x\) là \(p_{Y|X}(y|x) = \displaystyle \frac{p(x,y)}{p_X(x)}\) với \(p_X(x) > 0\).</li>
+              </ul>
+             <li> Hai biến ngẫu nhiên \(X\) và \(Y\) được gọi là độc lập nếu \(p(x,y) = p_X(x) p_Y(y)\) với mọi cặp giá trị \(x,y\).</li>
+             <li> Kỳ vọng và phương sai của hai biến ngẫu nhiên rời rạc </li>
+                <ul>
+                  <li> Kỳ vọng của \(X\) là \(E[X] = \displaystyle \sum_{x} x p_X(x)\).</li>
+                  <li> Kỳ vọng của \(Y\) là \(E[Y] = \displaystyle \sum_{y} y p_Y(y)\).</li>
+                  <li> Phương sai của \(X\) là \(Var(X) = E[X^2] - (E[X])^2\) với \(E[X^2] = \displaystyle \sum_{x} x^2 p_X(x)\).</li>
+                  <li> Phương sai của \(Y\) là \(Var(Y) = E[Y^2] - (E[Y])^2\) với \(E[Y^2] = \displaystyle \sum_{y} y^2 p_Y(y)\).</li>
+                  <li> Kỳ vọng của tích \(XY\) là \(E[XY] = \displaystyle \sum_{x} \sum_{y} xy p(x,y)\).</li>
+                  <li> Phương sai của tổng \(X + Y\) là \(Var(X + Y) = Var(X) + Var(Y) + 2Cov(X,Y)\) với \(Cov(X,Y) = E[XY] - E[X]E[Y]\).</li>      
+                  <li> Nếu \(X\) và \(Y\) độc lập thì \(Cov(X,Y) = 0\) và \(Var(X + Y) = Var(X) + Var(Y)\). <br> 
+                  <span style="background-color: red; padding: 2px 5px;"> Điều ngược lại không đúng</span>
+                  </li>    
+                </ul>
+    </ul>
+    </div>    <br> 
+
+
+    <button onclick="toggleSection('bnnlt')">📘2. Biến ngẫu nhiên liên tục</button>    
+    <div id="bnnlt" class="section-content">  Nội dung 
+      <ul>
+        <li>Hàm mật độ xác suất đồng thời của hai biến ngẫu nhiên liên tục X,Y, ký hiệu là \(f(x,y)\) thỏa mãn  </li>
+        <ul>
+          <li> \(\displaystyle \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} f(x,y) dx dy = 1\) </li>
+          <li> \(f(x,y) \geq 0\) với mọi cặp giá trị \(x,y\).<br> </li>
+        </ul>   
+        <li>Hàm phân phối đồng thời của hai biến ngẫu nhiên liên tục X,Y, ký hiệu là \(F(x,y)\) được định nghĩa là \(F(x,y) = P(X \leq x, Y \leq y)= \displaystyle \int_{-\infty}^{x} \int_{-\infty}^{y} f(x',y') dx' dy'\). </li> <br>
+        Tính chất 
+          <ul>
+            <li> \(F(x,y)\) là hàm không giảm theo cả hai biến \(x\) và \(y\).</li>
+            <li> \(\displaystyle \lim_{x \to \infty} F(x,y) = F(\infty, y) = P(Y \leq y)\) và \(\displaystyle \lim_{y \to \infty} F(x,y) = F(x, \infty) = P(X \leq x)\).</li>
+            <li> \(\displaystyle \lim_{x,y \to \infty} F(x,y) = F(\infty, \infty) = 1\).</li>     
+            <li> \(\displaystyle \lim_{x \to -\infty} F(x,y) = F(-\infty, y)= \lim_{y \to -\infty} F(x,y) = F(x, -\infty) = 0\).</li>
+            <li> \(F(x,y)\) là hàm liên tục tại mọi điểm \((x,y)\).</li>
+            <!-- <li> \(F(x,y) = \displaystyle \int_{-\infty}^{x} \int_{-\infty}^{y} f(x',y') dx' dy'\).</li> -->
+            <li> \(P(X \leq x) = \displaystyle \int_{-\infty}^{x} \int_{-\infty}^{\infty} f(x',y') dx' dy'\) và \(P(Y \leq y) = \displaystyle \int_{-\infty}^{\infty} \int_{-\infty}^{y} f(x',y') dx' dy'\).</li> 
+           </ul>
+           <li> Hàm mật độ xác suất biên </li>
+              <ul>
+                <li> Hàm mật độ xác suất biên của \(X\) là \(f_X(x) = \displaystyle \int_{-\infty}^{\infty} f(x,y) dy\).</li>
+                <li> Hàm mật độ xác suất biên của \(Y\) là \(f_Y(y) = \displaystyle \int_{-\infty}^{\infty} f(x,y) dx\).</li> 
+              </ul>
+            <li> Xác suất có điều kiện </li>
+              <ul>      
+                <li> Xác suất có điều kiện của \(X\) khi biết \(Y = y\) là \(f_{X|Y}(x|y) = \displaystyle \frac{f(x,y)}{f_Y(y)}\) với \(f_Y(y) > 0\).</li>
+                <!-- <li> Xác suất có điều kiện của \(Y\) khi biết \(X = x\) là \(f_{Y|X}(y|x) = \displaystyle \frac{f(x,y)}{f_X(x)}\) với \(f_X(x) > 0\).</li>       -->
+              </ul>
+             <li> Hai biến ngẫu nhiên \(X\) và \(Y\) được gọi là độc lập nếu \(f(x,y) = f_X(x) f_Y(y)\) với mọi cặp giá trị \(x,y\) hoặc \(f_{X|Y}(x|y) = f_X(x)\) hoặc \(f_{Y|X}(y|x) = f_Y(y)\).</li>
+             <li> Kỳ vọng và phương sai của hai biến ngẫu nhiên liên tục </li>
+                <ul>
+                  <li> Kỳ vọng của \(X\) là \(E[X] = \displaystyle \int_{-\infty}^{\infty} x f_X(x) dx\).</li>
+                  <!-- <li> Kỳ vọng của \(Y\) là \(E[Y] = \displaystyle \int_{-\infty}^{\infty} y f_Y(y) dy\).</li> -->
+                  <li> Kỳ vọng có điều kiện của \(X\) khi biết \(Y = y\) là \(E[X|Y=y] = \displaystyle \int_{-\infty}^{\infty} x f_{X|Y}(x|y) dx\). </li>
+                  <li> Phương sai của \(X\) là \(Var(X) = E[X^2] - (E[X])^2\) với \(E[X^2] = \displaystyle \int_{-\infty}^{\infty} x^2 f_X(x) dx\).</li>
+                  <!-- <li> Phương sai của \(Y\) là \(Var(Y) = E[Y^2] - (E[Y])^2\) với \(E[Y^2] = \displaystyle \int_{-\infty}^{\infty} y^2 f_Y(y) dy\).</li> -->
+                  <li> Kỳ vọng của tích \(XY\) là \(E[XY] = \displaystyle \int_{-\infty}^{\infty} \int_{-\infty}^{\infty} xy f(x,y) dx dy\).</li>
+                  <li> Phương sai của tổng \(X + Y\) là \(Var(X + Y) = Var(X) + Var(Y) + 2Cov(X,Y)\) với \(Cov(X,Y) = E[XY] - E[X]E[Y]\).</li>      
+                  <li> Nếu \(X\) và \(Y\) độc lập thì \(Cov(X,Y) = 0\) và \(Var(X + Y) = Var(X) + Var(Y)\). <br> 
+                  <span style="background-color: red; padding: 2px 5px;"> Điều ngược lại không đúng</span>
+                  </li> 
+                  <li> Nếu \(X\) và \(Y\) độc lập thì \(E[XY] = E[X]E[Y]\).</li>
+                <li> Nếu \(X\) và \(Y\) độc lập thì \(Cov(X,Y) = 0\).</li>
+                </ul>
+      </ul>
+    </div>    <br> 
+
+
+
+
+
+
+
+  <!-- Phần II -->
+  <h2>II. Các dạng bài tập điển hình</h2>
+
+
+
+
+  <!-- Phần II -->
+  <h2>IV. Bài tập rèn luyện</h2>
+  <ul>
+    <script>
+      function toggleSection(id) {
+          const section = document.getElementById(id);
+          section.style.display = (section.style.display === "none" || section.style.display === "") ? "block" : "none";
+        }
+    </script>
+  </ul>
+  
+
+
+
+ <h2> Xem thêm  <br> 
+    <p>Xem thêm nội dung <a href="C3Bnnnhieuchieu.html">Chương 1 tại đây</a>.</p>
+    <br>    
+    <p>Xem thêm nội dung <a href="C2BNN_LT.html">Chương 2 tại đây</a>.</p>
+    <br>  
+    <p>Xem thêm nội dung <a href="C3Bnnnhieuchieu.html">Chương 3 tại đây</a>.</p>
+    <br>    
+    <p>Xem thêm nội dung <a href="C4ThongkeUocluongthamsoV2.html">Chương 4 tại đây</a>.</p>
+    <br>    
+    <p>Xem thêm nội dung <a href="C5Kiemdinhgth.html">Chương 5 tại đây</a>.</p>
+    <br>    
+ </h2> 
+
+</body>
+</html>

@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Mục lục học phần XSTK</title>
+
+  <!-- MathJax để hiển thị công thức toán -->
+  <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #222;
+      margin: 40px;<ul>
+            <li>Bước 1: Nhận dạng bài toán (Ước lượng tham số cho kỳ vọng, phương sai, tỷ lệ) </li>
+            <li>Bước 2: Chọn thống kê và chỉ ra quy thuật phân phối của mẫu</li>
+            <li>Bước 3: Xác định các giá trị quan sát \(n, \alpha, t_{\alpha }^{n}, t_{\alpha/2}^{n},z_{\alpha }, z_{\alpha/2}\)</li>
+            <li>Bước 4: Xác định các khoảng tin cậy trái, phải, đối xứng tùy vào yêu cầu của đề bài.</li>
+        </ul> 
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+    }
+    h2 {
+      color: #0055aa;
+      margin-top: 40px;
+    }
+    button {
+      background-color: #0055aa;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #003f7f;
+    }
+    .section-content {
+      display: none;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .author {
+      text-align: right;
+      font-style: italic;
+      margin-top: 30px;
+    }
+  </style>
+
+<style>
+body{
+    background:#e9e9e9;
+    font-family:"Times New Roman", serif;
+}
+
+.box{
+    width:950px;
+    margin:20px auto;
+    border:3px solid #ff3333;
+    border-radius:10px;
+    background:#f5f5f5;
+}
+
+.header{
+    background:#ff3333;
+    color:white;
+    font-size:22px;
+    font-weight:bold;
+    padding:8px 25px;
+}
+
+.content{
+    padding:10px 25px 20px 25px;
+    font-size:18px;
+    line-height:1.4;
+}
+
+ol{
+    margin-left:20px;
+}
+
+li{
+    margin-bottom:18px;
+}
+
+ul{
+    margin-top:10px;
+}
+
+.green{
+    background:#00ff00;
+    padding:2px 8px;
+}
+
+.blue{
+    color:blue;
+}
+
+.math{
+    font-style:italic;
+}
+</style>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    body{font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:#f7f7fb; padding:20px}
+    .card{background:white;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);max-width:900px;margin:0 auto}
+    label{margin-right:6px}
+    input[type=number]{width:80px;padding:4px;margin-right:10px}
+    button{padding:6px 12px;border:0;background:#2563eb;color:white;border-radius:8px;cursor:pointer}
+    button:active{transform:translateY(1px)}
+  </style>
+
+</head>
+<body>
+
+  <h1>📚 CHƯƠNG V: Kiểm định giả thuyết thống kê</h1>
+  <p class="author">
+    Biên soạn: <strong>Ts. Khổng Văn Hải</strong><br>
+    Khoa Toán - Tin, Đại học Bách Khoa Hà Nội
+  </p>
+ 
+  <hr>
+
+  <!-- Phần I -->
+   <h2>I. Lý thuyết</h2>
+   Mức độ ý nghĩa 
+
+
+
+
+
+
+
+  <!-- Phần II -->
+  <h2>II. Bài toán kiểm định giả thuyết</h2>
+
+ <button onclick="toggleSection('Cacbuoclambtults')">Các bước làm bài toán kiểm định giả thuyết</button>
+ <div id="Cacbuoclambtults" class="section-content">
+<ol style="
+  list-style-type: decimal;
+  line-height: 1.8;
+  padding-left: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+">
+  <li style="margin-bottom: 10px;">
+    Phát biểu giả thuyết không \(H_0\) và đối thuyết \(H_1\) thích hợp.
+  </li>
+  <li style="margin-bottom: 10px;">
+    Xác định một tiêu chuẩn kiểm định thích hợp và dạng phân phối xác suất của nó nếu giả thuyết \(H_{0}\) là đúng.
+  </li>
+  <li style="margin-bottom: 10px;">
+    Chọn mức ý nghĩa \(\alpha\) cố định, xây dựng miền bác bỏ giả thuyết \(H_0\) dựa vào \(\alpha\).
+  </li>
+  <li style="margin-bottom: 10px;">
+    Tính giá trị quan sát của tiêu chuẩn kiểm định.
+  </li>
+  <li style="margin-bottom: 10px;">
+    Quyết định xem có nên bác bỏ \(H_0\) hay không và báo cáo điều đó trong bối cảnh bài toán.
+  </li>
+</ol>
+        </div>
+        <br>
+        <br>
+
+<button onclick="toggleSection('onesampletest')">📘1. Kiểm định một mẫu thử</button>    
+  <div id="onesampletest" class="section-content"> 
+    <button onclick="toggleSection('Dang1')">📘 Kiểm định giả thuyết về kỳ vọng khi \(\sigma^2\) đã biết</button>    
+    <div id="Dang1" class="section-content"> 
+      <br>
+    Các bước làm:   
+      <ol style="
+  list-style-type: decimal;
+  line-height: 1.8;
+  padding-left: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+">
+  <li style="margin-bottom: 10px;">
+    Đặt cặp giả thuyết đối thuyết 
+    \(\begin{cases} 
+    H_0: \mu=\mu_{0} \\
+    H_1: \, \,
+    \begin{align}
+    \mu \neq \mu_{0} &: \text{Kiểm định hai phía} \\
+    \mu > \mu_{0} & : \text{Kiểm định phải} \\
+    \mu < \mu_{0} & : \text{Kiểm định trái} 
+    \end{align}
+    \end{cases}  \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Chọn tiêu chuẩn kiểm định
+    \( Z= \dfrac{\bar{X} -\mu_{0} }{\sigma}\sqrt{n}  \overset{H_0}{\sim} \mathcal{N}(0,1) 
+      \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Với mức ý nghĩa \(\alpha \), miền bác bỏ giả thuyết \(H_{0}\) là : 
+    <ol>
+      <li> Kiểm định hai phía: \(W_\alpha = \left(- \infty , -z_{\alpha/2}\right) \cup \left( z_{\alpha/2},\infty \right) \)  </li>
+      <li> Kiểm định phải: \(W_\alpha = \left( z_{\alpha},\infty \right) \)  </li>
+      <li> Kiểm định trái: \(W_\alpha = \left(- \infty , -z_{\alpha}\right) \)  </li>
+    </ol>
+    
+      
+  </li>
+  <li style="margin-bottom: 10px;">
+    Tính giá trị quan sát: \(n, \bar{x}, z_{\alpha/2}, z_{\alpha}, z_{qs} \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Quyết định xem có nên bác bỏ \(H_0\) hay không và kết luận với mức ý nghĩa cho trước. 
+  </li>
+  </ol>
+
+    <button onclick="toggleSection('dang1vd1')">📘 Ví dụ minh họa</button>    
+      <div id="dang1vd1" class="section-content">
+Một nhà sản xuất muốn kiểm tra xem liệu một lô hàng có đáp ứng tiêu chuẩn chất lượng hay không. Tiêu chuẩn yêu cầu rằng trọng lượng trung bình của sản phẩm phải là 500 gram. Một mẫu ngẫu nhiên gồm 30 sản phẩm được lấy từ lô hàng và có trọng lượng trung bình là 495 gram với độ lệch chuẩn là 10 gram. Nhà sản xuất muốn kiểm tra giả thuyết rằng trọng lượng trung bình của lô hàng là 500 gram với mức ý nghĩa \(\alpha = 0.05\). Hãy thực hiện các bước kiểm định giả thuyết để đưa ra kết luận.  
+      </div>
+      <button onclick="toggleSection('dang1vd1-solution')">📘 Lời giải</button>
+      <div id="dang1vd1-solution" class="section-content">
+Bước 1: Đặt cặp giả thuyết đối thuyết
+\[\begin{cases} 
+H_0: \mu=500 \\
+H_1: \mu \neq 500
+\end{cases}\]   
+Bước 2: Chọn tiêu chuẩn kiểm định
+\[ Z= \dfrac{\bar{X} -\mu_{0} }{\sigma}\sqrt{n} = \dfrac{495 - 500 }{10}\sqrt{30} \approx -2.74 \] 
+Bước 3: Với mức ý nghĩa \(\alpha = 0.05\), miền bác bỏ giả thuyết \(H_{0}\) là: 
+\[W_\alpha = \left(- \infty , -z_{0.025}\right) \cup \left( z_{0.025},\infty \right) = \left(- \infty , -1.96\right) \cup \left( 1.96,\infty \right) \] 
+Bước 4: Tính giá trị quan sát
+\[ Z_{qs} \approx -2.74 \] 
+Bước 5: Vì \(Z_{qs} \approx -2.74\) nằm trong miền bác bỏ \(W_\alpha\), chúng ta bác bỏ giả thuyết \(H_0\).  
+<br> Kết luận: Trọng lượng trung bình của lô hàng không phải là 500 gram với mức ý nghĩa 0.05. 
+      </div>  
+    </div>    
+  <br> 
+
+
+
+    <button onclick="toggleSection('Dang2')">📘 Kiểm định giả thuyết về kỳ vọng khi \(\sigma^2\) chưa biết </button>    
+      <div id="Dang2" class="section-content"> 
+        Các bước làm bài toán kiểm định giả thuyết về kỳ vọng khi \(\sigma^2\) chưa biết:
+        <ol style="
+  list-style-type: decimal;
+  line-height: 1.8;
+  padding-left: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+">
+  <li style="margin-bottom: 10px;">
+    Đặt cặp giả thuyết đối thuyết 
+    \(\begin{cases} 
+    H_0: \mu=\mu_{0} \\
+    H_1: \, \,
+    \begin{align}
+    \mu \neq \mu_{0} &: \text{Kiểm định hai phía} \\
+    \mu > \mu_{0} & : \text{Kiểm định phải} \\
+    \mu < \mu_{0} & : \text{Kiểm định trái} 
+    \end{align}
+    \end{cases}  \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Chọn tiêu chuẩn kiểm định
+    \( T= \dfrac{\bar{X} -\mu_{0} }{S}\sqrt{n}  \overset{H_0}{\sim} t_{n-1} 
+      \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Với mức ý nghĩa \(\alpha \), miền bác bỏ giả thuyết \(H_{0}\) là : 
+    <ol>
+      <li> Kiểm định hai phía: \(W_\alpha = \left(- \infty , -t_{\alpha/2}^{n-1}\right) \cup \left( t_{\alpha/2}^{n-1},\infty \right) \)  </li>
+      <li> Kiểm định phải: \(W_\alpha = \left( t_{\alpha}^{n-1},\infty \right) \)  </li>
+      <li> Kiểm định trái: \(W_\alpha = \left(- \infty , -t_{\alpha}^{n-1}\right) \)  </li>
+    </ol>  
+  </li>
+  <li style="margin-bottom: 10px;">
+    Tính giá trị quan sát: \(n, \bar{x}, t_{\alpha/2}^{n-1}, t_{\alpha}^{n-1}, T_{qs} \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Quyết định xem có nên bác bỏ \(H_0\) hay không và kết luận với mức ý nghĩa cho trước. 
+  </li> 
+  <button onclick="toggleSection('dang2vd1')">📘 Ví dụ 1</button>
+      <div id="dang2vd1" class="section-content">
+Một nhà nghiên cứu muốn kiểm tra xem liệu một loại thuốc mới có ảnh hưởng đến huyết áp hay không. Một mẫu ngẫu nhiên gồm 25 bệnh nhân được điều trị bằng loại thuốc mới và có huyết áp trung bình là 120 mmHg với độ lệch chuẩn mẫu là 15 mmHg. Nhà nghiên cứu muốn kiểm tra giả thuyết rằng huyết áp trung bình của bệnh nhân sau khi sử dụng thuốc là 130 mmHg với mức ý nghĩa \(\alpha = 0.05\). Hãy thực hiện các bước kiểm định giả thuyết để đưa ra kết luận.  
+      </div>
+
+      <button onclick="toggleSection('dang2vd1-solution')">📘 Lời giải ví dụ 1</button>
+      <div id="dang2vd1-solution" class="section-content">
+Bước 1: Đặt cặp giả thuyết đối thuyết
+\[\begin{cases} 
+H_0: \mu=130 \\
+H_1: \mu \neq 130
+\end{cases}\]   
+Bước 2: Chọn tiêu chuẩn kiểm định   
+\[ T= \dfrac{\bar{X} -\mu_{0} }{S}\sqrt{n} = \dfrac{120 - 130 }{15}\sqrt{25} = -3.33 \]
+Bước 3: Với mức ý nghĩa \(\alpha = 0.05\), miền bác bỏ giả thuyết \(H_{0}\) là: 
+\[W_\alpha = \left(- \infty , -t_{0.025}^{24}\right) \cup \left( t_{0.025}^{24},\infty \right) = \left(- \infty , -2.064\right) \cup \left( 2.064,\infty \right) \] 
+Bước 4: Tính giá trị quan sát
+\[ T_{qs} = -3.33 \]
+Bước 5: Vì \(T_{qs} = -3.33\) nằm trong miền bác bỏ \(W_\alpha\), chúng ta bác bỏ giả thuyết \(H_0\).  
+<br> Kết luận: Huyết áp trung bình của bệnh nhân sau khi sử dụng thuốc không phải là 130 mmHg với mức ý nghĩa 0.05. 
+      </div>
+
+</div> 
+      
+      
+      
+      <br> 
+
+    <button onclick="toggleSection('Dang3')">📘 Kiểm định giả thuyết về kỳ vọng trường hợp mẫu lớn</button>    
+      <div id="Dang3" class="section-content"> 
+        <button onclick="toggleSection('dang3cacbuoc')">📘 Các bước thực hiện</button>    
+          <div id="dang3cacbuoc" class="section-content">
+            Các bước làm bài toán kiểm định giả thuyết về kỳ vọng khi mẫu lớn:
+            <ol style="
+  list-style-type: decimal;
+  line-height: 1.8;
+  padding-left: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+">
+  <li style="margin-bottom: 10px;">
+    Đặt cặp giả thuyết đối thuyết
+    \(\begin{cases} 
+H_0: \mu=\mu_{0} \\
+H_1: \, \,    
+\begin{align}
+\mu \neq \mu_{0} &: \text{Kiểm định hai phía} \\
+\mu > \mu_{0} & : \text{Kiểm định phải} \\
+\mu < \mu_{0} & : \text{Kiểm định trái} 
+\end{align}
+\end{cases}  \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Chọn tiêu chuẩn kiểm định
+    \( Z= \dfrac{\bar{X} -\mu_{0} }{S}\sqrt{n}  \overset{H_0}{\sim} \mathcal{N}(0,1) 
+      \)
+  </li>
+  <li style="margin-bottom: 10px;"> 
+    Với mức ý nghĩa \(\alpha \), miền bác bỏ giả thuyết \(H_{0}\) là : 
+    <ol>
+      <li> Kiểm định hai phía: \(W_\alpha = \left(- \infty , -z_{\alpha/2}\right) \cup \left( z_{\alpha/2},\infty \right) \)  </li>
+      <li> Kiểm định phải: \(W_\alpha = \left( z_{\alpha},\infty \right) \)  </li>
+      <li> Kiểm định trái: \(W_\alpha = \left(- \infty , -z_{\alpha}\right) \)  </li>
+    </ol>
+  </li>
+  <li style="margin-bottom: 10px;">
+    Tính giá trị quan sát: \(n, \bar{x}, z_{\alpha/2}, z_{\alpha}, z_{qs} \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Quyết định xem có nên bác bỏ \(H_0\) hay không và kết luận với mức ý nghĩa cho trước. 
+  </li>
+</ol>
+          </div>  
+
+      <button onclick="toggleSection('dang3vd1')">📘 Dạng 3- Ví dụ 1</button>    
+        <div id="dang3vd1" class="section-content">
+Một công ty sản xuất bóng đèn muốn kiểm tra xem liệu tuổi thọ trung bình của bóng đèn có đạt tiêu chuẩn 1000 giờ hay không. Một mẫu ngẫu nhiên gồm 50 bóng đèn được kiểm tra và có tuổi thọ trung bình là 980 giờ với độ lệch chuẩn mẫu là 50 giờ. Công ty muốn kiểm tra giả thuyết rằng tuổi thọ trung bình của bóng đèn là 1000 giờ với mức ý nghĩa \(\alpha = 0.05\). Hãy thực hiện các bước kiểm định giả thuyết để đưa ra kết luận.  
+        </div>   
+      <button onclick="toggleSection('dang3vd1-solution')">📘 Lời giải</button>    
+        <div id="dang3vd1-solution" class="section-content">
+Gọi X là tuổi thọ của bóng đèn \(EX=\mu, VX=\sigma^2\). <br> 
+Bước 1: Đặt cặp giả thuyết đối thuyết
+\[\begin{cases} 
+H_0: \mu=1000 \\
+H_1: \mu \neq 1000
+\end{cases}\]   
+Bước 2: Chọn tiêu chuẩn kiểm định
+\[ Z= \dfrac{\bar{X} -\mu_{0} }{S}\sqrt{n} = \dfrac{980 - 1000 }{50}\sqrt{50} \approx -2.83 \] 
+Bước 3: Với mức ý nghĩa \(\alpha = 0.05\), miền bác bỏ giả thuyết \(H_{0}\) là: 
+\[W_\alpha = \left(- \infty , -z_{0.025}\right) \cup \left( z_{0.025},\infty \right) = \left(- \infty , -1.96\right) \cup \left( 1.96,\infty \right) \] 
+Bước 4: Tính giá trị quan sát
+\[ Z_{qs} \approx -2.83 \] 
+Bước 5: Vì \(Z_{qs} \approx -2.83\) nằm trong miền bác bỏ \(W_\alpha\), chúng ta bác bỏ giả thuyết \(H_0\).  
+<br> Kết luận: Tuổi thọ trung bình của bóng đèn không phải là 1000 giờ với mức ý nghĩa 0.05. 
+        </div>
+
+
+      </div>    <br> 
+    
+    <button onclick="toggleSection('Dang4')">📘 Kiểm định giả thuyết về tỷ lệ</button>    
+      <div id="Dang4" class="section-content"> 
+        
+        <button onclick="toggleSection('dang4cacbuoc')">📘 Các bước thực hiện</button>    
+          <div id="dang4cacbuoc" class="section-content">
+            Các bước làm bài toán kiểm định giả thuyết về tỷ lệ:
+            <ol style="
+  list-style-type: decimal;
+  line-height: 1.8;
+  padding-left: 20px;   
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+">
+  <li style="margin-bottom: 10px;">
+    Đặt cặp giả thuyết đối thuyết
+    \(\begin{cases} 
+H_0: p=p_{0} \\
+H_1: \, \,
+\begin{align}
+p \neq p_{0} &: \text{Kiểm định hai phía} \\
+p > p_{0} & : \text{Kiểm định phải} \\
+p < p_{0} & : \text{Kiểm định trái} 
+\end{align}
+\end{cases}  \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Chọn tiêu chuẩn kiểm định
+    \( Z= \dfrac{\hat{p} -p_{0} }{\sqrt{\dfrac{p_{0}(1-p_{0})}{n}}}    \text{ nếu } np_{0} \geq 5 \text{ và } n(1-p_{0}) \geq 5 \text{ thì } Z \overset{H_0}{\sim} \mathcal{N}(0,1).
+      \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Với mức ý nghĩa \(\alpha \), miền bác bỏ giả thuyết \(H_{0}\) là : 
+    <ol>
+      <li> Kiểm định hai phía: \(W_\alpha = \left(- \infty , -z_{\alpha/2}\right) \cup \left( z_{\alpha/2},\infty \right) \)  </li>
+      <li> Kiểm định phải: \(W_\alpha = \left( z_{\alpha},\infty \right) \)  </li>
+      <li> Kiểm định trái: \(W_\alpha = \left(- \infty , -z_{\alpha}\right) \)  </li>
+    </ol>
+  </li>
+  <li style="margin-bottom: 10px;">
+    Tính giá trị quan sát: \(n, \hat{p}, z_{\alpha/2}, z_{\alpha}, z_{qs} \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Quyết định xem có nên bác bỏ \(H_0\) hay không và kết luận với mức ý nghĩa cho trước. 
+  </li>
+</ol> 
+          </div>
+
+        <button onclick="toggleSection('dang4vd1')">📘 Ví dụ 1</button  >  
+          <div id="dang4vd1" class="section-content">
+Một nhà sản xuất muốn kiểm tra xem liệu tỷ lệ sản phẩm lỗi trong một lô hàng có vượt quá 5% hay không. Một mẫu ngẫu nhiên gồm 200 sản phẩm được kiểm tra và có 12 sản phẩm bị lỗi. Nhà sản xuất muốn kiểm tra giả thuyết rằng tỷ lệ sản phẩm lỗi là 5% với mức ý nghĩa \(\alpha = 0.05\). Hãy thực hiện các bước kiểm định giả thuyết để đưa ra kết luận.  
+          </div>  
+        <button onclick="toggleSection('dang4vd1-solution')">📘 Lời giải</button> 
+          <div id="dang4vd1-solution" class="section-content">
+Bước 1: Đặt cặp giả thuyết đối thuyết
+\[\begin{cases} 
+H_0: p=0.05 \\
+H_1: p > 0.05     
+\end{cases}\]   
+Bước 2: 
+Ta có \(\hat{p} = \dfrac{12}{200} = 0.06\) và \( np_{0} = 200 \times 0.05 = 10 \geq 5, n(1-p_{0}) = 200 \times 0.95 = 190 \geq 5\)  <br>
+Chọn tiêu chuẩn kiểm định
+\(Z= \dfrac{\hat{p} -p_{0} }{\sqrt{\dfrac{p_{0}(1-p_{0})}{n}}}\overset{H_0}{\sim} \mathcal{N}(0,1) \) <br>
+Bước 3: Với mức ý nghĩa \(\alpha = 0.05\), miền bác bỏ giả thuyết \(H_{0}\) là: 
+\[W_\alpha = \left( z_{0.05},\infty \right) = \left( 1.645,\infty \right) \] 
+Bước 4: Tính giá trị quan sát
+\[ Z_{qs} \approx 1.095 \] 
+Bước 5: Vì \(Z_{qs} \approx 1.095\) không nằm trong miền bác bỏ \(W_\alpha\), chúng ta không bác bỏ giả thuyết \(H_0\).  
+<br> Kết luận: Tỷ lệ sản phẩm lỗi trong lô hàng không vượt quá 5% với mức ý nghĩa 0.05. 
+          </div>  
+
+      </div>    <br> 
+</div>    <br> 
+
+
+<button onclick="toggleSection('twosampletest')">📘2. Kiểm định hai mẫu thử</button>    
+  <div id="twosampletest" class="section-content"> 
+
+      <button onclick="toggleSection('Dang1phuongsaidabiet')">📘 So sánh hai kỳ vọng khi phương sai đã biết</button>    
+      <div id="Dang1phuongsaidabiet" class="section-content"> 
+        <button onclick="toggleSection('Phan2Dang1')">📘 Các bước kiểm định</button>     
+          <div id="Phan2Dang1" class="section-content">
+            Các bước làm bài toán kiểm định giả thuyết về so sánh hai kỳ vọng khi phương sai đã biết:  
+            <ol style="
+  list-style-type: decimal;
+  line-height: 1.8;
+  padding-left: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+">
+  <li style="margin-bottom: 10px;">
+    Đặt cặp giả thuyết đối thuyết
+    \(\begin{cases} 
+H_0: \mu_1=\mu_{2} \\
+H_1: \, \,
+\begin{align}
+\mu_1 \neq \mu_{2} &: \text{Kiểm định hai phía} \\
+\mu_1 > \mu_{2} & : \text{Kiểm định phải} \\
+\mu_1 < \mu_{2} & : \text{Kiểm định trái} 
+\end{align}
+\end{cases}  \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Chọn tiêu chuẩn kiểm định
+    \( Z= \dfrac{\bar{X}_1 -\bar{X}_2}{\sqrt{\dfrac{\sigma_1^2}{n_1} + \dfrac{\sigma_2^2}{n_2}}}  \overset{H_0}{\sim} \mathcal{N}(0,1) 
+      \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Với mức ý nghĩa \(\alpha \), miền bác bỏ giả thuyết \(H_{0}\) là : 
+    <ol>
+      <li> Kiểm định hai phía: \(W_\alpha = \left(- \infty , -z_{\alpha/2}\right) \cup \left( z_{\alpha/2},\infty \right) \)  </li>
+      <li> Kiểm định phải: \(W_\alpha = \left( z_{\alpha},\infty \right) \)  </li>
+      <li> Kiểm định trái: \(W_\alpha = \left(- \infty , -z_{\alpha}\right) \)  </li>
+    </ol>
+  </li>
+  <li style="margin-bottom: 10px;">
+    Tính giá trị quan sát: \(n_1, n_2, \bar{x}_1, \bar{x}_2, z_{\alpha/2}, z_{\alpha}, z_{qs} \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Quyết định xem có nên bác bỏ \(H_0\) hay không và kết luận với mức ý nghĩa cho trước. 
+  </li>
+</ol>
+          </div>
+
+
+
+    </div>    <br>
+    <button onclick="toggleSection('Dang2phuongsaichuabiết')">📘 So sánh hai kỳ vọng khi phương sai chưa biết</button>    
+      <div id="Dang2phuongsaichuabiết" class="section-content"> 
+        <button onclick="toggleSection('Phan2Dang2')">📘 Các bước kiểm định</button>     
+          <div id="Phan2Dang2" class="section-content">
+            Các bước làm bài toán kiểm định giả thuyết về so sánh hai kỳ vọng khi phương sai chưa biết:  
+            <ol style="
+  list-style-type: decimal;
+  line-height: 1.8;
+  padding-left: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+">
+  <li style="margin-bottom: 10px;">
+    Đặt cặp giả thuyết đối thuyết
+    \(\begin{cases} 
+H_0: \mu_1=\mu_{2} \\
+H_1: \, \,
+\begin{align}
+\mu_1 \neq \mu_{2} &: \text{Kiểm định hai phía} \\
+\mu_1 > \mu_{2} & : \text{Kiểm định phải} \\
+\mu_1 < \mu_{2} & : \text{Kiểm định trái} 
+\end{align}
+\end{cases}  \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Chọn tiêu chuẩn kiểm định
+    \( T= \dfrac{\bar{X}_1 -\bar{X}_2}{\sqrt{\dfrac{S_1^2}{n_1} + \dfrac{S_2^2}{n_2}}}  \overset{H_0}{\sim} t^{n_1+n_2-2} 
+      \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Với mức ý nghĩa \(\alpha \), miền bác bỏ giả thuyết \(H_{0}\) là : 
+    <ol>
+      <li> Kiểm định hai phía: \(W_\alpha = \left(- \infty , -t_{\alpha/2}^{n_1+n_2-2}\right) \cup \left( t_{\alpha/2}^{n_1+n_2-2},\infty \right) \)  </li>
+      <li> Kiểm định phải: \(W_\alpha = \left( t_{\alpha}^{n_1+n_2-2},\infty \right) \)  </li>
+      <li> Kiểm định trái: \(W_\alpha = \left(- \infty , -t_{\alpha}^{n_1+n_2-2}\right) \)  </li>
+    </ol>
+  </li>
+  <li style="margin-bottom: 10px;">
+    Tính giá trị quan sát: \(n_1, n_2, \bar{x}_1, \bar{x}_2, t_{\alpha/2}^{n_1+n_2-2}, t_{\alpha}^{n_1+n_2-2}, T_{qs} \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Quyết định xem có nên bác bỏ \(H_0\) hay không và kết luận với mức ý nghĩa cho trước. 
+  </li>
+</ol>
+          </div>
+      </div>    <br>
+
+
+    <button onclick="toggleSection('Dang3sosanhhaikyvongmaulon')">📘 So sánh hai kỳ vọng khi mẫu lớn \((n_1, n_2 > 30)\) </button>    
+      <div id="Dang3sosanhhaikyvongmaulon" class="section-content"> 
+        <button onclick="toggleSection('Phan2Dang3')">📘 Các bước kiểm định</button>     
+          <div id="Phan2Dang3" class="section-content">
+            Các bước làm bài toán kiểm định giả thuyết về kỳ vọng khi mẫu lớn:  
+            <ol style="
+  list-style-type: decimal;
+  line-height: 1.8;
+  padding-left: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+">
+  <li style="margin-bottom: 10px;">
+    Đặt cặp giả thuyết đối thuyết
+    \(\begin{cases} 
+H_0: \mu_1=\mu_{2} \\
+H_1: \, \,
+\begin{align}
+\mu_1 \neq \mu_{2} &: \text{Kiểm định hai phía} \\
+\mu_1 > \mu_{2} & : \text{Kiểm định phải} \\
+\mu_1 < \mu_{2} & : \text{Kiểm định trái} 
+\end{align}
+\end{cases}  \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Chọn tiêu chuẩn kiểm định
+    \( Z= \dfrac{\bar{X}_1 -\bar{X}_2}{\sqrt{\dfrac{S_1^2}{n_1} + \dfrac{S_2^2}{n_2}}}  \overset{H_0}{\sim^*} \mathcal{N}(0,1) 
+      \)  
+  </li>
+  <li style="margin-bottom: 10px;">
+    Với mức ý nghĩa \(\alpha \), miền bác bỏ giả thuyết \(H_{0}\) là : 
+    <ol>
+      <li> Kiểm định hai phía: \(W_\alpha = \left(- \infty , -z_{\alpha/2}\right) \cup \left( z_{\alpha/2},\infty \right) \)  </li>
+      <li> Kiểm định phải: \(W_\alpha = \left( z_{\alpha},\infty \right) \)  </li>
+      <li> Kiểm định trái: \(W_\alpha = \left(- \infty , -z_{\alpha}\right) \)  </li>
+    </ol>
+  </li>
+  <li style="margin-bottom: 10px;">
+    Tính giá trị quan sát: \(n_1, n_2, \bar{x}_1, \bar{x}_2, z_{\alpha/2}, z_{\alpha}, z_{qs} \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Quyết định xem có nên bác bỏ \(H_0\) hay không và kết luận với mức ý nghĩa cho trước. 
+  </li>
+</ol>
+          </div>
+      </div>    <br>
+
+    <button onclick="toggleSection('sosanhtungcap')">📘 So sánh từng cặp</button>    
+      <div id="sosanhtungcap" class="section-content"> 
+      Đặt \(Z=X-Y\) rồi ta chuyển về một tổng thể. 
+      </div>  
+      <br>
+      
+
+    <button onclick="toggleSection('sosanhhaityle')">📘 So sánh hai tỷ lệ</button>    
+      <div id="sosanhhaityle" class="section-content"> 
+      
+        <button onclick="toggleSection('Phan2Dang4')">📘 Các bước kiểm định</button>     
+          <div id="Phan2Dang4" class="section-content">
+            Các bước làm bài toán kiểm định giả thuyết về so sánh hai tỷ lệ:  
+            <ol style="
+  list-style-type: decimal;
+  line-height: 1.8;
+  padding-left: 20px;
+  font-family: Arial, sans-serif; 
+  font-size: 16px;
+  color: #333;
+">
+  <li style="margin-bottom: 10px;">
+    Đặt cặp giả thuyết đối thuyết
+    \(\begin{cases} 
+H_0: p_1=p_{2} \\
+H_1: \, \,
+\begin{align}
+p_1 \neq p_{2} &: \text{Kiểm định hai phía} \\
+p_1 > p_{2} & : \text{Kiểm định phải} \\
+p_1 < p_{2} & : \text{Kiểm định trái} 
+\end{align}
+\end{cases}  \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Chọn tiêu chuẩn kiểm định
+    \( Z= \dfrac{\hat{p}_1 -\hat{p}_2}{\sqrt{\hat{p}(1-\hat{p})\left(\dfrac{1}{n_1} + \dfrac{1}{n_2}\right)}}  \overset{H_0}{\sim^*} \mathcal{N}(0,1) 
+      \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Với mức ý nghĩa \(\alpha \), miền bác bỏ giả thuyết \(H_{0}\) là : 
+    <ol>
+      <li> Kiểm định hai phía: \(W_\alpha = \left(- \infty , -z_{\alpha/2}\right) \cup \left( z_{\alpha/2},\infty \right) \)  </li>
+      <li> Kiểm định phải: \(W_\alpha = \left( z_{\alpha},\infty \right) \)  </li>
+      <li> Kiểm định trái: \(W_\alpha = \left(- \infty , -z_{\alpha}\right) \)  </li>
+    </ol>
+  </li>
+  <li style="margin-bottom: 10px;">
+    Tính giá trị quan sát: \(n_1, n_2, \hat{p}_1, \hat{p}_2, z_{\alpha/2}, z_{\alpha}, z_{qs} \)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Quyết định xem có nên bác bỏ \(H_0\) hay không và kết luận với mức ý nghĩa cho trước. 
+  </li>
+</ol>     
+      </div>    <br> 
+</div>  
+
+
+
+      
+</div>    <br> 
+
+
+<div class="box">
+
+    <div class="header">
+        Một số lỗi thường gặp khi làm bài toán kiểm định !
+    </div>
+
+    <div class="content">
+
+        <ol>
+            <li>
+                Quên không gọi các đại lượng biến ngẫu nhiên.
+                Đề cho thông tin biến ngẫu nhiên tuân theo phân phối chuẩn thì ghi ra,
+                với những bài dạng toán mẫu lớn thì thường không có thông tin về phân bố
+                của biến ngẫu nhiên nhưng lại ghi tuân theo phân phối chuẩn.
+            </li>
+
+            <li>
+                Bước 1: Viết sai đối thuyết
+                <span class="math">H<sub>1</sub></span>
+            </li>
+
+            <li>
+                Bước 2:
+                <ul>
+                    <li>Chọn sai tiêu chuẩn kiểm định.</li>
+                    <li>
+                        Quên không chỉ ra phân bố của tiêu chuẩn kiểm định
+                        (bản chất là một thống kê) khi
+                        <span class="math">H<sub>1</sub></span> đúng.
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                Bước 3:
+                <ul>
+                    <li>
+                        Chọn nhầm miền bác bỏ (kiểm định 1 phía hoặc kiểm định trái,
+                        kiểm định phải).
+                    </li>
+
+                    <li>
+                        Tiêu chuẩn kiểm định <span class="math">Z</span>
+                        thì lại sử dụng giá trị tới hạn của pp student và ngược lại.
+                    </li>
+
+                    <li>
+                        Các giá trị tới hạn đối với kiểm định
+                        <span class="math">T</span> có dạng
+
+                        <span class="math">
+                            t<sub><span class="green">α</span></sub>
+                        </span>
+
+                        trong đó
+
+                        <span class="math">
+                            P(T &gt; t<sub>α</sub>) = α.
+                        </span>
+
+                        Nếu muốn sử dụng ký hiệu khác
+
+                        <span class="math">
+                            t<sub><span class="green">1−α</span></sub>
+                        </span>
+
+                        thì cần định nghĩa lại
+
+                        <span class="math">
+                            P(T &lt; t<sub>α</sub>) = α.
+                        </span>
+                    </li>
+
+                    <li>
+                        Tương tự đối với kiểm định
+                        <span class="math">Z</span>.
+                        Cách tốt nhất là nên định nghĩa lại các công thức giá trị tới hạn
+                        khi trình bày để khỏi nhầm lẫn.
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                Bước 4:
+                <ul>
+                    <li>
+                        Đề bài nếu có cho giá trị mẫu thì ta cần phải chuyển sang
+                        <b>mẫu hiệu chỉnh</b>.
+                    </li>
+
+                    <li>
+                        Các giá trị quan sát được cần được viết bằng chữ cái thường
+                        <span class="math">x̄, s</span>
+                        chứ không phải chữ cái in hoa
+                        <span class="math">X, S</span>
+                        - thường được dùng cho biến ngẫu nhiên.
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                Bước 5:
+                <ul>
+                    <li>Mắc sai lầm loại 1, hoặc loại 2.</li>
+
+                    <li>
+                        Cần kết luận với bài toán cụ thể chứ không phải chỉ là
+                        bác bỏ
+                        <span class="math">H<sub>0</sub></span>
+                        hoặc chấp thuận
+                        <span class="math">H<sub>0</sub></span>.
+                    </li>
+
+                    <li>
+                        Kết luận thường gắn liền với
+                        <span class="blue">mức ý nghĩa α</span>
+                        cho trước.
+                    </li>
+                </ul>
+            </li>
+
+        </ol>
+
+    </div>
+  </div>
+
+
+  <!-- Phần II -->
+  <h2>IV. Bài tập rèn luyện</h2>
+  <ul>
+    <script>
+      function toggleSection(id) {
+          const section = document.getElementById(id);
+          section.style.display = (section.style.display === "none" || section.style.display === "") ? "block" : "none";
+        }
+    </script>
+
+    <button onclick="toggleSection('BT1')">Bài tập 1</button>
+    <div id="BT1" class="section-content">
+      <p><p>Một nhà máy công bố tuổi thọ trung bình của bóng đèn là 1000 giờ. Biết độ lệch chuẩn tổng thể là 120 giờ.Lấy ngẫu nhiên 64 bóng đèn, thu được tuổi thọ trung bình mẫu là 965 giờ.Với mức ý nghĩa  \(\alpha= 0.05\), hãy kiểm định xem công bố của nhà máy có còn đúng không.</p>
+        
+      </p>
+    </div>
+    <br>
+    <button onclick="toggleSection('BT2')">Bài tập 2</button>
+    <div id="BT2" class="section-content">
+      Một loại nước giải khát được quảng cáo có dung tích trung bình 330 ml.
+    Kiểm tra 49 lon thu được:
+    \(\bar{x} = 325\) ml, \(\sigma = 14\) ml.
+    Kiểm định ở mức ý nghĩa 1% xem dung tích trung bình có nhỏ hơn quảng cáo hay không.
+    </div>
+    <br>  
+
+    <!-- <li> <button onclick="btbnnroirac()">Ước lượng tham số cho kỳ vọng</button>
+      <script>
+        function btbnnroirac() {
+          window.open("C2BNNRR_BT.html", "_blank");
+          window.open("Contents/XSTK/C2BT.html", "_self");
+        }
+      </script>
+    </li> -->
+
+    <!-- <li>
+      <button onclick="btbnnlientuc()">Ước lượng tham số cho phương sai </button>
+      <script>
+        function btbnnlientuc() {
+          window.open("C2BNNLT_BT.html", "_self");
+        }
+      </script> 
+    </li> -->
+    <!-- <li> 
+      <button onclick="ppthongdung()">Ước lượng tham số cho tỷ lệ</button>
+      <script>
+        function ppthongdung() {
+          window.open("C2PPThongDung.html", "_self");
+        }
+      </script> 
+    </li> -->
+  </ul>
+  
+
+   <h2> Xem thêm  <br> 
+    <p>Xem thêm nội dung <a href="C3Bnnnhieuchieu.html">Chương 1 tại đây</a>.</p>
+    <p>Xem thêm nội dung <a href="C2BNN_LT.html">Chương 2 tại đây</a>.</p>
+    <p>Xem thêm nội dung <a href="C3Bnnnhieuchieu.html">Chương 3 tại đây</a>.</p>
+    <p>Xem thêm nội dung <a href="C4ThongkeUocluongthamsoV2.html">Chương 4 tại đây</a>.</p>
+    <p>Xem thêm nội dung <a href="C5Kiemdinhgth.html">Chương 5 tại đây</a>.</p>
+ </h2> 
+
+
+
+
+
+</body>
+</html>

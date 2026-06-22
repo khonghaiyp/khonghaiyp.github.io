@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Mục lục học phần XSTK</title>
+
+  <!-- MathJax để hiển thị công thức toán -->
+  <script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+  <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #222;
+      margin: 40px;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+    }
+    h2 {
+      color: #0055aa;
+      margin-top: 40px;
+    }
+    button {
+      background-color: #0055aa;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #003f7f;
+    }
+    .section-content {
+      display: none;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .author {
+      text-align: right;
+      font-style: italic;
+      margin-top: 30px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    body{font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:#f7f7fb; padding:20px}
+    .card{background:white;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);max-width:900px;margin:0 auto}
+    label{margin-right:6px}
+    input[type=number]{width:80px;padding:4px;margin-right:10px}
+    button{padding:6px 12px;border:0;background:#2563eb;color:white;border-radius:8px;cursor:pointer}
+    button:active{transform:translateY(1px)}
+  </style>
+
+</head>
+<body>
+
+  <h1>📚 CHƯƠNG I: SỰ KIỆN NGẪU NHIÊN VÀ PHÉP TÍNH XÁC SUẤT </h1>
+  <p class="author">
+    Biên soạn: <strong>Ts. Khổng Văn Hải</strong><br>
+    Khoa Toán - Tin, Đại học Bách Khoa Hà Nội
+  </p>
+ 
+  <hr>
+
+  <!-- Phần I -->
+  <h2>I. Tóm tắt lý thuyết</h2>
+  <!-- <button onclick="toggleSection('theory')">📘 Xem / Ẩn phần lý thuyết</button>
+  <div id="theory" class="section-content"> -->
+    <h3> Định nghĩa xác suất</h3>
+    <ul>
+        <li>Nếu X là biến ngẫu nhiên rời rạc thì </li> 
+            <ul>
+                <li> \(E[X]= \sum_{k} x_{k}p_{k} \)</li>
+
+                <li>\(E[h(X)]= \sum_{k} h(x_{k})p_{k} \).
+                    <p>Ví dụ \(E[X^2]= \sum_{k} (x_{k})^{2}p_{k}\) </p> 
+                </li>
+            </ul>
+        <li>Nếu X là biến ngẫu nhiên liên tục thì </li>
+            <ul>
+                <li> \(E[X]= \int_{-\infty}^{\infty}xf_{X}(x)dx \)</li>
+                <li>\(E[h(X)]= \int_{-\infty}^{\infty}h(x)f_{X}(x)dx \).
+                    <p> Ví dụ  \(E[X^2]= \int_{-\infty}^{\infty}x^2f_{X}(x)dx\)</p> </li>
+            </ul>
+        <li> Tính chất</li>
+            <ul>
+                <li> \(E(c)=c \) (với c là hằng số)</li>
+                <li> \(E(X+Y) = E(X) +E(Y) \)</li>
+                <li> \(E(aX) = aE(X)\)</li>
+                <li> Tổng quát \(E(ah(X)+bg(Y)) = aE(h(X)) +bE(g(Y)) \) với </li>
+            </ul>
+    </ul>
+    <h3> Công thức cộng, nhân xác suất </h3>
+      <ul>
+        <li> Xác suất có điều kiện: \(P(A|B) = \dfrac{P(AB)}{P(B)}\)</li>
+        <li> Công thức cộng xác suất: </li>
+          <ul> 
+            <li> \( P(A+B)= P(A)+P(B)-P(AB)\) </li>
+            <li> \( P(A+B+C)= P(A)+P(B)+P(C)-P(AB)-P(AC)-P(BC)+P(ABC)\) </li>
+            <li> Tổng quát \( P(\sum_{i=1}^{n}A_{i})= \sum_{i=1}^{n}P(A_i)-\sum_{i < j} P(A_{i}A_{j}) + \cdots + (-1)^n P(\prod_{i=1}^n)A_{i}\) </li>
+          </ul>
+          Nếu A,B xung khắc thì $A.B=0$ 
+      </ul> 
+
+
+    <h3> Công thức Bernoulli </h3>
+    <h3> Công thức Bernoulli </h3>
+    Giả sử ta thực hiện n phép thử. Xác suất mỗi lần thử thành công là \(p\). Khi đó xác suất để thực hiện n phép thử có k phép thử thành công là 
+    \begin{align}
+    P_{n}(k)= C_n^kp^{n}(1-p)^{m-k}
+    \end{align}
+    <h3> Công thức xác suất dầy đủ. Công thức Bayes </h3>
+
+<!-- </div>     -->
+
+
+
+
+  <!-- Phần II -->
+  <h2>III. Bài tập rèn luyện</h2>
+  <ul>
+    <li> <button onclick="btbnnroirac()">Bài tập biến ngẫu nhiên rời rạc</button>
+      <script>
+        function toggleSection(id) {
+          const section = document.getElementById(id);
+          section.style.display = (section.style.display === "none" || section.style.display === "") ? "block" : "none";
+        }
+
+        function btbnnroirac() {
+          window.open("C2BNNRR_BT.html", "_blank");
+        //   window.open("Contents/XSTK/C2BT.html", "_self");
+        }
+      </script>
+    </li>
+    <li>
+      <button onclick="btbnnlientuc()">Bài tập biến ngẫu nhiên liên tục</button>
+      <script>
+        function btbnnlientuc() {
+          window.open("C2BNNLT_BT.html", "_self");
+        }
+      </script> 
+    </li>
+    <li> 
+      <button onclick="ppthongdung()">Bài tập: Một số phân phối xác suất thông dung</button>
+      <script>
+        function ppthongdung() {
+          window.open("C2PPThongDung.html", "_self");
+        }
+      </script> 
+    </li>
+  </ul>
+  
+
+
+
+<!-- 
+<script>
+  function backToHome() {
+    window.open("../../index.html", "_self");
+  }
+</script>
+
+<button onclick="backToHome()">⬅ Quay lại Trang chính</button> -->
+
+
+ <h2> Xem thêm  <br> 
+    <p>Xem thêm nội dung <a href="C3Bnnnhieuchieu.html">Chương 1 tại đây</a>.</p>
+    <p>Xem thêm nội dung <a href="C2BNN_LT.html">Chương 2 tại đây</a>.</p>
+    <p>Xem thêm nội dung <a href="C3Bnnnhieuchieu.html">Chương 3 tại đây</a>.</p>
+    <p>Xem thêm nội dung <a href="C4ThongkeUocluongthamsoV2.html">Chương 4 tại đây</a>.</p>
+    <p>Xem thêm nội dung <a href="C5Kiemdinhgth.html">Chương 5 tại đây</a>.</p>
+ </h2> 
+
+
+
+</body>
+</html>
