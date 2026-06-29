@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tóm tắt Giải tích 3 - Chương 3: Phép biến đổi Laplace</title>
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+    <script>
+    function toggleSection(sectionId) {
+        // Tìm phần tử HTML theo ID được truyền vào (ở đây là 'Congthucxsdaydubayes')
+        var section = document.getElementById(sectionId);
+        
+        // Kiểm tra trạng thái hiển thị và đảo ngược nó
+        if (section.style.display === "none" || section.style.display === "") {
+            section.style.display = "block"; // Hiển thị nội dung
+        } else {
+            section.style.display = "none";  // Ẩn nội dung
+        }
+    }
+    </script> 
+
+    <style>
+        /* body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f0f4f8;
+        } */
+        body {
+            background-color: #f8f9fa;
+            color: #222;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, #cc2b5e 0%, #753a88 100%);
+            color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 { margin: 0; font-size: 2rem; }
+        p.subtitle { margin: 5px 0 0 0; opacity: 0.9; font-style: italic; }
+        .author {
+        text-align: right;
+        font-style: italic;
+        margin-top: 30px;
+        }
+        section {
+            background: #fff;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            border-left: 5px solid #ff416c;
+        }
+        h2 {
+            color: #ff416c;
+            margin-top: 0;
+            border-bottom: 2px solid #f0f0f0;
+            padding-bottom: 10px;
+        }
+        h3 { color: #2f3640; margin-top: 20px; padding-left: 5px; border-left: 3px solid #ff4b2b; }
+        
+        .important-box {
+            background-color: #fff5f5;
+            border: 1px solid #ffe3e3;
+            color: #c0392b;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .method-box {
+            background-color: #f1f2f6;
+            border-left: 4px solid #747d8c;
+            padding: 12px;
+            margin: 10px 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #dee2e6;
+            padding: 10px;
+            text-align: left;
+        }
+        th { background-color: #ffe8ec; color: #ff416c; }
+        tr:nth-child(even) { background-color: #f8f9fa; }
+        .badge {
+            background-color: #2ed573;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>📚 Chương 3: Phép biến đổi Laplace và <br> Ứng dụng giải phương trình vi phân </h1>
+    <p class="author">
+    Biên soạn: <strong>Ts. Khổng Văn Hải</strong><br>
+    Khoa Toán - Tin, Đại học Bách Khoa Hà Nội
+    </p>
+</header>
+
+<main>
+    <section>
+        <h2>1. Định nghĩa phép biến đổi Laplace</h2>
+        <button onclick="toggleSection('dinhnghiaphepbiendoi')">📘 Xem / Ẩn phần lý thuyết</button>    <div id="dinhnghiaphepbiendoi" class="section-content">  
+            <p>Cho hàm số $f(t)$ xác định với mọi $t \ge 0$. Phép biến đổi Laplace của $f(t)$ ký hiệu là $F(s)$ hoặc $\mathcal{L}\{f(t)\}(s)$ được định nghĩa qua tích phân suy rộng:</p>
+            $$F(s) = \mathcal{L}\{f(t)\}(s) = \int_{0}^{+\infty} e^{-st} f(t) dt$$
+            <p>Hàm gốc $f(t)$ thường được khôi phục từ hàm ảnh $F(s)$ qua <strong>phép biến đổi Laplace ngược</strong>: $f(t) = \mathcal{L}^{-1}\{F(s)\}(t)$.</p>
+            
+            <div class="important-box">            
+            <strong>Chú ý:</strong>
+                Viết biến đổi Laplace cần có đầy đủ các chỉ số s, và t. Vì với cặp giá trị (s,t) khác nhau thì giá trị của phép biến  đổi cũng sẽ khác nhau.
+            </div> 
+        
+
+            <p>Để làm bài nhanh, ta không tính tích phân mà tra trực tiếp bảng sau:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>$f(t)$ ($t \ge 0$)</th>
+                        <th>$F(s) = \mathcal{L}\{f(t)\}(s)$</th>
+                        <th>$f(t)$ ($t \ge 0$)</th>
+                        <th>$F(s) = \mathcal{L}\{f(t)\}(s)$</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>$1$</td>
+                        <td>$\dfrac{1}{s}$</td>
+                        <td>$e^{at}$</td>
+                        <td>$\dfrac{1}{s - a}$</td>
+                    </tr>
+                    <tr>
+                        <td>$t^n \quad (n \in \mathbb{N})$</td>
+                        <td>$\dfrac{n!}{s^{n+1}}$</td>
+                        <td>$t^\alpha \quad (\alpha > -1)$</td>
+                        <td>$\dfrac{\Gamma(\alpha + 1)}{s^{\alpha + 1}}$</td>
+                    </tr>
+                    <tr>
+                        <td>$\sin(\omega t)$</td>
+                        <td>$\dfrac{\omega}{s^2 + \omega^2}$</td>
+                        <td>$\cos(\omega t)$</td>
+                        <td>$\dfrac{s}{s^2 + \omega^2}$</td>
+                    </tr>
+                    <tr>
+                        <td>$\sinh(at)$</td>
+                        <td>$\dfrac{a}{s^2 - a^2}$</td>
+                        <td>$\cosh(at)$</td>
+                        <td>$\dfrac{s}{s^2 - a^2}$</td>
+                    </tr>
+                </tbody>
+            </table>
+            trong đó 
+            <ul>
+                <li>     Trong đó $\Gamma (\alpha) = \displaystyle \int_{0}^{\infty} x^{\alpha -1} e^{-x}dx$    thoả mãn $\Gamma \left(\alpha +1\right) =\alpha \Gamma (\alpha ) $
+                 và  $ \Gamma \left(\dfrac{1}{2}\right) =\sqrt{\pi}$, $ \Gamma (n+1) = n!$</li>
+            </ul>
+        </div>    <br> 
+    </section>
+
+    <section>
+        <h2>2. Các tính chất chất của biến đổi Laplace</h2>
+        <button onclick="toggleSection('tinhchatphepbiendoi')">📘 Xem / Ẩn phần lý thuyết</button>    <div id="tinhchatphepbiendoi" class="section-content">  
+            <p>Giả sử $\mathcal{L}\{f(t)\}(s) = F(s)$ và $\mathcal{L}\{g(t)\}(s) = G(s)$:</p>
+            <ul>
+                <li><strong>Tính tuyến tính:</strong> $\mathcal{L}\{\alpha f(t) + \beta g(t)\}(s) = \alpha F(s) + \beta G(s)$</li>
+                <li><strong>Tính chất dời dịch ( tịnh tiến theo s):</strong> $\mathcal{L}\{e^{at}f(t)\}(s) = F(s - a)$</li>
+                <li><strong>Đạo hàm của phép biến đổi</strong> $\mathcal{L}\{t \cdot f(t)\}(s) = -F'(s) \quad \Rightarrow \quad \mathcal{L}\{t^n \cdot f(t)\} = (-1)^n \dfrac{d^n F(s)}{ds^n}$</li>
+                <li><strong>Tích phân của phép biến đổi:</strong> $\mathcal{L}\left\{\dfrac{f(t)}{t}\right\}(s) = \int_{s}^{+\infty} F(u) du$ Điều kiện  \(\displaystyle \lim_{t \to 0} \dfrac{f(t)}{t}\) tồn tại </li>
+            </ul>
+
+            <div class="important-box">
+                <strong>Định lý phép biến đổi của đạo hàm (Dùng để giải PT vi phân):</strong><br>
+                $$\mathcal{L}\{y'(t)\} = sY(s) - y(0)$$
+                $$\mathcal{L}\{y''(t)\} = s^2Y(s) - sy(0) - y'(0)$$
+                <em>Tổng quát:</em> $\mathcal{L}\{y^{(n)}(t)\} = s^n Y(s) - s^{n-1}y(0) - s^{n-2}y'(0) - \dots - y^{(n-1)}(0)$
+            </div>
+            <div class="important-box">
+                <strong>Một số công thức thường dùng </strong><br>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>$f(t)$ ($t \ge 0$)</th>
+                                <th>$F(s) = \mathcal{L}\{f(t)\}(s)$</th>
+                                <th>$f(t)$ ($t \ge 0$)</th>
+                                <th>$F(s) = \mathcal{L}\{f(t)\}(s)$</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>$t^{n}e^{at} \quad (n \in \mathbb{N})$</td>
+                                <td>$\dfrac{n!}{(s-a)^{n+1}}$</td>
+                                <td>$t^{\alpha}e^{at} \quad (\alpha \in \mathbb{R}^+)$</td>
+                                <td>$\dfrac{\Gamma(\alpha +1)}{(s-a)^{\alpha+1}}$</td>
+                            </tr>
+                            <tr>
+                                <td>$t\sin kt $</td>
+                                <td>$\dfrac{2ks}{(s^2+k^2)^2}$</td>
+                                <td>$t\sinh kt$</td>
+                                <td>$\dfrac{2ks}{(s^2-k^2)^2}$</td>
+                            </tr>
+                            <tr>
+                                <td>$t\cos kt$</td>
+                                <td>$\dfrac{s^2-k^2}{(s^2+k^2)^2}$</td>
+                                <td>$t\cosh kt$</td>
+                                <td>$\dfrac{s^2+k^2}{(s^2-k^2)^2}$</td>
+                            </tr>
+                            <tr>
+                                <td>$\dfrac{1}{2k^3} \left(\sin kt - kt \cos kt \right)$</td>
+                                <td>$\dfrac{1}{(s^2+k^2)^2}$</td>
+                                <td>$\dfrac{\sinh(kt)}{2k}$</td>
+                                <td>$\dfrac{s}{(s^2+k^2)^2}$</td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>    <br> 
+
+    </section>
+
+    <section>
+        <h2>3. Định lý tích chập (Convolution)</h2>
+        <button onclick="toggleSection('khainiemtichchap')">📘 Xem / Ẩn phần lý thuyết</button>    <div id="khainiemtichchap" class="section-content">  
+            <p>Tích chập của hai hàm $f(t)$ và $g(t)$ được ký hiệu và định nghĩa là: $$(f * g)(t) = \int_{0}^{t} f(\tau)g(t - \tau) d\tau$$</p>
+            <p><strong>Định lý:</strong> Ảnh Laplace của tích chập bằng tích các hàm ảnh:</p>
+            $$\mathcal{L}\{(f * g)(t)\}(s) = F(s) \cdot G(s) \quad \Rightarrow \quad \mathcal{L}^{-1}\{F(s) \cdot G(s)\} = (f * g)(t)$$
+        </div>    <br> 
+    </section>
+
+    <section>
+        <h2>4. Thuật toán tìm biến đổi Laplace ngược ($\mathcal{L}^{-1}$)</h2>
+        <button onclick="toggleSection('timbdlaplacenguoc')">📘 Xem / Ẩn phần lý thuyết</button>    <div id="timbdlaplacenguoc" class="section-content">  
+            <p>Đề bài thường cho hàm phân thức $F(s) = \dfrac{P(s)}{Q(s)}$. Ta thực hiện theo các bước:</p>
+            <div class="method-box">
+                <strong>Các bước phân tích mẫu số:</strong><br>
+                <strong>Bước 1:</strong> Phân tích mẫu số $Q(s)$ thành các nhân tử bậc nhất hoặc bậc hai vô nghiệm.<br>
+                <strong>Bước 2:</strong> Dùng phương pháp <em>Hệ số bất định</em> (hoặc phương pháp che đi - Heaviside) để tách thành các phân số tối giản.<br>
+                <ul>
+                    <li>Dạng bậc nhất: $\dfrac{A}{s - a} \xrightarrow{\mathcal{L}^{-1}} A e^{at}$</li>
+                    <li>Dạng bậc hai vô nghiệm (đưa về bình phương đầy đủ): $\dfrac{B \cdot s + C}{(s-\alpha)^2 + \beta^2}$ rồi dùng tính chất dời dịch phối hợp với $\sin, \cos$.</li>
+                </ul>
+            </div>
+        </div>    <br> 
+    </section>
+
+    <section>
+        <h2>5. Ứng dụng giải Phương trình vi phân với điều kiện ban đầu ( Bài toán Cauchy) <span class="badge">Câu ăn điểm thi</span></h2>
+        <button onclick="toggleSection('giaiptviphan')">📘 Xem / Ẩn phần lý thuyết</button>    <div id="giaiptviphan" class="section-content">  
+            <p>Xét bài toán tìm $y(t)$ thỏa mãn: $y'' + ay' + by = f(t)$ với điều kiện $y(0) = y_0, y'(0) = y_1$.</p>
+            <div class="method-box">
+                <strong>Thuật toán 3 bước:</strong><br>
+                <strong>Bước 1:</strong> Thực hiện phép biến đổi Laplace cả 2 vế của phương trình. Áp dụng định lý đạo hàm hàm gốc và thế các giá trị $y(0), y'(0)$ vào.<br>
+                <strong>Bước 2:</strong> Gom nhóm, cô lập để rút ra biểu thức của hàm ảnh $Y(s)$ dưới dạng phân thức đại số.<br>
+                <strong>Bước 3:</strong> Tìm biến đổi Laplace ngược của $Y(s)$ để suy ra nghiệm $y(t) = \mathcal{L}^{-1}\{Y(s)\}$.
+            </div>
+        </div>    <br> 
+    </section>
+    <section>
+         <h2> Xem thêm nội dung  <br> 
+            <p><a href="GT3C1.html">Chương 1</a>.</p>
+            <p><a href="GT3C2.html">Chương 2</a>.</p>
+            <p><a href="GT3C3.html">Chương 3</a>.</p>  
+        </h2>
+    </section>
+</main>
+
+<footer>
+    <p style="text-align: center; color: #7f8c8d; font-size: 0.9rem;">Kết thúc trọn vẹn 3 chương Giải tích 3 HUST. Chúc các bạn đạt điểm tuyệt đối! 🚀</p>
+</footer>
+
+</body>
+</html>

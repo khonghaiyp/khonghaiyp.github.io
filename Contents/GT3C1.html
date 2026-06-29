@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tóm tắt Giải tích 3 - Toàn bộ Chương 1: Chuỗi Số & Chuỗi Lũy Thừa</title>
+    
+    <script>
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']],
+                processEscapes: true
+            }
+        };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+
+<script>
+function toggleSection(sectionId) {
+    // Tìm phần tử HTML theo ID được truyền vào (ở đây là 'Congthucxsdaydubayes')
+    var section = document.getElementById(sectionId);
+    
+    // Kiểm tra trạng thái hiển thị và đảo ngược nó
+    if (section.style.display === "none" || section.style.display === "") {
+        section.style.display = "block"; // Hiển thị nội dung
+    } else {
+        section.style.display = "none";  // Ẩn nội dung
+    }
+}
+</script>    
+
+
+    <style>
+        body {
+            background-color: #f8f9fa;
+            color: #222;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 950px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            text-align: center;
+            background: linear-gradient(135deg, #cc2b5e 0%, #753a88 100%);
+            color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 { margin: 0; font-size: 2rem; }
+        p.subtitle { margin: 5px 0 0 0; opacity: 0.9; font-style: italic; }
+        
+        section {
+            background: #fff;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            border-left: 5px solid #753a88;
+        }
+        h2 {
+            color: #753a88;
+            margin-top: 0;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 10px;
+        }
+        h3 { color: #d9534f; margin-top: 20px; }
+        
+        .important-box {
+            background-color: #fff3cd;
+            border: 1px solid #ffeeba;
+            color: #856404;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .problem {
+            background-color: #eef7fc;
+            border-left: 4px solid #3498db;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        .solution {
+            margin-top: 15px;
+            padding-left: 10px;
+        }
+        .section-content {
+        display: none;
+        background: #fff;
+        border-radius: 10px;
+        padding: 20px;
+        margin-top: 15px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        .method {
+            background-color: #fdfefe;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .method-box {
+            background-color: #e2e3e5;
+            border-left: 4px solid #6c757d;
+            padding: 12px;
+            margin: 10px 0;
+            font-style: italic;
+        }
+        .exercise-container {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .exercise-title {
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        .author {
+        text-align: right;
+        font-style: italic;
+        margin-top: 30px;
+        }
+        .latex-block-content {
+            background-color: #fdf7f7;
+            padding: 15px 20px 15px 15px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+        th { background-color: #f2f2f2; color: #753a88; }
+        tr:nth-child(even) { background-color: #f9f9f9; }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>📚 Chương 1: Chuỗi Số & Chuỗi Lũy Thừa </h1>
+    <p class="author">
+    Biên soạn: <strong>Ts. Khổng Văn Hải</strong><br>
+    Khoa Toán - Tin, Đại học Bách Khoa Hà Nội
+    </p>
+</header>
+
+<main>
+    <section>
+        <h2>1. Chuỗi số: Các khái niệm cơ bản</h2>
+        <button onclick="toggleSection('chuoisokncoban')">📘 Xem / Ẩn phần nội dung</button>    
+        <div id="chuoisokncoban" class="section-content">   
+            <p>Chuỗi số có dạng tổng vô hạn: $$\sum_{n=1}^{\infty} u_n = u_1 + u_2 + \dots + u_n + \dots$$</p>
+            <p><strong>Tổng riêng thứ $n$:</strong> $\displaystyle S_n = \sum_{k=1}^{n} u_k$. Nếu $\displaystyle \lim_{n \to \infty} S_n = S$ (hữu hạn) thì chuỗi hội tụ và có tổng bằng $S$.</p>
+            <div class="important-box">
+                <strong>Điều kiện cần để chuỗi hội tụ:</strong> Nếu chuỗi $\displaystyle \sum_{n=1}^{\infty} u_n$ hội tụ thì $\displaystyle \lim_{n \to \infty} u_n = 0$.<br>
+                <em>Hệ quả:</em> Nếu $\displaystyle \lim_{n \to \infty} u_n \neq 0$ thì chuỗi <strong>phân kỳ</strong>. <br>
+                <em>Chú ý:</em> Nếu  $\displaystyle \lim_{n \to \infty} u_n = 0$  không suy ra được thì chuỗi <strong> hội tụ </strong> - <p style="color: blue;">Cái này sinh viên sai rất nhiều.  </p>
+            </div>
+                    <button onclick="toggleSection('vidu1.1')">📘 Ví dụ 1</button>    
+                    <div id="vidu1.1" class="section-content">  
+                        <div class="exercise">
+                        <p><strong>Bài 1:</strong> Xét tính hội tụ và tính tổng (nếu có) của chuỗi số sau:</p>
+                            <div>$$\sum_{n=1}^{\infty} \frac{1}{n(n+1)}$$</div>
+                
+                        <button class="btn-sol" onclick="toggleSection('sol-bai1')">📘 Xem lời giải chi tiết</button>
+                            <div id="sol-bai1" class="solution-content">
+                                <p><strong>Lời giải:</strong></p>
+                                <p>Số hạng tổng quát được phân tích thành hiệu:</p>
+                                <div>$$a_n = \frac{1}{n(n+1)} = \frac{1}{n} - \frac{1}{n+1}$$</div>
+                                <p>Ta lập tổng riêng phần thứ $n$ của chuỗi số:</p>
+                                <div>$$S_n = a_1 + a_2 + \dots + a_n$$</div>
+                                <div>$$S_n = \left(1 - \frac{1}{2}\right) + \left(\frac{1}{2} - \frac{1}{3}\right) + \dots + \left(\frac{1}{n} - \frac{1}{n+1}\right)$$</div>
+                                <p>Triệt tiêu các số hạng đối nhau từng đôi một, ta được:</p>
+                                <div>$$S_n = 1 - \frac{1}{n+1}$$</div>
+                                <p>Tính giới hạn của $S_n$ khi $n \to \infty$:</p>
+                                <div>$$\lim_{n \to \infty} S_n = \lim_{n \to \infty} \left(1 - \frac{1}{n+1}\right) = 1$$</div>
+                                <p><strong>Kết luận:</strong> Vì giới hạn hữu hạn nên chuỗi số <span class="highlight">hội tụ</span> và có tổng $S = 1$.</p>
+                            </div>
+                        </div>
+                    </div>    <br> 
+
+
+                <button onclick="toggleSection('vidu1.2')">📘 Ví dụ 2</button>    
+                <div id="vidu1.2" class="section-content">  
+                    <div class="problem">
+                    <p><strong>Bài 2:</strong> Xét tính hội tụ và tính tổng (nếu có) của chuỗi số sau:</p>
+                    <div>$$\sum_{n=1}^{\infty} \frac{1}{4n^2 - 1}$$</div>
+                    
+                    <button class="btn-sol" onclick="toggleSection('sol-bai2')">📘 Xem lời giải chi tiết</button>
+                        <div id="sol-bai2" class="solution">
+                            <p><strong>Lời giải:</strong></p>
+                            <p>Ta có: $4n^2 - 1 = (2n-1)(2n+1)$. Tách phân thức số hạng tổng quát:</p>
+                            <div>$$a_n = \frac{1}{(2n-1)(2n+1)} = \frac{1}{2}\left(\frac{1}{2n-1} - \frac{1}{2n+1}\right)$$</div>
+                            <p>Khai triển tổng riêng phần $S_n$:</p>
+                            <div>$$S_n = \frac{1}{2}\left[\left(1 - \frac{1}{3}\right) + \left(\frac{1}{3} - \frac{1}{5}\right) + \dots + \left(\frac{1}{2n-1} - \frac{1}{2n+1}\right)\right]$$</div>
+                            <div>$$S_n = \frac{1}{2}\left(1 - \frac{1}{2n+1}\right)$$</div>
+                            <p>Xét giới hạn:</p>
+                            <div>$$\lim_{n \to \infty} S_n = \lim_{n \to \infty} \frac{1}{2}\left(1 - \frac{1}{2n+1}\right) = \frac{1}{2}$$</div>
+                            <p><strong>Kết luận:</strong> Chuỗi số <span class="highlight">hội tụ</span> và có tổng $S = \frac{1}{2}$.</p>
+                        </div>
+                    </div>
+                </div>    <br> 
+
+            <button onclick="toggleSection('Baitap1.1')">📘 Bài tập 1</button>    
+            <div id="Baitap1.1" class="section-content">
+
+            
+                <div class="exercise-container">
+                    <div class="exercise-title">
+                        Bài tập: Xét sự hội tụ và tính tổng nếu có của các chuỗi số sau:
+                    </div>
+                    
+                    <div class="two-columns">
+                        <div class="list-item">
+                            <span class="item-label">1.</span>
+                            <span class="item-content">$\displaystyle \sum_{n=1}^{\infty } \dfrac{1}{n(n+2)}$</span>
+                        </div>
+                        
+                        <div class="list-item">
+                            <span class="item-label">2.</span>
+                            <span class="item-content">$\displaystyle \sum_{n=1}^{\infty } \cos \dfrac{1}{n+1}$</span>
+                        </div>
+                        
+                        <div class="list-item">
+                            <span class="item-label">3.</span>
+                            <span class="item-content">$\displaystyle \sum_{n=1}^{\infty} \dfrac{1}{n\left(n+2\right) \left(n+4\right)  }$</span>
+                        </div>
+                        
+                        <div class="list-item">
+                            <span class="item-label">4.</span>
+                            <span class="item-content">$\dfrac{2}{2025}+\dfrac{2}{2025^{2}} + \dots + \dfrac{2}{2025^{n}}+ \dots$</span>
+                        </div>
+                        
+                        <div class="list-item">
+                            <span class="item-label">5.</span>
+                            <span class="item-content">$\displaystyle \sum_{n=1}^{\infty } \ln \left(1+\dfrac{2}{n}\right)$</span>
+                        </div>
+                    </div>
+                </div>
+            </div>    <br> 
+        </div>    <br>
+
+    </section>
+
+    <section>
+        <h2>2. Chuỗi số dương ($u_n \ge 0$)</h2>
+        <button onclick="toggleSection('chuoisoduong')">📘 Xem / Ẩn phần nội dung</button>    
+        <div id="chuoisoduong" class="section-content">  
+            <p>Các tiêu chuẩn xét hội tụ thường dùng tại HUST:</p>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tên tiêu chuẩn</th>
+                        <th>Công thức xét</th>
+                        <th>Kết luận</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>So sánh giới hạn</strong></td>
+                        <td>Tính $k = \lim_{n \to \infty} \frac{u_n}{v_n}$</td>
+                        <td>$0 < k < \infty$: Hai chuỗi cùng tính chất (thường chọn $v_n = \frac{1}{n^\alpha}$).</td>
+                    </tr>
+                    <tr>
+                        <td><strong>D'Alembert (Tỉ số)</strong></td>
+                        <td>Tính $D = \lim_{n \to \infty} \frac{u_{n+1}}{u_n}$</td>
+                        <td>$D < 1$: Hội tụ | $D > 1$: Phân kỳ | $D = 1$: Chưa kết luận được.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Cauchy (Căn số)</strong></td>
+                        <td>Tính $C = \lim_{n \to \infty} \sqrt[n]{u_n}$</td>
+                        <td>$C < 1$: Hội tụ | $C > 1$: Phân kỳ | $C = 1$: Chưa kết luận được.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><em>Lưu ý:</em> Chuỗi Riemann $\sum \frac{1}{n^\alpha}$ hội tụ khi $\alpha > 1$, phân kỳ khi $\alpha \le 1$.</p>
+            <div class="important-box">
+                <strong>Một số lỗi thường gặp:</strong> 
+                <ul class="latex-itemize">
+                    <li>
+                        $\lim_{n \to \infty } S_{n} = S^{*} \neq 0 \rightarrow$ Chuỗi phân kỳ <span class="text-danger">(Lỗi tư duy: Phép suy luận này bị ngược hoặc nhầm lẫn với điều kiện cần của số hạng tổng quát $a_n$).</span>
+                    </li>
+                    <li>
+                        $\lim_{n \to \infty } a_{n}=0 \rightarrow$ Chuỗi hội tụ <span class="text-danger">(Lỗi kinh điển: Đây chỉ là điều kiện cần, không phải điều kiện đủ. Ví dụ điển hình là chuỗi điều hòa $\sum \frac{1}{n}$ phân kỳ).</span>
+                    </li>
+                    <li>
+                        Đối với một số chuỗi số dương, chuỗi đan dấu thì không chỉ ra chuỗi đó là chuỗi số dương, chuỗi đan dấu trong bài làm trước khi áp dụng các tiêu chuẩn hội tụ liên quan.
+                    </li>
+                </ul>
+            </div>
+
+            <div class="important-box">
+                <strong>Những lưu ý đối với bài tập này:</strong> 
+                <ul>
+                    <li> Tính hội tụ, phân kỳ không phụ thuộc vào những phần tử đầu tiên
+                    <li>Tổng hiệu của một chuỗi hội tụ với chuỗi hội tụ là hội tụ</li>
+                    <li>Tổng hiệu của một chuỗi hội tụ với chuỗi phân kỳ là phân kỳ</li>
+                    <li>Tổng hiệu của hai chuỗi phân kỳ thì không xác định</li>
+                </ul>
+            </div>
+        </div>    <br> 
+    </section>
+
+    <section>
+        <h2>3. Chuỗi đan dấu & Dấu bất kỳ</h2>
+        <button onclick="toggleSection('chuoidandau')">📘 Xem / Ẩn phần nội dung</button>    
+        <div id="chuoidandau" class="section-content">  
+            <h3>Tiêu chuẩn Leibniz (Cho chuỗi đan dấu $\sum (-1)^n u_n$)</h3>
+            <p>Chuỗi hội tụ nếu dãy $\{u_n\}$ đơn điệu giảm và $\displaystyle \lim_{n \to \infty} u_n = 0$.</p>
+            <h3>Hội tụ tuyệt đối và Bán hội tụ</h3>
+            <ul>
+                <li>Nếu $\sum |u_n|$ hội tụ $\Rightarrow \sum u_n$ <strong>Hội tụ tuyệt đối</strong>.</li>
+                <li>Nếu $\sum |u_n|$ phân kỳ nhưng $\sum u_n$ hội tụ $\Rightarrow \sum u_n$ <strong>Bán hội tụ</strong>.</li>
+            </ul>
+            <button onclick="toggleSection('tieuchuankhac')">📘 Một số tiêu chuẩn khác</button>    
+            <div id="tieuchuankhac" class="section-content">  
+                <ul>
+                    <!-- Mục 1: Dirichlet -->
+                    <li class="criteria-item">
+                        <span class="criteria-title">(Dirichlet)</span> Dãy tổng riêng của chuỗi $\displaystyle \sum_{n=1}^\infty a_{n}$ bị chặn, $b_{n} \downarrow 0$, chuỗi $\displaystyle \sum_{n=1}^{\infty}a_{n}b_{n}$ hội tụ.
+                    </li>
+
+                    <!-- Mục 2: Abel -->
+                    <li class="criteria-item">
+                        <span class="criteria-title">(Abel)</span> Chuỗi $\displaystyle \sum_{n=1}^\infty a_{n}$ hội tụ, $b_{n}$ đơn điệu (có thể tăng hoặc giảm) và bị chặn, chuỗi $\displaystyle \sum_{n=1}^{\infty}a_{n}b_{n}$ hội tụ.
+                    </li>
+
+                    <!-- Mục 3: Raabe -->
+                    <li class="criteria-item">
+                        <span class="criteria-title">Tiêu chuẩn Raabe:</span> Giả thiết
+                        <div class="math-block">
+                            $$\begin{aligned}
+                                \lim_{n \to \infty} \left| \dfrac{a_{n}}{a_{n+1}} \right| &= 1 \\
+                                \lim_{n \to \infty} n \left( \left| \dfrac{a_{n}}{a_{n+1}} \right| - 1 \right) &= R
+                            \end{aligned}$$
+                        </div>
+                        Khi đó nếu $R > 1$ thì chuỗi hội tụ, nếu $R < 1$ thì chuỗi phân kỳ.
+                    </li>
+
+                    <!-- Mục 4: Bertrand -->
+                    <li class="criteria-item">
+                        <span class="criteria-title">Tiêu chuẩn Bertrand:</span> Cho $\left\{ a_{n}\right\}$ là một dãy các số dương. Đặt $b_{n}= \ln \left( n \left( \dfrac{a_{n}}{a_{n+1}}-1\right) -1\right)$. Đặt $L= \lim_{n \to \infty } b_{n}$.
+                        <ul class="sub-list">
+                            <li>Nếu $L > 1$ chuỗi hội tụ</li>
+                            <li>Nếu $L < 1$ chuỗi phân kỳ</li>
+                            <li>Nếu $L = 1$ chưa xác định được.</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>    <br> 
+            <div class="important-box">
+                Một số công thức thường dùng trong phần này: <br>
+                $$ \cos (x+k\pi) = (-1)^{k}\cos x, \, \,  \sin(x+ k\pi) =\sin(x), \forall k \in \mathbb{N}.$$ 
+            </div>
+        </div>    <br> 
+    </section>
+
+
+    <section>
+        <h2>4. Chuỗi Lũy Thừa (Trọng tâm)</h2>
+        <button onclick="toggleSection('chuoiluythua')">📘 Xem / Ẩn phần lý thuyết</button>    
+        <div id="chuoiluythua" class="section-content">  
+
+        
+
+            Chuỗi lũy thừa là chuỗi có dạng $\displaystyle \sum_{n=1}^{\infty} a_{n}x^{n}$
+            <br>
+
+            <button onclick="toggleSection('Tcchuoiluythua')">📘 Tính chất</button>    
+            <div id="Tcchuoiluythua" class="section-content">
+                <ol class="main-list">
+                    <!-- Mục 2 -->
+                    <li>Chuỗi hội tụ tại $x_{0}$ thì sẽ hội tụ với mọi $x$ sao cho $\left| x \right| \leq \left| x_{0} \right|$.</li>
+                    
+                    <!-- Mục 3 -->
+                    <li>Công thức tính bán kính hội tụ:
+                        <div class="math-block">
+                            $$R = \lim_{n \to \infty } \left| \dfrac{a_{n}}{a_{n+1}} \right| \quad \text{hoặc} \quad R = \dfrac{1}{\lim_{n \to \infty } \sqrt[n]{\left| a_{n} \right|}}$$
+                        </div>
+                    </li>
+                    
+                    <!-- Mục 4 -->
+                    <li>Tính chất:
+                        <ol class="sub-list">
+                            <li><strong>Tính hội tụ đều:</strong> $\displaystyle \sum_{n=1}^{\infty} a_{n}x^{n}$ hội tụ đều trên mọi đoạn $[a,b] \subset (-R,R)$.</li>
+                            <li><strong>Tính liên tục:</strong> Tổng $S(x)$ liên tục trên $(-R,R)$.</li>
+                            <li><strong>Tính khả tích:</strong> $S(x)$ khả tích trên mọi đoạn $[a,b] \subset (-R,R)$ và:
+                                <div class="math-block">
+                                    $$\int_{a}^{b} S(x) dx = \int_{a}^{b} \left(\sum_{n=1}^{\infty} a_{n}x^{n}\right) dx = \sum_{n=1}^{\infty} \int_{a}^{b} a_{n}x^{n} dx$$
+                                </div>
+                            </li>
+                            <li><strong>Tính khả vi:</strong> $S(x)$ khả vi trên mọi đoạn $(a,b) \subset (-R,R)$ và:
+                                <div class="math-block">
+                                    $$S'(x) = \frac{d}{dx}\left(\sum_{n=1}^{\infty} a_{n}x^{n}\right) = \sum_{n=1}^{\infty} u_{n}'(x) = \sum_{n=1}^{\infty} n a_{n} x^{n-1}$$
+                                </div>
+                            </li>
+                        </ol>
+                    </li>
+                    
+                    <!-- Mục 5 -->
+                    <li>Công thức khai triển Taylor tại $x=a$ của một hàm:
+                        <div class="math-block">
+                            $$\begin{aligned}
+                            f(x) &= \sum_{n=0}^{\infty} \dfrac{f^{(n)}(a)(x-a)^{n}}{n!} \\
+                            &= f(a) + \dfrac{f'(a)}{1!}(x-a) + \dfrac{f''(a)}{2!} (x-a)^{2} + \dots + \dfrac{f^{(n)}(a)}{n!}(x-a)^{n} + o(\left|x-a\right|^{n})
+                            \end{aligned}$$
+                        </div>
+                    </li>
+                </ol>
+            </div>    <br> 
+
+            <h3>a. Cách tìm Bán kính hội tụ $R$</h3>
+            <button onclick="toggleSection('timbkht')">📘 Ẩn/ hiện nội dung</button>    
+            <div id="timbkht" class="section-content">          
+                
+                <p>Sử dụng một trong hai công thức sau:</p>
+                <ul>
+                    <li><strong>Công thức D'Alembert:</strong> $\rho = \lim_{n \to \infty} \left| \frac{a_{n+1}}{a_n} \right| \Rightarrow R = \frac{1}{\rho}$</li>
+                    <li><strong>Công thức Cauchy-Hadamard:</strong> $\rho = \lim_{n \to \infty} \sqrt[n]{|a_n|} \Rightarrow R = \frac{1}{\rho}$</li>
+                </ul>
+                <p><em>Quy ước:</em> Nếu $\rho = 0 \Rightarrow R = +\infty$. Nếu $\rho = +\infty \Rightarrow R = 0$.</p>
+            </div>    <br> 
+
+            <h3>b. Cách tìm Miền hội tụ (MHT)</h3>
+            <button onclick="toggleSection('timmienht')">📘 Ẩn/ hiện nội dung</button>    
+            <div id="timmienht" class="section-content">  
+                <div class="method-box">
+                    <strong>Thuật toán tìm MHT:</strong><br>
+                    <strong>Bước 1:</strong> Tính bán kính hội tụ $R$. Ta có khoảng hội tụ tạm thời là $(-R, R)$.<br>
+                    <strong>Bước 2:</strong> Xét tại hai đầu mút $x = -R$ và $x = R$ (thay trực tiếp vào chuỗi ban đầu để trở thành chuỗi số).<br>
+                    <strong>Bước 3:</strong> Kết luận MHT (có thể lấy hoặc không lấy dấu ngoặc vuông tại các mút tùy thuộc mút đó hội tụ hay phân kỳ).
+                </div>
+            </div>    <br> 
+
+            <h3>c. Tính tổng chuỗi lũy thừa (Khả vi/ khả tích)</h3>
+            <button onclick="toggleSection('tinhtongchuoi')">📘 Ẩn/ hiện nội dung </button>    
+            <div id="tinhtongchuoi" class="section-content"> 
+                <p>Trong khoảng hội tụ $(-R, R)$, ta có thể lấy đạo hàm hoặc tích phân từng số hạng của chuỗi:</p>
+                <ul>
+                    <li><strong>Hạ bậc (Đạo hàm):</strong> $\left( \displaystyle \sum_{n=0}^{\infty} a_n x^n \right)' = \displaystyle  \sum_{n=1}^{\infty} n a_n x^{n-1}$</li>
+                    <li><strong>Tăng bậc (Tích phân):</strong> $\displaystyle \int_{0}^{x} \left( \sum_{n=0}^{\infty} a_n t^n \right) dt = \displaystyle \sum_{n=0}^{\infty} \frac{a_n}{n+1} x^{n+1}$</li>
+                </ul>
+            </div>    <br> 
+
+            <div class="important-box">
+                <strong>Các chuỗi lũy thừa cần thuộc lòng để đưa về dạng tổng:</strong><br>
+                <strong>(Khai triển Maclaurin của các hàm cơ bản) </strong><br>
+                \( \begin{align}
+                \frac{1}{1-x} &= \sum_{n=0}^{\infty} x^n = 1 + x + x^2 + \dots \quad (\text{với } |x| < 1), \tag{R=1} \\
+                (1+x)^{\alpha} & = 1+\alpha x+ \dfrac{\alpha (\alpha -1)}{2}x^{2} + \dfrac{\alpha (\alpha -1)\cdots (\alpha -n+1)}{n!}x^{n} + \cdots , \tag{R=1} \\
+                \ln(1+x) &= \sum_{n=1}^{\infty} (-1)^{n-1} \frac{x^n}{n}\, \tag{R=1}  \\
+                e^x &= \sum_{n=0}^{\infty} \frac{x^n}{n!} = 1 + x + \frac{x^2}{2!} + \dots\,   \tag{R= $\infty$  }  \\
+                \sin x &=\displaystyle \sum_{n=0}^{\infty}\dfrac{(-1)^{n}x^{2n+1}}{(2n+1)!}  =x- \dfrac{x^{3}}{3!} +\dfrac{x^{5}}{5!} + (-1)^{n} \dfrac{x^{2n+1}}{(2n+1)!} \, \tag{R= $\infty$ } \\
+                \cos x &=\displaystyle \sum_{n=0}^{\infty}\dfrac{(-1)^{n}x^{2n}}{(2n)!} =1- \dfrac{x^{2}}{2!} +\dfrac{x^{4}}{4!} + (-1)^{n} \dfrac{x^{2n}}{(2n)!} \, \tag{R= $\infty$ } \\
+                \arctan x & = \displaystyle \sum_{n=1}^{\infty} \dfrac{(-1)^{n-1}}{2n-1} x^{2n-1} \tag{R=1}
+                \end{align}
+                    \)
+            </div>
+            <h3>Một số dạng toán thường gặp</h3>
+            <ul>
+                <li>Dạng 1: Tìm khoảng (miền ) hội tụ của chuỗi lũy thừa. </li>
+                <li>Dạng 2: Tính tổng của chuỗi lũy thừa </li>
+                <li>Dạng 3: Tìm khai triển Maclaurin của một hàm</li>
+                <li>Dạng 4: Tìm khai triển Taylor của một hàm tại một điểm nào đó </li>
+            </ul>
+                <button onclick="toggleSection('vddang1')">📘 Ví dụ dạng 1</button>    <div id="vddang1" class="section-content">  
+                    <p>Tìm miền hội tụ của chuỗi lũy thừa sau:</p>
+                    <div class="math-block">
+                        $$\displaystyle \sum_{n=1}^{\infty} \dfrac{(-1)^n}{n \cdot 3^n} (x-2)^n$$
+                    </div>
+                </div>    <br> 
+
+                <button onclick="toggleSection('vddang1sol')">🔑 LỜI GIẢI CHI TIẾT</button>    <div id="vddang1sol" class="section-content">
+                        Bước 1: Xác định hệ số và tìm bán kính hội tụ $R$
+                        <p>Đặt $X = x - 2$, chuỗi trở thành chuỗi lũy thừa dạng $\sum_{n=1}^{\infty} a_n X^n$ với hệ số:</p>
+                        
+                            $$a_n = \dfrac{(-1)^n}{n \cdot 3^n}$$
+                        
+                        <p>Áp dụng công thức D'Alembert để tìm bán kính hội tụ $R$:</p>
+                    
+                            $$\begin{aligned}
+                            R = \lim_{n \to \infty} \left| \dfrac{a_n}{a_{n+1}} \right| &= \lim_{n \to \infty} \left| \dfrac{(-1)^n}{n \cdot 3^n} \cdot \dfrac{(n+1) \cdot 3^{n+1}}{(-1)^{n+1}} \right| \\
+                            &= \lim_{n \to \infty} \left( \dfrac{n+1}{n} \cdot 3 \right) = 3
+                            \end{aligned}$$
+                    
+                        <p>Suy ra chuỗi hội tụ khi $\left| x - 2 \right| < 3 \iff -1 < x < 5$.</p>
+
+                        Bước 2: Xét tính hội tụ tại các điểm đầu mút
+                        
+                        <p><strong>• Tại mút $x = -1$:</strong> Thay vào chuỗi ban đầu ta được:</p>
+                        
+                            $$\sum_{n=1}^{\infty} \dfrac{(-1)^n}{n \cdot 3^n} (-1-2)^n = \sum_{n=1}^{\infty} \dfrac{(-1)^n}{n \cdot 3^n} (-3)^n = \sum_{n=1}^{\infty} \dfrac{(-1)^{2n} \cdot 3^n}{n \cdot 3^n} = \sum_{n=1}^{\infty} \dfrac{1}{n}$$
+                        
+                        <p>Đây là chuỗi điều hòa, nên nó <strong>phân kỳ</strong>.</p>
+
+                        <p><strong>• Tại mút $x = 5$:</strong> Thay vào chuỗi ban đầu ta được:</p>
+                            $$\sum_{n=1}^{\infty} \dfrac{(-1)^n}{n \cdot 3^n} (5-2)^n = \sum_{n=1}^{\infty} \dfrac{(-1)^n \cdot 3^n}{n \cdot 3^n} = \sum_{n=1}^{\infty} \dfrac{(-1)^n}{n}$$
+                    
+                        <p>Đây là chuỗi đan dấu. Xét dãy số $u_n = \dfrac{1}{n}$, ta có $u_n \downarrow 0$ khi $n \to \infty$. Theo tiêu chuẩn Leibniz, chuỗi này <strong>hội tụ</strong>.</p>
+
+                        Bước 3: Kết luận miền hội tụ
+                        <p>Kết hợp khoảng hội tụ và điểm mút hội tụ, miền hội tụ $D$ của chuỗi số đã cho là:</p>
+                            $$D = (-1, 5]$$
+                </div>    <br> 
+        </div>    <br> 
+    </section>
+
+    <section>
+         <h2> Xem thêm nội dung  <br> 
+            <p><a href="GT3C1.html">Chương 1</a>.</p>
+            <p><a href="GT3C2.html">Chương 2</a>.</p>
+            <p><a href="GT3C3.html">Chương 3</a>.</p>  
+        </h2>
+    </section>
+
+</main>
+
+<footer>
+    <p style="text-align: center; color: #888; font-size: 0.9rem; margin-top: 5px;"> Kíp này quyết tâm giật A+ Giải tích 3 HUST! 🚀</p>
+</footer>
+
+</body>
+</html>
