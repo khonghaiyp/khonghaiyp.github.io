@@ -5,22 +5,28 @@
   <title>Mục lục học phần XSTK</title>
 
   <!-- MathJax để hiển thị công thức toán -->
+  <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
   <script>
   MathJax = {
     tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
     svg: { fontCache: 'global' }
   };
 </script>
-  <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
-  <script id="MathJax-script" async
-          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
 
   <style>
     body {
       font-family: "Segoe UI", Arial, sans-serif;
       background-color: #f8f9fa;
       color: #222;
-      margin: 40px;
+      margin: 40px;<ul>
+            <li>Bước 1: Nhận dạng bài toán (Ước lượng tham số cho kỳ vọng, phương sai, tỷ lệ) </li>
+            <li>Bước 2: Chọn thống kê và chỉ ra quy thuật phân phối của mẫu</li>
+            <li>Bước 3: Xác định các giá trị quan sát \(n, \alpha, t_{\alpha }^{n}, t_{\alpha/2}^{n},z_{\alpha }, z_{\alpha/2}\)</li>
+            <li>Bước 4: Xác định các khoảng tin cậy trái, phải, đối xứng tùy vào yêu cầu của đề bài.</li>
+        </ul> 
       line-height: 1.6;
     }
     h1 {
@@ -80,60 +86,100 @@
   <hr>
 
   <!-- Phần I -->
-  <h2>I. Tóm tắt lý thuyết</h2>
-  <!-- <button onclick="toggleSection('theory')">📘 Xem / Ẩn phần lý thuyết</button>
-  <div id="theory" class="section-content"> -->
-    <h3> Định nghĩa xác suất</h3>
-    <ul>
-        <li>Nếu X là biến ngẫu nhiên rời rạc thì </li> 
-            <ul>
-                <li> \(E[X]= \sum_{k} x_{k}p_{k} \)</li>
+   <h2>I. Lý thuyết</h2>
+      <button onclick="toggleSection('Phepthusukien')">📘 1. Phép thử, sự kiện</button>
+      <div id="Phepthusukien" class="section-content">
+        
+        <section>
+        <h3>Phép thử (Trial / Experiment)</h3>
+        <p><strong>Định nghĩa:</strong> Phép thử là một hành động, thí nghiệm hoặc một quá trình quan sát một hiện tượng nào đó mà kết quả của nó không thể đoán trước được một cách chính xác, nhưng ta biết trước được tất cả các kết quả có thể xảy ra của nó.</p>
+        
+        <p><strong>Không gian mẫu (Sample Space):</strong> Tập hợp tất cả các kết quả có thể xảy ra của một phép thử được gọi là không gian mẫu, ký hiệu là $\Omega$.</p>
 
-                <li>\(E[h(X)]= \sum_{k} h(x_{k})p_{k} \).
-                    <p>Ví dụ \(E[X^2]= \sum_{k} (x_{k})^{2}p_{k}\) </p> 
-                </li>
+        <p><em>Ví dụ:</em></p>
+        <ul>
+            <li>Phép thử gieo một đồng xu cân đối: Không gian mẫu là $\Omega = \{S, N\}$ (Sấp, Ngửa).</li>
+            <li>Phép thử gieo một con xúc xắc 6 mặt: Không gian mẫu là $\Omega = \{1, 2, 3, 4, 5, 6\}$.</li>
+        </ul>
+        <h3>Biến cố / Sự kiện (Event) </h3>
+        <p><strong>Định nghĩa:</strong> Biến cố (hay sự kiện) là một tập hợp con của không gian mẫu $\Omega$. Nói cách khác, biến cố là một hoặc một nhóm các kết quả của phép thử mà ta đang quan tâm. Người ta thường ký hiệu biến cố bằng các chữ cái in hoa: $A, B, C, \dots$</p>
+
+        <p><em>Ví dụ:</em> Trong phép thử gieo con xúc xắc, ta xét biến cố $A$: "Xuất hiện mặt có số chấm chẵn". Khi đó, tập hợp các kết quả thuận lợi cho $A$ là $A = \{2, 4, 6\} \subset \Omega$.</p>  
+        </section>
+
+        <section>
+        <h3>Các loại biến cố đặc biệt:</h3>
+        <ul>
+            <li><strong>Biến cố chắc chắn (Certain Event):</strong> Biến cố luôn luôn xảy ra khi thực hiện phép thử, ký hiệu chính là $\Omega$.</li>
+            <li><strong>Biến cố không thể (Impossible Event):</strong> Biến cố không bao giờ xảy ra khi thực hiện phép thử, ký hiệu là $\varnothing$.</li>
+            <li><strong>Biến cố đối (Complementary Event):</strong> Biến cố đối của biến cố $A$ là biến cố xảy ra khi và chỉ khi $A$ không xảy ra, ký hiệu là $\bar{A}$ hoặc $A^c$.</li>
+        </ul>
+        </section>
+
+        <section>
+          <h3> Mối quan hệ giữa các sự kiện. </h3>
+          <p>Giả sử $A$ và $B$ là hai biến cố thuộc cùng một không gian mẫu $\Omega$:</p>
+        <ul>
+            <li><strong>Biến cố giao (Biến cố tích):</strong> $A \cap B$ (hoặc $A \cdot B$) xảy ra khi cả $A$ và $B$ đồng thời xảy ra.</li>
+            <li><strong>Biến cố hợp (Biến cố tổng):</strong> $A \cup B$ (hoặc $A + B$) xảy ra khi có ít nhất một trong hai biến cố $A$ hoặc $B$ xảy ra.</li>
+            <li><strong>Biến cố xung khắc (Mutually Exclusive):</strong> $A$ và $B$ được gọi là xung khắc nếu chúng không thể đồng thời xảy ra trong một phép thử, tức là $A \cap B = \varnothing$.</li>
+        </ul>
+        </section>
+      </div> <br>
+
+      <button onclick="toggleSection('Dinhnghiaxacsuat')">📘 2. Định nghĩa xác suất</button>
+      <div id="Dinhnghiaxacsuat" class="section-content">
+          <ol> 
+            <li> Quan điểm cổ điển
+              \(P(A) = \dfrac{m}{n}\) trong đó $n$ tổng số kết cục đồng khả năng có thể có. $m$ tổng số kết cục thuận lợi cho A.
+            </li>
+            <li> Quan điểm hình học:
+ $P(A)= \dfrac{\text{ độ đo của H}}{\text{ độ đo của G}}$. Trong đó miền G biểu thị các kết cục có thể xảy ra. Miền H biểu thị các kết cục thuận lợi.
+            </li>
+            <li> Quan điểm thống kê:
+              Quan điểm $f_{n}(A)= \dfrac{x}{n}$ trong đó, n là số phép thử thực hiện, x là số lần xuất hiện sự kiện A.
+            </li>
+          </ol>
+
+        </div> <br>
+
+      <button onclick="toggleSection('Congthuccong')">📘 3. Công thức cộng và nhân xác suất </button>
+      <div id="Congthuccong" class="section-content">
+        <h3> Công thức cộng, nhân xác suất </h3>
+        <ul>
+          <li> Xác suất có điều kiện: \(P(A|B) = \dfrac{P(AB)}{P(B)}\)</li>
+          <li> Công thức cộng xác suất: </li>
+            <ul> 
+              <li> \( P(A+B)= P(A)+P(B)-P(AB)\) </li>
+              <li> \( P(A+B+C)= P(A)+P(B)+P(C)-P(AB)-P(AC)-P(BC)+P(ABC)\) </li>
+              <li> Tổng quát \(\displaystyle  P\left(\sum_{i=1}^{n}A_{i}\right)= \sum_{i=1}^{n}P(A_i)-\sum_{i < j} P(A_{i}A_{j}) + \cdots + (-1)^n P\left(\prod_{i=1}^n\right)A_{i}\) </li>
             </ul>
-        <li>Nếu X là biến ngẫu nhiên liên tục thì </li>
-            <ul>
-                <li> \(E[X]= \int_{-\infty}^{\infty}xf_{X}(x)dx \)</li>
-                <li>\(E[h(X)]= \int_{-\infty}^{\infty}h(x)f_{X}(x)dx \).
-                    <p> Ví dụ  \(E[X^2]= \int_{-\infty}^{\infty}x^2f_{X}(x)dx\)</p> </li>
-            </ul>
-        <li> Tính chất</li>
-            <ul>
-                <li> \(E(c)=c \) (với c là hằng số)</li>
-                <li> \(E(X+Y) = E(X) +E(Y) \)</li>
-                <li> \(E(aX) = aE(X)\)</li>
-                <li> Tổng quát \(E(ah(X)+bg(Y)) = aE(h(X)) +bE(g(Y)) \) với </li>
-            </ul>
-    </ul>
-    <h3> Công thức cộng, nhân xác suất </h3>
-      <ul>
-        <li> Xác suất có điều kiện: \(P(A|B) = \dfrac{P(AB)}{P(B)}\)</li>
-        <li> Công thức cộng xác suất: </li>
-          <ul> 
-            <li> \( P(A+B)= P(A)+P(B)-P(AB)\) </li>
-            <li> \( P(A+B+C)= P(A)+P(B)+P(C)-P(AB)-P(AC)-P(BC)+P(ABC)\) </li>
-            <li> Tổng quát \( P(\sum_{i=1}^{n}A_{i})= \sum_{i=1}^{n}P(A_i)-\sum_{i < j} P(A_{i}A_{j}) + \cdots + (-1)^n P(\prod_{i=1}^n)A_{i}\) </li>
-          </ul>
-          Nếu A,B xung khắc thì $A.B=0$ 
-      </ul> 
-
-    <h3> Công thức Bernoulli </h3>
-    Giả sử ta thực hiện n phép thử. Xác suất mỗi lần thử thành công là \(p\). Khi đó xác suất để thực hiện n phép thử có k phép thử thành công là 
-    \begin{align}
-    P_{n}(k)= C_n^kp^{n}(1-p)^{m-k}
-    \end{align}
-    <h3> Công thức xác suất đầy đủ. Công thức Bayes </h3>
+            Nếu A,B xung khắc thì $A.B=0$ 
+          <li> Công thức Bernoulli:
+            <p style="font-size: 1.3rem; text-align: center;">
+        $$P_n(k) = C_n^k \cdot p^k \cdot (1-p)^{n-k}$$
+    </p>
+          </li>
+        </ul> 
+      </div> <br>
 
 
-<!-- </div>     -->
+      <button onclick="toggleSection('Congthucxsdaydubayes')">📘 4. Công thức xác suất đầy đủ. Công thức Bayes </button>
+      <div id="Congthucxsdaydubayes" class="section-content">
+        Giả sử $\displaystyle \left\{A_{1}, \dots, A_{n}\right\} $ là một hệ đầy đủ ( $\displaystyle A_{i} \cap A_{j} = \emptyset, \displaystyle \cup_{i=1}^{n}A_{i}= \Omega $ và B là một sự kiện bất kì, khi đó:
+        <ul>
+          <li> $B=BS=B \left(A_{1} + \dots +A_{n}\right)  = BA_{1} + \dots +BA_{n}
+$ </li>
+          <li> $P(B)= \sum_{k=1}^{n} P(A_{k})P \left(B \left|A_{k} \right. \right) $ </li>
+          <li>$P\left(A_{k} \left|B \right. \right) = \dfrac{P(B \left|A_{k} \right.)P(A_{k}) }{\displaystyle \sum_{n=1}^{n} P(A_{k}) P \left(B \left|A_{k} \right. \right) }$ </li>
+        </ul> 
+      </div> <br>
 
-
+</div>
 
 
   <!-- Phần II -->
-  <h2>III. Bài tập rèn luyện</h2>
+  <h2>IV. Bài tập rèn luyện</h2>
   <ul>
     <li> <button onclick="btbnnroirac()">Bài tập biến ngẫu nhiên rời rạc</button>
       <script>
@@ -166,18 +212,34 @@
     </li>
   </ul>
   
+  <ul>
+    <script>
+      function toggleSection(id) {
+          const section = document.getElementById(id);
+          section.style.display = (section.style.display === "none" || section.style.display === "") ? "block" : "none";
+        }
+    </script>
 
 
 
-<!-- 
-<script>
-  function backToHome() {
-    window.open("../../index.html", "_self");
-  }
-</script>
-
-<button onclick="backToHome()">⬅ Quay lại Trang chính</button> -->
-
+    <!-- <li>
+      <button onclick="btbnnlientuc()">Ước lượng tham số cho phương sai </button>
+      <script>
+        function btbnnlientuc() {
+          window.open("C2BNNLT_BT.html", "_self");
+        }
+      </script> 
+    </li> -->
+    <!-- <li> 
+      <button onclick="ppthongdung()">Ước lượng tham số cho tỷ lệ</button>
+      <script>
+        function ppthongdung() {
+          window.open("C2PPThongDung.html", "_self");
+        }
+      </script> 
+    </li> -->
+  </ul>
+  
 
  <h2> Xem thêm nội dung  <br> 
     <p><a href="C1PhepThu.html">Chương 1</a>.</p>
