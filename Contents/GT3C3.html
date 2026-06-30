@@ -1,133 +1,148 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tóm tắt Giải tích 3 - Chương 3: Phép biến đổi Laplace</title>
-    
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                processEscapes: true
-            }
-        };
-    </script>
-    <script type="text/javascript" id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    </script>
+  <meta charset="UTF-8">
+  <title>Mục lục học phần XSTK</title>
 
-    <script>
-    function toggleSection(sectionId) {
-        // Tìm phần tử HTML theo ID được truyền vào (ở đây là 'Congthucxsdaydubayes')
-        var section = document.getElementById(sectionId);
-        
-        // Kiểm tra trạng thái hiển thị và đảo ngược nó
-        if (section.style.display === "none" || section.style.display === "") {
-            section.style.display = "block"; // Hiển thị nội dung
-        } else {
-            section.style.display = "none";  // Ẩn nội dung
-        }
+  <!-- MathJax để hiển thị công thức toán -->
+  <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+
+<script>
+    function toggleSection(id) {
+        const section = document.getElementById(id);
+        section.style.display = (section.style.display === "none" || section.style.display === "") ? "block" : "none";
     }
-    </script> 
+</script>
 
-    <style>
-        /* body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 950px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f0f4f8;
-        } */
-        body {
-            background-color: #f8f9fa;
-            color: #222;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            max-width: 950px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        header {
-            text-align: center;
-            background: linear-gradient(135deg, #cc2b5e 0%, #753a88 100%);
-            color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        h1 { margin: 0; font-size: 2rem; }
-        p.subtitle { margin: 5px 0 0 0; opacity: 0.9; font-style: italic; }
-        .author {
-        text-align: right;
-        font-style: italic;
-        margin-top: 30px;
-        }
-        section {
-            background: #fff;
-            padding: 25px;
-            margin-bottom: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            border-left: 5px solid #ff416c;
-        }
-        h2 {
-            color: #ff416c;
-            margin-top: 0;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 10px;
-        }
-        h3 { color: #2f3640; margin-top: 20px; padding-left: 5px; border-left: 3px solid #ff4b2b; }
-        
-        .important-box {
-            background-color: #fff5f5;
-            border: 1px solid #ffe3e3;
-            color: #c0392b;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 15px 0;
-        }
-        .method-box {
-            background-color: #f1f2f6;
-            border-left: 4px solid #747d8c;
-            padding: 12px;
-            margin: 10px 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-        th, td {
-            border: 1px solid #dee2e6;
-            padding: 10px;
-            text-align: left;
-        }
-        th { background-color: #ffe8ec; color: #ff416c; }
-        tr:nth-child(even) { background-color: #f8f9fa; }
-        .badge {
-            background-color: #2ed573;
-            color: white;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-    </style>
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #222;
+      margin: 40px;<ul>
+            <li>Bước 1: Nhận dạng bài toán (Ước lượng tham số cho kỳ vọng, phương sai, tỷ lệ) </li>
+            <li>Bước 2: Chọn thống kê và chỉ ra quy thuật phân phối của mẫu</li>
+            <li>Bước 3: Xác định các giá trị quan sát \(n, \alpha, t_{\alpha }^{n}, t_{\alpha/2}^{n},z_{\alpha }, z_{\alpha/2}\)</li>
+            <li>Bước 4: Xác định các khoảng tin cậy trái, phải, đối xứng tùy vào yêu cầu của đề bài.</li>
+        </ul> 
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+    }
+    h2 {
+      color: #0055aa;
+      margin-top: 40px;
+    }
+    button {
+      background-color: #0055aa;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+    .step {
+            margin-bottom: 20px;
+            padding-left: 10px;
+    }
+    .step-title {
+        font-weight: bold;
+        color: #2c3e50;
+        margin-bottom: 5px;
+    }
+    button:hover {
+      background-color: #003f7f;
+    }
+    .section-content {
+      display: none;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .latex-block-content {
+                background-color: #fdf7f7;
+                        padding: 15px 20px 15px 15px;
+                            }
+                                table {
+                                        width: 100%;
+                                                border-collapse: collapse;
+                                                        margin: 15px 0;
+                                                            }
+                                                                th, td {
+                                                                        border: 1px solid #ddd;
+                                                                                padding: 12px;
+                                                                                        text-align: left;
+                                                                                            }
+                                                                                                th { background-color: #f2f2f2; color: #753a88; }
+                                                                                                    tr:nth-child(even) { background-color: #f9f9f9; }
+    }
+    .badge {
+        background-color: #e74c3c;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+    .important-box {
+        background-color: #fff3cd;
+        border: 1px solid #ffeeba;
+        color: #856404;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 15px 0;
+    }
+    .problem {
+        background-color: #eef7fc;
+        border-left: 4px solid #3498db;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 4px 4px 0;
+    }
+    .solution {
+        margin-top: 15px;
+        padding-left: 10px;
+    }   
+    .author {
+      text-align: right;
+      font-style: italic;
+      margin-top: 30px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    body{font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:#f7f7fb; padding:20px}
+    .card{background:white;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);max-width:900px;margin:0 auto}
+    label{margin-right:6px}
+    input[type=number]{width:80px;padding:4px;margin-right:10px}
+    button{padding:6px 12px;border:0;background:#2563eb;color:white;border-radius:8px;cursor:pointer}
+    button:active{transform:translateY(1px)}
+  </style>
+
+
 </head>
 <body>
 
-<header>
     <h1>📚 Chương 3: Phép biến đổi Laplace và <br> Ứng dụng giải phương trình vi phân </h1>
     <p class="author">
     Biên soạn: <strong>Ts. Khổng Văn Hải</strong><br>
     Khoa Toán - Tin, Đại học Bách Khoa Hà Nội
     </p>
-</header>
 
 <main>
     <section>
@@ -248,17 +263,10 @@
 
     </section>
 
-    <section>
-        <h2>3. Định lý tích chập (Convolution)</h2>
-        <button onclick="toggleSection('khainiemtichchap')">📘 Xem / Ẩn phần lý thuyết</button>    <div id="khainiemtichchap" class="section-content">  
-            <p>Tích chập của hai hàm $f(t)$ và $g(t)$ được ký hiệu và định nghĩa là: $$(f * g)(t) = \int_{0}^{t} f(\tau)g(t - \tau) d\tau$$</p>
-            <p><strong>Định lý:</strong> Ảnh Laplace của tích chập bằng tích các hàm ảnh:</p>
-            $$\mathcal{L}\{(f * g)(t)\}(s) = F(s) \cdot G(s) \quad \Rightarrow \quad \mathcal{L}^{-1}\{F(s) \cdot G(s)\} = (f * g)(t)$$
-        </div>    <br> 
-    </section>
+
 
     <section>
-        <h2>4. Thuật toán tìm biến đổi Laplace ngược ($\mathcal{L}^{-1}$)</h2>
+        <h2>3. Thuật toán tìm biến đổi Laplace ngược ($\mathcal{L}^{-1}$)</h2>
         <button onclick="toggleSection('timbdlaplacenguoc')">📘 Xem / Ẩn phần lý thuyết</button>    <div id="timbdlaplacenguoc" class="section-content">  
             <p>Đề bài thường cho hàm phân thức $F(s) = \dfrac{P(s)}{Q(s)}$. Ta thực hiện theo các bước:</p>
             <div class="method-box">
@@ -274,16 +282,259 @@
     </section>
 
     <section>
-        <h2>5. Ứng dụng giải Phương trình vi phân với điều kiện ban đầu ( Bài toán Cauchy) <span class="badge">Câu ăn điểm thi</span></h2>
-        <button onclick="toggleSection('giaiptviphan')">📘 Xem / Ẩn phần lý thuyết</button>    <div id="giaiptviphan" class="section-content">  
-            <p>Xét bài toán tìm $y(t)$ thỏa mãn: $y'' + ay' + by = f(t)$ với điều kiện $y(0) = y_0, y'(0) = y_1$.</p>
-            <div class="method-box">
-                <strong>Thuật toán 3 bước:</strong><br>
-                <strong>Bước 1:</strong> Thực hiện phép biến đổi Laplace cả 2 vế của phương trình. Áp dụng định lý đạo hàm hàm gốc và thế các giá trị $y(0), y'(0)$ vào.<br>
-                <strong>Bước 2:</strong> Gom nhóm, cô lập để rút ra biểu thức của hàm ảnh $Y(s)$ dưới dạng phân thức đại số.<br>
-                <strong>Bước 3:</strong> Tìm biến đổi Laplace ngược của $Y(s)$ để suy ra nghiệm $y(t) = \mathcal{L}^{-1}\{Y(s)\}$.
-            </div>
+        <h2>4. Định lý tích chập (Convolution)</h2>
+        <button onclick="toggleSection('khainiemtichchap')">📘 Xem / Ẩn phần lý thuyết</button>    
+            <div id="khainiemtichchap" class="section-content">  
+    
+                <div class="theorem-box">
+                    <strong>Định lý tích chập (Convolution Theorem):</strong><br>
+                    Cho hai hàm số $f(t)$ và $g(t)$ liên tục từng đoạn trên $[0, +\infty)$. Tích chập của chúng được định nghĩa là:
+                    $$(f * g)(t) = \int_{0}^{t} f(\tau)g(t - \tau)d\tau$$
+                    Khi đó, ta có hai chiều hệ quả:
+                    <ul>
+                        <li><strong>Chiều xuôi:</strong> $\mathcal{L}\{(f * g)(t)\} = F(s) \cdot G(s)$</li>
+                        <li><strong>Chiều ngược:</strong> $\mathcal{L}^{-1}\{F(s) \cdot G(s)\} = (f * g)(t)$</li>
+                    </ul>
+                    Ở đây $F(s) = \mathcal{L}\{f(t)\}$ và $G(s) = \mathcal{L}\{g(t)\}$.
+                </div>
+
+                
+            </div> <br>
+
+            <!-- VÍ DỤ 1 -->
+                 <button onclick="toggleSection('Tichchapvd1')">📘 Ví dụ 1 </button>        
+                 <div id="Tichchapvd1" class="section-content">  
+                    <div class="problem">
+                        <strong>Đề bài:</strong> Tính biến đổi Laplace của hàm số sau bằng cách đưa về tích chập:
+                        $$h(t) = \int_{0}^{t} e^{\tau} \sin(t - \tau) d\tau$$
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">Bước 1: Nhận dạng các hàm thành phần</div>
+                        <p>Đối chiếu công thức đề bài với định nghĩa tích chập $(f * g)(t) = \int_{0}^{t} f(\tau)g(t - \tau)d\tau$, ta dễ dàng nhận thấy $h(t)$ chính là tích chập của hai hàm:</p>
+                        $$f(t) = e^t \quad \text{và} \quad g(t) = \sin(t)$$
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">Bước 2: Tìm biến đổi Laplace của từng hàm thành phần</div>
+                        <p>Tra bảng biến đổi Laplace cơ bản, ta có:</p>
+                        $$F(s) = \mathcal{L}\{e^t\} = \frac{1}{s - 1}$$
+                        $$G(s) = \mathcal{L}\{\sin(t)\} = \frac{1}{s^2 + 1}$$
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">Bước 3: Áp dụng định lý tích chập</div>
+                        <p>Theo định lý, biến đổi Laplace của tích chập bằng tích các biến đổi Laplace:</p>
+                        $$\mathcal{L}\{h(t)\} = F(s) \cdot G(s) = \frac{1}{s - 1} \cdot \frac{1}{s^2 + 1}$$
+                    </div>
+
+                    <div class="result">
+                        Đáp án Ví dụ 1: $\mathcal{L}\left\{\int_{0}^{t} e^{\tau} \sin(t - \tau) d\tau\right\} = \frac{1}{(s - 1)(s^2 + 1)}$
+                    </div>
+                </div> <br>
+
+                <!-- VÍ DỤ 2 -->
+                <button onclick="toggleSection('Tichchapvd2')">📘 Ví dụ 2 </button>        
+                <div id="Tichchapvd2" class="section-content">
+                    <div class="problem">
+                        <strong>Đề bài:</strong> Tìm biến đổi Laplace ngược của hàm số sau:
+                        $$H(s) = \frac{1}{s^2(s - 3)}$$
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">Bước 1: Tách biểu thức thành tích hai hàm $F(s)$ và $G(s)$</div>
+                        <p>Ta có thể phân tích $H(s)$ dưới dạng tích của hai phân thức đơn giản đã biết rõ dạng ảnh ngược:</p>
+                        $$H(s) = \frac{1}{s^2} \cdot \frac{1}{s - 3}$$
+                        <p>Đặt $F(s) = \frac{1}{s^2}$ và $G(s) = \frac{1}{s - 3}$.</p>
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">Bước 2: Tìm các hàm ảnh ngược gốc $f(t)$ và $g(t)$</div>
+                        $$f(t) = \mathcal{L}^{-1}\left\{\frac{1}{s^2}\right\} = t$$
+                        $$g(t) = \mathcal{L}^{-1}\left\{\frac{1}{s - 3}\right\} = e^{3t}$$
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">Bước 3: Thiết lập và tính tích phân tích chập</div>
+                        <p>Theo định lý tích chập ngược, ta có $h(t) = (f * g)(t)$:</p>
+                        $$h(t) = \int_{0}^{t} \tau \cdot e^{3(t - \tau)} d\tau = \int_{0}^{t} \tau \cdot e^{3t} \cdot e^{-3\tau} d\tau = e^{3t} \int_{0}^{t} \tau e^{-3\tau} d\tau$$
+                        <p>Sử dụng phương pháp tích phân từng phần cho $\int_{0}^{t} \tau e^{-3\tau} d\tau$ (đặt $u = \tau, dv = e^{-3\tau}d\tau$):</p>
+                        $$\int_{0}^{t} \tau e^{-3\tau} d\tau = \left[ -\frac{1}{3}\tau e^{-3\tau} \right]_{0}^{t} - \int_{0}^{t} \left(-\frac{1}{3}e^{-3\tau}\right) d\tau$$
+                        $$= -\frac{1}{3}t e^{-3t} + \left[ -\frac{1}{9}e^{-3\tau} \right]_{0}^{t} = -\frac{1}{3}t e^{-3t} - \frac{1}{9}e^{-3t} + \frac{1}{9}$$
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">Bước 4: Nhân phân phối để ra kết quả cuối cùng</div>
+                        <p>Nhân lại với thừa số $e^{3t}$ ở phía trước:</p>
+                        $$h(t) = e^{3t} \left( -\frac{1}{3}t e^{-3t} - \frac{1}{9}e^{-3t} + \frac{1}{9} \right) = -\frac{1}{3}t - \frac{1}{9} + \frac{1}{9}e^{3t}$$
+                    </div>
+
+                    <div class="result">
+                        Đáp án Ví dụ 2: $\mathcal{L}^{-1}\left\{\frac{1}{s^2(s - 3)}\right\} = \frac{1}{9}e^{3t} - \frac{1}{3}t - \frac{1}{9}$
+                    </div>
+
+                    <div class="important-box">                        
+                    <strong> Chú ý</strong>
+                    Ta hoàn toàn có thê tách  $\dfrac{1}{s^{2}(s-3)}= \dfrac{1}{9(s-3)}-\dfrac{-1}{9s}- \dfrac{1}{3s^{2}} $ và khi đó phép biến đổi Laplace ngược vẫn ra kết quả là $\mathcal{L}\left\{\dfrac{1}{s^{2}(s-3)}\right\}t= \dfrac{1}{9}e^{3t}- \dfrac{t}{3}- \dfrac{1}{9} $.  <br> <strong>Đi thi nên dùng cách này, vừa đơn giản mà lại có thể dùng máy tính kiểm tra lại được. </strong>
+                    </div> 
+
+                </div> 
         </div>    <br> 
+    </section>    
+
+    <section>
+        <h2>5. Ứng dụng giải Phương trình vi phân với điều kiện ban đầu ( Bài toán Cauchy) </h2>
+            <!-- Lý thuyết  -->
+            <button onclick="toggleSection('giaiptviphan')">📘 Xem / Ẩn phần lý thuyết</button>    <div id="giaiptviphan" class="section-content">  
+                <p>Xét bài toán tìm $y(t)$ thỏa mãn: $y'' + ay' + by = f(t)$ với điều kiện $y(0) = y_0, y'(0) = y_1$.</p>
+                <div class="method-box">
+                    <strong>Thuật toán 3 bước:</strong><br>
+                    <strong>Bước 1:</strong> Thực hiện phép biến đổi Laplace cả 2 vế của phương trình. Áp dụng định lý đạo hàm hàm gốc và thế các giá trị $y(0), y'(0)$ vào.<br>
+                    <strong>Bước 2:</strong> Gom nhóm, cô lập để rút ra biểu thức của hàm ảnh $Y(s)$ dưới dạng phân thức đại số.<br>
+                    <strong>Bước 3:</strong> Tìm biến đổi Laplace ngược của $Y(s)$ để suy ra nghiệm $y(t) = \mathcal{L}^{-1}\{Y(s)\}$.
+                </div>
+            </div>    <br> 
+
+            <!-- Ví dụ 1 -->
+             <button onclick="toggleSection('giaiptvpvd1')">📘 Ví dụ 1: Giải  phương trình vi phân  </button>        
+             <div id="giaiptvpvd1" class="section-content">
+                <div class="container">
+                    <div class="problem">
+                        <strong>Đề bài:</strong> Giải bài toán Cauchy (phương trình vi phân kèm điều kiện đầu) sau đây:
+                        $$y'' - 3y' + 2y = e^{3t}$$
+                        Với các điều kiện ban đầu: $y(0) = 1$ và $y'(0) = 0$.
+                    </div>
+
+                    <div class="note">
+                        <strong>Nhắc lại công thức đạo hàm trong không gian Laplace:</strong>
+                        <ul>
+                            <li>$\mathcal{L}\{y(t)\} = Y(s)$</li>
+                            <li>$\mathcal{L}\{y'(t)\} = sY(s) - y(0)$</li>
+                            <li>$\mathcal{L}\{y''(t)\} = s^2Y(s) - sy(0) - y'(0)$</li>
+                        </ul>
+                    </div>
+
+                    <h2>Lời giải chi tiết</h2>
+
+                    <div class="step">
+                        <div class="step-title">Bước 1: Áp dụng phép biến đổi Laplace vào hai vế của phương trình</div>
+                        <p>Thực hiện biến đổi Laplace cho cả hai vế phương trình vi phân:</p>
+                        $$\mathcal{L}\{y''\} - 3\mathcal{L}\{y'\} + 2\mathcal{L}\{y\} = \mathcal{L}\{e^{3t}\}$$
+                        <p>Sử dụng các công thức đạo hàm và tra bảng cho vế phải $\mathcal{L}\{e^{3t}\} = \frac{1}{s-3}$:</p>
+                        $$\left[s^2Y(s) - sy(0) - y'(0)\right] - 3\left[sY(s) - y(0)\right] + 2Y(s) = \frac{1}{s-3}$$
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">Bước 2: Thay thế các điều kiện ban đầu và cô lập $Y(s)$</div>
+                        <p>Thay $y(0) = 1$ và $y'(0) = 0$ vào phương trình đại số vừa thu được:</p>
+                        $$\left[s^2Y(s) - s \cdot 1 - 0\right] - 3\left[sY(s) - 1\right] + 2Y(s) = \frac{1}{s-3}$$
+                        $$s^2Y(s) - s - 3sY(s) + 3 + 2Y(s) = \frac{1}{s-3}$$
+                        <p>Nhóm các số hạng chứa $Y(s)$ và chuyển các số hạng còn lại sang vế phải:</p>
+                        $$(s^2 - 3s + 2)Y(s) - s + 3 = \frac{1}{s-3}$$
+                        $$(s-1)(s-2)Y(s) = \frac{1}{s-3} + s - 3$$
+                        <p>Quy đồng mẫu số vế phải:</p>
+                        $$(s-1)(s-2)Y(s) = \frac{1 + (s-3)^2}{s-3} = \frac{s^2 - 6s + 10}{s-3}$$
+                        <p>Suy ra biểu thức của $Y(s)$ trong miền tần số:</p>
+                        $$Y(s) = \frac{s^2 - 6s + 10}{(s-1)(s-2)(s-3)}$$
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">Bước 3: Phân tích thành các phân thức đơn giản (Partial Fractions)</div>
+                        <p>Giả sử $Y(s)$ có dạng phân tích:</p>
+                        $$\frac{s^2 - 6s + 10}{(s-1)(s-2)(s-3)} = \frac{A}{s-1} + \frac{B}{s-2} + \frac{C}{s-3}$$
+                        <p>Sử dụng phương pháp che (Heaviside) để tìm nhanh các hệ số:</p>
+                        <ul>
+                            <li>$A = \left. \frac{s^2 - 6s + 10}{(s-2)(s-3)} \right|_{s=1} = \frac{1 - 6 + 10}{(1-2)(1-3)} = \frac{5}{2}$</li>
+                            <li>$B = \left. \frac{s^2 - 6s + 10}{(s-1)(s-3)} \right|_{s=2} = \frac{4 - 12 + 10}{(2-1)(2-3)} = \frac{2}{-1} = -2$</li>
+                            <li>$C = \left. \frac{s^2 - 6s + 10}{(s-1)(s-2)} \right|_{s=3} = \frac{9 - 18 + 10}{(3-1)(3-2)} = \frac{1}{2}$</li>
+                        </ul>
+                        <p>Do đó, ta có:</p>
+                        $$Y(s) = \frac{5}{2} \cdot \frac{1}{s-1} - 2 \cdot \frac{1}{s-2} + \frac{1}{2} \cdot \frac{1}{s-3}$$
+                    </div>
+
+                    <div class="step">
+                        <div class="step-title">Bước 4: Tìm nghiệm $y(t)$ bằng phép biến đổi Laplace ngược</div>
+                        <p>Lấy biến đổi Laplace ngược $\mathcal{L}^{-1}$ cho từng phân thức dựa vào công thức cơ bản $\mathcal{L}^{-1}\left\{\frac{1}{s-a}\right\} = e^{at}$:</p>
+                        $$y(t) = \mathcal{L}^{-1}\{Y(s)\} = \frac{5}{2}\mathcal{L}^{-1}\left\{\frac{1}{s-1}\right\} - 2\mathcal{L}^{-1}\left\{\frac{1}{s-2}\right\} + \frac{1}{2}\mathcal{L}^{-1}\left\{\frac{1}{s-3}\right\}$$
+                    </div>
+
+                    <div class="result">
+                        <strong>Kết luận:</strong> Nghiệm duy nhất của bài toán vi phân thỏa mãn các điều kiện biên đã cho là:
+                        $$y(t) = \frac{5}{2}e^t - 2e^{2t} + \frac{1}{2}e^{3t}$$
+                    </div>
+                </div>
+            </div> <br>
+
+            <!-- Ví dụ 2 -->
+             <button onclick="toggleSection('giaihptvpvd2')">📘 Ví dụ 2: Giải  hệ phương trình vi phân cấp 1 </button>        
+            <div id="giaihptvpvd2" class="section-content">  
+                
+                <div class="problem">
+                    <strong>Đề bài:</strong> Giải hệ phương trình vi phân cấp 1 sau đây:
+                    $$ \begin{cases} x'(t) = 3x - 2y \\ y'(t) = 2x - 2y \end{cases} $$
+                    Thỏa mãn các điều kiện ban đầu: $x(0) = 1$ và $y(0) = 1$.
+                </div>
+
+                <h2>Lời giải chi tiết</h2>
+
+                <div class="step">
+                    <div class="step-title">Bước 1: Chuyển hệ phương trình sang miền Laplace</div>
+                    <p>Gọi $X(s) = \mathcal{L}\{x(t)\}$ và $Y(s) = \mathcal{L}\{y(t)\}$. Áp dụng tính chất đạo hàm của phép biến đổi Laplace:</p>
+                    $$ \mathcal{L}\{x'\} = sX(s) - x(0) = sX(s) - 1 $$
+                    $$ \mathcal{L}\{y'\} = sY(s) - y(0) = sY(s) - 1 $$
+                    
+                    <p>Thay vào hệ phương trình ban đầu, ta thu được hệ phương trình đại số tuyến tính đối với $X(s)$ và $Y(s)$:</p>
+                    $$ \begin{cases} sX(s) - 1 = 3X(s) - 2Y(s) \\ sY(s) - 1 = 2X(s) - 2Y(s) \end{cases} $$
+                    
+                    <p>Thu gọn và sắp xếp lại các số hạng:</p>
+                    $$ \begin{cases} (s - 3)X(s) + 2Y(s) = 1 \quad (1) \\ -2X(s) + (s + 2)Y(s) = 1 \quad (2) \end{cases} $$
+                </div>
+
+                <div class="step">
+                    <div class="step-title">Bước 2: Giải hệ phương trình đại số để tìm $X(s)$ và $Y(s)$</div>
+                    <p>Ta có thể sử dụng phương pháp định thức định lý Cramer hoặc phương pháp thế. Định thức chính của hệ là:</p>
+                    $$ \Delta = \begin{vmatrix} s - 3 & 2 \\ -2 & s + 2 \end{vmatrix} = (s - 3)(s + 2) - (2)(-2) = s^2 - s - 6 + 4 = s^2 - s - 2 = (s - 2)(s + 1) $$
+
+                    <p>Tìm các định thức thành phần $\Delta_X$ và $\Delta_Y$:</p>
+                    $$ \Delta_X = \begin{vmatrix} 1 & 2 \\ 1 & s + 2 \end{vmatrix} = (s + 2) - 2 = s $$
+                    $$ \Delta_Y = \begin{vmatrix} s - 3 & 1 \\ -2 & 1 \end{vmatrix} = (s - 3) - (-2) = s - 1 $$
+
+                    <p>Suy ra biểu thức miền s của $x(t)$ và $y(t)$:</p>
+                    $$ X(s) = \frac{\Delta_X}{\Delta} = \frac{s}{(s - 2)(s + 1)} $$
+                    $$ Y(s) = \frac{\Delta_Y}{\Delta} = \frac{s - 1}{(s - 2)(s + 1)} $$
+                </div>
+
+                <div class="step">
+                    <div class="step-title">Bước 3: Phân tích thành các phân thức đơn giản</div>
+                    <p><strong>Đối với $X(s)$:</strong> Giả sử $\frac{s}{(s - 2)(s + 1)} = \frac{A}{s - 2} + \frac{B}{s + 1}$</p>
+                    <ul>
+                        <li>$A = \left. \frac{s}{s + 1} \right|_{s=2} = \frac{2}{3}$</li>
+                        <li>$B = \left. \frac{s}{s - 2} \right|_{s=-1} = \frac{-1}{-3} = \frac{1}{3}$</li>
+                    </ul>
+                    $$ \implies X(s) = \frac{2}{3} \cdot \frac{1}{s - 2} + \frac{1}{3} \cdot \frac{1}{s + 1} $$
+
+                    <p><strong>Đối với $Y(s)$:</strong> Giả sử $\frac{s - 1}{(s - 2)(s + 1)} = \frac{C}{s - 2} + \frac{D}{s + 1}$</p>
+                    <ul>
+                        <li>$C = \left. \frac{s - 1}{s + 1} \right|_{s=2} = \frac{1}{3}$</li>
+                        <li>$D = \left. \frac{s - 1}{s - 2} \right|_{s=-1} = \frac{-2}{-3} = \frac{2}{3}$</li>
+                    </ul>
+                    $$ \implies Y(s) = \frac{1}{3} \cdot \frac{1}{s - 2} + \frac{2}{3} \cdot \frac{1}{s + 1} $$
+                </div>
+
+                <div class="step">
+                    <div class="step-title">Bước 4: Tìm ảnh ngược Laplace để kết luận nghiệm</div>
+                    <p>Sử dụng công thức tra bảng cơ bản $\mathcal{L}^{-1}\left\{\frac{1}{s - a}\right\} = e^{at}$, ta lấy ảnh ngược cho cả hai biểu thức:</p>
+                    $$ x(t) = \mathcal{L}^{-1}\{X(s)\} = \frac{2}{3}e^{2t} + \frac{1}{3}e^{-t} $$
+                    $$ y(t) = \mathcal{L}^{-1}\{Y(s)\} = \frac{1}{3}e^{2t} + \frac{2}{3}e^{-t} $$
+                </div>
+
+                <div class="result">
+                    <strong>Kết luận:</strong> Nghiệm tổng quát duy nhất của hệ phương trình vi phân thỏa mãn điều kiện biên ban đầu là:
+                    $$ \begin{cases} x(t) = \frac{2}{3}e^{2t} + \frac{1}{3}e^{-t} \\ y(t) = \frac{1}{3}e^{2t} + \frac{2}{3}e^{-t} \end{cases} $$
+                </div>
+
+            </div>
+            
     </section>
     <section>
          <h2> Xem thêm nội dung  <br> 
@@ -295,7 +546,7 @@
 </main>
 
 <footer>
-    <p style="text-align: center; color: #7f8c8d; font-size: 0.9rem;">Kết thúc trọn vẹn 3 chương Giải tích 3 HUST. Chúc các bạn đạt điểm tuyệt đối! 🚀</p>
+    <p style="text-align: center; color: #7f8c8d; font-size: 0.9rem;"> Làm ơn thuộc công thức được không 🚀</p>
 </footer>
 
 </body>

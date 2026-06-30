@@ -1,164 +1,145 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tóm tắt Giải tích 3 - Toàn bộ Chương 1: Chuỗi Số & Chuỗi Lũy Thừa</title>
-    
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                processEscapes: true
-            }
-        };
-    </script>
-    <script type="text/javascript" id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    </script>
+  <meta charset="UTF-8">
+  <title>Mục lục học phần XSTK</title>
+
+  <!-- MathJax để hiển thị công thức toán -->
+  <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
 
 <script>
-function toggleSection(sectionId) {
-    // Tìm phần tử HTML theo ID được truyền vào (ở đây là 'Congthucxsdaydubayes')
-    var section = document.getElementById(sectionId);
-    
-    // Kiểm tra trạng thái hiển thị và đảo ngược nó
-    if (section.style.display === "none" || section.style.display === "") {
-        section.style.display = "block"; // Hiển thị nội dung
-    } else {
-        section.style.display = "none";  // Ẩn nội dung
+    function toggleSection(id) {
+        const section = document.getElementById(id);
+        section.style.display = (section.style.display === "none" || section.style.display === "") ? "block" : "none";
     }
-}
-</script>    
+</script>
 
-
-    <style>
-        body {
-            background-color: #f8f9fa;
-            color: #222;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            max-width: 950px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        header {
-            text-align: center;
-            background: linear-gradient(135deg, #cc2b5e 0%, #753a88 100%);
-            color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-        h1 { margin: 0; font-size: 2rem; }
-        p.subtitle { margin: 5px 0 0 0; opacity: 0.9; font-style: italic; }
-        
-        section {
-            background: #fff;
-            padding: 25px;
-            margin-bottom: 25px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-            border-left: 5px solid #753a88;
-        }
-        h2 {
-            color: #753a88;
-            margin-top: 0;
-            border-bottom: 2px solid #eee;
-            padding-bottom: 10px;
-        }
-        h3 { color: #d9534f; margin-top: 20px; }
-        
-        .important-box {
-            background-color: #fff3cd;
-            border: 1px solid #ffeeba;
-            color: #856404;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 15px 0;
-        }
-        .problem {
-            background-color: #eef7fc;
-            border-left: 4px solid #3498db;
-            padding: 15px;
-            margin: 20px 0;
-            border-radius: 0 4px 4px 0;
-        }
-        .solution {
-            margin-top: 15px;
-            padding-left: 10px;
-        }
-        .section-content {
-        display: none;
-        background: #fff;
-        border-radius: 10px;
-        padding: 20px;
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #222;
+      margin: 40px;<ul>
+            <li>Bước 1: Nhận dạng bài toán (Ước lượng tham số cho kỳ vọng, phương sai, tỷ lệ) </li>
+            <li>Bước 2: Chọn thống kê và chỉ ra quy thuật phân phối của mẫu</li>
+            <li>Bước 3: Xác định các giá trị quan sát \(n, \alpha, t_{\alpha }^{n}, t_{\alpha/2}^{n},z_{\alpha }, z_{\alpha/2}\)</li>
+            <li>Bước 4: Xác định các khoảng tin cậy trái, phải, đối xứng tùy vào yêu cầu của đề bài.</li>
+        </ul> 
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+    }
+    h2 {
+      color: #0055aa;
+      margin-top: 40px;
+    }
+    button {
+      background-color: #0055aa;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #003f7f;
+    }
+    .section-content {
+      display: none;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .latex-block-content {
+                background-color: #fdf7f7;
+                        padding: 15px 20px 15px 15px;
+                            }
+                                table {
+                                        width: 100%;
+                                                border-collapse: collapse;
+                                                        margin: 15px 0;
+                                                            }
+                                                                th, td {
+                                                                        border: 1px solid #ddd;
+                                                                                padding: 12px;
+                                                                                        text-align: left;
+                                                                                            }
+                                                                                                th { background-color: #f2f2f2; color: #753a88; }
+                                                                                                    tr:nth-child(even) { background-color: #f9f9f9; }
+    }
+    .badge {
+        background-color: #e74c3c;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+    .important-box {
+        background-color: #fff3cd;
+        border: 1px solid #ffeeba;
+        color: #856404;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 15px 0;
+    }
+    .problem {
+        background-color: #eef7fc;
+        border-left: 4px solid #3498db;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 4px 4px 0;
+    }
+    .solution {
         margin-top: 15px;
-        box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
-        .method {
-            background-color: #fdfefe;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 15px;
-            margin-bottom: 20px;
-        }
-        .method-box {
-            background-color: #e2e3e5;
-            border-left: 4px solid #6c757d;
-            padding: 12px;
-            margin: 10px 0;
-            font-style: italic;
-        }
-        .exercise-container {
-            background-color: #fff;
-            border: 1px solid #ccc;
-            padding: 20px;
-            border-radius: 4px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        .exercise-title {
-            font-weight: bold;
-            margin-bottom: 15px;
-        }
-        .author {
-        text-align: right;
-        font-style: italic;
-        margin-top: 30px;
-        }
-        .latex-block-content {
-            background-color: #fdf7f7;
-            padding: 15px 20px 15px 15px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-        th, td {
-            border: 1px solid #ddd;
-            padding: 12px;
-            text-align: left;
-        }
-        th { background-color: #f2f2f2; color: #753a88; }
-        tr:nth-child(even) { background-color: #f9f9f9; }
-    </style>
+        padding-left: 10px;
+    }   
+    .author {
+      text-align: right;
+      font-style: italic;
+      margin-top: 30px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    body{font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:#f7f7fb; padding:20px}
+    .card{background:white;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);max-width:900px;margin:0 auto}
+    label{margin-right:6px}
+    input[type=number]{width:80px;padding:4px;margin-right:10px}
+    button{padding:6px 12px;border:0;background:#2563eb;color:white;border-radius:8px;cursor:pointer}
+    button:active{transform:translateY(1px)}
+  </style>
+
+
 </head>
 <body>
 
-<header>
     <h1>📚 Chương 1: Chuỗi Số & Chuỗi Lũy Thừa </h1>
     <p class="author">
     Biên soạn: <strong>Ts. Khổng Văn Hải</strong><br>
     Khoa Toán - Tin, Đại học Bách Khoa Hà Nội
     </p>
-</header>
+ 
+  <hr>
 
-<main>
-    <section>
-        <h2>1. Chuỗi số: Các khái niệm cơ bản</h2>
+
+
+         <h2>1. Chuỗi số: Các khái niệm cơ bản</h2>
         <button onclick="toggleSection('chuoisokncoban')">📘 Xem / Ẩn phần nội dung</button>    
         <div id="chuoisokncoban" class="section-content">   
             <p>Chuỗi số có dạng tổng vô hạn: $$\sum_{n=1}^{\infty} u_n = u_1 + u_2 + \dots + u_n + \dots$$</p>
@@ -251,14 +232,19 @@ function toggleSection(sectionId) {
                 </div>
             </div>    <br> 
         </div>    <br>
+  
 
-    </section>
+    <script>
+      function toggleSection(id) {
+          const section = document.getElementById(id);
+          section.style.display = (section.style.display === "none" || section.style.display === "") ? "block" : "none";
+        }
+    </script>
 
-    <section>
         <h2>2. Chuỗi số dương ($u_n \ge 0$)</h2>
         <button onclick="toggleSection('chuoisoduong')">📘 Xem / Ẩn phần nội dung</button>    
         <div id="chuoisoduong" class="section-content">  
-            <p>Các tiêu chuẩn xét hội tụ thường dùng tại HUST:</p>
+            <p>Các tiêu chuẩn xét hội tụ thường: </p>
             <table>
                 <thead>
                     <tr>
@@ -310,10 +296,8 @@ function toggleSection(sectionId) {
                     <li>Tổng hiệu của hai chuỗi phân kỳ thì không xác định</li>
                 </ul>
             </div>
-        </div>    <br> 
-    </section>
+        </div>    <br>
 
-    <section>
         <h2>3. Chuỗi đan dấu & Dấu bất kỳ</h2>
         <button onclick="toggleSection('chuoidandau')">📘 Xem / Ẩn phần nội dung</button>    
         <div id="chuoidandau" class="section-content">  
@@ -365,10 +349,7 @@ function toggleSection(sectionId) {
                 $$ \cos (x+k\pi) = (-1)^{k}\cos x, \, \,  \sin(x+ k\pi) =\sin(x), \forall k \in \mathbb{N}.$$ 
             </div>
         </div>    <br> 
-    </section>
 
-
-    <section>
         <h2>4. Chuỗi Lũy Thừa (Trọng tâm)</h2>
         <button onclick="toggleSection('chuoiluythua')">📘 Xem / Ẩn phần lý thuyết</button>    
         <div id="chuoiluythua" class="section-content">  
@@ -514,8 +495,7 @@ function toggleSection(sectionId) {
                         <p>Kết hợp khoảng hội tụ và điểm mút hội tụ, miền hội tụ $D$ của chuỗi số đã cho là:</p>
                             $$D = (-1, 5]$$
                 </div>    <br> 
-        </div>    <br> 
-    </section>
+        </div>    <br>   
 
     <section>
          <h2> Xem thêm nội dung  <br> 
@@ -525,11 +505,6 @@ function toggleSection(sectionId) {
         </h2>
     </section>
 
-</main>
-
-<footer>
-    <p style="text-align: center; color: #888; font-size: 0.9rem; margin-top: 5px;"> Kíp này quyết tâm giật A+ Giải tích 3 HUST! 🚀</p>
-</footer>
 
 </body>
 </html>

@@ -1,118 +1,130 @@
 <!DOCTYPE html>
 <html lang="vi">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tóm tắt Giải tích 3 - Chương 2: Phương trình vi phân</title>
-    
-    <script>
-        window.MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']],
-                displayMath: [['$$', '$$'], ['\\[', '\\]']],
-                processEscapes: true
-            }
-        };
-    </script>
-    <script type="text/javascript" id="MathJax-script" async
-        src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
-    </script>
+  <meta charset="UTF-8">
+  <title>Mục lục học phần XSTK</title>
 
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 950px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #f8fafc;
-        }
-        header {
-            text-align: center;
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
-            color: #fff;
-            padding: 30px;
-            border-radius: 8px;
-            margin-bottom: 30px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-        /* h1 { margin: 0; font-size: 2rem; text-shadow: 1px 1px 2px rgba(0,0,0,0.2); }
-        p.subtitle { margin: 5px 0 0 0; opacity: 0.9; font-style: italic; } */
-        h1 {
-        text-align: center;
-        color: #003366;
-        }
-        
-        section {
-            background: #fff;
-            padding: 25px;
-            margin-bottom: 25px;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            border-left: 5px solid #11998e;
-        }
-        h2 {
-            color: #11998e;
-            margin-top: 0;
-            border-bottom: 2px solid #f0f0f0;
-            padding-bottom: 10px;
-        }
-        h3 { color: #e056fd; margin-top: 20px; border-left: 3px solid #e056fd; padding-left: 8px; }
-        
-        .important-box {
-            background-color: #fff3cd;
-            border: 1px solid #ffeeba;
-            color: #856404;
-            padding: 15px;
-            border-radius: 5px;
-            margin: 15px 0;
-        }
-        .method-box {
-            background-color: #f1f3f5;
-            border-left: 4px solid #6c757d;
-            padding: 12px;
-            margin: 10px 0;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 15px 0;
-        }
-        .author {
-        text-align: right;
-        font-style: italic;
-        margin-top: 30px;
-        }
-        th, td {
-            border: 1px solid #dee2e6;
-            padding: 12px;
-            text-align: left;
-        }
-        th { background-color: #e8f5e9; color: #11998e; }
-        tr:nth-child(even) { background-color: #f8f9fa; }
-        .badge {
-            background-color: #e74c3c;
-            color: white;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-size: 0.8rem;
-            font-weight: bold;
-        }
-    </style>
+  <!-- MathJax để hiển thị công thức toán -->
+  <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+  <script>
+  MathJax = {
+    tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+    svg: { fontCache: 'global' }
+  };
+</script>
+
 <script>
-function toggleSection(sectionId) {
-    // Tìm phần tử HTML theo ID được truyền vào (ở đây là 'Congthucxsdaydubayes')
-    var section = document.getElementById(sectionId);
-    
-    // Kiểm tra trạng thái hiển thị và đảo ngược nó
-    if (section.style.display === "none" || section.style.display === "") {
-        section.style.display = "block"; // Hiển thị nội dung
-    } else {
-        section.style.display = "none";  // Ẩn nội dung
+    function toggleSection(id) {
+        const section = document.getElementById(id);
+        section.style.display = (section.style.display === "none" || section.style.display === "") ? "block" : "none";
     }
-}
-</script> 
+</script>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #222;
+      margin: 40px;<ul>
+            <li>Bước 1: Nhận dạng bài toán (Ước lượng tham số cho kỳ vọng, phương sai, tỷ lệ) </li>
+            <li>Bước 2: Chọn thống kê và chỉ ra quy thuật phân phối của mẫu</li>
+            <li>Bước 3: Xác định các giá trị quan sát \(n, \alpha, t_{\alpha }^{n}, t_{\alpha/2}^{n},z_{\alpha }, z_{\alpha/2}\)</li>
+            <li>Bước 4: Xác định các khoảng tin cậy trái, phải, đối xứng tùy vào yêu cầu của đề bài.</li>
+        </ul> 
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+    }
+    h2 {
+      color: #0055aa;
+      margin-top: 40px;
+    }
+    button {
+      background-color: #0055aa;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #003f7f;
+    }
+    .section-content {
+      display: none;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .latex-block-content {
+                background-color: #fdf7f7;
+                        padding: 15px 20px 15px 15px;
+                            }
+                                table {
+                                        width: 100%;
+                                                border-collapse: collapse;
+                                                        margin: 15px 0;
+                                                            }
+                                                                th, td {
+                                                                        border: 1px solid #ddd;
+                                                                                padding: 12px;
+                                                                                        text-align: left;
+                                                                                            }
+                                                                                                th { background-color: #f2f2f2; color: #753a88; }
+                                                                                                    tr:nth-child(even) { background-color: #f9f9f9; }
+    }
+    .badge {
+        background-color: #e74c3c;
+        color: white;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-size: 0.8rem;
+        font-weight: bold;
+    }
+    .important-box {
+        background-color: #fff3cd;
+        border: 1px solid #ffeeba;
+        color: #856404;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 15px 0;
+    }
+    .problem {
+        background-color: #eef7fc;
+        border-left: 4px solid #3498db;
+        padding: 15px;
+        margin: 20px 0;
+        border-radius: 0 4px 4px 0;
+    }
+    .solution {
+        margin-top: 15px;
+        padding-left: 10px;
+    }   
+    .author {
+      text-align: right;
+      font-style: italic;
+      margin-top: 30px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    body{font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:#f7f7fb; padding:20px}
+    .card{background:white;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);max-width:900px;margin:0 auto}
+    label{margin-right:6px}
+    input[type=number]{width:80px;padding:4px;margin-right:10px}
+    button{padding:6px 12px;border:0;background:#2563eb;color:white;border-radius:8px;cursor:pointer}
+    button:active{transform:translateY(1px)}
+  </style>
+
 
 </head>
 <body>
@@ -127,17 +139,18 @@ function toggleSection(sectionId) {
 </header>
 
 <main>
-    <section>
-        <h2>1. Phương trình vi phân cấp 1</h2>
-        <button onclick="toggleSection('ptvpcap1')">📘 Xem / Ẩn nội dung </button>
-        <div id="ptvpcap1" class="section-content"> 
-            <p>Dạng tổng quát: $y' = f(x,y)$ hoặc $P(x,y)dx + Q(x,y)dy = 0$.</p>
-
-            <h3>a. Khuyết biến / Phân ly (Tách biến)</h3>
+    <h2>1. Phương trình vi phân cấp 1</h2>
+    <button onclick="toggleSection('ptvpcap1')">📘 Xem / Ẩn nội dung </button>
+    <div id="ptvpcap1" class="section-content"> 
+        <p>Dạng tổng quát: $y' = f(x,y)$ hoặc $P(x,y)dx + Q(x,y)dy = 0$.</p>
+        <button onclick="toggleSection('Dang1ptbspl')">📘 Dạng 1: Phương trình biến số phân ly</button>        
+        <div id="Dang1ptbspl" class="section-content">
             <p><strong>Dạng:</strong> $f(x)dx = g(y)dy$</p>
             <p><strong>Cách giải:</strong> Tích phân thẳng 2 vế: $\int f(x)dx = \int g(y)dy + C$</p>
-
-            <h3>b. Phương trình đẳng cấp cấp 1</h3>
+        </div>  <br>
+        
+        <button onclick="toggleSection('Dang2ptdangcap')">📘 Dạng 2: Phương trình đẳng cấp bậc 1 </button>        
+        <div id="Dang2ptdangcap" class="section-content">
             <p><strong>Dạng nhận biết:</strong> Hàm bậc tử bằng bậc mẫu hoặc biến đổi được về dạng $y' = f\left(\frac{y}{x}\right)$.</p>
             <div class="method-box">
                 <strong>Thuật toán giải:</strong><br>
@@ -145,13 +158,18 @@ function toggleSection(sectionId) {
                 2. Thay vào phương trình ban đầu ta được hệ phương trình tách biến theo $u$ và $x$:
                 $$x \frac{du}{dx} = f(u) - u \Rightarrow \frac{du}{f(u) - u} = \frac{dx}{x}$$
             </div>
+        </div>  <br>
 
-            <h3>c. Phương trình tuyến tính cấp 1 <span class="badge">Trọng tâm</span></h3>
+        <button onclick="toggleSection('Dang3ptttcap1')">📘 Dạng 3: Phương trình tuyến tính cấp 1- Trọng tâm </button>        
+        <div id="Dang3ptttcap1" class="section-content">
             <p><strong>Dạng:</strong> $y' + p(x)y = q(x)$</p>
             <p><strong>Công thức nghiệm tổng quát (Nên thuộc lòng):</strong></p>
             $$y = e^{-\int p(x)dx} \left[ \int q(x) \cdot e^{\int p(x)dx} dx + C \right]$$
+        </div> <br>
+            
 
-            <h3>d. Phương trình Bernoulli</h3>
+        <button onclick="toggleSection('Dang4ptber')">📘 Dạng 4: Phương trình Bernoulli</button>        
+        <div id="Dang4ptber" class="section-content">
             <p><strong>Dạng:</strong> $y' + p(x)y = q(x) \cdot y^\alpha \quad (\alpha \neq 0, \alpha \neq 1)$</p>
             <div class="method-box">
                 <strong>Thuật toán giải:</strong><br>
@@ -159,8 +177,10 @@ function toggleSection(sectionId) {
                 2. Đặt biến phụ: $z = y^{1-\alpha} \Rightarrow z' = (1-\alpha)y^{-\alpha}y'$.<br>
                 3. Thế vào đưa về phương trình tuyến tính cấp 1 theo biến $z$: $ z'+p(x)(1-\alpha) = (1-\alpha) q(x) $.
             </div>
+        </div> <br>
 
-            <h3>e. Phương trình vi phân toàn phần</h3>
+        <button onclick="toggleSection('Dang5ptvptoanphan')">📘 Dạng 5: Phương trình vi phân toàn phần </button>        
+        <div id="Dang5ptvptoanphan" class="section-content">
             <p><strong>Dạng:</strong> $P(x,y)dx + Q(x,y)dy = 0$ thỏa mãn điều kiện Cauchy-Riemann: $\frac{\partial P}{\partial y} = \frac{\partial Q}{\partial x}$</p>
             <p><strong>Nghiệm tổng quát:</strong> $U(x,y) = C$. </p>
                 <ol>
@@ -182,161 +202,229 @@ function toggleSection(sectionId) {
             \end{align}
             <p><strong>Một số dạng đặt biệt khác:</strong></p>
             Dạng đa thức  $(6y^{2} + 18 x^{3}y)dx +  \left(5xy + 8 x^{4}\right)dy=0 $
-        </div>    <br>    
-    </section>
+            <br>
 
-    <section>
-        <h2>2. Phương trình vi phân cấp 2 khuyết</h2>
-        <button onclick="toggleSection('ptvpcap2khuyet')">📘 Xem / Ẩn nội dung </button>
-        <div id="ptvpcap2khuyet" class="section-content"> 
-            <h3>a. Dạng khuyết $y$: $F(x, y', y'') = 0$</h3>
+            <button onclick="toggleSection('1dang6vd1')">📘  Phương trình vi phân toàn phần: Ví dụ 1  </button>        
+            <div id="1dang6vd1" class="section-content">
+                <div class="container">
+                    
+                    <div class="problem">
+                        <strong>Đề bài:</strong> Giải phương trình vi phân sau:
+                        $$(3x^2 + 2xy)dx + (x^2 + y^3)dy = 0$$
+                    </div>
+
+                    <button onclick="toggleSection('1dang6vd1sol')">📘 Lời giải  </button>        <div id="1dang6vd1sol" class="section-content">
+                    
+                        <div class="solution">
+                            <div class="step">
+                                <div class="step-title">Bước 1: Xác định các hàm số và kiểm tra điều kiện vi phân toàn phần</div>
+                                <p>Đặt $M(x, y) = 3x^2 + 2xy$ và $N(x, y) = x^2 + y^3$.</p>
+                                <p>Tính các đạo hàm riêng tương ứng theo các biến ngược lại:</p>
+                                $$\frac{\partial M}{\partial y} = \frac{\partial}{\partial y}(3x^2 + 2xy) = 2x$$
+                                $$\frac{\partial N}{\partial x} = \frac{\partial}{\partial x}(x^2 + y^3) = 2x$$
+                                <p>Vì $\frac{\partial M}{\partial y} = \frac{\partial N}{\partial x} = 2x$, phương trình đã cho là một <strong>phương trình vi phân toàn phần</strong>.</p>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-title">Bước 2: Tìm hàm thế năng $U(x, y)$</div>
+                                <p>Theo định nghĩa, ta cần tìm hàm số $U(x, y)$ sao cho:</p>
+                                $$\frac{\partial U}{\partial x} = M(x, y) = 3x^2 + 2xy \quad (1)$$
+                                $$\frac{\partial U}{\partial y} = N(x, y) = x^2 + y^3 \quad (2)$$
+                                
+                                <p>Lấy tích phân hai vế của phương trình (1) theo biến $x$ (xem $y$ như hằng số):</p>
+                                $$U(x, y) = \int (3x^2 + 2xy)dx = x^3 + x^2y + h(y)$$
+                                <p>Trong đó $h(y)$ là một hàm số bất kỳ chỉ phụ thuộc vào $y$.</p>
+                            </div>
+
+                            <div class="step">
+                                <div class="step-title">Bước 3: Xác định hàm $h(y)$</div>
+                                <p>Lấy đạo hàm riêng của $U(x, y)$ vừa tìm được theo biến $y$:</p>
+                                $$\frac{\partial U}{\partial y} = \frac{\partial}{\partial y}\left(x^3 + x^2y + h(y)\right) = x^2 + h'(y)$$
+                                
+                                <p>Đồng nhất kết quả này với phương trình (2), ta có:</p>
+                                $$x^2 + h'(y) = x^2 + y^3 \implies h'(y) = y^3$$
+                                
+                                <p>Lấy tích phân theo biến $y$ để tìm $h(y)$:</p>
+                                $$h(y) = \int y^3 dy = \frac{y^4}{4} + C_1$$
+                            </div>
+
+                            <div class="step">
+                                <div class="step-title">Bước 4: Kết luận nghiệm tổng quát</div>
+                                <p>Thay $h(y)$ vào biểu thức của $U(x, y)$, tích phân toàn phần có dạng $U(x, y) = C_2$. Kết hợp các hằng số lại, ta thu được nghiệm tổng quát của phương trình:</p>
+                            </div>
+
+                            <div class="result">
+                                <strong>Kết luận:</strong> Nghiệm tổng quát của phương trình vi phân là:
+                                $$x^3 + x^2y + \frac{y^4}{4} = C$$
+                                <p><em>(Với $C$ là hằng số tự do tùy ý)</em></p>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+            </div> 
+
+            <div class="important-box">            
+            <strong> Chú ý</strong> 
+                <ol>
+                    <li> Phương trình vi phân cũng giống như phương trình khác, trước khi giải ta cần đặt điều kiện cho các biến.</li>
+                    <li>Trước khi thực hiện phép chia, ta cần chú ý số chia phải khác $0$ </li>
+                </ol>
+            </div>
+
+        </div> 
+        
+    </div>    <br>    
+
+    <h2>2. Phương trình vi phân cấp 2 khuyết</h2>
+    <button onclick="toggleSection('ptvpcap2khuyet')">📘 Xem / Ẩn nội dung </button>
+    <div id="ptvpcap2khuyet" class="section-content"> 
+        <button onclick="toggleSection('cap2khuyety')">📘 Dạng khuyết $y$: $F(x, y', y'') = 0$ </button>        
+        <div id="cap2khuyety" class="section-content">
             <p><strong>Thuật toán:</strong> Đặt $y' = p(x) \Rightarrow y'' = p'$. Đưa về phương trình cấp 1 theo biến $p$ và $x$.</p>
-
-            <h3>b. Dạng khuyết $x$: $F(y, y', y'') = 0$</h3>
+        </div> <br>
+        
+        <button onclick="toggleSection('cap2khuyetx')">📘 Dạng khuyết $x$: $F(y, y', y'') = 0$ </button>        
+        <div id="cap2khuyetx" class="section-content">
             <p><strong>Thuật toán:</strong> Đặt $y' = p(y)$ (coi $y$ là biến số). Khi đó hệ thức đạo hàm hợp cho ta:
-                $$y'' = \frac{dp}{dx} = \frac{dp}{dy} \cdot \frac{dy}{dx} = p \cdot \frac{dp}{dy}$$
+            $$y'' = \frac{dp}{dx} = \frac{dp}{dy} \cdot \frac{dy}{dx} = p \cdot \frac{dp}{dy}$$
             </p>
             <p>Thay vào phương trình ta được một phương trình cấp 1 theo biến $p$ và $y$ $F\left(y, p, p \dfrac{dp}{dy}\right)=0$ </p>
-        </div>    <br> 
-    </section>
+        </div> 
 
-    <section>
-        <h2>3. PT vi phân tuyến tính cấp 2 <span class="badge">Bắt buộc có trong đề thi</span></h2>
-        <button onclick="toggleSection('ptvpcap2tuyentinh')">📘 Xem / Ẩn phần lý thuyết</button>    
-        <div id="ptvpcap2tuyentinh" class="section-content">  
-            <p>Dạng tổng quát: $y'' + p(x) \cdot y' + q(x) \cdot y = f(x)$ ($p, q$ là hằng số).</p>
-            <p>Nghiệm tổng quát có cấu trúc: <strong>$y = y^* + \bar{y}$</strong> (Trong đó $\bar{y}$ là nghiệm của PT thuần nhất, $y^*$ là một nghiệm riêng của  phương trình tổng quát).</p>
-            
-                <button onclick="toggleSection('hesohang')">📘 Hệ số hằng số : $p(x)=p, q(x)=q$ </button>    <div id="hesohang" class="section-content">
 
-                    <h3>Bước 1: Tìm nghiệm $Y$ bằng PT đặc trưng</h3>
-                    <p>Giải phương trình đại số: $k^2 + pk + q = 0 \quad (*)$</p>
-                    <ul>
-                        <li><strong>TH 1 ($\Delta > 0$):</strong> Có 2 nghiệm thực phân biệt $k_1, k_2 \Rightarrow \bar{y} = C_1 e^{k_1 x} + C_2 e^{k_2 x}$</li>
-                        <li><strong>TH 2 ($\Delta = 0$):</strong> Có nghiệm kép $k_1 = k_2 = k \Rightarrow \bar{y} = (C_1 + C_2 x)e^{kx}$</li>
-                        <li><strong>TH 3 ($\Delta < 0$):</strong> Có nghiệm phức $k = \alpha \pm i\beta \Rightarrow \bar{y} = e^{\alpha x}(C_1 \cos \beta x + C_2 \sin \beta x)$</li>
-                    </ul>
+    </div>    <br> 
 
-                    <h3>Bước 2: Tìm nghiệm riêng $\bar{y}$ bằng phương pháp hệ số bất định</h3>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Dạng của vế phải $f(x)$</th>
-                                <th>Điều kiện nghiệm đặc trưng</th>
-                                <th>Cách tìm nghiệm riêng $y^*$</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td rowspan="3"><strong>Dạng đa thức nhân mũ:</strong><br>$f(x) = P_n(x)e^{\alpha x}$</td>
-                                <td>$\alpha$ không là nghiệm của $(*)$</td>
-                                <td>$y^* = Q_n(x)e^{\alpha x}$</td>
-                            </tr>
-                            <tr>
-                                <td>$\alpha$ là nghiệm đơn của $(*)$</td>
-                                <td>$y^* = x \cdot Q_n(x)e^{\alpha x}$</td>
-                            </tr>
-                            <tr>
-                                <td>$\alpha$ là nghiệm kép của $(*)$</td>
-                                <td>$y^* = x^2 \cdot Q_n(x)e^{\alpha x}$</td>
-                            </tr>
-                            <tr>
-                                <td rowspan="2"><strong>Dạng lượng giác:</strong><br>$f(x) = e^{\alpha x}[P_n(x)\cos\beta x + Q_m(x)\sin\beta x]$</td>
-                                <td>$\alpha + i\beta$ không là nghiệm $(*)$</td>
-                                <td>$y^* = e^{\alpha x}[M_k(x)\cos\beta x + N_k(x)\sin\beta x]$</td>
-                            </tr>
-                            <tr>
-                                <td>$\alpha + i\beta$ là nghiệm $(*)$</td>
-                                <td>$y^* = x \cdot e^{\alpha x}[M_k(x)\cos\beta x + N_k(x)\sin\beta x]$</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <p><em>(Với $Q_n, M_k, N_k$ là các đa thức tổng quát có bậc tương ứng, $k = \max(n, m)$).</em></p>
-                </div>    <br> 
+    <h2>3. PT vi phân tuyến tính cấp 2 <span class="badge">Trọng tâm </span></h2>
+    <button onclick="toggleSection('ptvpcap2tuyentinh')">📘 Xem / Ẩn phần lý thuyết</button>    
+    <div id="ptvpcap2tuyentinh" class="section-content">  
+        <p>Dạng tổng quát: $y'' + p(x) \cdot y' + q(x) \cdot y = f(x)$ ($p, q$ là hằng số).</p>
+        <p>Nghiệm tổng quát có cấu trúc: <strong>$y = y^* + \bar{y}$</strong> (Trong đó $\bar{y}$ là nghiệm của PT thuần nhất, $y^*$ là một nghiệm riêng của  phương trình tổng quát).</p>
+        
+            <button onclick="toggleSection('hesohang')">📘 Hệ số hằng số : $p(x)=p, q(x)=q$ </button>    <div id="hesohang" class="section-content">
 
-                <button onclick="toggleSection('hesohamso')">📘 Hệ số hàm số </button>    
-                <div id="hesohamso" class="section-content">  
-                    <ul>
-                        <li>
-                            Nếu $y_{1} \neq 0 $ là một nghiệm của phương trình thuần nhất $y^{''}+y^{'} p(x) +q(x) y=0$ thì  phương trình có một nghiệm khác độc lập tuyến tính vớii $y_1$ có dạng
-                            \begin{equation}
-                                y_{2}= y_{1} \int \dfrac{1}{y_{1}^{2}} e^{-\int p(x)dx}dx
-                            \end{equation}
-                        </li>
-                        <li> Nghiệm tổng quát của  phương trình thuần nhất có dạng $\bar{y}=C_1y_1 +C_2y_2$</li>
-                    </ul>
-                </div>    <br> 
+                <h3>Bước 1: Tìm nghiệm $Y$ bằng PT đặc trưng</h3>
+                <p>Giải phương trình đại số: $k^2 + pk + q = 0 \quad (*)$</p>
+                <ul>
+                    <li><strong>TH 1 ($\Delta > 0$):</strong> Có 2 nghiệm thực phân biệt $k_1, k_2 \Rightarrow \bar{y} = C_1 e^{k_1 x} + C_2 e^{k_2 x}$</li>
+                    <li><strong>TH 2 ($\Delta = 0$):</strong> Có nghiệm kép $k_1 = k_2 = k \Rightarrow \bar{y} = (C_1 + C_2 x)e^{kx}$</li>
+                    <li><strong>TH 3 ($\Delta < 0$):</strong> Có nghiệm phức $k = \alpha \pm i\beta \Rightarrow \bar{y} = e^{\alpha x}(C_1 \cos \beta x + C_2 \sin \beta x)$</li>
+                </ul>
 
-                <button onclick="toggleSection('ppbthangso')">📘 Phương pháp biến thiên hằng số Lagrange</button>    
-                <div id="ppbthangso" class="section-content">  
-                     Trong trường hợp $f(x)$ không có dạng đặc biệt, thì ta sẽ sử dụng phương pháp biến thiên hằng số Largrange.
-                    <ol>
-                        <li> Bước 1: Xác định nghiệm TQ của PT (1) có dạng $\bar{y}=C_1 y_1+C_2 y_2$.</li>
-                        <li> Bước 2: Coi $C_1$ và $C_2$ là các hàm số để tìm 1 nghiệm riêng $y^*$ của phương trình tổng quát 
-                        $$
-                        Y=C_1(x) y_1+C_2(x) y_2
-                        $$
-                        bằng cách xét HPT sau: $\left\{\begin{array}{l}C_1^{\prime}(x) y_1+C_2^{\prime}(x) y_2=0 \\ C_1^{\prime}(x) y_1^{\prime}+C_2^{\prime}(x) y_2^{\prime}=f(x) .\end{array}\right.$ <br>
-                        Giải HPT trên tìm $C_1^{\prime}(x)$ và $C_2^{\prime}(x) \Rightarrow C_1(x)$ và $C_2(x)$. </li>
-                    </ol>
-                    <div class="important-box">            
-                    <strong>Nhắc lại cách giải hệ  phương trình tuyến tính :</strong> 
-                             \begin{align}
-                                \begin{cases}
-                                a_{1}x+b_{1}y=c_{1} \\
-                                a_{2}x+b_{2}y=c_{2}
-                                \end{cases}
-                            \end{align}     
-                            $D= a_{1}b_{2}-b_{1}a_{2}$ - Anh Bạn , <br>
-                            $D_{x}= c_{1}b_{2}-c_{2}b_{1}$ - Cầm Bát, <br>
-                            $D_{y}= a_{1}c_{2}- a_{2}c_{1}$ - Ăn Cơm .<br>
-                            Nếu $D\neq 0$ thì $x= \dfrac{D_{x}}{D}, y= \dfrac{D_{y}}{D}$.      
-                    </div> 
-                </div>    <br> 
-                <p><strong>Nguyên lý chồng chất nghiệm</strong></p>
-                    Nghiệm của phương trình vi phân cấp 2 tuyến tính không thuần nhất
-                    \begin{align}
-                        y^{''} +p(x)y^{'} +q(x)y= \sum_{i=1}^{n}f_{i}
-                    \end{align}
-                    có dạng $y=\bar{y}+\sum_{i=1}^{n} y^{*}_{i}$ ở đó
-                    <ol>
-                        <li>$\bar{y}$ Nghiệm của PTTN </li>
-                        <li>$y^{*}_{i}$ Nghiệm riêng của PT không TN $y^{''} +p(x)y^{'} +q(x)y= f_{i}$</li>
-                    </ol>
+                <h3>Bước 2: Tìm nghiệm riêng $\bar{y}$ bằng phương pháp hệ số bất định</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Dạng của vế phải $f(x)$</th>
+                            <th>Điều kiện nghiệm đặc trưng</th>
+                            <th>Cách tìm nghiệm riêng $y^*$</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td rowspan="3"><strong>Dạng đa thức nhân mũ:</strong><br>$f(x) = P_n(x)e^{\alpha x}$</td>
+                            <td>$\alpha$ không là nghiệm của $(*)$</td>
+                            <td>$y^* = Q_n(x)e^{\alpha x}$</td>
+                        </tr>
+                        <tr>
+                            <td>$\alpha$ là nghiệm đơn của $(*)$</td>
+                            <td>$y^* = x \cdot Q_n(x)e^{\alpha x}$</td>
+                        </tr>
+                        <tr>
+                            <td>$\alpha$ là nghiệm kép của $(*)$</td>
+                            <td>$y^* = x^2 \cdot Q_n(x)e^{\alpha x}$</td>
+                        </tr>
+                        <tr>
+                            <td rowspan="2"><strong>Dạng lượng giác:</strong><br>$f(x) = e^{\alpha x}[P_n(x)\cos\beta x + Q_m(x)\sin\beta x]$</td>
+                            <td>$\alpha + i\beta$ không là nghiệm $(*)$</td>
+                            <td>$y^* = e^{\alpha x}[M_k(x)\cos\beta x + N_k(x)\sin\beta x]$</td>
+                        </tr>
+                        <tr>
+                            <td>$\alpha + i\beta$ là nghiệm $(*)$</td>
+                            <td>$y^* = x \cdot e^{\alpha x}[M_k(x)\cos\beta x + N_k(x)\sin\beta x]$</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p><em>(Với $Q_n, M_k, N_k$ là các đa thức tổng quát có bậc tương ứng, $k = \max(n, m)$).</em></p>
+            </div>    <br> 
 
-        </div>    <br> 
+            <button onclick="toggleSection('hesohamso')">📘 Hệ số hàm số </button>    
+            <div id="hesohamso" class="section-content">  
+                <ul>
+                    <li>
+                        Nếu $y_{1} \neq 0 $ là một nghiệm của phương trình thuần nhất $y^{''}+y^{'} p(x) +q(x) y=0$ thì  phương trình có một nghiệm khác độc lập tuyến tính vớii $y_1$ có dạng
+                        \begin{equation}
+                            y_{2}= y_{1} \int \dfrac{1}{y_{1}^{2}} e^{-\int p(x)dx}dx
+                        \end{equation}
+                    </li>
+                    <li> Nghiệm tổng quát của  phương trình thuần nhất có dạng $\bar{y}=C_1y_1 +C_2y_2$</li>
+                </ul>
+            </div>    <br> 
 
-    </section>
+            <button onclick="toggleSection('ppbthangso')">📘 Phương pháp biến thiên hằng số Lagrange</button>    
+            <div id="ppbthangso" class="section-content">  
+                    Trong trường hợp $f(x)$ không có dạng đặc biệt, thì ta sẽ sử dụng phương pháp biến thiên hằng số Largrange.
+                <ol>
+                    <li> Bước 1: Xác định nghiệm TQ của PT (1) có dạng $\bar{y}=C_1 y_1+C_2 y_2$.</li>
+                    <li> Bước 2: Coi $C_1$ và $C_2$ là các hàm số để tìm 1 nghiệm riêng $y^*$ của phương trình tổng quát 
+                    $$
+                    Y=C_1(x) y_1+C_2(x) y_2
+                    $$
+                    bằng cách xét HPT sau: $\left\{\begin{array}{l}C_1^{\prime}(x) y_1+C_2^{\prime}(x) y_2=0 \\ C_1^{\prime}(x) y_1^{\prime}+C_2^{\prime}(x) y_2^{\prime}=f(x) .\end{array}\right.$ <br>
+                    Giải HPT trên tìm $C_1^{\prime}(x)$ và $C_2^{\prime}(x) \Rightarrow C_1(x)$ và $C_2(x)$. </li>
+                </ol>
+                <div class="important-box">            
+                <strong>Nhắc lại cách giải hệ  phương trình tuyến tính :</strong> 
+                            \begin{align}
+                            \begin{cases}
+                            a_{1}x+b_{1}y=c_{1} \\
+                            a_{2}x+b_{2}y=c_{2}
+                            \end{cases}
+                        \end{align}     
+                        $D= a_{1}b_{2}-b_{1}a_{2}$ - Anh Bạn , <br>
+                        $D_{x}= c_{1}b_{2}-c_{2}b_{1}$ - Cầm Bát, <br>
+                        $D_{y}= a_{1}c_{2}- a_{2}c_{1}$ - Ăn Cơm .<br>
+                        Nếu $D\neq 0$ thì $x= \dfrac{D_{x}}{D}, y= \dfrac{D_{y}}{D}$.      
+                </div> 
+            </div>    <br> 
+            <p><strong>Nguyên lý chồng chất nghiệm</strong></p>
+                Nghiệm của phương trình vi phân cấp 2 tuyến tính không thuần nhất
+                \begin{align}
+                    y^{''} +p(x)y^{'} +q(x)y= \sum_{i=1}^{n}f_{i}
+                \end{align}
+                có dạng $y=\bar{y}+\sum_{i=1}^{n} y^{*}_{i}$ ở đó
+                <ol>
+                    <li>$\bar{y}$ Nghiệm của PTTN </li>
+                    <li>$y^{*}_{i}$ Nghiệm riêng của PT không TN $y^{''} +p(x)y^{'} +q(x)y= f_{i}$</li>
+                </ol>
 
-    <section>
-        <h2>4. Hệ phương trình vi phân tuyến tính cấp 1</h2>
-        <button onclick="toggleSection('hpttuyentinhcap1')">📘 Xem / Ẩn nội dung</button>    
-        <div id="hpttuyentinhcap1" class="section-content">
-            <p>Dạng hệ 2 ẩn thường gặp:</p>
-            $$\begin{cases} x'(t) = a_{11}x(t) + a_{12}y(t) \\ y'(t) = a_{21}x(t) + a_{22}y(t) \end{cases}$$
-            <div class="important-box">
-                <strong>Phương pháp khử (Đưa về PT cấp 2):</strong><br>
-                1. Từ phương trình đầu, cô lập biến $y$: $y = \frac{1}{a_{12}}(x' - a_{11}x)$.<br>
-                2. Đạo hàm hai vế theo $t$ để tìm $y'$.<br>
-                3. Thế biểu thức của $y$ và $y'$ vào phương trình thứ hai. Hệ thống sẽ quy về một phương trình vi phân tuyến tính cấp 2 chỉ còn chứa ẩn $x(t)$. Giải tìm $x(t)$ rồi suy ra $y(t)$.
-            </div>
-            <p><strong>Cách giải nhanh:</strong></p> 
-            $x(t)$ là nghiệm của  phương trình sau 
-                $x^{''}  -\det(A)x^{'}+\text{trace}(A)x=0$, với A là ma trận hệ số
-        </div>    <br> 
-    </section>
+    </div>    <br> 
 
-    <section>
-        <h2> Xem thêm nội dung  <br> 
-            <p><a href="GT3C1.html">Chương 1</a>.</p>
-            <p><a href="GT3C2.html">Chương 2</a>.</p>
-            <p><a href="GT3C3.html">Chương 3</a>.</p>  
-        </h2>
-    </section>
+
+    <h2>4. Hệ phương trình vi phân tuyến tính cấp 1</h2>
+    <button onclick="toggleSection('hpttuyentinhcap1')">📘 Xem / Ẩn nội dung</button>    
+    <div id="hpttuyentinhcap1" class="section-content">
+        <p>Dạng hệ 2 ẩn thường gặp:</p>
+        $$\begin{cases} x'(t) = a_{11}x(t) + a_{12}y(t) \\ y'(t) = a_{21}x(t) + a_{22}y(t) \end{cases}$$
+        <div class="important-box">
+            <strong>Phương pháp khử (Đưa về PT cấp 2):</strong><br>
+            1. Từ phương trình đầu, cô lập biến $y$: $y = \frac{1}{a_{12}}(x' - a_{11}x)$.<br>
+            2. Đạo hàm hai vế theo $t$ để tìm $y'$.<br>
+            3. Thế biểu thức của $y$ và $y'$ vào phương trình thứ hai. Hệ thống sẽ quy về một phương trình vi phân tuyến tính cấp 2 chỉ còn chứa ẩn $x(t)$. Giải tìm $x(t)$ rồi suy ra $y(t)$.
+        </div>
+        <p><strong>Cách giải nhanh:</strong></p> 
+        $x(t)$ là nghiệm của  phương trình sau 
+            $x^{''}  -\det(A)x^{'}+\text{trace}(A)x=0$, với A là ma trận hệ số
+    </div>    <br> 
+
+    <h2> Xem thêm nội dung  <br> 
+        <p><a href="GT3C1.html">Chương 1</a>.</p>
+        <p><a href="GT3C2.html">Chương 2</a>.</p>
+        <p><a href="GT3C3.html">Chương 3</a>.</p>  
+    </h2>
 </main>
 
 <footer>
-    <p style="text-align: center; color: #7f8c8d; font-size: 0.9rem;">Ôn tập kỹ - Thi cử tốt - Kíp này ta giật điểm A! 🎯</p>
+    <p style="text-align: center; color: #7f8c8d; font-size: 0.9rem;"> Làm ơn đọc phần chú ý được không  🎯</p>
 </footer>
 
 </body>
