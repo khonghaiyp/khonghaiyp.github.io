@@ -51,6 +51,14 @@
       margin-top: 15px;
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
+    .important-box {
+        background-color: #fff3cd;
+        border: 1px solid #ffeeba;
+        color: #856404;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 15px 0;
+    }
     .author {
       text-align: right;
       font-style: italic;
@@ -138,15 +146,10 @@
 </div>
 
 
-
-
-
-
-
   <!-- Phần II -->
   <h2>II. Bài toán ước lượng tham số</h2>
 
- <button onclick="toggleSection('Cacbuoclambtults')">📘 1. Các bước làm bài toán ước lượng tham số</button>
+ <button onclick="toggleSection('Cacbuoclambtults')"> &#128161   Các bước làm bài toán ước lượng tham số</button>
  <div id="Cacbuoclambtults" class="section-content">
         <ul>
             <li>Bước 1: Nhận dạng bài toán <br> (Ước lượng tham số cho kỳ vọng, phương sai, tỷ lệ)  </li>
@@ -157,10 +160,84 @@
         </div>
         <br>
 
-  <button onclick="toggleSection('ULkyvongphuongsaidabiet')">📘 2. Ước lượng tham số cho kỳ vọng, phương sai đã biết</button>
+  <button onclick="toggleSection('ULkyvongphuongsaidabiet')">📘 1. Ước lượng tham số cho kỳ vọng, phương sai đã biết</button>
       <div id="ULkyvongphuongsaidabiet" class="section-content">
+        <div class="important-box">                        
+          <ol>
+            <strong> Điều kiện </strong>
+            <li>\( X \sim \mathcal{N}(\mu, \sigma^2) \) thì \(n\) tùy ý hoặc \( n \geq 30 \) (mẫu lớn - Dạng 3)   <br></li> 
+              <li> Cơ sở lý thuyết: Nếu \(X \sim \mathcal{N}(\mu, \sigma^2)\), thì \( \dfrac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim \mathcal{N}(0,1) \) </li>
+          </ol>
+          
+        </div>
         <li> Thống kê \( Z = \dfrac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim \mathcal{N}(0,1) \) </li> <br>
-         ĐK: \( n \geq 30 \) hoặc \( X \sim \mathcal{N}(\mu, \sigma^2) \)  <br>
+        <br>
+         <b> Các khoảng tin cậy cho kỳ vọng \( \mu \):</b>
+        <li> Khoảng tin cậy đối xứng: \( \left( \bar{X} - z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}}, \bar{X} + z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}} \right) \)</li>
+        Độ rộng khoảng tin cậy \( k = 2 z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}} \)  <br> 
+        <em><p style="color: blue;">Thường được dùng trong bài toán tìm kích thước mẫu để sai số nhỏ hơn một đại lượng nào đó. Trong đó sai số của ước lượng là \(\epsilon = z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}}\). </p> </em>
+        
+        <li> Khoảng tin cậy trái: \( \left( -\infty, \bar{X} + z_{\alpha} \dfrac{\sigma}{\sqrt{n}} \right) \)</li>
+        <li> Khoảng tin cậy phải: \( \left( \bar{X} - z_{\alpha} \dfrac{\sigma}{\sqrt{n}}, +\infty \right) \)</li>
+      </div> <br>
+
+  <button onclick="toggleSection('ULkyvongphuongsaichuabiet')">📘 2. Ước lượng tham số cho kỳ vọng, phương sai chưa biết</button>
+      <div id="ULkyvongphuongsaichuabiet" class="section-content">
+        <div class="important-box">                        
+          <strong> Điều kiện </strong>
+          \(\textcolor{red}{ X \sim \mathcal{N}(\mu, \sigma^2)} \)
+        </div> 
+        <li> Thống kê \( Z = \dfrac{\bar{X} - \mu}{S/\sqrt{n}} \sim t^{n-1} \) </li>   
+        <u> Chú ý</u>
+        <ul> 
+          <li> \( S^2 = \dfrac{\sum_{i=1}^{n}(X_i - \bar{X})^2}{n-1} \) là phương sai mẫu hiệu chỉnh.  </li>
+              
+          <li> Khi \( n \geq 30 \) thì phân phối Student xấp xỉ phân phối chuẩn tắc. </li>
+        </ul>
+        <br>
+        <b> Các khoảng tin cậy cho kỳ vọng \( \mu \):</b>
+        <li> Khoảng tin cậy đối xứng: \( \left( \bar{X} - t_{\alpha/2}^{n-1} \dfrac{S}{\sqrt{n}}, \bar{X} + t_{\alpha/2}^{n-1} \dfrac{S}{\sqrt{n}} \right) \)      </li> <br>
+        Độ rộng khoảng tin cậy \( k = 2 t_{\alpha/2}^{n-1} \dfrac{S}{\sqrt{n}} \)
+        <li> Khoảng tin cậy trái: \( \left( -\infty, \bar{X} + t_{\alpha}^{n-1} \dfrac{S}{\sqrt{n}} \right) \) </li>
+        <li> Khoảng tin cậy phải: \( \left( \bar{X} - t_{\alpha}^{n-1} \dfrac{S}{\sqrt{n}} , +\infty \right) \) </li>
+        <br>
+        <div class="important-box">                        
+          <strong> Chú ý</strong>       
+          <ol>
+            <li> Thông thường những bài này thì người ta sẽ cho một mẫu cụ thể và các giá trị mẫu trước (kích thước mẫu, trung mình mẫu, độ lệch chuẩn mẫu hiệu chỉnh, độ lệch chuẩn mẫu chưa hiệu chỉnh (cần chuyển về độ lệch chuẩn mẫu hiệu chỉnh)  </li>
+            <li> Nếu đề bài chỉ cho một bảng dữ liệu, thì ta cần lập công thức tính và ghi kết quả.</li>
+            <li> Cơ sở lý thuyết phần này là 
+              <ol> 
+                <li> <strong> Nếu \(X \sim \mathcal{N}(\mu, \sigma^2)\), thì \( \dfrac{\bar{X} - \mu}{S/\sqrt{n}} \sim t^{n-1} \) với mọi n.</strong> </li> 
+                  <ul>
+                    <li> Nếu n <30 </li> thì ta có thể tra bảng phân phối Student để tìm giá trị \(t_{\alpha}^{n-1}\) hoặc \(t_{\alpha/2}^{n-1}\). </li>
+                    <li> Nếu n ≥ 30 </li> thì ta có thể tra bảng phân phối chuẩn tắc để tìm giá trị \(z_{\alpha}\) hoặc \(z_{\alpha/2}\). </li>
+                  </ul>
+                <li> Nếu không cho thông tin \(X \sim \mathcal{N}\left(0,1\right) \) thì ta cần mẫu có kích thước lớn \( n \geq 30 \) (dạng 3), thì phân phối Student xấp xỉ phân phối chuẩn tắc.         </li>
+              </ol>
+          </ol>
+        </div> 
+      </div> <br>
+
+  <button onclick="toggleSection('ULkyvongmaulon')">📘 3. Ước lượng tham số cho kỳ vọng, mẫu lớn \(n>30\). </button>
+      <div id="ULkyvongmaulon" class="section-content">
+        <div class="important-box">                        
+          <strong> Chú ý</strong>
+          <ul> 
+            <li>ĐK: \( n \geq 30 \). </li>
+            <li>Thông thường người ta sẽ không cho biết phân phối của \( X \). <br>
+              \(\Rightarrow \) Ta chỉ cần viết \(EX=\mu\) và \(VX=\sigma^2\).</li>
+            <li> Cơ sở lý thuyết phần này là <strong> Định lý giới hạn trung tâm</strong>. Nên ta không cần quan tâm đến dạng phân bố của biến ngẫu nhiên X, và chỉ quan tâm đến kích thước mẫu \(n>30 \) .</li>
+          </ul>
+          
+          
+        </div> 
+        <li> Thống kê 
+          <ol>
+            <li> \( Z = \dfrac{\bar{X} - \mu}{\sigma/\sqrt{n}}  \) nếu \(\sigma\) đã biết,</li>
+            <li> hoặc \(Z = \dfrac{\bar{X} - \mu}{S/\sqrt{n}}\) nếu \(\sigma\) chưa biết,</li>
+          </ol>  
+           <br> khi đó \(Z\sim^{*} \mathcal{N}(0,1)\) </li> <br>
         <br>
          <b> Các khoảng tin cậy cho kỳ vọng \( \mu \):</b>
         <li> Khoảng tin cậy đối xứng: \( \left( \bar{X} - z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}}, \bar{X} + z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}} \right) \)</li>
@@ -170,56 +247,27 @@
         <li> Khoảng tin cậy phải: \( \left( \bar{X} - z_{\alpha} \dfrac{\sigma}{\sqrt{n}}, +\infty \right) \)</li>
       </div> <br>
 
-  <button onclick="toggleSection('ULkyvongphuongsaichuabiet')">📘 3. Ước lượng tham số cho kỳ vọng, phương sai chưa biết</button>
-      <div id="ULkyvongphuongsaichuabiet" class="section-content">
-        <li> Thống kê \( Z = \dfrac{\bar{X} - \mu}{S/\sqrt{n}} \sim t^{n-1} \) </li>   
-        <u> Chú ý</u>
-        <ul> 
-          <li> \( S^2 = \dfrac{\sum_{i=1}^{n}(X_i - \bar{X})^2}{n-1} \) là phương sai mẫu hiệu chỉnh.  </li>
-          <li> ĐK: \(\textcolor{red}{ X \sim \mathcal{N}(\mu, \sigma^2)} \) </li>    
-          <li> Khi \( n \geq 30 \) thì phân phối Student xấp xỉ phân phối chuẩn tắc. </li>
-        </ul>
-        <br>
-        <b> Các khoảng tin cậy cho kỳ vọng \( \mu \):</b>
-        <li> Khoảng tin cậy đối xứng: \( \left( \bar{X} - t_{\alpha/2}^{n-1} \dfrac{S}{\sqrt{n}}, \bar{X} + t_{\alpha/2}^{n-1} \dfrac{S}{\sqrt{n}} \right) \)      </li> <br>
-        Độ rộng khoảng tin cậy \( k = 2 t_{\alpha/2}^{n-1} \dfrac{S}{\sqrt{n}} \)
-        <li> Khoảng tin cậy trái: \( \left( -\infty, \bar{X} + t_{\alpha}^{n-1} \dfrac{S}{\sqrt{n}} \right) \) </li>
-        <li> Khoảng tin cậy phải: \( \left( \bar{X} - t_{\alpha}^{n-1} \dfrac{S}{\sqrt{n}} , +\infty \right) \) </li>
-      </div> <br>
 
 
   <button onclick="toggleSection('ULtyle')">📘 4. Ước lượng tham số cho tỷ lệ</button>
       <div id="ULtyle" class="section-content">
+        <div class="important-box">                        
+          <strong> Chú ý </strong> 
+          <ol> 
+            <li> Điều kiện:</li> \( np \geq 5, n(1-p) \geq 5 \)  
+            <li> <strong> Cơ sở lý thuyết: </strong> Định lý giới hạn trung tâm </li>
+          </ol>
+        </div> 
+        
         <li> Thống kê  \( Z = \dfrac{\hat{p} - p}{\sqrt{\dfrac{p(1-p)}{n}}} \sim \mathcal{N}(0,1) \) </li>
-         ĐK: \( n \geq 30 \) và \( np \geq 5, n(1-p) \geq 5 \)  
          <br>
         <br> 
         <b> Các khoảng tin cậy cho tỷ lệ \( p \):</b>
-        <!-- <li> Khoảng tin cậy đối xứng: \( \left( \hat{p} - z_{\alpha/2} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}}, \hat{p} + z_{\alpha/2} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} \right) \) </li>
+        <li> Khoảng tin cậy đối xứng: \( \left( \hat{p} - z_{\alpha/2} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}}, \hat{p} + z_{\alpha/2} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} \right) \)  <br> 
+          Độ rộng khoảng tin cậy \( k = 2 z_{\alpha/2} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} \)
+        </li>
         <li> Khoảng tin cậy trái: \( \left( -\infty, \hat{p} + z_{\alpha} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} \right) \) </li>
-        <li> Khoảng tin cậy phải: \( \left( \hat{p} - z_{\alpha} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} , +\infty \right) \) </li> -->
-<table border="1" cellpadding="8" cellspacing="0" style="border-collapse: collapse; text-align: center;">
-  <thead>
-    <tr style="background-color: #f2f2f2;">
-      <th>Type</th>
-      <th>Khoảng tin cậy</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr>
-      <td>Khoảng tin cậy đối xứng</td>
-      <td>\( \left( \hat{p} - z_{\alpha/2} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}}, \hat{p} + z_{\alpha/2} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} \right) \)</td>
-    </tr>
-    <tr>
-      <td>Khoảng tin cậy trái</td>
-      <td>\( \left( -\infty, \hat{p} + z_{\alpha} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} \right) \)</td>
-    </tr>
-    <tr>
-      <td>Khoảng tin cậy phải</td>
-      <td>\( \left( \hat{p} - z_{\alpha} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} , +\infty \right) \)</td>
-    </tr>
-  </tbody>
-</table>
+        <li> Khoảng tin cậy phải: \( \left( \hat{p} - z_{\alpha} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} , +\infty \right) \) </li>
       </div> <br>
 
 
