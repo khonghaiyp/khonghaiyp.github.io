@@ -89,11 +89,11 @@
           <li> \(p(x,y) \geq 0\) với mọi cặp giá trị \(x,y\).<br> </li>
         </ul>
         
-        <li>Hàm phân phối đồng thời của hai biến ngẫu nhiên rời rạc X,Y, ký hiệu là \(F(x,y)\) được định nghĩa là \(F(x,y) = P(X \leq x, Y \leq y)= \displaystyle \sum_{x' \leq x} \sum_{y' \leq y} p(x',y')\). </li> <br> 
+        <li>Hàm phân phối đồng thời của hai biến ngẫu nhiên rời rạc X,Y, ký hiệu là \(F(x,y)\) được định nghĩa là \(F(x,y) = P(X < x, Y < y)= \displaystyle \sum_{x' < x} \sum_{y' < y} p(x',y')\). </li> <br> 
         Tính chất 
           <ul>
             <li> \(F(x,y)\) là hàm không giảm theo cả hai biến \(x\) và \(y\).</li>
-            <li> \(\displaystyle \lim_{x \to \infty} F(x,y) = F(\infty, y) = P(Y \leq y)\) và \(\displaystyle \lim_{y \to \infty} F(x,y) = F(x, \infty) = P(X \leq x)\).</li>
+            <li> \(\displaystyle \lim_{x \to \infty} F(x,y) = F(\infty, y) = P(Y < y)\) và \(\displaystyle \lim_{y \to \infty} F(x,y) = F(x, \infty) = P(X < x)\).</li>
             <li> \(\displaystyle \lim_{x,y \to \infty} F(x,y) = F(\infty, \infty) = 1\).</li>     
             <li> \(\displaystyle \lim_{x \to -\infty} F(x,y) = F(-\infty, y)= \lim_{y \to -\infty} F(x,y) = F(x, -\infty) = 0\).</li>
             <li> \(F(x,y)\) là hàm liên tục tại mọi điểm \((x,y)\).</li>
