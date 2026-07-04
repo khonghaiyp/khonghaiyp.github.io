@@ -276,6 +276,12 @@
                 <ul>
                     <li>Dạng bậc nhất: $\dfrac{A}{s - a} \xrightarrow{\mathcal{L}^{-1}} A e^{at}$</li>
                     <li>Dạng bậc hai vô nghiệm (đưa về bình phương đầy đủ): $\dfrac{B \cdot s + C}{(s-\alpha)^2 + \beta^2}$ rồi dùng tính chất dời dịch phối hợp với $\sin, \cos$.</li>
+                    <li>Dạng bậc bốn vô nghiệm nhưng có thể tách thành tích của hai hàm bậc hai vô nghiệm. \(\dfrac{B \cdot s + C}{(s-\alpha)^2 + \beta^2} \cdot \dfrac{D \cdot s + E}{(s-\gamma)^2 + \delta^2} \)
+                        <ol>
+                            <li> Nếu \(\alpha, \beta\) khác \(\gamma, \delta\)  thì ta chuyển về tổng hai dạng bậc hai vô nghiệm</li>
+                            <li> Nếu \((\alpha, \beta) =(\gamma, \delta)\) thì ta chuyển về dạng biến đổi Laplace của các hàm \(t\sin kt\) và \(t\cos kt\) kết hợp với phép tịnh tiến. </li>
+                        </ol>
+                    </li>
                 </ul>
             </div>
         </div>    <br> 
@@ -309,28 +315,32 @@
                         $$h(t) = \int_{0}^{t} e^{\tau} \sin(t - \tau) d\tau$$
                     </div>
 
-                    <div class="step">
-                        <div class="step-title">Bước 1: Nhận dạng các hàm thành phần</div>
-                        <p>Đối chiếu công thức đề bài với định nghĩa tích chập $(f * g)(t) = \int_{0}^{t} f(\tau)g(t - \tau)d\tau$, ta dễ dàng nhận thấy $h(t)$ chính là tích chập của hai hàm:</p>
-                        $$f(t) = e^t \quad \text{và} \quad g(t) = \sin(t)$$
+                    <button class="btn-sol" onclick="toggleSection('soltichchapvd1')"> &#128269 Lời giải </button>              
+                    <div id="soltichchapvd1" class="solution-content">   
+                        <div class="step">
+                            <div class="step-title">Bước 1: Nhận dạng các hàm thành phần</div>
+                            <p>Đối chiếu công thức đề bài với định nghĩa tích chập $(f * g)(t) = \int_{0}^{t} f(\tau)g(t - \tau)d\tau$, ta dễ dàng nhận thấy $h(t)$ chính là tích chập của hai hàm:</p>
+                            $$f(t) = e^t \quad \text{và} \quad g(t) = \sin(t)$$
+                        </div>
+
+                        <div class="step">
+                            <div class="step-title">Bước 2: Tìm biến đổi Laplace của từng hàm thành phần</div>
+                            <p>Tra bảng biến đổi Laplace cơ bản, ta có:</p>
+                            $$F(s) = \mathcal{L}\{e^t\}(s) = \frac{1}{s - 1}$$
+                            $$G(s) = \mathcal{L}\{\sin(t)\}(s) = \frac{1}{s^2 + 1}$$
+                        </div>
+
+                        <div class="step">
+                            <div class="step-title">Bước 3: Áp dụng định lý tích chập</div>
+                            <p>Theo định lý, biến đổi Laplace của tích chập bằng tích các biến đổi Laplace:</p>
+                            $$\mathcal{L}\{h(t)\} = F(s) \cdot G(s) = \frac{1}{s - 1} \cdot \frac{1}{s^2 + 1}$$
+                        </div> 
+
+                        <div class="result">
+                            Như vậy  $\mathcal{L}\left\{\int_{0}^{t} e^{\tau} \sin(t - \tau) d\tau\right\}(s) = \frac{1}{(s - 1)(s^2 + 1)}$
+                        </div>
                     </div>
 
-                    <div class="step">
-                        <div class="step-title">Bước 2: Tìm biến đổi Laplace của từng hàm thành phần</div>
-                        <p>Tra bảng biến đổi Laplace cơ bản, ta có:</p>
-                        $$F(s) = \mathcal{L}\{e^t\} = \frac{1}{s - 1}$$
-                        $$G(s) = \mathcal{L}\{\sin(t)\} = \frac{1}{s^2 + 1}$$
-                    </div>
-
-                    <div class="step">
-                        <div class="step-title">Bước 3: Áp dụng định lý tích chập</div>
-                        <p>Theo định lý, biến đổi Laplace của tích chập bằng tích các biến đổi Laplace:</p>
-                        $$\mathcal{L}\{h(t)\} = F(s) \cdot G(s) = \frac{1}{s - 1} \cdot \frac{1}{s^2 + 1}$$
-                    </div>
-
-                    <div class="result">
-                        Đáp án Ví dụ 1: $\mathcal{L}\left\{\int_{0}^{t} e^{\tau} \sin(t - \tau) d\tau\right\} = \frac{1}{(s - 1)(s^2 + 1)}$
-                    </div>
                 </div> <br>
 
                 <!-- VÍ DỤ 2 -->
@@ -341,37 +351,42 @@
                         $$H(s) = \frac{1}{s^2(s - 3)}$$
                     </div>
 
-                    <div class="step">
-                        <div class="step-title">Bước 1: Tách biểu thức thành tích hai hàm $F(s)$ và $G(s)$</div>
-                        <p>Ta có thể phân tích $H(s)$ dưới dạng tích của hai phân thức đơn giản đã biết rõ dạng ảnh ngược:</p>
-                        $$H(s) = \frac{1}{s^2} \cdot \frac{1}{s - 3}$$
-                        <p>Đặt $F(s) = \frac{1}{s^2}$ và $G(s) = \frac{1}{s - 3}$.</p>
+                    <button class="btn-sol" onclick="toggleSection('sol-bai1')"> &#128269 Lời giải </button>              
+                    <div id="sol-bai1" class="solution-content"> 
+                        <div class="step">
+                            <div class="step-title">Bước 1: Tách biểu thức thành tích hai hàm $F(s)$ và $G(s)$</div>
+                            <p>Ta có thể phân tích $H(s)$ dưới dạng tích của hai phân thức đơn giản đã biết rõ dạng ảnh ngược:</p>
+                            $$H(s) = \frac{1}{s^2} \cdot \frac{1}{s - 3}$$
+                            <p>Đặt $F(s) = \frac{1}{s^2}$ và $G(s) = \frac{1}{s - 3}$.</p>
+                        </div>
+
+                        <div class="step">
+                            <div class="step-title">Bước 2: Tìm các hàm ảnh ngược gốc $f(t)$ và $g(t)$</div>
+                            $$f(t) = \mathcal{L}^{-1}\left\{\frac{1}{s^2}\right\} = t$$
+                            $$g(t) = \mathcal{L}^{-1}\left\{\frac{1}{s - 3}\right\} = e^{3t}$$
+                        </div>
+
+                        <div class="step">
+                            <div class="step-title">Bước 3: Thiết lập và tính tích phân tích chập</div>
+                            <p>Theo định lý tích chập ngược, ta có $h(t) = (f * g)(t)$:</p>
+                            $$h(t) = \int_{0}^{t} \tau \cdot e^{3(t - \tau)} d\tau = \int_{0}^{t} \tau \cdot e^{3t} \cdot e^{-3\tau} d\tau = e^{3t} \int_{0}^{t} \tau e^{-3\tau} d\tau$$
+                            <p>Sử dụng phương pháp tích phân từng phần cho $\int_{0}^{t} \tau e^{-3\tau} d\tau$ (đặt $u = \tau, dv = e^{-3\tau}d\tau$):</p>
+                            $$\int_{0}^{t} \tau e^{-3\tau} d\tau = \left[ -\frac{1}{3}\tau e^{-3\tau} \right]_{0}^{t} - \int_{0}^{t} \left(-\frac{1}{3}e^{-3\tau}\right) d\tau$$
+                            $$= -\frac{1}{3}t e^{-3t} + \left[ -\frac{1}{9}e^{-3\tau} \right]_{0}^{t} = -\frac{1}{3}t e^{-3t} - \frac{1}{9}e^{-3t} + \frac{1}{9}$$
+                        </div>
+
+                        <div class="step">
+                            <div class="step-title">Bước 4: Nhân phân phối để ra kết quả cuối cùng</div>
+                            <p>Nhân lại với thừa số $e^{3t}$ ở phía trước:</p>
+                            $$h(t) = e^{3t} \left( -\frac{1}{3}t e^{-3t} - \frac{1}{9}e^{-3t} + \frac{1}{9} \right) = -\frac{1}{3}t - \frac{1}{9} + \frac{1}{9}e^{3t}$$
+                        </div>
+
+                        <div class="result">
+                            Đáp án Ví dụ 2: $\mathcal{L}^{-1}\left\{\frac{1}{s^2(s - 3)}\right\} = \frac{1}{9}e^{3t} - \frac{1}{3}t - \frac{1}{9}$
+                        </div>
+
                     </div>
 
-                    <div class="step">
-                        <div class="step-title">Bước 2: Tìm các hàm ảnh ngược gốc $f(t)$ và $g(t)$</div>
-                        $$f(t) = \mathcal{L}^{-1}\left\{\frac{1}{s^2}\right\} = t$$
-                        $$g(t) = \mathcal{L}^{-1}\left\{\frac{1}{s - 3}\right\} = e^{3t}$$
-                    </div>
-
-                    <div class="step">
-                        <div class="step-title">Bước 3: Thiết lập và tính tích phân tích chập</div>
-                        <p>Theo định lý tích chập ngược, ta có $h(t) = (f * g)(t)$:</p>
-                        $$h(t) = \int_{0}^{t} \tau \cdot e^{3(t - \tau)} d\tau = \int_{0}^{t} \tau \cdot e^{3t} \cdot e^{-3\tau} d\tau = e^{3t} \int_{0}^{t} \tau e^{-3\tau} d\tau$$
-                        <p>Sử dụng phương pháp tích phân từng phần cho $\int_{0}^{t} \tau e^{-3\tau} d\tau$ (đặt $u = \tau, dv = e^{-3\tau}d\tau$):</p>
-                        $$\int_{0}^{t} \tau e^{-3\tau} d\tau = \left[ -\frac{1}{3}\tau e^{-3\tau} \right]_{0}^{t} - \int_{0}^{t} \left(-\frac{1}{3}e^{-3\tau}\right) d\tau$$
-                        $$= -\frac{1}{3}t e^{-3t} + \left[ -\frac{1}{9}e^{-3\tau} \right]_{0}^{t} = -\frac{1}{3}t e^{-3t} - \frac{1}{9}e^{-3t} + \frac{1}{9}$$
-                    </div>
-
-                    <div class="step">
-                        <div class="step-title">Bước 4: Nhân phân phối để ra kết quả cuối cùng</div>
-                        <p>Nhân lại với thừa số $e^{3t}$ ở phía trước:</p>
-                        $$h(t) = e^{3t} \left( -\frac{1}{3}t e^{-3t} - \frac{1}{9}e^{-3t} + \frac{1}{9} \right) = -\frac{1}{3}t - \frac{1}{9} + \frac{1}{9}e^{3t}$$
-                    </div>
-
-                    <div class="result">
-                        Đáp án Ví dụ 2: $\mathcal{L}^{-1}\left\{\frac{1}{s^2(s - 3)}\right\} = \frac{1}{9}e^{3t} - \frac{1}{3}t - \frac{1}{9}$
-                    </div>
 
                     <div class="important-box">                        
                     <strong> Chú ý</strong>
@@ -389,7 +404,7 @@
                 <p>Xét bài toán tìm $y(t)$ thỏa mãn: $y'' + ay' + by = f(t)$ với điều kiện $y(0) = y_0, y'(0) = y_1$.</p>
                 <div class="method-box">
                     <strong>Thuật toán 3 bước:</strong><br>
-                    <strong>Bước 1:</strong> Thực hiện phép biến đổi Laplace cả 2 vế của phương trình. Áp dụng định lý đạo hàm hàm gốc và thế các giá trị $y(0), y'(0)$ vào.<br>
+                    <strong>Bước 1:</strong> Thực hiện phép biến đổi Laplace cả 2 vế của phương trình. Áp dụng định lý biến đổi laplace của đạo hàm và thế các giá trị $y(0), y'(0)$ vào.<br>
                     <strong>Bước 2:</strong> Gom nhóm, cô lập để rút ra biểu thức của hàm ảnh $Y(s)$ dưới dạng phân thức đại số.<br>
                     <strong>Bước 3:</strong> Tìm biến đổi Laplace ngược của $Y(s)$ để suy ra nghiệm $y(t) = \mathcal{L}^{-1}\{Y(s)\}$.
                 </div>
@@ -406,61 +421,81 @@
                     </div>
 
                     <div class="note">
-                        <strong>Nhắc lại công thức đạo hàm trong không gian Laplace:</strong>
+                        <strong>Nhắc lại công thức biến đổi Laplace của đạo hàm :</strong>
                         <ul>
-                            <li>$\mathcal{L}\{y(t)\} = Y(s)$</li>
-                            <li>$\mathcal{L}\{y'(t)\} = sY(s) - y(0)$</li>
-                            <li>$\mathcal{L}\{y''(t)\} = s^2Y(s) - sy(0) - y'(0)$</li>
+                            <li>$\mathcal{L}\{y(t)\}(s) = Y(s)$</li>
+                            <li>$\mathcal{L}\{y'(t)\}(s) = sY(s) - y(0)$</li>
+                            <li>$\mathcal{L}\{y''(t)\}(s) = s^2Y(s) - sy(0) - y'(0)$</li>
                         </ul>
                     </div>
 
-                    <h2>Lời giải chi tiết</h2>
+                    <button class="btn-sol" onclick="toggleSection('solvd5.1')"> &#128269 Lời giải </button>              
+                    <div id="solvd5.1" class="solution-content">               
+                        <div class="step">
+                            <div class="step-title">Bước 1: Áp dụng phép biến đổi Laplace vào hai vế của phương trình</div>
+                            <p>Thực hiện biến đổi Laplace cho cả hai vế phương trình vi phân:</p>
+                            $$\mathcal{L}\{y''\}(s) - 3\mathcal{L}\{y'\}(s) + 2\mathcal{L}\{y\}(s) = \mathcal{L}\{e^{3t}\}(s)$$
+                            <p>Sử dụng các công thức đạo hàm và tra bảng cho vế phải $\mathcal{L}\{e^{3t}\}(s) = \frac{1}{s-3}$:</p>
+                            $$\left[s^2Y(s) - sy(0) - y'(0)\right] - 3\left[sY(s) - y(0)\right] + 2Y(s) = \frac{1}{s-3}$$
+                        </div>
 
-                    <div class="step">
-                        <div class="step-title">Bước 1: Áp dụng phép biến đổi Laplace vào hai vế của phương trình</div>
-                        <p>Thực hiện biến đổi Laplace cho cả hai vế phương trình vi phân:</p>
-                        $$\mathcal{L}\{y''\} - 3\mathcal{L}\{y'\} + 2\mathcal{L}\{y\} = \mathcal{L}\{e^{3t}\}$$
-                        <p>Sử dụng các công thức đạo hàm và tra bảng cho vế phải $\mathcal{L}\{e^{3t}\} = \frac{1}{s-3}$:</p>
-                        $$\left[s^2Y(s) - sy(0) - y'(0)\right] - 3\left[sY(s) - y(0)\right] + 2Y(s) = \frac{1}{s-3}$$
-                    </div>
+                        <div class="step">
+                            <div class="step-title">Bước 2: Thay thế các điều kiện ban đầu và rút ra $Y(s)$</div>
+                            <p>Thay $y(0) = 1$ và $y'(0) = 0$ vào phương trình đại số vừa thu được:</p>
+                            $$\left[s^2Y(s) - s \cdot 1 - 0\right] - 3\left[sY(s) - 1\right] + 2Y(s) = \frac{1}{s-3}$$
+                            $$s^2Y(s) - s - 3sY(s) + 3 + 2Y(s) = \frac{1}{s-3}$$
+                            <p>Nhóm các số hạng chứa $Y(s)$ và chuyển các số hạng còn lại sang vế phải:</p>
+                            $$(s^2 - 3s + 2)Y(s) - s + 3 = \frac{1}{s-3}$$
+                            $$(s-1)(s-2)Y(s) = \frac{1}{s-3} + s - 3$$
+                            <p>Quy đồng mẫu số vế phải:</p>
+                            $$(s-1)(s-2)Y(s) = \frac{1 + (s-3)^2}{s-3} = \frac{s^2 - 6s + 10}{s-3}$$
+                            <p>Suy ra biểu thức của $Y(s)$ trong miền tần số:</p>
+                            $$Y(s) = \frac{s^2 - 6s + 10}{(s-1)(s-2)(s-3)}$$
+                        </div>
 
-                    <div class="step">
-                        <div class="step-title">Bước 2: Thay thế các điều kiện ban đầu và cô lập $Y(s)$</div>
-                        <p>Thay $y(0) = 1$ và $y'(0) = 0$ vào phương trình đại số vừa thu được:</p>
-                        $$\left[s^2Y(s) - s \cdot 1 - 0\right] - 3\left[sY(s) - 1\right] + 2Y(s) = \frac{1}{s-3}$$
-                        $$s^2Y(s) - s - 3sY(s) + 3 + 2Y(s) = \frac{1}{s-3}$$
-                        <p>Nhóm các số hạng chứa $Y(s)$ và chuyển các số hạng còn lại sang vế phải:</p>
-                        $$(s^2 - 3s + 2)Y(s) - s + 3 = \frac{1}{s-3}$$
-                        $$(s-1)(s-2)Y(s) = \frac{1}{s-3} + s - 3$$
-                        <p>Quy đồng mẫu số vế phải:</p>
-                        $$(s-1)(s-2)Y(s) = \frac{1 + (s-3)^2}{s-3} = \frac{s^2 - 6s + 10}{s-3}$$
-                        <p>Suy ra biểu thức của $Y(s)$ trong miền tần số:</p>
-                        $$Y(s) = \frac{s^2 - 6s + 10}{(s-1)(s-2)(s-3)}$$
-                    </div>
+                        <div class="step">
+                            <div class="step-title">Bước 3: Phân tích thành các phân thức đơn giản (Partial Fractions)</div>
+                            <p>Giả sử $Y(s)$ có dạng phân tích:</p>
+                            $$\frac{s^2 - 6s + 10}{(s-1)(s-2)(s-3)} = \frac{A}{s-1} + \frac{B}{s-2} + \frac{C}{s-3}$$ <br>
+                            Các cách để tìm các hệ số $A, B, C$ có thể thực hiện như sau: <br>
 
-                    <div class="step">
-                        <div class="step-title">Bước 3: Phân tích thành các phân thức đơn giản (Partial Fractions)</div>
-                        <p>Giả sử $Y(s)$ có dạng phân tích:</p>
-                        $$\frac{s^2 - 6s + 10}{(s-1)(s-2)(s-3)} = \frac{A}{s-1} + \frac{B}{s-2} + \frac{C}{s-3}$$
-                        <p>Sử dụng phương pháp che (Heaviside) để tìm nhanh các hệ số:</p>
-                        <ul>
-                            <li>$A = \left. \frac{s^2 - 6s + 10}{(s-2)(s-3)} \right|_{s=1} = \frac{1 - 6 + 10}{(1-2)(1-3)} = \frac{5}{2}$</li>
-                            <li>$B = \left. \frac{s^2 - 6s + 10}{(s-1)(s-3)} \right|_{s=2} = \frac{4 - 12 + 10}{(2-1)(2-3)} = \frac{2}{-1} = -2$</li>
-                            <li>$C = \left. \frac{s^2 - 6s + 10}{(s-1)(s-2)} \right|_{s=3} = \frac{9 - 18 + 10}{(3-1)(3-2)} = \frac{1}{2}$</li>
-                        </ul>
-                        <p>Do đó, ta có:</p>
-                        $$Y(s) = \frac{5}{2} \cdot \frac{1}{s-1} - 2 \cdot \frac{1}{s-2} + \frac{1}{2} \cdot \frac{1}{s-3}$$
-                    </div>
+                            <strong>Cách 1:</strong> Dùng phương pháp hệ số bất định, ta có:
+                            $$s^2 - 6s + 10 = A(s-2)(s-3) + B(s-1)(s-3) + C(s-1)(s-2)$$
+                            <p>Thay các giá trị $s = 1, 2, 3$ để tìm nhanh các hệ số:</p>
+                            <ul>
+                                <li>Với $s = 1$: $1 - 6 + 10 = A(-1)(-2) \Rightarrow A = \frac{5}{2}$</li>
+                                <li>Với $s = 2$: $4 - 12 + 10 = B(1)(-1) \Rightarrow B = -2$</li>
+                                <li>Với $s = 3$: $9 - 18 + 10 = C(2)(1) \Rightarrow C = \frac{1}{2}$</li>   
+                            </ul>
+                            <strong>Cách 2:</strong>
+                            <p>Sử dụng phương pháp che (Heaviside) để tìm nhanh các hệ số:</p>
+                            <ul>
+                                <li>$A = \left. \frac{s^2 - 6s + 10}{(s-2)(s-3)} \right|_{s=1} = \frac{1 - 6 + 10}{(1-2)(1-3)} = \frac{5}{2}$</li>
+                                <li>$B = \left. \frac{s^2 - 6s + 10}{(s-1)(s-3)} \right|_{s=2} = \frac{4 - 12 + 10}{(2-1)(2-3)} = \frac{2}{-1} = -2$</li>
+                                <li>$C = \left. \frac{s^2 - 6s + 10}{(s-1)(s-2)} \right|_{s=3} = \frac{9 - 18 + 10}{(3-1)(3-2)} = \frac{1}{2}$</li>
+                            </ul>
+                            <p>Do đó, ta có:</p>
+                            $$Y(s) = \frac{5}{2} \cdot \frac{1}{s-1} - 2 \cdot \frac{1}{s-2} + \frac{1}{2} \cdot \frac{1}{s-3}$$
+                                <div class="important-box">                        
+                                    <strong> Chú ý</strong>  Phương pháp này chỉ được áp dụng khi mẫu số là tích các nhân tử bậc nhất khác nhau. Nếu mẫu số có nhân tử bậc hai vô nghiệm hoặc nhân tử bậc nhất trùng nhau thì không thể áp dụng phương pháp này.
+                                </div> 
+                            <strong>Cách 3:</strong> Thay s bởi 3 giá tri khác nhau và giải hệ phương trình 3 ẩn A, B, C. Cách này hơi dài dòng nhưng vẫn ra kết quả như trên.   
+                            <div class="important-box">                        
+                                <strong> Chú ý</strong> Trong trường hợp không có máy tính, ta thường xuyên sử dụng cách đơn giản mà hiệu quả bằng cách sử dụng hằng đẳng thức sau 
+                                \(\dfrac{1}{(s-a)(s-b)} = \dfrac{1}{a-b}\left(\dfrac{1}{s-a} - \dfrac{1}{s-b}\right)\)
+                            </div> 
+                        </div>
 
-                    <div class="step">
-                        <div class="step-title">Bước 4: Tìm nghiệm $y(t)$ bằng phép biến đổi Laplace ngược</div>
-                        <p>Lấy biến đổi Laplace ngược $\mathcal{L}^{-1}$ cho từng phân thức dựa vào công thức cơ bản $\mathcal{L}^{-1}\left\{\frac{1}{s-a}\right\} = e^{at}$:</p>
-                        $$y(t) = \mathcal{L}^{-1}\{Y(s)\} = \frac{5}{2}\mathcal{L}^{-1}\left\{\frac{1}{s-1}\right\} - 2\mathcal{L}^{-1}\left\{\frac{1}{s-2}\right\} + \frac{1}{2}\mathcal{L}^{-1}\left\{\frac{1}{s-3}\right\}$$
-                    </div>
+                        <div class="step">
+                            <div class="step-title">Bước 4: Tìm nghiệm $y(t)$ bằng phép biến đổi Laplace ngược</div>
+                            <p>Lấy biến đổi Laplace ngược $\mathcal{L}^{-1}$ cho từng phân thức dựa vào công thức cơ bản $\mathcal{L}^{-1}\left\{\frac{1}{s-a}\right\}(t)  = e^{at}$:</p>
+                            $$y(t) = \mathcal{L}^{-1}\{Y(s)\}(t)  = \frac{5}{2}\mathcal{L}^{-1}\left\{\frac{1}{s-1}\right\}(t) - 2\mathcal{L}^{-1}\left\{\frac{1}{s-2}\right\}(t) + \frac{1}{2}\mathcal{L}^{-1}\left\{\frac{1}{s-3}\right\}(t)$$
+                        </div>
 
-                    <div class="result">
-                        <strong>Kết luận:</strong> Nghiệm duy nhất của bài toán vi phân thỏa mãn các điều kiện biên đã cho là:
-                        $$y(t) = \frac{5}{2}e^t - 2e^{2t} + \frac{1}{2}e^{3t}$$
+                        <div class="result">
+                            <strong>Kết luận:</strong> Nghiệm duy nhất của bài toán vi phân thỏa mãn các điều kiện biên đã cho là:
+                            $$y(t) = \frac{5}{2}e^t - 2e^{2t} + \frac{1}{2}e^{3t}$$
+                        </div>
                     </div>
                 </div>
             </div> <br>
@@ -476,68 +511,71 @@
                 </div>
 
                 <h2>Lời giải chi tiết</h2>
+                <button class="btn-sol" onclick="toggleSection('solvd5.2')"> &#128269 Lời giải </button>              
+                <div id="solvd5.2" class="solution-content">                
+                    <div class="step">
+                        <div class="step-title">Bước 1: Chuyển sang phương trình đại số bằng cách tác động biến đổi Laplace lên hai vế của phương trình</div>
+                        <p>Gọi $X(s) = \mathcal{L}\{x(t)\}(s)$ và $Y(s) = \mathcal{L}\{y(t)\}(s)$. Áp dụng tính chất biến đổi Laplace của đạo hàm:</p>
+                        $$ \mathcal{L}\{x'\}(s) = sX(s) - x(0) = sX(s) - 1 $$
+                        $$ \mathcal{L}\{y'\}(s) = sY(s) - y(0) = sY(s) - 1 $$
 
-                <div class="step">
-                    <div class="step-title">Bước 1: Chuyển hệ phương trình sang miền Laplace</div>
-                    <p>Gọi $X(s) = \mathcal{L}\{x(t)\}$ và $Y(s) = \mathcal{L}\{y(t)\}$. Áp dụng tính chất đạo hàm của phép biến đổi Laplace:</p>
-                    $$ \mathcal{L}\{x'\} = sX(s) - x(0) = sX(s) - 1 $$
-                    $$ \mathcal{L}\{y'\} = sY(s) - y(0) = sY(s) - 1 $$
-                    
-                    <p>Thay vào hệ phương trình ban đầu, ta thu được hệ phương trình đại số tuyến tính đối với $X(s)$ và $Y(s)$:</p>
-                    $$ \begin{cases} sX(s) - 1 = 3X(s) - 2Y(s) \\ sY(s) - 1 = 2X(s) - 2Y(s) \end{cases} $$
-                    
-                    <p>Thu gọn và sắp xếp lại các số hạng:</p>
-                    $$ \begin{cases} (s - 3)X(s) + 2Y(s) = 1 \quad (1) \\ -2X(s) + (s + 2)Y(s) = 1 \quad (2) \end{cases} $$
-                </div>
+                        <p>Thay vào hệ phương trình ban đầu, ta thu được hệ phương trình đại số tuyến tính đối với $X(s)$ và $Y(s)$:</p>
+                        $$ \begin{cases} sX(s) - 1 = 3X(s) - 2Y(s) \\ sY(s) - 1 = 2X(s) - 2Y(s) \end{cases} $$
+                        
+                        <p>Thu gọn và sắp xếp lại các số hạng:</p>
+                        $$ \begin{cases} (s - 3)X(s) + 2Y(s) = 1 \quad (1) \\ -2X(s) + (s + 2)Y(s) = 1 \quad (2) \end{cases} $$
+                    </div>
 
-                <div class="step">
-                    <div class="step-title">Bước 2: Giải hệ phương trình đại số để tìm $X(s)$ và $Y(s)$</div>
-                    <p>Ta có thể sử dụng phương pháp định thức định lý Cramer hoặc phương pháp thế. Định thức chính của hệ là:</p>
-                    $$ \Delta = \begin{vmatrix} s - 3 & 2 \\ -2 & s + 2 \end{vmatrix} = (s - 3)(s + 2) - (2)(-2) = s^2 - s - 6 + 4 = s^2 - s - 2 = (s - 2)(s + 1) $$
+                    <div class="step">
+                        <div class="step-title">Bước 2: Giải hệ phương trình đại số để tìm $X(s)$ và $Y(s)$</div>
+                        <p>Ta có thể sử dụng phương pháp định thức định lý Cramer hoặc phương pháp thế. Định thức chính của hệ là:</p>
+                        $$ \Delta = \begin{vmatrix} s - 3 & 2 \\ -2 & s + 2 \end{vmatrix} = (s - 3)(s + 2) - (2)(-2) = s^2 - s - 6 + 4 = s^2 - s - 2 = (s - 2)(s + 1) $$
 
-                    <p>Tìm các định thức thành phần $\Delta_X$ và $\Delta_Y$:</p>
-                    $$ \Delta_X = \begin{vmatrix} 1 & 2 \\ 1 & s + 2 \end{vmatrix} = (s + 2) - 2 = s $$
-                    $$ \Delta_Y = \begin{vmatrix} s - 3 & 1 \\ -2 & 1 \end{vmatrix} = (s - 3) - (-2) = s - 1 $$
+                        <p>Tìm các định thức thành phần $\Delta_X$ và $\Delta_Y$:</p>
+                        $$ \Delta_X = \begin{vmatrix} 1 & 2 \\ 1 & s + 2 \end{vmatrix} = (s + 2) - 2 = s $$
+                        $$ \Delta_Y = \begin{vmatrix} s - 3 & 1 \\ -2 & 1 \end{vmatrix} = (s - 3) - (-2) = s - 1 $$
 
-                    <p>Suy ra biểu thức miền s của $x(t)$ và $y(t)$:</p>
-                    $$ X(s) = \frac{\Delta_X}{\Delta} = \frac{s}{(s - 2)(s + 1)} $$
-                    $$ Y(s) = \frac{\Delta_Y}{\Delta} = \frac{s - 1}{(s - 2)(s + 1)} $$
-                </div>
+                        <p>Suy ra biểu thức miền s của $x(t)$ và $y(t)$:</p>
+                        $$ X(s) = \frac{\Delta_X}{\Delta} = \frac{s}{(s - 2)(s + 1)} $$
+                        $$ Y(s) = \frac{\Delta_Y}{\Delta} = \frac{s - 1}{(s - 2)(s + 1)} $$
+                    </div>
 
-                <div class="step">
-                    <div class="step-title">Bước 3: Phân tích thành các phân thức đơn giản</div>
-                    <p><strong>Đối với $X(s)$:</strong> Giả sử $\frac{s}{(s - 2)(s + 1)} = \frac{A}{s - 2} + \frac{B}{s + 1}$</p>
-                    <ul>
-                        <li>$A = \left. \frac{s}{s + 1} \right|_{s=2} = \frac{2}{3}$</li>
-                        <li>$B = \left. \frac{s}{s - 2} \right|_{s=-1} = \frac{-1}{-3} = \frac{1}{3}$</li>
-                    </ul>
-                    $$ \implies X(s) = \frac{2}{3} \cdot \frac{1}{s - 2} + \frac{1}{3} \cdot \frac{1}{s + 1} $$
+                    <div class="step">
+                        <div class="step-title">Bước 3: Phân tích thành các phân thức đơn giản</div>
+                        <p><strong>Đối với $X(s)$:</strong> Giả sử $\frac{s}{(s - 2)(s + 1)} = \frac{A}{s - 2} + \frac{B}{s + 1}$</p>
+                        <ul>
+                            <li>$A = \left. \frac{s}{s + 1} \right|_{s=2} = \frac{2}{3}$</li>
+                            <li>$B = \left. \frac{s}{s - 2} \right|_{s=-1} = \frac{-1}{-3} = \frac{1}{3}$</li>
+                        </ul>
+                        $$ \implies X(s) = \frac{2}{3} \cdot \frac{1}{s - 2} + \frac{1}{3} \cdot \frac{1}{s + 1} $$
 
-                    <p><strong>Đối với $Y(s)$:</strong> Giả sử $\frac{s - 1}{(s - 2)(s + 1)} = \frac{C}{s - 2} + \frac{D}{s + 1}$</p>
-                    <ul>
-                        <li>$C = \left. \frac{s - 1}{s + 1} \right|_{s=2} = \frac{1}{3}$</li>
-                        <li>$D = \left. \frac{s - 1}{s - 2} \right|_{s=-1} = \frac{-2}{-3} = \frac{2}{3}$</li>
-                    </ul>
-                    $$ \implies Y(s) = \frac{1}{3} \cdot \frac{1}{s - 2} + \frac{2}{3} \cdot \frac{1}{s + 1} $$
-                </div>
+                        <p><strong>Đối với $Y(s)$:</strong> Giả sử $\frac{s - 1}{(s - 2)(s + 1)} = \frac{C}{s - 2} + \frac{D}{s + 1}$</p>
+                        <ul>
+                            <li>$C = \left. \frac{s - 1}{s + 1} \right|_{s=2} = \frac{1}{3}$</li>
+                            <li>$D = \left. \frac{s - 1}{s - 2} \right|_{s=-1} = \frac{-2}{-3} = \frac{2}{3}$</li>
+                        </ul>
+                        $$ \implies Y(s) = \frac{1}{3} \cdot \frac{1}{s - 2} + \frac{2}{3} \cdot \frac{1}{s + 1} $$
+                    </div>
 
-                <div class="step">
-                    <div class="step-title">Bước 4: Tìm ảnh ngược Laplace để kết luận nghiệm</div>
-                    <p>Sử dụng công thức tra bảng cơ bản $\mathcal{L}^{-1}\left\{\frac{1}{s - a}\right\} = e^{at}$, ta lấy ảnh ngược cho cả hai biểu thức:</p>
-                    $$ x(t) = \mathcal{L}^{-1}\{X(s)\} = \frac{2}{3}e^{2t} + \frac{1}{3}e^{-t} $$
-                    $$ y(t) = \mathcal{L}^{-1}\{Y(s)\} = \frac{1}{3}e^{2t} + \frac{2}{3}e^{-t} $$
-                </div>
+                    <div class="step">
+                        <div class="step-title">Bước 4: Tìm ảnh ngược Laplace để kết luận nghiệm</div>
+                        <p>Sử dụng công thức tra bảng cơ bản $\mathcal{L}^{-1}\left\{\frac{1}{s - a}\right\}(t) = e^{at}$, ta lấy ảnh ngược cho cả hai biểu thức:</p>
+                        $$ x(t) = \mathcal{L}^{-1}\{X(s)\}(t) = \frac{2}{3}e^{2t} + \frac{1}{3}e^{-t} $$
+                        $$ y(t) = \mathcal{L}^{-1}\{Y(s)\}(t) = \frac{1}{3}e^{2t} + \frac{2}{3}e^{-t} $$
+                    </div>
 
-                <div class="result">
-                    <strong>Kết luận:</strong> Nghiệm tổng quát duy nhất của hệ phương trình vi phân thỏa mãn điều kiện biên ban đầu là:
-                    $$ \begin{cases} x(t) = \frac{2}{3}e^{2t} + \frac{1}{3}e^{-t} \\ y(t) = \frac{1}{3}e^{2t} + \frac{2}{3}e^{-t} \end{cases} $$
-                </div>
+                    <div class="result">
+                        <strong>Kết luận:</strong> Nghiệm tổng quát duy nhất của hệ phương trình vi phân thỏa mãn điều kiện biên ban đầu là:
+                        $$ \begin{cases} x(t) = \frac{2}{3}e^{2t} + \frac{1}{3}e^{-t} \\ y(t) = \frac{1}{3}e^{2t} + \frac{2}{3}e^{-t} \end{cases} $$
+                    </div>
+                </div> 
+
 
             </div>
             
     </section>
     <section>
-         <h2> Xem thêm nội dung  <br> 
+         <h2> Xem thêm nội dung &#128071; <br> 
             <p><a href="GT3C1.html">Chương 1</a>.</p>
             <p><a href="GT3C2.html">Chương 2</a>.</p>
             <p><a href="GT3C3.html">Chương 3</a>.</p>  
