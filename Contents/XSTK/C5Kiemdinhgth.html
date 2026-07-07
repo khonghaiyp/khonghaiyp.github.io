@@ -503,7 +503,7 @@ Bước 5: Vì \(Z_{qs} \approx 1.095\) không nằm trong miền bác bỏ \(W_
 <button onclick="toggleSection('twosampletest')">📘2. Kiểm định hai mẫu thử</button>    
   <div id="twosampletest" class="section-content"> 
 
-      <button onclick="toggleSection('Dang1phuongsaidabiet')">📘 So sánh hai kỳ vọng khi phương sai đã biết</button>    
+      <button onclick="toggleSection('Dang1phuongsaidabiet')">📘2.1 So sánh hai kỳ vọng khi phương sai đã biết</button>    
       <div id="Dang1phuongsaidabiet" class="section-content"> 
         <button onclick="toggleSection('Phan2Dang1')">📘 Các bước kiểm định</button>     
           <div id="Phan2Dang1" class="section-content">
@@ -556,7 +556,7 @@ H_1: \, \,
           
 
     </div>    <br>
-    <button onclick="toggleSection('Dang2phuongsaichuabiết')">📘 So sánh hai kỳ vọng khi phương sai chưa biết</button>    
+    <button onclick="toggleSection('Dang2phuongsaichuabiết')">📘2.2 So sánh hai kỳ vọng khi phương sai chưa biết</button>    
       <div id="Dang2phuongsaichuabiết" class="section-content"> 
         <button onclick="toggleSection('Phan2Dang2')">📘 Các bước kiểm định</button>     
           <div id="Phan2Dang2" class="section-content">
@@ -588,8 +588,11 @@ H_1: \, \,
   </li>
   <li style="margin-bottom: 10px;">
     Chọn tiêu chuẩn kiểm định
-    \( T= \dfrac{\bar{X}_1 -\bar{X}_2}{\sqrt{\dfrac{S_1^2}{n_1} + \dfrac{S_2^2}{n_2}}}  \overset{H_0}{\sim} t^{n_1+n_2-2} 
-      \)
+    \( T= \dfrac{\bar{X}_1 -\bar{X}_2}{S_{p}\sqrt{\dfrac{1}{n_1} + \dfrac{1}{n_2}}}  \overset{H_0}{\sim} t^{n_1+n_2-2} 
+      \)  trong đó 
+      \begin{align}
+      S_{p}^2= \dfrac{(n_1 -1)S_{1}^{2}+(n_{2} -1)S_{2}^{2}}{n_{1}+n_{2}-2} 
+      \end{align}
   </li>
   <li style="margin-bottom: 10px;">
     Với mức ý nghĩa \(\alpha \), miền bác bỏ giả thuyết \(H_{0}\) là : 
@@ -606,11 +609,25 @@ H_1: \, \,
     Quyết định xem có nên bác bỏ \(H_0\) hay không và kết luận với mức ý nghĩa cho trước. 
   </li>
 </ol>
+          </div> <br>
+        
+        
+        <button onclick="toggleSection('sosanhtungcap')">&#x26A0   So sánh từng cặp</button>    
+        <div id="sosanhtungcap" class="section-content"> 
+          <div class="important-box">  
+          Đặc điểm: 
+          <ol>
+            <li> Mỗi quan sát ở mẫu thứ nhất có đúng một quan sát tương ứng ở mẫu thứ hai</li>
+            <li>Mục tiêu so sánh sự khác biệt trong từng cặp, chứ không phải so sánh hai nhóm độc lập</li>
+          </ol>
           </div>
+        Đặt \(Z_i=X_i-Y_i, i = 1,2, \ldots , n \) rồi ta chuyển về một tổng thể.  
+        </div> 
+        <br>
       </div>    <br>
 
 
-    <button onclick="toggleSection('Dang3sosanhhaikyvongmaulon')">📘 So sánh hai kỳ vọng khi mẫu lớn \((n_1, n_2 > 30)\) </button>    
+    <button onclick="toggleSection('Dang3sosanhhaikyvongmaulon')">📘2.3 So sánh hai kỳ vọng khi mẫu lớn \((n_1, n_2 > 30)\) </button>    
       <div id="Dang3sosanhhaikyvongmaulon" class="section-content"> 
         <button onclick="toggleSection('Phan2Dang3')">📘 Các bước kiểm định</button>     
           <div id="Phan2Dang3" class="section-content">
@@ -665,21 +682,10 @@ H_1: \, \,
           </div>
       </div>    <br>
 
-    <button onclick="toggleSection('sosanhtungcap')">📘 So sánh từng cặp</button>    
-      <div id="sosanhtungcap" class="section-content"> 
-        <div class="important-box"> 
-        Đặc điểm: 
-        <ol>
-          <li> Mỗi quan sát ở mẫu thứ nhất có đúng một quan sát tương ứng ở mẫu thứ hai</li>
-          <li>Mục tiêu so sánh sự khác biệt trong từng cặp, chứ không phải so sánh hai nhóm độc lập</li>
-        </ol>
-        </div>
-      Đặt \(Z_i=X_i-Y_i, i = 1,2, \ldots , n \) rồi ta chuyển về một tổng thể.  
-      </div> 
-      <br>
+
       
 
-    <button onclick="toggleSection('sosanhhaityle')">📘 So sánh hai tỷ lệ</button>    
+    <button onclick="toggleSection('sosanhhaityle')">📘2.4 So sánh hai tỷ lệ</button>    
       <div id="sosanhhaityle" class="section-content"> 
       
         <button onclick="toggleSection('Phan2Dang4')">📘 Các bước kiểm định</button>     
