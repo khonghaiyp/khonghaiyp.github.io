@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="vi" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Khổng Văn Hải | Trang cá nhân</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Lora', 'serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#fdf8f6',
+                            100: '#f2e8e5',
+                            500: '#d4a373',
+                            800: '#6b705c',
+                            900: '#3f4238',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fdf8f6; /* Warm off-white background */
+            color: #3f4238;
+        }
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Fixed Navigation -->
+    <nav class="fixed top-0 left-0 w-full bg-brand-50/90 backdrop-blur-md z-50 border-b border-brand-100 shadow-sm transition-all duration-300">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="#" class="font-serif text-2xl font-semibold text-brand-900">K.V. Hải</a>
+                </div>
+                <div class="hidden md:flex space-x-8">
+                    <a href="#gioi-thieu" class="text-brand-800 hover:text-brand-500 transition-colors px-3 py-2 font-medium text-sm">Giới thiệu</a>
+                    <a href="#gia-dinh" class="text-brand-800 hover:text-brand-500 transition-colors px-3 py-2 font-medium text-sm">Gia đình</a>
+                    <a href="#nghien-cuu" class="text-brand-800 hover:text-brand-500 transition-colors px-3 py-2 font-medium text-sm">Nghiên cứu & Giảng dạy</a>
+                    <a href="#tho-ca" class="text-brand-800 hover:text-brand-500 transition-colors px-3 py-2 font-medium text-sm">Thơ ca & Đời sống</a>
+                </div>
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="text-brand-800 hover:text-brand-900 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-brand-50 border-t border-brand-100">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 shadow-lg">
+                <a href="#gioi-thieu" class="block px-3 py-2 rounded-md text-base font-medium text-brand-800 hover:bg-brand-100">Giới thiệu</a>
+                <a href="#gia-dinh" class="block px-3 py-2 rounded-md text-base font-medium text-brand-800 hover:bg-brand-100">Gia đình</a>
+                <a href="#nghien-cuu" class="block px-3 py-2 rounded-md text-base font-medium text-brand-800 hover:bg-brand-100">Nghiên cứu & Giảng dạy</a>
+                <a href="#tho-ca" class="block px-3 py-2 rounded-md text-base font-medium text-brand-800 hover:bg-brand-100">Thơ ca & Đời sống</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 overflow-hidden flex items-center justify-center fade-in">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <img src="https://placehold.co/400x400/d4a373/ffffff?text=Anh+Dai+Dien" alt="Khổng Văn Hải" class="w-40 h-40 object-cover rounded-full mx-auto mb-6 shadow-xl border-4 border-white transition-transform hover:scale-105 duration-300">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-serif font-semibold text-brand-900 mb-4">Khổng Văn Hải</h1>
+            <p class="text-xl md:text-2xl text-brand-800 font-light max-w-2xl mx-auto italic">
+                "Toán học, Gia đình và những vần thơ ngẫu hứng."
+            </p>
+        </div>
+    </header>
+
+    <!-- 1. Giới thiệu bản thân -->
+    <section id="gioi-thieu" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div>
+                    <h2 class="text-3xl font-serif font-semibold text-brand-900 mb-6">Giới thiệu bản thân</h2>
+                    <p class="text-gray-600 mb-4 leading-relaxed text-lg">
+                        Xin chào, tôi là <strong>Khổng Văn Hải</strong>. Hiện tại, tôi đang công tác với vai trò Giảng viên Toán tại <span class="font-medium text-brand-800">Đại học Bách khoa Hà Nội (HUST)</span> - một môi trường học thuật đầy năng động và nhiệt huyết.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed text-lg">
+                        Trước khi gắn bó với bục giảng tại quê nhà, tôi từng có khoảng thời gian thanh xuân tu nghiệp và nghiên cứu tại <span class="font-medium text-brand-800">Université de Nantes</span>, Pháp. Quãng thời gian tại đây không chỉ hun đúc cho tôi tình yêu sâu sắc với Toán học mà còn mang lại cho tôi những trải nghiệm văn hóa vô giá.
+                    </p>
+                </div>
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl group">
+                    <img src="https://placehold.co/600x450/e2e8f0/475569?text=Anh+Gioi+Thieu" alt="Giới thiệu" class="w-full h-auto object-cover transform transition duration-500 group-hover:scale-105">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2. Gia đình nhỏ -->
+    <section id="gia-dinh" class="py-20 bg-brand-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center flex-col-reverse lg:flex-row-reverse">
+                <div class="order-1 lg:order-2">
+                    <h2 class="text-3xl font-serif font-semibold text-brand-900 mb-6">Tổ ấm nhỏ</h2>
+                    <p class="text-gray-600 mb-4 leading-relaxed text-lg">
+                        Đằng sau những con số và phương trình phức tạp, niềm tự hào và bến đỗ bình yên nhất của tôi chính là gia đình. 
+                    </p>
+                    <p class="text-gray-600 mb-4 leading-relaxed text-lg">
+                        Tôi may mắn có sự đồng hành của người vợ hiền thảo, <strong>Giang</strong>, người luôn đứng sau ủng hộ mọi quyết định và chia sẻ cùng tôi những buồn vui trong cuộc sống. Và đặc biệt hơn cả, tháng 8 năm 2026, gia đình chúng tôi vỡ òa trong hạnh phúc khi đón chào sự ra đời của cô con gái nhỏ vô cùng đáng yêu: <strong>bé Mía</strong>.
+                    </p>
+                    <p class="text-gray-600 leading-relaxed text-lg italic">
+                        "Mọi hành trình dài đều trở nên ý nghĩa hơn khi có người thương yêu đứng đợi ở nhà."
+                    </p>
+                </div>
+                <div class="order-2 lg:order-1 relative rounded-2xl overflow-hidden shadow-2xl group">
+                    <img src="Image/Congai.jpg" alt="Gia đình" class="w-full h-auto object-cover transform transition duration-500 group-hover:scale-105">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 3. Nghiên cứu & Giảng dạy -->
+    <section id="nghien-cuu" class="py-20 bg-white">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl font-serif font-semibold text-brand-900 mb-4">Nghiên cứu & Giảng dạy</h2>
+                <div class="h-1 w-20 bg-brand-500 mx-auto rounded"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <div class="bg-brand-50 p-8 rounded-2xl shadow-sm border border-brand-100 hover:shadow-md transition-shadow">
+                    <img src="https://placehold.co/400x250/bbf7d0/15803d?text=Toan+Sinh+Hoc" alt="Toán sinh học" class="w-full h-48 object-cover rounded-xl mb-6">
+                    <h3 class="text-xl font-serif font-bold text-brand-900 mb-3">Toán Sinh Học (Mathematical Biology)</h3>
+                    <p class="text-gray-600">
+                        Nghiên cứu việc ứng dụng các mô hình toán học để mô phỏng và giải quyết các vấn đề phức tạp trong sinh học, từ sự phát triển của quần thể đến dịch tễ học. Một lĩnh vực đầy tính nhân văn và tính thực tiễn cao.
+                    </p>
+                </div>
+                
+                <div class="bg-brand-50 p-8 rounded-2xl shadow-sm border border-brand-100 hover:shadow-md transition-shadow">
+                    <img src="https://placehold.co/400x250/bfdbfe/1d4ed8?text=Phuong+Trinh+Vi+Phan" alt="Phương trình vi phân" class="w-full h-48 object-cover rounded-xl mb-6">
+                    <h3 class="text-xl font-serif font-bold text-brand-900 mb-3">Phương trình Vi phân Ngẫu nhiên</h3>
+                    <p class="text-gray-600">
+                        Khám phá vẻ đẹp của lý thuyết xác suất kết hợp với giải tích để mô tả các hiện tượng biến đổi theo thời gian chịu tác động của các yếu tố nhiễu loạn ngẫu nhiên trong tự nhiên và tài chính.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. Góc Thơ ca & Đời sống -->
+    <section id="tho-ca" class="py-20 bg-brand-900 text-brand-50">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-3xl font-serif font-semibold mb-6 text-brand-100">Góc Thơ Ca & Đời Sống</h2>
+                    <p class="text-brand-100/80 mb-6 leading-relaxed text-lg">
+                        Không chỉ có logic và những con số khô khan, tâm hồn tôi luôn dành một góc nhỏ cho sự lãng mạn. Tôi thích làm thơ tặng vợ, viết về con gái nhỏ, và ghi lại những kỷ niệm đẹp trong các chuyến đi.
+                    </p>
+                    <div class="bg-white/10 p-6 rounded-xl border border-white/20 backdrop-blur-sm mb-6 relative">
+                        <svg class="absolute top-4 left-4 w-8 h-8 text-brand-500/40" fill="currentColor" viewBox="0 0 24 24"><path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/></svg>
+                        <blockquote class="italic text-lg text-center font-serif mt-4 text-brand-50">
+                            "Mây Sa Pa giăng đầy ô cửa sổ,<br>
+                            Tay nắm tay trong giá lạnh sương mù.<br>
+                            Nghe tiếng con cười tan đi bao vất vả,<br>
+                            Phương trình đời bỗng chốc hóa lời ru."
+                        </blockquote>
+                        <p class="text-right mt-4 text-sm text-brand-500">- Tặng Giang và Mía yêu -</p>
+                    </div>
+                    <p class="text-brand-100/80 leading-relaxed text-lg">
+                        Đặc biệt, chuyến đi <strong>Sa Pa</strong> đầy sương mây cùng gia đình là một trong những hồi ức tuyệt đẹp mà tôi luôn trân quý, nơi thiên nhiên hòa quyện với tình cảm gia đình ấm áp.
+                    </p>
+                </div>
+                <div class="relative rounded-2xl overflow-hidden shadow-2xl group">
+                    <img src="https://placehold.co/600x600/ddd6fe/6d28d9?text=Ki+Niem+Sa+Pa" alt="Du lịch Sa Pa" class="w-full h-auto object-cover transform transition duration-500 group-hover:scale-105">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-brand-900 border-t border-white/10 pt-10 pb-6 text-center">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <h3 class="text-2xl font-serif text-brand-100 mb-4">Khổng Văn Hải</h3>
+            <p class="text-brand-100/60 mb-6 text-sm">
+                Giảng viên Toán | Đại học Bách khoa Hà Nội
+            </p>
+            <p class="text-brand-100/40 text-xs mt-8">
+                &copy; 2026 Khổng Văn Hải. All rights reserved.<br>
+                Được thiết kế với sự tỉ mỉ và tình yêu dành cho gia đình.
+            </p>
+        </div>
+    </footer>
+
+    <!-- Mobile menu toggle script -->
+    <script>
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Hide mobile menu on link click
+        const mobileLinks = menu.querySelectorAll('a');
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
