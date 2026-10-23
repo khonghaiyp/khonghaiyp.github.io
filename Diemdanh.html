@@ -112,11 +112,11 @@
     <div id="status" class="status-bar">Đang kết nối dữ liệu...</div>
 
     <div class="legend">
-        <div class="legend-item"><div class="box red"></div> Chưa có người (Bấm để đặt)</div>
+        <div class="legend-item"><div class="box red"></div> Chưa có người ngồi</div>
         <div class="legend-item"><div class="box blue"></div> Đã có người ngồi</div>
     </div>
 
-    <div class="loading" id="loading">Đang đồng bộ dữ liệu với Google Sheet...</div>
+    <div class="loading" id="loading">Đang đồng bộ dữ liệu</div>
     <div class="classroom" id="classroom"></div>
 
     <div class="modal-overlay" id="modal">
@@ -186,7 +186,7 @@
                     }
                 }
                 document.getElementById('loading').style.display = 'none';
-                statusEl.innerHTML = "Đã đồng bộ với Google Sheet ✅";
+                statusEl.innerHTML = "Đã đồng bộ ✅";
             } catch (error) {
                 console.error("Lỗi khi tải dữ liệu:", error);
                 statusEl.innerHTML = "Lỗi kết nối. Vui lòng kiểm tra lại đường truyền hoặc URL.";
