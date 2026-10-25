@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Điểm danh lớp thầy Khổng Văn Hải</title>
+    <style>
+        :root {
+            --red-empty: #e74c3c;
+            --blue-taken: #3498db;
+            --bg-color: #f5f6fa;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            margin: 0; padding: 20px;
+            color: #2c3e50;
+        }
+        
+        /* Màn hình đăng nhập */
+        #login-screen {
+            display: flex; flex-direction: column; align-items: center; justify-content: center; height: 80vh;
+        }
+        #login-screen h2 { margin-bottom: 20px; text-align: center; }
+        #login-screen input {
+            padding: 12px; margin-bottom: 10px; width: 250px;
+            border: 1px solid #ccc; border-radius: 5px; font-size: 16px; text-align: center;
+        }
+        #login-screen button {
+            padding: 12px 30px; background: #27ae60; color: white;
+            border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold;
+        }
+        #login-screen button:hover { background: #219653; }
+        #login-error { color: #e74c3c; font-weight: bold; display: none; margin-top: 10px; text-align: center; }
+
+        /* Vùng nội dung chính */
+        #main-content { display: none; }
+        h1 { text-align: center; color: #2c3e50; margin-bottom: 5px; }
+        .status-bar { text-align: center; margin-bottom: 30px; font-size: 1.1em; font-weight: bold; color: #27ae60; }
+        .legend { display: flex; justify-content: center; gap: 20px; margin-bottom: 30px; }
+        .legend-item { display: flex; align-items: center; gap: 8px; }
+        .box { width: 20px; height: 20px; border-radius: 4px;}
+        .box.red { background-color: var(--red-empty); }
+        .box.blue { background-color: var(--blue-taken); }
+
+        /* Sơ đồ lớp học */
+        .classroom { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+        .day { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); width: 320px; }
+        .day-title { text-align: center; background: #2c3e50; color: white; padding: 8px; border-radius: 4px; margin-top: 0; }
+        .ban { border: 1px solid #ddd; border-radius: 6px; padding: 10px; margin-bottom: 12px; background: #fafafa; }
+        .ban-title { font-size: 0.9em; font-weight: bold; margin-bottom: 8px; color: #555; text-align: center;}
+        
+        .seats { display: flex; justify-content: center; gap: 8px; }
+        .seat {
+            width: 45px; height: 45px; background-color: var(--red-empty); border-radius: 6px;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            color: white; font-size: 0.8em; font-weight: bold; transition: transform 0.1s; position: relative;
+        }
+        .seat:hover { transform: scale(1.1); }
+        .seat.taken {
+            background-color: var(--blue-taken); cursor: pointer;
+            font-size: 0.7em; text-align: center; line-height: 1.2; padding: 2px;
+        }
+        .seat.taken:hover { background-color: #c0392b; transform: scale(1.05); }
+        .seat.taken:hover::after {
+            content: "Xóa?"; position: absolute; background: rgba(0,0,0,0.8);
+            color: white; font-size: 12px; padding: 2px 5px; border-radius: 4px; top: -20px; white-space: nowrap;
+        }
+
+        /* Modal nhập thông tin */
+        .modal-overlay {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;
+        }
+        .modal { background: white; padding: 25px; border-radius: 10px; width: 300px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .modal h3 { margin-top: 0; color: #2c3e50; }
+        .modal input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
+        .modal button { width: 100%; padding: 10px; background: #2c3e50; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 5px; }
+        .modal button:hover { background: #34495e; }
+        .modal .btn-cancel { background: #e74c3c; margin-top: 10px;}
+        .modal .btn-cancel:hover { background: #c0392b; }
+        .loading { display: none; text-align: center; color: #e67e22; font-weight: bold; margin-bottom: 10px;}
+    </style>
+</head>
+<body>
+
+    <div id="login-screen">
+        <h2>NHẬP MẬT KHẨU ĐỂ XEM DANH SÁCH</h2>
+        <input type="password" id="password-input" placeholder="Đang kết nối cấu hình..." onkeypress="handleKeyPress(event)" disabled>
+        <button id="login-btn" onclick="checkPassword()" disabled>Xác nhận</button>
+        <p id="login-error">Đang chờ cấu hình...</p>
+    </div>
+
+    <div id="main-content">
+        <h1>ĐIỂM DANH LỚP THẦY KHỔNG VĂN HẢI</h1>
+        <div id="status" class="status-bar">Đang kết nối dữ liệu...</div>
+        <div class="legend">
+            <div class="legend-item"><div class="box red"></div> Chưa có người ngồi</div>
+            <div class="legend-item"><div class="box blue"></div> Đã có người ngồi (Click để xóa)</div>
+        </div>
+        <div class="loading" id="loading">Đang đồng bộ dữ liệu</div>
+        <div class="classroom" id="classroom"></div>
+    </div>
+
+    <div class="modal-overlay" id="modal">
+        <div class="modal">
+            <h3 id="modal-title">Đăng ký ghế</h3>
+            <input type="text" id="sv-id" placeholder="Mã sinh viên" required>
+            <input type="text" id="sv-name" placeholder="Họ và Tên" required>
+            <button onclick="submitData()">Xác nhận</button>
+            <button class="btn-cancel" onclick="closeModal()">Hủy</button>
+        </div>
+    </div>
+
+    <script>
+        // =========================================================================
+        // DÁN ID GOOGLE SHEET CẤU HÌNH (Cột A: Mật khẩu, Cột B: Link Script)
+        //https://docs.google.com/spreadsheets/d/1pWxfmmAc04IJCCaj-tzPJjjfgaM-NcHrVeSgrx0kL6I/edit?usp=sharing
+        // =========================================================================
+        const CONFIG_SHEET_ID = '1pWxfmmAc04IJCCaj-tzPJjjfgaM-NcHrVeSgrx0kL6I'; 
+        
+        let SECRET_PASSWORD = ""; 
+        let SCRIPT_URL = "";
+        let currentSeatId = '';
+        const classroomEl = document.getElementById('classroom');
+        const statusEl = document.getElementById('status');
+
+        // [MÃ ĐÃ CẬP NHẬT]: Dùng JSONP chèn trực tiếp để lách luật CORS của Chrome
+        function loadSystemConfig() {
+            const errorMsg = document.getElementById('login-error');
+
+            if (CONFIG_SHEET_ID === 'DÁN_ID_TRANG_TÍNH_CẤU_HÌNH_VÀO_ĐÂY') {
+                errorMsg.innerText = "⚠️ Chưa cài đặt ID Google Sheet cấu hình!";
+                errorMsg.style.display = 'block';
+                return;
+            }
+
+            // Gọi Google Sheet xuất định dạng JSONP
+            const script = document.createElement('script');
+            script.src = `https://docs.google.com/spreadsheets/d/${CONFIG_SHEET_ID}/gviz/tq?tqx=responseHandler:processConfig`;
+            document.body.appendChild(script);
+            
+            // Cảnh báo nếu sau 5 giây vẫn không tải được
+            setTimeout(() => {
+                if (SECRET_PASSWORD === "") {
+                    errorMsg.innerText = "Lỗi: Không tải được dữ liệu. Hãy chắc chắn file Sheet đã bật quyền 'Bất kỳ ai có liên kết'.";
+                    errorMsg.style.display = 'block';
+                }
+            }, 5000);
+        }
+
+        // Hàm này tự động kích hoạt khi Google Sheet trả về dữ liệu thành công
+        function processConfig(json) {
+            try {
+                // Lấy Cột A (ô A1) và Cột B (ô B1)
+                let row = json.table.rows[0].c;
+                SECRET_PASSWORD = (row[0] && row[0].v) ? row[0].v.toString().trim() : "";
+                SCRIPT_URL = (row[1] && row[1].v) ? row[1].v.toString().trim() : "";
+
+                // Mở khóa giao diện đăng nhập
+                const passInput = document.getElementById('password-input');
+                const loginBtn = document.getElementById('login-btn');
+                const errorMsg = document.getElementById('login-error');
+
+                passInput.disabled = false;
+                loginBtn.disabled = false;
+                passInput.placeholder = "Nhập mật khẩu...";
+                errorMsg.style.display = 'none';
+            } catch (e) {
+                console.error(e);
+                document.getElementById('login-error').innerText = "Lỗi định dạng cấu hình, không tìm thấy ô mật khẩu và link!";
+                document.getElementById('login-error').style.display = 'block';
+            }
+        }
+
+        // Tải cấu hình khi trình duyệt bật
+        window.onload = loadSystemConfig;
+
+        // --- CÁC CHỨC NĂNG LỚP HỌC (Giữ nguyên) ---
+        function checkPassword() {
+            const input = document.getElementById('password-input').value;
+            const errorMsg = document.getElementById('login-error');
+            
+            if (input === SECRET_PASSWORD) {
+                document.getElementById('login-screen').style.display = 'none';
+                document.getElementById('main-content').style.display = 'block';
+                errorMsg.style.display = 'none';
+                renderClassroom();
+                fetchInitialData();
+            } else {
+                errorMsg.innerText = "Mật khẩu không đúng!";
+                errorMsg.style.display = 'block';
+            }
+        }
+
+        function handleKeyPress(e) { if (e.key === 'Enter') checkPassword(); }
+
+        function renderClassroom() {
+            classroomEl.innerHTML = '';
+            for (let day = 1; day <= 3; day++) {
+                let dayHtml = `<div class="day"><h2 class="day-title">Dãy ${day}</h2>`;
+                for (let ban = 1; ban <= 15; ban++) {
+                    dayHtml += `<div class="ban"><div class="ban-title">Bàn ${ban}</div><div class="seats">`;
+                    for (let ghe = 1; ghe <= 5; ghe++) {
+                        let seatId = `D${day}-B${ban}-G${ghe}`;
+                        dayHtml += `<div class="seat" id="${seatId}" onclick="openModal('${seatId}')">${ghe}</div>`;
+                    }
+                    dayHtml += `</div></div>`;
+                }
+                dayHtml += `</div>`;
+                classroomEl.innerHTML += dayHtml;
+            }
+        }
+
+        async function fetchInitialData() {
+            if(!SCRIPT_URL) return;
+            try {
+                document.getElementById('loading').style.display = 'block';
+                statusEl.innerHTML = "Đang kết nối...";
+                let response = await fetch(SCRIPT_URL);
+                let data = await response.json();
+                
+                for (let seatId in data) {
+                    if(data[seatId].name && data[seatId].name.trim() !== "") {
+                        let seatEl = document.getElementById(seatId);
+                        if (seatEl) {
+                            seatEl.className = 'seat taken';
+                            seatEl.onclick = () => confirmDelete(seatId); 
+                            let shortName = data[seatId].name.split(" ").pop();
+                            seatEl.innerHTML = shortName;
+                            seatEl.title = `${data[seatId].name} (${data[seatId].studentId})`;
+                        }
+                    }
+                }
+                document.getElementById('loading').style.display = 'none';
+                statusEl.innerHTML = "Đã đồng bộ ✅";
+                statusEl.style.color = "#27ae60";
+            } catch (error) {
+                console.error("Lỗi:", error);
+                statusEl.innerHTML = "Lỗi kết nối dữ liệu từ Google Sheet.";
+                statusEl.style.color = "red";
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        function openModal(seatId) {
+            currentSeatId = seatId;
+            document.getElementById('modal-title').innerText = `Đặt chỗ: ${seatId}`;
+            document.getElementById('sv-id').value = '';
+            document.getElementById('sv-name').value = '';
+            document.getElementById('modal').style.display = 'flex';
+            document.getElementById('sv-id').focus();
+        }
+
+        function closeModal() { document.getElementById('modal').style.display = 'none'; }
+
+        async function submitData() {
+            let svId = document.getElementById('sv-id').value.trim();
+            let svName = document.getElementById('sv-name').value.trim();
+            if (!svId || !svName) return alert('Vui lòng nhập đầy đủ thông tin!');
+
+            const savedSeatId = currentSeatId; 
+            let seatEl = document.getElementById(savedSeatId);
+            seatEl.className = 'seat taken';
+            seatEl.onclick = () => confirmDelete(savedSeatId); 
+            let shortName = svName.split(" ").pop();
+            seatEl.innerHTML = shortName;
+            seatEl.title = `${svName} (${svId})`;
+            closeModal();
+
+            if(!SCRIPT_URL) return;
+
+            try {
+                document.getElementById('loading').style.display = 'block';
+                statusEl.innerHTML = "Đang lưu...";
+                await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({
+                        action: 'book', 
+                        seatId: savedSeatId, 
+                        studentId: svId,
+                        name: svName
+                    })
+                });
+                document.getElementById('loading').style.display = 'none';
+                statusEl.innerHTML = "Đã lưu thành công ✅";
+            } catch (error) {
+                console.error("Lỗi:", error);
+                statusEl.innerHTML = "Lỗi lưu dữ liệu!";
+                statusEl.style.color = "red";
+                document.getElementById('loading').style.display = 'none';
+            }
+        }
+
+        async function confirmDelete(seatId) {
+            let isConfirm = confirm(`Bạn có chắc chắn muốn XÓA sinh viên ở ghế ${seatId} không?`);
+            if (isConfirm) {
+                let seatEl = document.getElementById(seatId);
+                seatEl.className = 'seat';
+                let gheNum = seatId.split("-G")[1];
+                seatEl.innerHTML = gheNum;
+                seatEl.title = '';
+                seatEl.onclick = () => openModal(seatId);
+
+                if(!SCRIPT_URL) return;
+
+                try {
+                    document.getElementById('loading').style.display = 'block';
+                    statusEl.innerHTML = "Đang xóa dữ liệu...";
+                    await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify({
+                            action: 'delete', 
+                            seatId: seatId
+                        })
+                    });
+                    document.getElementById('loading').style.display = 'none';
+                    statusEl.innerHTML = `Đã xóa ghế ${seatId} ✅`;
+                    statusEl.style.color = "#27ae60";
+                } catch (error) {
+                    console.error("Lỗi xóa:", error);
+                    alert("Đã xóa trên giao diện nhưng gửi lên Sheet bị lỗi!");
+                    document.getElementById('loading').style.display = 'none';
+                }
+            }
+        }
+    </script>
+</body>
+</html>
