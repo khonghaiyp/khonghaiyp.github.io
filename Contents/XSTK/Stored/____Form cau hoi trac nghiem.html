@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Bài trắc nghiệm & Thảo luận - Xác suất Thống kê</title>
+  <title>Bài trắc nghiệm</title>
 
   <!-- Cấu hình và nhúng MathJax -->
   <script>
@@ -210,6 +210,11 @@
       padding: 8px 15px;
       width: auto;
     }
+    .author {
+      text-align: right;
+      font-style: italic;
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
@@ -217,7 +222,7 @@
 <div class="container">
   
   <!-- ================= PHẦN 1: TRẮC NGHIỆM ================= -->
-  <h1>Biến ngẫu nhiên rời rạc</h1>
+  <h1>Tiêu đề </h1>
   <form id="quizForm">
     <div class="question" data-qid="q1">
       <p><strong>Câu 01.</strong> Cho X là biến ngẫu nhiên rời rạc với bảng:</p>
@@ -249,136 +254,6 @@
       <label><input type="checkbox" name="q1" value="C"> C. 0,60</label>
       <label><input type="checkbox" name="q1" value="D"> D. 0,20</label>
       <label><input type="checkbox" name="q1" value="E"> E. 0,25</label>
-    </div>
-
-    <div class="question" data-qid="q2">
-      <p><strong>Câu 02.</strong> Cho hàm mật độ 
-      \( f(x) = \begin{cases} 
-      k(x^2-1) & x \in [2,3]\\
-      0 & x \notin [2,3]
-      \end{cases} \). Tìm $E(g(X))$ với \(g(X)=2X\).</p>
-      <label><input type="checkbox" name="q2" value="A"> A. 7.1235</label>
-      <label><input type="checkbox" name="q2" value="B"> B. 5.2350</label>
-      <label><input type="checkbox" name="q2" value="C"> C. 6.1506</label>
-      <label><input type="checkbox" name="q2" value="D"> D. 5.1563</label>
-      <label><input type="checkbox" name="q2" value="E"> E. 4.1560</label>
-    </div>
-
-    <div class="question" data-qid="q3">
-      <p><strong>Câu 03.</strong> Tỉ lệ sản phẩm loại A của lô hàng là 90%. Lấy ngẫu nhiên 50 sản phẩm, X = số sản phẩm loại A. Tính V(X), E(X) =?</p>
-      <label><input type="checkbox" name="q3" value="A"> A. 4,5 và 45</label>
-      <label><input type="checkbox" name="q3" value="B"> B. 45 và 4,5</label>
-      <label><input type="checkbox" name="q3" value="C"> C. 5,5 và 50</label>
-      <label><input type="checkbox" name="q3" value="D"> D. 50 và 4,5</label>
-      <label><input type="checkbox" name="q3" value="E"> E. 4,5 và 50</label>
-    </div>
-
-    <div class="question" data-qid="q4">
-      <p><strong>Câu 04.</strong> $X \sim  U[0,12]$. Tính kì vọng và phương sai.</p>
-      <label><input type="checkbox" name="q4" value="A"> A. 6 và 6</label>
-      <label><input type="checkbox" name="q4" value="B"> B. 12 và 12</label>
-      <label><input type="checkbox" name="q4" value="C"> C. 7,5 và 6</label>
-      <label><input type="checkbox" name="q4" value="D"> D. 6 và 12</label>
-      <label><input type="checkbox" name="q4" value="E"> E. 7,5 và 12</label>
-    </div>
-
-    <div class="question" data-qid="q5">
-      <p><strong>Câu 05.</strong> Cho hàm phân phối $F(x) = 0 (x ≤ 1); (x+1)/4 (1 < x ≤ 3); 1 (x > 3).$ Tính $P(0 &lt; X &lt; 1).$</p>
-      <label><input type="checkbox" name="q5" value="A"> A. 0,1</label>
-      <label><input type="checkbox" name="q5" value="B"> B. 0,25</label>
-      <label><input type="checkbox" name="q5" value="C"> C. 0,15</label>
-      <label><input type="checkbox" name="q5" value="D"> D. 0,2</label>
-      <label><input type="checkbox" name="q5" value="E"> E. 0,3</label>
-    </div>
-
-    <div class="question" data-qid="q6">
-      <p><strong>Câu 06.</strong> Thời dài chi tiết máy có mật độ $f(x)=k e^{-(x-12+8x^2)/8}$. Tính kỳ vọng và phương sai của $X$?</p>
-      <label><input type="checkbox" name="q6" value="A"> A. 8 và 4</label>
-      <label><input type="checkbox" name="q6" value="B"> B. 4 và 4</label>
-      <label><input type="checkbox" name="q6" value="C"> C. 4 và 8</label>
-      <label><input type="checkbox" name="q6" value="D"> D. 4 và 6</label>
-      <label><input type="checkbox" name="q6" value="E"> E. 6 và 4</label>
-    </div>
-
-    <div class="question" data-qid="q7">
-      <p><strong>Câu 07.</strong> Tuổi thọ một loại bóng đèn X (năm) có mật độ $f(x)=k x^2(4 - x)$ trên $[0,4]$. Tính $E(X)$.</p>
-      <label><input type="checkbox" name="q7" value="A"> A. 7,2</label>
-      <label><input type="checkbox" name="q7" value="B"> B. 2,4</label>
-      <label><input type="checkbox" name="q7" value="C"> C. 9,6</label>
-      <label><input type="checkbox" name="q7" value="D"> D. 4,8</label>
-      <label><input type="checkbox" name="q7" value="E"> E. 3,6</label>
-    </div>
-
-    <div class="question" data-qid="q8">
-      <p><strong>Câu 08.</strong> X có mật độ $f(x)=k x(4 - x^2)$ trên $[0,2]$. Tính xác suất: sau 3 lần lặp độc lập có đúng 1 lần X nhận giá trị trong khoảng (0, 1/2).</p>
-      <label><input type="checkbox" name="q8" value="A"> A. 0.1632</label>
-      <label><input type="checkbox" name="q8" value="B"> B. 0.2523</label>
-      <label><input type="checkbox" name="q8" value="C"> C. 0.3260</label>
-      <label><input type="checkbox" name="q8" value="D"> D. 0.4256</label>
-      <label><input type="checkbox" name="q8" value="E"> E. 0.2806</label>
-    </div>
-
-    <div class="question" data-qid="q9">
-      <p><strong>Câu 09.</strong> Một thiết bị A có thời gian hỏng tuân theo phân phối mũ với $\lambda = 0,001$, thời gian bảo hành là 800 giờ. Tính thời gian làm trung bình và xác suất hỏng trong thời gian bảo hành.</p>
-      <label><input type="checkbox" name="q9" value="A"> A. đáp án khác</label>
-      <label><input type="checkbox" name="q9" value="B"> B. 10 000 và 0.3214</label>
-      <label><input type="checkbox" name="q9" value="C"> C. 1 000 và 0.4493</label>
-      <label><input type="checkbox" name="q9" value="D"> D. 10 000 và 0.6785</label>
-      <label><input type="checkbox" name="q9" value="E"> E. 1 000 và 0.5507</label>
-    </div>
-
-    <div class="question" data-qid="q10">
-      <p><strong>Câu 10.</strong> Nếu xác suất $80\%$ sinh viên của một trường đại học là nam, thì với 5 sinh viên chọn ngẫu nhiên từ trường đó, xác suất có nhiều nhất một sinh viên nữ là?</p>
-      <label><input type="checkbox" name="q10" value="A"> A. 0,3333</label>
-      <label><input type="checkbox" name="q10" value="B"> B. 0,1235</label>
-      <label><input type="checkbox" name="q10" value="C"> C. 0,7373</label>
-      <label><input type="checkbox" name="q10" value="D"> D. 0,6667</label>
-      <label><input type="checkbox" name="q10" value="E"> E. 0,2627</label>
-    </div>
-
-    <div class="question" data-qid="q11">
-      <p><strong>Câu 11.</strong> Gieo 1 con xúc xắc đều 10 lần. Xác suất số lẻ xuất hiện một chẵn > lẻ là?</p>
-      <label><input type="checkbox" name="q11" value="A"> A. 0.3770</label>
-      <label><input type="checkbox" name="q11" value="B"> B. 0.4232</label>
-      <label><input type="checkbox" name="q11" value="C"> C. 0.6233</label>
-      <label><input type="checkbox" name="q11" value="D"> D. 0.2523</label>
-      <label><input type="checkbox" name="q11" value="E"> E. 0.6230</label>
-    </div>
-
-    <div class="question" data-qid="q12">
-      <p><strong>Câu 12.</strong> Tỉ lệ mắc bệnh A trong 1 vùng là 10%. Trong 100 người, số người bị bệnh A có khả năng nhất là?</p>
-      <label><input type="checkbox" name="q12" value="A"> A. 13</label>
-      <label><input type="checkbox" name="q12" value="B"> B. 11</label>
-      <label><input type="checkbox" name="q12" value="C"> C. 10</label>
-      <label><input type="checkbox" name="q12" value="D"> D. 14</label>
-      <label><input type="checkbox" name="q12" value="E"> E. 12</label>
-    </div>
-
-    <div class="question" data-qid="q13">
-      <p><strong>Câu 13.</strong> Cho X rời rạc có hàm phân phối (theo file gốc). Bảng phân phối xác suất của X là:</p>
-      <label><input type="checkbox" name="q13" value="A"> A. $\begin{matrix}  X & 1 & 2 & 3\\ P(X) & 0,3 & 0,7 & 0 \end{matrix}$</label>
-      <label><input type="checkbox" name="q13" value="B"> B. $\begin{matrix}  X & 1 & 2 & 3\\ P(X) & 0,3 & 0,4 & 0,3 \end{matrix}$</label>
-      <label><input type="checkbox" name="q13" value="C"> C. $\begin{matrix}  X & 1 & 2 & 3\\ P(X) & 0 & 0,3 & 0,7 \end{matrix}$</label>
-      <label><input type="checkbox" name="q13" value="D"> D. $\begin{matrix}  X & 1 & 2 & 3\\ P(X) & 0,7 & 0,3 & 0 \end{matrix}$</label>
-      <label><input type="checkbox" name="q13" value="E"> E. $\begin{matrix}  X & 1 & 2 & 3\\ P(X) & 0,3 & 0,2 & 0,5 \end{matrix}$</label>
-    </div>
-
-    <div class="question" data-qid="q14">
-      <p><strong>Câu 14.</strong> $X \sim \mathcal{P}(λ=2)$. Tính $P(X &lt; 7 | X &gt; 2)$</p>
-      <label><input type="checkbox" name="q14" value="A"> A. $1 - e^{-10}$</label>
-      <label><input type="checkbox" name="q14" value="B"> B. $1 - e^{-14}$</label>
-      <label><input type="checkbox" name="q14" value="C"> C. $e^{-10}$</label>
-      <label><input type="checkbox" name="q14" value="D"> D. $1 - e^{-4}$</label>
-      <label><input type="checkbox" name="q14" value="E"> E. $e^{-4}$</label>
-    </div>
-
-    <div class="question" data-qid="q15">
-      <p><strong>Câu 15.</strong> Số máy A bán được trong ngày của một siêu thị $X \sim \mathcal{P}(\lambda)$. Biết xác suất bán được 1 máy trong ngày là $20\%$. Trong 30 ngày, số ngày bán 1 máy có khả năng nhất là:</p>
-      <label><input type="checkbox" name="q15" value="A"> A. 6</label>
-      <label><input type="checkbox" name="q15" value="B"> B. 5</label>
-      <label><input type="checkbox" name="q15" value="C"> C. 7</label>
-      <label><input type="checkbox" name="q15" value="D"> D. 3</label>
-      <label><input type="checkbox" name="q15" value="E"> E. 4</label>
     </div>
 
     <button type="button" class="btn-submit-quiz" onclick="checkAnswers()">Nộp bài</button>
