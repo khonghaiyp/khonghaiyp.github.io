@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bài Kiểm Tra 15 Phút</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .container { max-width: 1200px; margin: auto; background: white; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        h1, h2, h3 { text-align: center; color: #333; }
+        
+        /* Màn hình đăng nhập */
+        #login-screen { text-align: center; margin-top: 50px; }
+        .input-group { margin-bottom: 15px; }
+        .input-group input { padding: 10px; width: 300px; border: 1px solid #ccc; border-radius: 4px; font-size: 16px; outline: none; }
+        .input-group input:focus { border-color: #0056b3; }
+        button { padding: 12px 25px; background-color: #0056b3; color: white; border: none; border-radius: 4px; font-size: 16px; cursor: pointer; font-weight: bold; }
+        button:hover { background-color: #004494; }
+
+        /* Màn hình làm bài */
+        #quiz-screen { display: none; }
+        .header-info { display: flex; justify-content: space-between; background: #e9ecef; padding: 15px; border-radius: 4px; font-weight: bold; margin-bottom: 20px;}
+        #timer { color: red; font-size: 1.2em; }
+        
+        .quiz-container { display: flex; gap: 20px; height: 75vh; }
+        
+        /* Khu vực hiển thị PDF */
+        .pdf-section { flex: 2; border: 1px solid #ccc; border-radius: 4px; background-color: #525659; overflow: hidden; position: relative;}
+        .pdf-section iframe { width: 100%; height: 100%; border: none; }
+        
+        /* Khu vực chọn đáp án */
+        .answer-section { flex: 1; border: 1px solid #ccc; border-radius: 4px; padding: 15px; overflow-y: auto; background: #fafafa; }
+        .question-row { display: flex; align-items: center; margin-bottom: 12px; border-bottom: 1px dashed #ccc; padding-bottom: 12px;}
+        .question-row span { width: 55px; font-weight: bold; color: #333;}
+        .options { display: flex; gap: 15px; }
+        .options label { cursor: pointer; display: flex; align-items: center; gap: 5px; font-size: 15px;}
+        .options input { cursor: pointer; }
+        
+        .submit-btn { width: 100%; margin-top: 20px; background-color: #28a745; font-size: 18px; }
+        .submit-btn:hover { background-color: #218838; }
+
+        /* Màn hình kết quả */
+        #result-screen { display: none; text-align: center; margin-top: 50px; }
+        .score { font-size: 55px; color: #d9534f; font-weight: bold; margin: 20px 0; }
+        .success-msg { font-size: 18px; color: #28a745; font-weight: normal; margin-top: 10px; display: block; }
+        .error-msg { font-size: 18px; color: #d9534f; font-weight: normal; margin-top: 10px; display: block; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- MÀN HÌNH 1: ĐĂNG NHẬP -->
+    <div id="login-screen">
+        <h2>Thông tin sinh viên</h2>
+        <form id="login-form" onsubmit="startQuiz(event)">
+            <div class="input-group">
+                <input type="text" id="mssv" placeholder="Nhập Mã số sinh viên" required>
+            </div>
+            <div class="input-group">
+                <input type="text" id="hoten" placeholder="Nhập Họ và tên" required>
+            </div>
+            <!-- Bổ sung ô nhập mật khẩu -->
+            <div class="input-group">
+                <input type="password" id="matkhau" placeholder="Nhập mật khẩu bài thi" required>
+            </div>
+            <button type="submit">Bắt đầu làm bài</button>
+        </form>
+    </div>
+
+    <!-- MÀN HÌNH 2: LÀM BÀI -->
+    <div id="quiz-screen">
+        <div class="header-info">
+            <div>
+                Sinh viên: <span id="display-hoten"></span> - MSSV: <span id="display-mssv"></span><br>
+                Mã đề: <span id="display-made"></span>
+            </div>
+            <div>
+                Thời gian: <span id="timer">15:00</span>
+            </div>
+        </div>
+
+        <div class="quiz-container">
+            <div class="pdf-section" oncontextmenu="return false;">
+                <iframe id="pdf-viewer" src=""></iframe>
+            </div>
+            
+            <div class="answer-section">
+                <h3 style="margin-top:0; border-bottom: 2px solid #ccc; padding-bottom: 10px;">Phiếu trả lời</h3>
+                <form id="answer-form">
+                    <div id="questions-container"></div>
+                    <button type="button" class="submit-btn" onclick="submitQuiz()">Nộp bài</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MÀN HÌNH 3: KẾT QUẢ -->
+    <div id="result-screen">
+        <h2>Kết quả bài kiểm tra</h2>
+        <p>Sinh viên: <strong id="res-hoten"></strong> - MSSV: <strong id="res-mssv"></strong></p>
+        <p>Mã đề: <strong id="res-made"></strong></p>
+        
+        <div class="score">
+            <span id="res-score"></span>/10
+            <span id="status-message" style="display: block;"></span>
+        </div>
+        
+        <p>Số câu đúng: <strong id="res-correct"></strong> / <strong id="res-total"></strong></p>
+    </div>
+</div>
+
+<script>
+    // --- 1. CẤU HÌNH CƠ BẢN ---
+    const TOTAL_QUESTIONS = 10; 
+    const TIME_LIMIT = 15 * 60; 
+    
+    // ĐẶT MẬT KHẨU BÀI THI TẠI ĐÂY
+    const EXAM_PASSWORD = "math123"; 
+    
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyZpYOKvxGWagrTR5nH7VUsIK8aq_YXbejX5nGSjb1iW7_fGlGpBiJsHNCEvPjBAW8F/exec'; 
+
+    const ANSWER_KEYS = {
+        1: ['A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'A', 'B'],
+        2: ['B', 'C', 'D', 'A', 'B', 'C', 'D', 'A', 'B', 'C'],
+        3: ['C', 'D', 'A', 'B', 'C', 'D', 'A', 'B', 'C', 'D'],
+        4: ['D', 'A', 'B', 'C', 'D', 'A', 'B', 'C', 'D', 'A'],
+        5: ['A', 'A', 'B', 'B', 'C', 'C', 'D', 'D', 'A', 'D'],
+        6: ['D', 'D', 'C', 'C', 'B', 'B', 'A', 'A', 'D', 'A'],
+        7: ['A', 'C', 'B', 'D', 'A', 'C', 'B', 'D', 'A', 'C'],
+        8: ['B', 'D', 'A', 'C', 'B', 'D', 'A', 'C', 'B', 'D'],
+        9: ['C', 'A', 'D', 'B', 'C', 'A', 'D', 'B', 'C', 'A'],
+        10: ['D', 'B', 'C', 'A', 'D', 'B', 'C', 'A', 'D', 'B']
+    };
+
+    let timerInterval;
+    let timeRemaining = TIME_LIMIT;
+    let currentExamCode = 1;
+
+    // --- 2. HÀM BẮT ĐẦU ---
+    function startQuiz(event) {
+        event.preventDefault(); // Ngăn trình duyệt reload trang
+
+        const mssv = document.getElementById('mssv').value.trim();
+        const hoten = document.getElementById('hoten').value.trim();
+        const matkhau = document.getElementById('matkhau').value;
+
+        // KIỂM TRA MẬT KHẨU
+        if (matkhau !== EXAM_PASSWORD) {
+            alert('Mật khẩu bài thi không chính xác!');
+            return; // Dừng lại không cho thi
+        }
+
+        if (!mssv || !hoten) {
+            alert('Vui lòng nhập đầy đủ thông tin!');
+            return;
+        }
+
+        currentExamCode = Math.floor(Math.random() * 10) + 1;
+
+        document.getElementById('display-mssv').textContent = mssv;
+        document.getElementById('display-hoten').textContent = hoten;
+        document.getElementById('display-made').textContent = currentExamCode;
+
+        document.getElementById('pdf-viewer').src = `de-thi/de_${currentExamCode}.pdf#toolbar=0&navpanes=0&scrollbar=0`;
+
+        generateAnswerSheet();
+
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('quiz-screen').style.display = 'block';
+
+        startTimer();
+    }
+
+    // --- 3. HÀM SINH PHIẾU TRẢ LỜI ---
+    function generateAnswerSheet() {
+        const container = document.getElementById('questions-container');
+        container.innerHTML = '';
+        const options = ['A', 'B', 'C', 'D'];
+
+        for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+            let row = document.createElement('div');
+            row.className = 'question-row';
+            
+            let label = document.createElement('span');
+            label.textContent = `Câu ${i}:`;
+            row.appendChild(label);
+
+            let optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+
+            options.forEach(opt => {
+                let lbl = document.createElement('label');
+                lbl.innerHTML = `<input type="radio" name="q${i}" value="${opt}"> ${opt}`;
+                optionsDiv.appendChild(lbl);
+            });
+
+            row.appendChild(optionsDiv);
+            container.appendChild(row);
+        }
+    }
+
+    // --- 4. HÀM ĐẾM NGƯỢC THỜI GIAN ---
+    function startTimer() {
+        timerInterval = setInterval(() => {
+            timeRemaining--;
+            let minutes = Math.floor(timeRemaining / 60);
+            let seconds = timeRemaining % 60;
+            
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            if (timeRemaining <= 0) {
+                clearInterval(timerInterval);
+                alert('Đã hết 15 phút! Hệ thống sẽ tự động nộp bài.');
+                submitQuiz();
+            }
+        }, 1000);
+    }
+
+    // --- 5. HÀM NỘP BÀI VÀ CHẤM ĐIỂM ---
+    function submitQuiz() {
+        clearInterval(timerInterval);
+        
+        let correctCount = 0;
+        const answerKey = ANSWER_KEYS[currentExamCode];
+        
+        for (let i = 1; i <= TOTAL_QUESTIONS; i++) {
+            const selected = document.querySelector(`input[name="q${i}"]:checked`);
+            if (selected && selected.value === answerKey[i - 1]) {
+                correctCount++;
+            }
+        }
+
+        const score = (correctCount / TOTAL_QUESTIONS) * 10;
+        const finalScore = score.toFixed(1);
+
+        const hoten = document.getElementById('display-hoten').textContent;
+        const mssv = document.getElementById('display-mssv').textContent;
+
+        document.getElementById('res-hoten').textContent = hoten;
+        document.getElementById('res-mssv').textContent = mssv;
+        document.getElementById('res-made').textContent = currentExamCode;
+        document.getElementById('res-score').textContent = finalScore;
+        document.getElementById('res-correct').textContent = correctCount;
+        document.getElementById('res-total').textContent = TOTAL_QUESTIONS;
+
+        document.getElementById('quiz-screen').style.display = 'none';
+        document.getElementById('result-screen').style.display = 'block';
+
+        sendDataToGoogleSheets(hoten, mssv, currentExamCode, finalScore);
+    }
+
+    // --- 6. HÀM GỬI DỮ LIỆU LÊN GOOGLE SHEETS ---
+    function sendDataToGoogleSheets(hoten, mssv, made, score) {
+        let statusMsg = document.getElementById('status-message');
+        
+        if(SCRIPT_URL === 'YOUR_GOOGLE_SCRIPT_WEB_APP_URL_HERE') {
+            statusMsg.className = 'error-msg';
+            statusMsg.textContent = '(Chưa cấu hình Link Google Sheets)';
+            return;
+        }
+
+        statusMsg.className = 'success-msg';
+        statusMsg.style.color = '#555';
+        statusMsg.textContent = '(Đang lưu điểm lên hệ thống...)';
+
+        const formData = new URLSearchParams();
+        formData.append('hoten', hoten);
+        formData.append('mssv', mssv);
+        formData.append('made', made);
+        formData.append('score', score);
+
+        fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.status === "success") {
+                statusMsg.className = 'success-msg';
+                statusMsg.style.color = '#28a745';
+                statusMsg.textContent = '(Đã lưu điểm thành công)';
+            } else {
+                statusMsg.className = 'error-msg';
+                statusMsg.textContent = '(Lỗi lưu điểm, vui lòng báo Giảng viên)';
+            }
+        })
+        .catch(error => {
+            statusMsg.className = 'error-msg';
+            statusMsg.textContent = '(Lỗi kết nối mạng, chưa lưu được điểm)';
+            console.error('Lỗi fetch:', error);
+        });
+    }
+</script>
+
+</body>
+</html>
