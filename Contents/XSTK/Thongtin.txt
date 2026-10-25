@@ -4,3 +4,7 @@ C2BNNRR_BT
 C2BNNLT_BT
 	Đang sử dụng phiên bản Version1
 
+C2PPThongDung
+	Đang sử dụng phiên bản V1
+
+
