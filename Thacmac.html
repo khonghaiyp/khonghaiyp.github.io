@@ -22,21 +22,30 @@
     
     .comments-list { margin-top: 20px; background: #fff; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0; }
     .comment-node { margin-top: 15px; }
-    .comment-level-0 { border-bottom: 1px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 15px; }
-    .comment-level-0:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
-    .comment-children { margin-left: 20px; padding-left: 15px; border-left: 2px solid #cbd5e0; margin-top: 10px;}
+    .comment-level-0 { margin-bottom: 15px; }
+    .comment-children { margin-left: 20px; padding-left: 15px; border-left: 2px solid #cbd5e0; margin-top: 15px;}
 
-    .btn-reply, .btn-status { background: none; border: none; cursor: pointer; font-size: 13px; font-weight: bold; padding: 0; margin-top: 8px; }
+    /* CSS MỚI CHO GIAO DIỆN XEM THÊM */
+    .comment-summary { display: flex; align-items: center; justify-content: space-between; padding: 12px 15px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; }
+    .comment-summary:hover { background-color: #edf2f7; }
+    .comment-summary-left { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+    .btn-toggle-details { background-color: #fff; border: 1px solid #cbd5e0; padding: 5px 12px; border-radius: 6px; font-size: 13px; cursor: pointer; color: #4a5568; font-weight: bold; white-space: nowrap; }
+    .btn-toggle-details:hover { background-color: #e2e8f0; }
+    .comment-details { display: none; margin-top: 15px; padding-left: 15px; border-left: 3px solid #e2e8f0; }
+    .comment-details.active { display: block; }
+    
+    /* Các nút chức năng */
+    .btn-reply, .btn-status { background: none; border: none; cursor: pointer; font-size: 13px; font-weight: bold; padding: 0; }
     .btn-reply { color: #4a5568; }
     .btn-reply:hover { text-decoration: underline; color: #2b6cb0; }
     .btn-status { color: #2b6cb0; margin-left: 15px; }
     .btn-status:hover { text-decoration: underline; color: #1a4f8b; }
 
-    .badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; font-weight: bold; color: #fff; margin-left: 10px; }
+    .badge { padding: 5px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; color: #fff; }
     .badge-resolved { background-color: #38c172; }
     .badge-unresolved { background-color: #f6993f; }
 
-    .reply-form-container { display: none; margin-top: 10px; background: #edf2f7; padding: 12px; border-radius: 6px; }
+    .reply-form-container { display: none; margin-top: 15px; background: #edf2f7; padding: 12px; border-radius: 6px; }
     .reply-form-container.active { display: block; }
     .reply-form-container input, .reply-form-container textarea { padding: 8px; font-size: 14px; }
     .reply-form-container .btn-submit { font-size: 14px; padding: 8px 15px; background-color: #0056b3; }
@@ -132,20 +141,14 @@
 <!-- ================= JAVASCRIPT XỬ LÝ ================= -->
 <script>
   const scriptURL = 'https://script.google.com/macros/s/AKfycbwSoACMV1Ux8ppJ2KkYAPJtyvvmB3yYnN0A4ErBRWh8rLd95fMcSWgsCd4QsSrbDgNXog/exec';
-  
   const PASSWORD_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyjzdIxwOAWdd5XReI3xM7sY-qzqXXImfrbu_fDX08pNU_9CqMlkVQXAjpp9Om-OYbbEg/exec';
   
-  // Biến lưu mật khẩu chung
   let masterPassword = "";
 
-  // Tự động tải mật khẩu khi vào trang web
   fetch(PASSWORD_SCRIPT_URL)
     .then(res => res.text())
-    .then(text => {
-      masterPassword = text.trim(); // Lưu mật khẩu chung
-    })
+    .then(text => { masterPassword = text.trim(); })
     .catch(err => console.error("Lỗi khi tải mật khẩu:", err));
-
 
   window._reloaders = {}; 
   const classIds = ['T2K4', 'T2K5', 'T2K6', 'T3K4', 'T5K4', 'T5K5', 'T5K6', 'T6K1', 'T6K4', 'T6K5'];
@@ -171,12 +174,25 @@
     });
   }
 
+  // Hàm Mở rộng / Thu gọn chi tiết
+  function toggleDetails(id) {
+    const detailsDiv = document.getElementById(id);
+    const btn = document.getElementById(`btn-${id}`);
+    if (detailsDiv) {
+      detailsDiv.classList.toggle('active');
+      if (detailsDiv.classList.contains('active')) {
+        btn.innerText = 'Thu gọn ▴';
+      } else {
+        btn.innerText = 'Xem thêm ▾';
+      }
+    }
+  }
+
   function toggleReplyForm(chapter, safeCommentId) {
     const form = document.getElementById(`reply-form-${chapter}-${safeCommentId}`);
     if (form) form.classList.toggle('active');
   }
 
-  // --- HÀM 1: Đánh dấu đã giải quyết (YÊU CẦU MẬT KHẨU LẤY TỪ GOOGLE SHEET) ---
   function markResolved(chapter, parentId) {
     if (!masterPassword) {
       alert("Hệ thống chưa tải xong mật khẩu hoặc link tải mật khẩu bị lỗi. Vui lòng thử lại sau giây lát.");
@@ -184,7 +200,7 @@
     }
 
     const pass = prompt("DÀNH CHO GIẢNG VIÊN:\nVui lòng nhập mật khẩu quản lý để chuyển trạng thái thành Đã giải quyết:");
-    if (pass === null) return; // Hủy
+    if (pass === null) return; 
     
     if (pass === masterPassword) {
       const formData = new URLSearchParams();
@@ -205,7 +221,6 @@
     }
   }
 
-  // --- HÀM 2: Trả lời sinh viên (KHÔNG YÊU CẦU MẬT KHẨU) ---
   function submitReply(event, chapter, originalParentId) {
     event.preventDefault();
 
@@ -242,7 +257,6 @@
       });
   }
 
-  // Setup render cho mỗi lớp
   function setupClassSection(chapter) {
     const listId = `list-${chapter}`;
 
@@ -291,32 +305,59 @@
                   statusBadge = `<span class="badge badge-unresolved">Chưa giải quyết</span>`;
                   resolveBtn = `<button class="btn-status" onclick="markResolved('${chapter}', '${c.id}')">✔ Chuyển sang Đã giải quyết</button>`;
                 }
+                
+                // MÃ CHO LEVEL 0 (Thắc mắc gốc của sinh viên: Dạng thu gọn)
+                const safeToggleId = `details-${chapter}-${c.safeId}`;
+                html += `
+                  <div class="comment-node comment-level-0">
+                    
+                    <!-- Phần hiển thị rút gọn -->
+                    <div class="comment-summary" onclick="toggleDetails('${safeToggleId}')">
+                      <div class="comment-summary-left">
+                        <strong style="color: #d9534f; font-size: 1.05rem;">${c.name}</strong> 
+                        ${statusBadge}
+                      </div>
+                      <button type="button" class="btn-toggle-details" id="btn-${safeToggleId}">Xem thêm ▾</button>
+                    </div>
+                    
+                    <!-- Phần nội dung chi tiết ẩn đi -->
+                    <div class="comment-details" id="${safeToggleId}">
+                      <div style="font-size: 0.85em; color: #888; margin-top: 5px;">Thời gian gửi: ${c.time}</div>
+                      <div style="margin-top: 8px; white-space: pre-wrap; line-height: 1.5; color: #333;">${formattedComment}</div>
+                      
+                      <div style="margin-top: 12px; margin-bottom: 5px;">
+                        <button class="btn-reply" onclick="toggleReplyForm('${chapter}', '${c.safeId}')">↩ Trả lời sinh viên</button>
+                        ${resolveBtn}
+                      </div>
+
+                      <div class="reply-form-container" id="reply-form-${chapter}-${c.safeId}">
+                        <form class="form-group" onsubmit="submitReply(event, '${chapter}', '${c.id}')">
+                          <input type="text" class="reply-name" value="Giảng viên" required>
+                          <textarea class="reply-text" placeholder="Nhập phản hồi..." rows="2" required></textarea>
+                          <button type="submit" class="btn-submit" style="background-color: #0056b3; width:auto;">Gửi phản hồi</button>
+                        </form>
+                      </div>
+                      
+                      <!-- Các phản hồi của Giảng viên -->
+                      <div class="comment-children">
+                        ${renderCommentsTree(c.id, level + 1)}
+                      </div>
+                    </div>
+                  </div>
+                `;
+              } else {
+                // MÃ CHO LEVEL > 0 (Phản hồi của giảng viên: Hiển thị dạng text không cần đóng gói thu gọn)
+                html += `
+                  <div class="comment-node comment-level-${level}" style="margin-bottom: 12px;">
+                    <strong style="color: #2b6cb0;">${c.name}</strong> 
+                    <span style="font-size: 0.8em; color: #888; margin-left: 10px;">${c.time}</span>
+                    <div style="margin-top: 5px; white-space: pre-wrap; line-height: 1.5; color: #333;">${formattedComment}</div>
+                    <div class="comment-children">
+                      ${renderCommentsTree(c.id, level + 1)}
+                    </div>
+                  </div>
+                `;
               }
-
-              html += `
-                <div class="comment-node comment-level-${level}">
-                  <strong style="color: ${level === 0 ? '#d9534f' : '#2b6cb0'};">${c.name}</strong> 
-                  <span style="font-size: 0.8em; color: #888; margin-left: 10px;">${c.time}</span>
-                  ${statusBadge}
-                  
-                  <div style="margin-top: 8px; white-space: pre-wrap; line-height: 1.5;">${formattedComment}</div>
-                  
-                  ${level === 0 ? `<button class="btn-reply" onclick="toggleReplyForm('${chapter}', '${c.safeId}')">↩ Trả lời</button>` : ''}
-                  ${resolveBtn}
-
-                  <div class="reply-form-container" id="reply-form-${chapter}-${c.safeId}">
-                    <form class="form-group" onsubmit="submitReply(event, '${chapter}', '${c.id}')">
-                      <input type="text" class="reply-name" value="Giảng viên" required>
-                      <textarea class="reply-text" placeholder="Nhập phản hồi..." rows="2" required></textarea>
-                      <button type="submit" class="btn-submit" style="background-color: #0056b3; width:auto;">Gửi phản hồi</button>
-                    </form>
-                  </div>
-                  
-                  <div class="comment-children">
-                    ${renderCommentsTree(c.id, level + 1)}
-                  </div>
-                </div>
-              `;
             });
             return html;
           }
@@ -333,12 +374,10 @@
     loadComments();
   }
 
-  // Chạy setup render cho toàn bộ các lớp
   classIds.forEach(chapter => {
     setupClassSection(chapter);
   });
 
-  // --- XỬ LÝ FORM SUBMIT CỦA SINH VIÊN ---
   document.getElementById('studentForm').addEventListener('submit', function(e) {
     e.preventDefault();
     
