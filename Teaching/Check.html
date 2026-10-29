@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phần Mềm Điểm Danh Sinh Viên</title>
+    
+    <!-- Load Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Load SheetJS for parsing Excel files -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    
+    <style>
+        /* Custom font and scrollbar styling */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        
+        textarea::-webkit-scrollbar {
+            width: 8px;
+        }
+        textarea::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 4px;
+        }
+        textarea::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 4px;
+        }
+        textarea::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen p-4 sm:p-8 flex items-center justify-center">
+
+    <div class="bg-white rounded-xl shadow-lg w-full max-w-3xl p-6 sm:p-10">
+        <div class="text-center mb-8">
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-800 mb-2">Hệ Thống Lọc Điểm Danh</h1>
+            <p class="text-gray-500">So sánh danh sách đã điểm danh và danh sách lớp để tìm sinh viên vắng</p>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-8">
+            <!-- Input 1: Điểm danh -->
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 bg-gray-50 hover:bg-gray-100 transition">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">1. File Danh sách ĐÃ điểm danh</label>
+                <p class="text-xs text-gray-500 mb-3">(Cột 3: MSSV, Cột 4: Họ tên)</p>
+                <input type="file" id="fileAttended" accept=".xlsx, .xls, .csv" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100 cursor-pointer" />
+            </div>
+
+            <!-- Input 2: Danh sách lớp -->
+            <div class="border-2 border-dashed border-gray-300 rounded-lg p-4 bg-gray-50 hover:bg-gray-100 transition">
+                <label class="block text-sm font-semibold text-gray-700 mb-2">2. File Danh sách Lớp (Tổng)</label>
+                <p class="text-xs text-gray-500 mb-3">(Cột 1: STT, Cột 2: MSSV, Cột 3: Họ tên)</p>
+                <input type="file" id="fileMaster" accept=".xlsx, .xls, .csv" class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-indigo-50 file:text-indigo-700 hover:file:bg-indigo-100 cursor-pointer" />
+            </div>
+        </div>
+
+        <!-- Nút xử lý -->
+        <div class="flex justify-center mb-8">
+            <button id="btnProcess" class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg shadow-md transition-colors focus:ring-4 focus:ring-blue-300 flex items-center">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                Tìm sinh viên vắng
+            </button>
+        </div>
+
+        <!-- Khu vực hiển thị kết quả -->
+        <div class="mt-4">
+            <div class="flex justify-between items-center mb-2">
+                <label class="block text-sm font-semibold text-gray-700">Kết quả: Danh sách sinh viên vắng mặt</label>
+                <span id="resultCount" class="text-sm text-red-600 font-semibold hidden"></span>
+            </div>
+            <textarea id="resultText" rows="10" readonly class="w-full border border-gray-300 rounded-lg p-4 bg-gray-50 text-gray-800 font-mono text-sm focus:ring-blue-500 focus:border-blue-500 outline-none resize-y" placeholder="Danh sách sẽ hiển thị ở đây với định dạng:
+STT - MSSV - Họ và tên"></textarea>
+            <div class="mt-2 flex justify-end space-x-4">
+                 <button id="btnExportExcel" class="text-green-600 hover:text-green-800 text-sm font-medium focus:outline-none hidden flex items-center">
+                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                     Xuất Excel
+                 </button>
+                 <button id="btnCopy" class="text-blue-600 hover:text-blue-800 text-sm font-medium focus:outline-none hidden">Copy kết quả</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Message Box (thay thế cho alert) -->
+    <div id="messageBox" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-lg shadow-xl p-6 w-96 transform scale-95 transition-transform duration-300">
+            <h3 class="text-lg font-bold text-gray-900 mb-2" id="msgTitle">Thông báo</h3>
+            <p class="text-gray-600 mb-6" id="msgContent">Nội dung thông báo</p>
+            <div class="text-right">
+                <button onclick="closeMessage()" class="bg-gray-800 hover:bg-gray-900 text-white font-medium py-2 px-4 rounded focus:outline-none">Đóng</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Các elements UI
+        const fileAttendedInput = document.getElementById('fileAttended');
+        const fileMasterInput = document.getElementById('fileMaster');
+        const btnProcess = document.getElementById('btnProcess');
+        const resultText = document.getElementById('resultText');
+        const resultCount = document.getElementById('resultCount');
+        const btnCopy = document.getElementById('btnCopy');
+        const btnExportExcel = document.getElementById('btnExportExcel');
+        
+        // Modal elements
+        const messageBox = document.getElementById('messageBox');
+        const msgTitle = document.getElementById('msgTitle');
+        const msgContent = document.getElementById('msgContent');
+
+        // Biến lưu trữ dữ liệu để xuất excel
+        let exportDataForExcel = [];
+
+        // Hiển thị Message Box
+        function showMessage(title, message, isError = false) {
+            msgTitle.innerText = title;
+            msgTitle.className = isError ? "text-lg font-bold text-red-600 mb-2" : "text-lg font-bold text-gray-900 mb-2";
+            msgContent.innerText = message;
+            
+            messageBox.classList.remove('hidden');
+            // Cần 1 chút timeout để CSS transition mượt mà
+            setTimeout(() => {
+                messageBox.classList.remove('opacity-0');
+                messageBox.querySelector('div').classList.remove('scale-95');
+                messageBox.querySelector('div').classList.add('scale-100');
+            }, 10);
+        }
+
+        // Đóng Message Box
+        function closeMessage() {
+            messageBox.classList.add('opacity-0');
+            messageBox.querySelector('div').classList.remove('scale-100');
+            messageBox.querySelector('div').classList.add('scale-95');
+            setTimeout(() => {
+                messageBox.classList.add('hidden');
+            }, 300);
+        }
+
+        // Hàm đọc file Excel dưới dạng Promise
+        function readExcelFile(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    try {
+                        const data = new Uint8Array(e.target.result);
+                        const workbook = XLSX.read(data, { type: 'array' });
+                        // Lấy sheet đầu tiên
+                        const firstSheetName = workbook.SheetNames[0];
+                        const worksheet = workbook.Sheets[firstSheetName];
+                        // Convert sang array of arrays
+                        const json = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+                        resolve(json);
+                    } catch (error) {
+                        reject(error);
+                    }
+                };
+                reader.onerror = (error) => reject(error);
+                reader.readAsArrayBuffer(file);
+            });
+        }
+
+        // Chuẩn hóa chuỗi để so sánh (xóa khoảng trắng, đưa về chữ thường)
+        function normalizeString(str) {
+            if (str === null || str === undefined) return "";
+            return String(str).trim().toLowerCase();
+        }
+
+        // Xử lý khi bấm nút
+        btnProcess.addEventListener('click', async () => {
+            const fileAttended = fileAttendedInput.files[0];
+            const fileMaster = fileMasterInput.files[0];
+
+            if (!fileAttended || !fileMaster) {
+                showMessage("Lỗi dữ liệu", "Vui lòng chọn đầy đủ cả hai file Excel trước khi tiến hành xử lý.", true);
+                return;
+            }
+
+            // Đổi text nút thành Đang xử lý
+            const originalBtnText = btnProcess.innerHTML;
+            btnProcess.innerHTML = `<svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Đang xử lý...`;
+            btnProcess.disabled = true;
+            
+            // Khởi tạo lại dữ liệu xuất Excel với Header
+            exportDataForExcel = [["STT", "Họ và tên sinh viên", "Điểm danh"]];
+
+            try {
+                // Đọc 2 file song song
+                const [dataAttended, dataMaster] = await Promise.all([
+                    readExcelFile(fileAttended),
+                    readExcelFile(fileMaster)
+                ]);
+
+                // Xử lý danh sách đã điểm danh (File 1)
+                const attendedSet = new Set();
+                dataAttended.forEach(row => {
+                    if (row && row.length > 2) {
+                        const mssvRaw = row[2]; // Cột 3
+                        if (mssvRaw) {
+                            const mssvNorm = normalizeString(mssvRaw);
+                            if (mssvNorm !== "mssv" && mssvNorm !== "mã số sinh viên" && mssvNorm !== "") {
+                                attendedSet.add(mssvNorm);
+                            }
+                        }
+                    }
+                });
+
+                // Xử lý danh sách lớp tổng (File 2)
+                const absentList = [];
+                let count = 0;
+
+                dataMaster.forEach((row, index) => {
+                    if (row && row.length >= 2) {
+                        const stt = row[0] !== undefined ? row[0] : "";
+                        const mssvRaw = row[1];
+                        const name = row[2] !== undefined ? row[2] : "";
+
+                        if (mssvRaw) {
+                            const mssvNorm = normalizeString(mssvRaw);
+                            
+                            // Bỏ qua header của danh sách tổng
+                            if (mssvNorm === "mssv" || mssvNorm === "mã số sinh viên" || mssvNorm === "mã sinh viên") {
+                                return; // Bỏ qua vòng lặp này
+                            }
+
+                            if (mssvNorm !== "") {
+                                const isAbsent = !attendedSet.has(mssvNorm);
+                                
+                                // Nếu vắng mặt thì add vào list hiển thị
+                                if (isAbsent) {
+                                    absentList.push(`${stt} - ${mssvRaw} - ${name}`);
+                                    count++;
+                                }
+
+                                // Tạo dòng dữ liệu mới cho Excel tổng
+                                // Điểm danh vắng thì ghi 'x', ngược lại để trống
+                                exportDataForExcel.push([stt, name, isAbsent ? "x" : ""]);
+                            }
+                        }
+                    }
+                });
+
+                // Hiển thị kết quả HTML
+                if (absentList.length > 0) {
+                    resultText.value = absentList.join('\n');
+                    resultCount.innerText = `Phát hiện ${count} sinh viên vắng`;
+                    resultCount.classList.remove('hidden');
+                } else {
+                    resultText.value = "Tuyệt vời! Tất cả sinh viên trong danh sách lớp đều đã điểm danh.";
+                    resultCount.classList.add('hidden');
+                }
+
+                // Hiện các nút Copy và Xuất Excel
+                btnCopy.classList.remove('hidden');
+                btnExportExcel.classList.remove('hidden');
+
+            } catch (error) {
+                console.error(error);
+                showMessage("Lỗi xử lý file", "Không thể đọc file. Vui lòng đảm bảo bạn tải lên đúng định dạng file Excel (.xlsx hoặc .xls).", true);
+            } finally {
+                // Phục hồi nút
+                btnProcess.innerHTML = originalBtnText;
+                btnProcess.disabled = false;
+            }
+        });
+
+        // Xử lý nút Xuất Excel
+        btnExportExcel.addEventListener('click', () => {
+            if (exportDataForExcel.length <= 1) {
+                showMessage("Lỗi", "Không có dữ liệu để xuất file Excel. Vui lòng chạy điểm danh trước.", true);
+                return;
+            }
+
+            try {
+                // Tạo worksheet từ mảng dữ liệu
+                const ws = XLSX.utils.aoa_to_sheet(exportDataForExcel);
+                
+                // Điều chỉnh độ rộng cột cho đẹp
+                ws['!cols'] = [
+                    { wch: 10 }, // STT
+                    { wch: 35 }, // Họ và tên
+                    { wch: 15 }  // Điểm danh
+                ];
+
+                // Tạo workbook và gắn sheet vào
+                const wb = XLSX.utils.book_new();
+                XLSX.utils.book_append_sheet(wb, ws, "Diem Danh");
+                
+                // Tải file về
+                XLSX.writeFile(wb, "Ket_Qua_Diem_Danh.xlsx");
+                
+                showMessage("Thành công", "Đã tải xuống file Excel điểm danh.");
+            } catch (err) {
+                console.error(err);
+                showMessage("Lỗi", "Đã xảy ra lỗi khi tạo file Excel.", true);
+            }
+        });
+
+        // Copy kết quả
+        btnCopy.addEventListener('click', () => {
+            resultText.select();
+            resultText.setSelectionRange(0, 99999); // Dành cho thiết bị di động
+            try {
+                document.execCommand('copy');
+                showMessage("Thành công", "Đã copy danh sách sinh viên vắng vào bộ nhớ tạm.");
+            } catch (err) {
+                showMessage("Lỗi", "Không thể copy tự động, vui lòng bôi đen và copy thủ công.", true);
+            }
+            window.getSelection().removeAllRanges(); // Deselect
+        });
+
+    </script>
+</body>
+</html>
