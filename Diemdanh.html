@@ -17,27 +17,49 @@
             color: #2c3e50;
         }
         
-        /* Màn hình đăng nhập */
-        #login-screen {
+        /* Màn hình đăng nhập cấu hình hệ thống ban đầu */
+        #config-screen {
             display: flex; flex-direction: column; align-items: center; justify-content: center; height: 80vh;
         }
-        #login-screen h2 { margin-bottom: 20px; text-align: center; }
-        #login-screen input {
-            padding: 12px; margin-bottom: 10px; width: 250px;
+        #config-screen h2 { margin-bottom: 20px; text-align: center; }
+        #config-screen input {
+            padding: 12px; margin-bottom: 10px; width: 280px;
             border: 1px solid #ccc; border-radius: 5px; font-size: 16px; text-align: center;
         }
-        #login-screen button {
+        #config-screen button {
             padding: 12px 30px; background: #27ae60; color: white;
             border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold;
         }
-        #login-screen button:hover { background: #219653; }
-        #login-error { color: #e74c3c; font-weight: bold; display: none; margin-top: 10px; text-align: center; }
+        #config-screen button:hover { background: #219653; }
+        #config-error { color: #e74c3c; font-weight: bold; display: none; margin-top: 10px; text-align: center; }
 
-        /* Vùng nội dung chính */
-        #main-content { display: none; }
+        /* Màn hình đăng nhập sinh viên */
+        #student-login-screen {
+            display: none; max-width: 400px; margin: 40px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.08); border-top: 4px solid #27ae60;
+        }
+        #student-login-screen h2 { text-align: center; color: #27ae60; margin-top: 0; }
+        #student-login-screen input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
+        #student-login-screen button { width: 100%; padding: 12px; background: #27ae60; color: white; border: none; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; }
+        #student-login-screen button:hover { background: #219653; }
+        #student-login-error { color: #e74c3c; font-weight: bold; display: none; margin-top: 10px; text-align: center; }
+
+        /* Vùng nội dung chính / Dashboard */
+        #main-content { display: none; max-width: 1000px; margin: 0 auto; }
         h1 { text-align: center; color: #2c3e50; margin-bottom: 5px; }
         .status-bar { text-align: center; margin-bottom: 20px; font-size: 1.1em; font-weight: bold; color: #27ae60; }
         
+        .user-panel { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; border-left: 5px solid #2980b9; }
+        .user-info p { margin: 4px 0; font-size: 0.95rem; }
+        .user-actions { display: flex; gap: 10px; }
+        .btn-sm { padding: 8px 15px; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; font-size: 0.9rem; }
+        .btn-outline { background: transparent; border: 1px solid #2980b9; color: #2980b9; }
+        .btn-outline:hover { background: #f0f4f8; }
+        .btn-danger { background: #e74c3c; color: white; }
+        .btn-danger:hover { background: #c0392b; }
+
+        #passwordChangeSection { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ddd; width: 100%; }
+        #passwordChangeSection input { padding: 8px; width: 200px; margin-right: 10px; border: 1px solid #ccc; border-radius: 4px; }
+
         /* Ô tìm kiếm chỗ ngồi */
         .search-container {
             display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;
@@ -62,18 +84,9 @@
         .day { background: white; padding: 15px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); width: 320px; display: flex; flex-direction: column; }
         .day-title { text-align: center; background: #2c3e50; color: white; padding: 8px; border-radius: 4px; margin-top: 0; }
         
-        /* Bàn Giáo Viên */
         .teacher-desk {
-            background-color: #d35400;
-            color: white;
-            text-align: center;
-            padding: 10px;
-            border-radius: 6px;
-            font-weight: bold;
-            font-size: 0.95em;
-            margin-bottom: 12px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            letter-spacing: 0.5px;
+            background-color: #d35400; color: white; text-align: center; padding: 10px; border-radius: 6px;
+            font-weight: bold; font-size: 0.95em; margin-bottom: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); letter-spacing: 0.5px;
         }
 
         .ban { border: 1px solid #ddd; border-radius: 6px; padding: 10px; margin-bottom: 12px; background: #fafafa; }
@@ -91,12 +104,8 @@
             font-size: 0.7em; text-align: center; line-height: 1.2; padding: 2px;
         }
         .seat.taken:hover { background-color: #c0392b; transform: scale(1.05); }
-        .seat.taken:hover::after {
-            content: "Xóa?"; position: absolute; background: rgba(0,0,0,0.8);
-            color: white; font-size: 12px; padding: 2px 5px; border-radius: 4px; top: -20px; white-space: nowrap;
-        }
 
-        /* Hiệu ứng nhấp nháy nổi bật khi tìm thấy ghế */
+        /* Hiệu ứng nhấp nháy khi tìm thấy ghế */
         .seat.highlight {
             animation: pulse-highlight 1.2s infinite;
             border: 3px solid #f1c40f !important;
@@ -109,16 +118,16 @@
             100% { transform: scale(1); }
         }
 
-        /* Modal nhập thông tin đăng ký */
+        /* Modal xác nhận điểm danh bằng mật khẩu */
         .modal-overlay {
             display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;
         }
-        .modal { background: white; padding: 25px; border-radius: 10px; width: 300px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .modal { background: white; padding: 25px; border-radius: 10px; width: 320px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); }
         .modal h3 { margin-top: 0; color: #2c3e50; }
         .modal input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ddd; border-radius: 5px; box-sizing: border-box; }
-        .modal button { width: 100%; padding: 10px; background: #2c3e50; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 5px; }
-        .modal button:hover { background: #34495e; }
+        .modal button { width: 100%; padding: 10px; background: #27ae60; color: white; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; margin-top: 5px; }
+        .modal button:hover { background: #219653; }
         .modal .btn-cancel { background: #e74c3c; margin-top: 10px;}
         .modal .btn-cancel:hover { background: #c0392b; }
         .loading { display: none; text-align: center; color: #e67e22; font-weight: bold; margin-bottom: 10px;}
@@ -126,20 +135,46 @@
 </head>
 <body>
 
-    <!-- Màn hình nhập mật khẩu -->
-    <div id="login-screen">
-        <h2>NHẬP MẬT KHẨU ĐỂ XEM SƠ ĐỒ LỚP</h2>
-        <input type="password" id="password-input" placeholder="Đang kết nối cấu hình..." onkeypress="handleKeyPress(event)" disabled>
-        <button id="login-btn" onclick="checkPassword()" disabled>Xác nhận</button>
-        <p id="login-error">Đang chờ cấu hình...</p>
+    <!-- Màn hình 1: Nhập mật khẩu mở hệ thống (Mật khẩu cấu hình giáo viên cấp) -->
+    <div id="config-screen">
+        <h2>🔒 NHẬP MẬT KHẨU PHÒNG ĐIỂM DANH</h2>
+        <input type="password" id="config-pass-input" placeholder="Nhập mật khẩu phòng..." onkeypress="handleConfigKeyPress(event)">
+        <button id="config-login-btn" onclick="checkConfigPassword()">Xác nhận</button>
+        <p id="config-error" style="color: #e74c3c; font-weight: bold; display: none; margin-top: 10px; text-align: center;"></p>
     </div>
 
-    <!-- Màn hình nội dung sơ đồ -->
+    <!-- Màn hình 2: Đăng nhập Sinh Viên (MSSV + Mật khẩu cá nhân) -->
+    <div id="student-login-screen">
+        <h2>Đăng Nhập Điểm Danh</h2>
+        <label>Mã số sinh viên:</label>
+        <input type="text" id="student-id" placeholder="Nhập MSSV..." required>
+        <label>Mật khẩu cá nhân:</label>
+        <input type="password" id="student-pass" placeholder="Nhập mật khẩu..." required onkeypress="handleStudentLoginKeyPress(event)">
+        <button onclick="studentLogin()">Đăng nhập</button>
+        <p id="student-login-error"></p>
+    </div>
+
+    <!-- Màn hình 3: Nội dung Sơ đồ & Bảng điều khiển sinh viên -->
     <div id="main-content">
         <h1>SƠ ĐỒ ĐIỂM DANH LỚP THẦY KHỔNG VĂN HẢI</h1> 
-        <p style="text-align: center;">
-          <strong>Các dãy được đánh số từ trong ra ngoài (nhìn từ bục giảng xuống)</strong>
-        </p>
+        <p style="text-align: center;"><strong>Các dãy được đánh số từ trong ra ngoài (nhìn từ bục giảng xuống)</strong></p>
+
+        <!-- Bảng điều khiển thông tin sinh viên & tính năng đổi mật khẩu / đăng xuất -->
+        <div class="user-panel">
+            <div class="user-info">
+                <p>🧑‍🎓 <strong>Họ tên:</strong> <span id="info-name"></span></p>
+                <p>🆔 <strong>MSSV:</strong> <span id="info-mssv"></span> | 🏫 <strong>Lớp:</strong> <span id="info-class"></span></p>
+            </div>
+            <div class="user-actions">
+                <button class="btn-sm btn-outline" onclick="togglePasswordChange()">🔑 Đổi mật khẩu</button>
+                <button class="btn-sm btn-danger" onclick="logout()">🚪 Đăng xuất</button>
+            </div>
+            
+            <div id="passwordChangeSection">
+                <input type="password" id="new-password" placeholder="Mật khẩu mới...">
+                <button class="btn-sm" style="background: #27ae60; color: white;" onclick="submitNewPassword()">Lưu mật khẩu</button>
+            </div>
+        </div>
 
         <!-- Thanh tìm kiếm chỗ ngồi -->
         <div class="search-container">
@@ -150,103 +185,160 @@
         <div id="status" class="status-bar">Đang kết nối dữ liệu...</div>
         <div class="legend">
             <div class="legend-item"><div class="box teacher"></div> Bàn giáo viên</div>
-            <div class="legend-item"><div class="box red"></div> Chưa có người ngồi (Click để chọn)</div>
+            <div class="legend-item"><div class="box red"></div> Chưa có người ngồi (Click để chọn chỗ)</div>
             <div class="legend-item"><div class="box blue"></div> Đã có người ngồi</div>
         </div>
         <div class="loading" id="loading">Đang đồng bộ dữ liệu lớp học...</div>
         <div class="classroom" id="classroom"></div>
     </div>
 
-    <!-- Modal cho sinh viên chọn ghế -->
+    <!-- Modal: Xác nhận mật khẩu để điểm danh chọn chỗ / hủy chỗ -->
     <div class="modal-overlay" id="modal">
         <div class="modal">
-            <h3 id="modal-title">Đăng ký chỗ ngồi</h3>
-            <input type="text" id="sv-id" placeholder="Mã sinh viên" required>
-            <input type="text" id="sv-name" placeholder="Họ và Tên" required>
-            <button onclick="submitData()">Xác nhận chọn chỗ</button>
+            <h3 id="modal-title">Xác nhận điểm danh</h3>
+            <p id="modal-desc" style="font-size: 0.9rem; color: #555; margin-bottom: 10px;"></p>
+            <label>Nhập lại mật khẩu cá nhân để xác nhận:</label>
+            <input type="password" id="confirm-pass" placeholder="Mật khẩu của bạn..." required onkeypress="handleModalKeyPress(event)">
+            <button onclick="executeAction()">Xác nhận hoàn tất</button>
             <button class="btn-cancel" onclick="closeModal()">Hủy</button>
         </div>
     </div>
 
     <script>
+        // GẮN CỨNG URL MÁY CHỦ VÀ MẬT KHẨU PHÒNG ĐỂ CHẠY ỔN ĐỊNH 100%
+        const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbxdEpgIrOqZ-R2z04FM8s7-BGmKju9VL9mYg0JZZN97eHCVQ5YVtCB1Wslwd7H1ccJH6g/exec";
         const CONFIG_SHEET_ID = '1pWxfmmAc04IJCCaj-tzPJjjfgaM-NcHrVeSgrx0kL6I'; 
         
         let SECRET_PASSWORD = ""; 
-        let SCRIPT_URL = "";
-        let currentSeatId = '';
+        let currentStudent = { id: '', name: '', className: '', password: '' };
+        let pendingAction = null; 
+        let targetSeatId = '';
         let seatDataCache = {}; 
         
         const classroomEl = document.getElementById('classroom');
         const statusEl = document.getElementById('status');
 
+        // Tải mật khẩu phòng từ ô A1 của file cấu hình
         function loadSystemConfig() {
-            const errorMsg = document.getElementById('login-error');
-
-            if (CONFIG_SHEET_ID === 'DÁN_ID_TRANG_TÍNH_CẤU_HÌNH_VÀO_ĐÂY') {
-                errorMsg.innerText = "⚠️ Chưa cài đặt ID Google Sheet cấu hình!";
-                errorMsg.style.display = 'block';
-                return;
-            }
-
             const script = document.createElement('script');
             script.src = `https://docs.google.com/spreadsheets/d/${CONFIG_SHEET_ID}/gviz/tq?tqx=responseHandler:processConfig`;
             document.body.appendChild(script);
-            
-            setTimeout(() => {
-                if (SECRET_PASSWORD === "") {
-                    errorMsg.innerText = "Lỗi: Không tải được dữ liệu. Hãy chắc chắn file Sheet đã bật quyền 'Bất kỳ ai có liên kết'.";
-                    errorMsg.style.display = 'block';
-                }
-            }, 5000);
         }
 
         function processConfig(json) {
             try {
                 let row = json.table.rows[0].c;
                 SECRET_PASSWORD = (row[0] && row[0].v) ? row[0].v.toString().trim() : "";
-                SCRIPT_URL = (row[1] && row[1].v) ? row[1].v.toString().trim() : "";
-
-                const passInput = document.getElementById('password-input');
-                const loginBtn = document.getElementById('login-btn');
-                const errorMsg = document.getElementById('login-error');
-
-                passInput.disabled = false;
-                loginBtn.disabled = false;
-                passInput.placeholder = "Nhập mật khẩu...";
-                errorMsg.style.display = 'none';
             } catch (e) {
-                console.error(e);
-                document.getElementById('login-error').innerText = "Lỗi định dạng cấu hình, không tìm thấy ô mật khẩu và link!";
-                document.getElementById('login-error').style.display = 'block';
+                console.error("Lỗi đọc cấu hình mật khẩu phòng");
             }
         }
 
         window.onload = loadSystemConfig;
 
-        function checkPassword() {
-            const input = document.getElementById('password-input').value;
-            const errorMsg = document.getElementById('login-error');
+        function checkConfigPassword() {
+            const input = document.getElementById('config-pass-input').value.trim();
+            const errorMsg = document.getElementById('config-error');
             
-            if (input === SECRET_PASSWORD) {
-                document.getElementById('login-screen').style.display = 'none';
-                document.getElementById('main-content').style.display = 'block';
-                errorMsg.style.display = 'none';
-                renderClassroom();
-                fetchInitialData();
+            // Nếu chưa tải kịp ô A1 qua gviz, cho phép đi tiếp hoặc so khớp trực tiếp
+            if (SECRET_PASSWORD === "" || input === SECRET_PASSWORD) {
+                document.getElementById('config-screen').style.display = 'none';
+                document.getElementById('student-login-screen').style.display = 'block';
+                document.getElementById('student-id').focus();
             } else {
-                errorMsg.innerText = "Mật khẩu không đúng!";
+                errorMsg.innerText = "Mật khẩu phòng điểm danh không đúng!";
                 errorMsg.style.display = 'block';
             }
         }
+        function handleConfigKeyPress(e) { if (e.key === 'Enter') checkConfigPassword(); }
 
-        function handleKeyPress(e) { if (e.key === 'Enter') checkPassword(); }
+        // ĐĂNG NHẬP SINH VIÊN
+        async function studentLogin() {
+            const mssv = document.getElementById('student-id').value.trim();
+            const pass = document.getElementById('student-pass').value.trim();
+            const errEl = document.getElementById('student-login-error');
+
+            if (!mssv || !pass) {
+                errEl.innerText = "Vui lòng nhập đầy đủ MSSV và mật khẩu!";
+                errEl.style.display = 'block';
+                return;
+            }
+
+            errEl.innerText = "Đang xác thực...";
+            errEl.style.display = 'block';
+
+            try {
+                let res = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'login', studentId: mssv, password: pass })
+                });
+                let data = await res.json();
+
+                if (data.success) {
+                    currentStudent = { id: mssv, name: data.studentName, className: data.className, password: pass };
+                    
+                    document.getElementById('info-name').innerText = currentStudent.name;
+                    document.getElementById('info-mssv').innerText = currentStudent.id;
+                    document.getElementById('info-class').innerText = currentStudent.className;
+
+                    document.getElementById('student-login-screen').style.display = 'none';
+                    document.getElementById('main-content').style.display = 'block';
+
+                    renderClassroom();
+                    fetchInitialData();
+                } else {
+                    errEl.innerText = data.message || "Sai MSSV hoặc mật khẩu!";
+                }
+            } catch (err) {
+                console.error(err);
+                errEl.innerText = "Lỗi kết nối đến máy chủ hệ thống!";
+            }
+        }
+        function handleStudentLoginKeyPress(e) { if (e.key === 'Enter') studentLogin(); }
+
+        function logout() {
+            currentStudent = { id: '', name: '', className: '', password: '' };
+            document.getElementById('student-id').value = '';
+            document.getElementById('student-pass').value = '';
+            document.getElementById('student-login-error').style.display = 'none';
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('student-login-screen').style.display = 'block';
+        }
+
+        function togglePasswordChange() {
+            let sec = document.getElementById('passwordChangeSection');
+            sec.style.display = sec.style.display === 'block' ? 'none' : 'block';
+        }
+
+        async function submitNewPassword() {
+            let newPwd = document.getElementById('new-password').value.trim();
+            if (!newPwd) { alert("Vui lòng nhập mật khẩu mới!"); return; }
+
+            try {
+                let res = await fetch(SCRIPT_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({ action: 'changePassword', studentId: currentStudent.id, newPassword: newPwd })
+                });
+                let data = await res.json();
+                if (data.success) {
+                    alert("Đổi mật khẩu thành công!");
+                    currentStudent.password = newPwd;
+                    document.getElementById('new-password').value = '';
+                    togglePasswordChange();
+                } else {
+                    alert("Lỗi: " + data.message);
+                }
+            } catch (e) {
+                alert("Lỗi kết nối mạng khi đổi mật khẩu!");
+            }
+        }
 
         function renderClassroom() {
             classroomEl.innerHTML = '';
-            
             for (let day = 1; day <= 3; day++) {
                 let dayHtml = `<div class="day"><h2 class="day-title">Dãy ${day}</h2>`;
-                
                 if (day === 1) {
                     dayHtml += `<div class="teacher-desk">👨‍🏫 BÀN GIÁO VIÊN</div>`;
                 } else {
@@ -257,7 +349,7 @@
                     dayHtml += `<div class="ban"><div class="ban-title">Bàn ${ban}</div><div class="seats">`;
                     for (let ghe = 1; ghe <= 5; ghe++) {
                         let seatId = `D${day}-B${ban}-G${ghe}`;
-                        dayHtml += `<div class="seat" id="${seatId}" onclick="openModal('${seatId}')">${ghe}</div>`;
+                        dayHtml += `<div class="seat" id="${seatId}" onclick="promptAction('${seatId}')">${ghe}</div>`;
                     }
                     dayHtml += `</div></div>`;
                 }
@@ -270,31 +362,29 @@
             if(!SCRIPT_URL) return;
             try {
                 document.getElementById('loading').style.display = 'block';
-                statusEl.innerHTML = "Đang kết nối...";
-                statusEl.style.color = "#27ae60";
+                statusEl.innerHTML = "Đang đồng bộ dữ liệu...";
                 
                 let response = await fetch(SCRIPT_URL);
                 let data = await response.json();
-                seatDataCache = data || {};
+                seatDataCache = data.seats || data || {};
                 
                 for (let seatId in seatDataCache) {
-                    if(seatDataCache[seatId].name && seatDataCache[seatId].name.trim() !== "") {
+                    let info = seatDataCache[seatId];
+                    if(info && info.name && info.name.trim() !== "") {
                         let seatEl = document.getElementById(seatId);
                         if (seatEl) {
                             seatEl.className = 'seat taken';
-                            seatEl.onclick = () => confirmDelete(seatId); 
-                            let shortName = seatDataCache[seatId].name.split(" ").pop();
+                            let shortName = info.name.split(" ").pop();
                             seatEl.innerHTML = shortName;
-                            seatEl.title = `${seatDataCache[seatId].name} (${seatDataCache[seatId].studentId})`;
+                            seatEl.title = `${info.name} (${info.studentId})`;
                         }
                     }
                 }
                 document.getElementById('loading').style.display = 'none';
                 statusEl.innerHTML = "Đã đồng bộ sơ đồ lớp ✅";
-                statusEl.style.color = "#27ae60";
             } catch (error) {
                 console.error("Lỗi:", error);
-                statusEl.innerHTML = "Lỗi kết nối dữ liệu từ Google Sheet.";
+                statusEl.innerHTML = "Lỗi kết nối dữ liệu sơ đồ.";
                 statusEl.style.color = "red";
                 document.getElementById('loading').style.display = 'none';
             }
@@ -314,7 +404,6 @@
                 if (data && data.name && data.name.trim() !== "") {
                     let matchId = data.studentId && data.studentId.toString().toLowerCase().includes(query);
                     let matchName = data.name.toLowerCase().includes(query);
-                    
                     if (matchId || matchName) {
                         foundSeatId = seatId;
                         foundData = data;
@@ -331,115 +420,112 @@
                     setTimeout(() => seatEl.classList.remove('highlight'), 5000);
 
                     let parts = foundSeatId.split('-');
-                    let dayNum = parts[0].replace('D', '');
-                    let banNum = parts[1].replace('B', '');
-                    let gheNum = parts[2].replace('G', '');
-
-                    alert(`✅ TÌM THẤY CHỖ NGỒI!\n-------------------------\nSinh viên: ${foundData.name}\nMSSV: ${foundData.studentId}\n\nVị trí: Dãy ${dayNum} - Bàn ${banNum} - Ghế ${gheNum} (${foundSeatId})`);
+                    alert(`✅ TÌM THẤY CHỖ NGỒI!\n-------------------------\nSinh viên: ${foundData.name}\nMSSV: ${foundData.studentId}\n\nVị trí: Dãy ${parts[0].replace('D','')}, Bàn ${parts[1].replace('B','')}, Ghế ${parts[2].replace('G','')}`);
                 }
             } else {
                 alert("❌ Không tìm thấy thông tin chỗ ngồi phù hợp với từ khóa này!");
             }
         }
+        function handleSearchKeyPress(e) { if (e.key === 'Enter') searchSeat(); }
 
-        function handleSearchKeyPress(e) {
-            if (e.key === 'Enter') searchSeat();
-        }
-
-        function openModal(seatId) {
-            currentSeatId = seatId;
-            document.getElementById('modal-title').innerText = `Chọn chỗ: ${seatId}`;
-            document.getElementById('sv-id').value = '';
-            document.getElementById('sv-name').value = '';
-            document.getElementById('modal').style.display = 'flex';
-            document.getElementById('sv-id').focus();
-        }
-
-        function closeModal() { document.getElementById('modal').style.display = 'none'; }
-
-        async function submitData() {
-            let svId = document.getElementById('sv-id').value.trim();
-            let svName = document.getElementById('sv-name').value.trim();
-            if (!svId || !svName) return alert('Vui lòng nhập đầy đủ MSSV và Họ Tên!');
-
-            const savedSeatId = currentSeatId; 
-            let seatEl = document.getElementById(savedSeatId);
-            seatEl.className = 'seat taken';
-            seatEl.onclick = () => confirmDelete(savedSeatId); 
-            let shortName = svName.split(" ").pop();
-            seatEl.innerHTML = shortName;
-            seatEl.title = `${svName} (${svId})`;
+        function promptAction(seatId) {
+            targetSeatId = seatId;
+            let seatInfo = seatDataCache[seatId];
             
-            seatDataCache[savedSeatId] = { studentId: svId, name: svName };
-            closeModal();
+            if (seatInfo && seatInfo.name && seatInfo.name.trim() !== "") {
+                if (seatInfo.studentId.toString().trim() !== currentStudent.id.toString().trim()) {
+                    alert("⚠️ Ghế này đã có sinh viên khác ngồi, bạn không thể thao tác!");
+                    return;
+                }
+                pendingAction = 'delete';
+                document.getElementById('modal-title').innerText = `Hủy chỗ ngồi: ${seatId}`;
+                document.getElementById('modal-desc').innerText = `Bạn đang yêu cầu hủy vị trí đã đăng ký.`;
+            } else {
+                pendingAction = 'book';
+                document.getElementById('modal-title').innerText = `Xác nhận điểm danh ghế: ${seatId}`;
+                document.getElementById('modal-desc').innerText = `Đăng ký chỗ ngồi cho: ${currentStudent.name} (${currentStudent.id})`;
+            }
 
-            if(!SCRIPT_URL) return;
+            document.getElementById('confirm-pass').value = '';
+            document.getElementById('modal').style.display = 'flex';
+            document.getElementById('confirm-pass').focus();
+        }
+
+        function closeModal() { 
+            document.getElementById('modal').style.display = 'none'; 
+            pendingAction = null;
+            targetSeatId = '';
+        }
+
+        async function executeAction() {
+            let inputPass = document.getElementById('confirm-pass').value.trim();
+            if (!inputPass) { alert("Vui lòng nhập mật khẩu xác nhận!"); return; }
+
+            if (inputPass !== currentStudent.password) {
+                alert("❌ Mật khẩu không chính xác! Không thể thực hiện điểm danh.");
+                return;
+            }
+
+            let actionToExecute = pendingAction;
+            let seatId = targetSeatId;
+            
+            closeModal();
 
             try {
                 document.getElementById('loading').style.display = 'block';
-                statusEl.innerHTML = "Đang lưu...";
+                statusEl.innerHTML = "Đang cập nhật hệ thống...";
                 statusEl.style.color = "#e67e22";
-                
-                await fetch(SCRIPT_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                    body: JSON.stringify({
-                        action: 'book', 
-                        seatId: savedSeatId, 
-                        studentId: svId,
-                        name: svName
-                    })
-                });
-                
-                document.getElementById('loading').style.display = 'none';
-                statusEl.innerHTML = "Đã chọn chỗ thành công ✅";
-                statusEl.style.color = "#27ae60";
-            } catch (error) {
-                console.error("Lỗi:", error);
-                statusEl.innerHTML = "Lỗi lưu dữ liệu!";
-                statusEl.style.color = "red";
-                document.getElementById('loading').style.display = 'none';
-            }
-        }
 
-        async function confirmDelete(seatId) {
-            let isConfirm = confirm(`Bạn có chắc muốn hủy đăng ký ở ghế ${seatId} không?`);
-            if (isConfirm) {
-                delete seatDataCache[seatId];
-                
-                let seatEl = document.getElementById(seatId);
-                seatEl.className = 'seat';
-                let gheNum = seatId.split("-G")[1];
-                seatEl.innerHTML = gheNum;
-                seatEl.title = '';
-                seatEl.onclick = () => openModal(seatId);
+                if (actionToExecute === 'book') {
+                    let seatEl = document.getElementById(seatId);
+                    seatEl.className = 'seat taken';
+                    let shortName = currentStudent.name.split(" ").pop();
+                    seatEl.innerHTML = shortName;
+                    seatEl.title = `${currentStudent.name} (${currentStudent.id})`;
+                    seatDataCache[seatId] = { studentId: currentStudent.id, name: currentStudent.name };
 
-                if(!SCRIPT_URL) return;
-
-                try {
-                    document.getElementById('loading').style.display = 'block';
-                    statusEl.innerHTML = "Đang hủy chỗ...";
-                    statusEl.style.color = "#e67e22";
-                    
                     await fetch(SCRIPT_URL, {
                         method: 'POST',
                         headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                         body: JSON.stringify({
-                            action: 'delete', 
+                            action: 'book',
+                            seatId: seatId,
+                            studentId: currentStudent.id,
+                            name: currentStudent.name
+                        })
+                    });
+                    statusEl.innerHTML = "Điểm danh chọn chỗ thành công ✅";
+                    
+                } else if (actionToExecute === 'delete') {
+                    delete seatDataCache[seatId];
+                    let seatEl = document.getElementById(seatId);
+                    seatEl.className = 'seat';
+                    let gheNum = seatId.split("-G")[1];
+                    seatEl.innerHTML = gheNum;
+                    seatEl.title = '';
+
+                    await fetch(SCRIPT_URL, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                        body: JSON.stringify({
+                            action: 'delete',
                             seatId: seatId
                         })
                     });
-                    
-                    document.getElementById('loading').style.display = 'none';
-                    statusEl.innerHTML = `Đã hủy chỗ ${seatId} ✅`;
-                    statusEl.style.color = "#27ae60";
-                } catch (error) {
-                    console.error("Lỗi xóa:", error);
-                    alert("Đã xóa trên màn hình nhưng gửi dữ liệu thất bại!");
-                    document.getElementById('loading').style.display = 'none';
+                    statusEl.innerHTML = `Đã hủy vị trí ${seatId} thành công ✅`;
                 }
+
+                document.getElementById('loading').style.display = 'none';
+                statusEl.style.color = "#27ae60";
+            } catch (error) {
+                console.error("Lỗi:", error);
+                statusEl.innerHTML = "Lỗi lưu dữ liệu lên máy chủ!";
+                statusEl.style.color = "red";
+                document.getElementById('loading').style.display = 'none';
+                fetchInitialData(); 
             }
         }
+        function handleModalKeyPress(e) { if (e.key === 'Enter') executeAction(); }
     </script>
 </body>
 </html>
