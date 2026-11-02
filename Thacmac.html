@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thắc mắc điểm danh - Xác suất Thống kê</title>
+
+  <style>
+    body { font-family: "Segoe UI", Arial, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 20px; line-height: 1.6; }
+    .container { max-width: 900px; margin: 0 auto; }
+    h1 { text-align: center; color: #003366; margin-bottom: 10px; }
+    .chapter-box { background: #fff; border-radius: 10px; padding: 25px; margin-bottom: 25px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-top: 4px solid #d9534f; }
+    .box-student { border-top: 4px solid #2b6cb0; background-color: #f8fafc; }
+    h2 { color: #d9534f; margin-top: 0; margin-bottom: 15px; font-size: 1.2rem; }
+    .box-student h2 { color: #2b6cb0; }
+    
+    .form-group { display: flex; flex-direction: column; gap: 12px; }
+    input[type="text"], input[type="url"], input[type="email"], textarea, select { padding: 12px; font-size: 15px; border: 1px solid #ccc; border-radius: 6px; font-family: inherit; background-color: #fff; }
+    .link-note { font-size: 12px; color: #e3342f; margin-top: -8px; margin-bottom: 5px; font-style: italic; }
+    .btn-submit { padding: 10px 20px; font-size: 16px; background-color: #2b6cb0; color: white; border: none; border-radius: 6px; cursor: pointer; width: fit-content; font-weight: bold; }
+    .btn-submit:hover { background-color: #1a4f8b; }
+    
+    .comments-list { margin-top: 20px; background: #fff; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0; }
+    .comment-node { margin-top: 15px; }
+    .comment-level-0 { margin-bottom: 15px; }
+    .comment-children { margin-left: 20px; padding-left: 15px; border-left: 2px solid #cbd5e0; margin-top: 15px;}
+
+    /* CSS MỚI CHO GIAO DIỆN XEM THÊM */
+    .comment-summary { display: flex; align-items: center; justify-content: space-between; padding: 12px 15px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 6px; cursor: pointer; transition: background-color 0.2s; }
+    .comment-summary:hover { background-color: #edf2f7; }
+    .comment-summary-left { display: flex; align-items: center; gap: 15px; flex-wrap: wrap; }
+    .btn-toggle-details { background-color: #fff; border: 1px solid #cbd5e0; padding: 5px 12px; border-radius: 6px; font-size: 13px; cursor: pointer; color: #4a5568; font-weight: bold; white-space: nowrap; }
+    .btn-toggle-details:hover { background-color: #e2e8f0; }
+    .comment-details { display: none; margin-top: 15px; padding-left: 15px; border-left: 3px solid #e2e8f0; }
+    .comment-details.active { display: block; }
+    
+    /* Các nút chức năng */
+    .btn-reply, .btn-status { background: none; border: none; cursor: pointer; font-size: 13px; font-weight: bold; padding: 0; }
+    .btn-reply { color: #4a5568; }
+    .btn-reply:hover { text-decoration: underline; color: #2b6cb0; }
+    .btn-status { color: #2b6cb0; margin-left: 15px; }
+    .btn-status:hover { text-decoration: underline; color: #1a4f8b; }
+
+    .badge { padding: 5px 10px; border-radius: 4px; font-size: 12px; font-weight: bold; color: #fff; }
+    .badge-resolved { background-color: #38c172; }
+    .badge-unresolved { background-color: #f6993f; }
+
+    .reply-form-container { display: none; margin-top: 15px; background: #edf2f7; padding: 12px; border-radius: 6px; }
+    .reply-form-container.active { display: block; }
+    .reply-form-container input, .reply-form-container textarea { padding: 8px; font-size: 14px; }
+    .reply-form-container .btn-submit { font-size: 14px; padding: 8px 15px; background-color: #0056b3; }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Hệ Thống Hỗ Trợ Sinh Viên</h1>
+
+  <!-- ================= FORM ĐIỀN THẮC MẮC DÀNH CHO SINH VIÊN ================= -->
+  <div class="chapter-box box-student">
+    <h2>Gửi Thắc Mắc Mới (Dành cho Sinh viên)</h2>
+    <form id="studentForm" class="form-group">
+      
+      <label style="font-weight: bold; margin-bottom: -5px;">Bước 1: Chọn lớp của bạn</label>
+      <select id="selClass" required>
+        <option value="" disabled selected>-- Chọn lớp học --</option>
+        <option value="T2K4">Lớp Lý thuyết-Bài tập - Mã 173929 - Thứ 2 K4</option>
+        <option value="T2K5">Lớp Lý thuyết-Bài tập - Mã 173930 - Thứ 2 K5</option>
+        <option value="T2K6">Lớp Lý thuyết-Bài tập - Mã 173931 - Thứ 2 K6</option>
+        <option value="T3K4">Lớp Lý thuyết-Bài tập - Mã 173539 - Thứ 3 K4</option>
+        <option value="T5K4">Lớp Bài tập - Mã 171840 - Thứ 5 K4</option>
+        <option value="T5K5">Lớp Bài tập - Mã 171854 - Thứ 5 K5</option>
+        <option value="T5K6">Lớp Bài tập - Mã 171853 - Thứ 5 K6</option>
+        <option value="T6K1">Lớp Bài tập - Mã 765592 - Thứ 6 K1</option>
+        <option value="T6K4">Lớp Lý thuyết-Bài tập - Mã 174586 - Thứ 6 K4</option>
+        <option value="T6K5">Lớp Lý thuyết-Bài tập - Mã 174587 - Thứ 6 K5</option>
+      </select>
+
+      <label style="font-weight: bold; margin-bottom: -5px; margin-top: 10px;">Bước 2: Chọn loại thắc mắc</label>
+      <select id="selType" required onchange="toggleAttendanceFields()">
+        <option value="" disabled selected>-- Chọn loại thắc mắc --</option>
+        <option value="Điểm danh">1. Điểm danh</option>
+        <option value="Điểm tích cực">2. Điểm tích cực</option>
+      </select>
+
+      <!-- BƯỚC 3: Điểm danh (Ẩn/Hiện tự động) -->
+      <div id="attendanceFields" class="form-group" style="display: none; border-left: 4px solid #2b6cb0; padding-left: 15px; margin-left: 5px; background: #e2e8f0; padding: 15px; border-radius: 0 6px 6px 0;">
+        <label style="font-weight: bold; font-size: 14px;">Bước 3: Dành riêng cho thắc mắc Điểm danh</label>
+        <select id="selWeek">
+          <option value="" disabled selected>-- Chọn tuần điểm danh --</option>
+          <option value="Tuần 1 (7-13/9)">Điểm danh tuần 1 (7-13/9)</option>
+          <option value="Tuần 2 (14-20/9)">Điểm danh tuần 2 (14-20/9)</option>
+          <option value="Tuần 3 (21-27/9)">Điểm danh tuần 3 (21-27/9)</option>
+          <option value="Tuần 4 (28-4/10)">Điểm danh tuần 4 (28-4/10)</option>
+          <option value="Tuần 5 (5-11/10)">Điểm danh tuần 5 (5-11/10)</option>
+          <option value="Tuần 6 (12-18/10)">Điểm danh tuần 6 (12-18/10)</option>
+          <option value="Tuần 7 (19-25/10)">Điểm danh tuần 7 (19-25/10)</option>
+          <option value="Tuần 8 (26-1/11)">Điểm danh tuần 8 (26-1/11)</option>
+          <option value="Tuần 9 (2-8/11)">Điểm danh tuần 9 (2-8/11) / Thi</option>
+          <option value="Tuần 10 (9-15/11)">Điểm danh tuần 10 (9-15/11)</option>
+          <option value="Tuần 11 (16-22/11)">Điểm danh tuần 11 (16-22/11)</option>
+          <option value="Tuần 12 (23-29/11)">Điểm danh tuần 12 (23-29/11)</option>
+          <option value="Tuần 13 (30-6/11)">Điểm danh tuần 13 (30-6/11)</option>
+          <option value="Tuần 14 (7-13/11)">Điểm danh tuần 14 (7-13/11)</option>
+          <option value="Tuần 15 (14-20/11)">Điểm danh tuần 15 (14-20/11)</option>
+          <option value="Tuần 16 (21-27/11)">Điểm danh tuần 16 (21-27/11)</option>
+          <option value="Tuần 17 (28-3/1)">Điểm danh tuần 17 (28-3/1)</option>
+          <option value="Tuần 18 (4-10/1)">Điểm danh tuần 18 (4-10/1)</option>
+          <option value="Tuần 19 (11-17/1)">Điểm danh tuần 19 (11-17/1)</option>
+        </select>
+        <input type="url" id="linkProof" placeholder="Dán link Google Drive chứa file minh chứng vào đây (Bắt buộc)">
+        <div class="link-note">Lưu ý: Nhớ mở quyền truy cập link Google Drive (Bất kỳ ai có đường liên kết) để Giảng viên có thể xem.</div>
+      </div>
+
+      <label style="font-weight: bold; margin-bottom: -5px; margin-top: 10px;">Thông tin chi tiết</label>
+      <input type="text" id="stuName" placeholder="Họ và tên - MSSV (VD: Nguyễn Văn A - 20210000)" required>
+      <input type="email" id="stuEmail" placeholder="Email cá nhân (Để nhận thông báo)" required>
+      <textarea id="stuDetail" placeholder="Trình bày chi tiết vấn đề của em..." rows="3" required></textarea>
+      
+      <button type="submit" class="btn-submit">Gửi Thắc Mắc</button>
+    </form>
+  </div>
+
+  <hr style="margin: 40px 0; border: 1px dashed #ccc;">
+  <h1 style="color: #d9534f; margin-bottom: 30px;">Tiến Độ Giải Quyết (Theo Lớp)</h1>
+
+  <!-- ================= DANH SÁCH CÁC LỚP ================= -->
+  <div class="chapter-box"><h2>Lớp Lý thuyết-Bài tập - 173929 - Thứ 2 K4</h2><div id="list-T2K4" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box"><h2>Lớp Lý thuyết-Bài tập - 173930 - Thứ 2 K5</h2><div id="list-T2K5" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box"><h2>Lớp Lý thuyết-Bài tập - 173931 - Thứ 2 K6</h2><div id="list-T2K6" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box"><h2>Lớp Lý thuyết-Bài tập - 173539 - Thứ 3 K4</h2><div id="list-T3K4" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box"><h2>Lớp Bài tập - 171840 - Thứ 5 K4</h2><div id="list-T5K4" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box"><h2>Lớp Bài tập - 171854 - Thứ 5 K5</h2><div id="list-T5K5" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box"><h2>Lớp Bài tập - 171853 - Thứ 5 K6</h2><div id="list-T5K6" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box"><h2>Lớp Bài tập - 765592 - Thứ 6 K1</h2><div id="list-T6K1" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box"><h2>Lớp Lý thuyết-Bài tập - 174586 - Thứ 6 K4</h2><div id="list-T6K4" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box"><h2>Lớp Lý thuyết-Bài tập - 174587 - Thứ 6 K5</h2><div id="list-T6K5" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+
+</div>
+
+<!-- ================= JAVASCRIPT XỬ LÝ ================= -->
+<script>
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbwSoACMV1Ux8ppJ2KkYAPJtyvvmB3yYnN0A4ErBRWh8rLd95fMcSWgsCd4QsSrbDgNXog/exec';
+  const PASSWORD_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyjzdIxwOAWdd5XReI3xM7sY-qzqXXImfrbu_fDX08pNU_9CqMlkVQXAjpp9Om-OYbbEg/exec';
+  
+  let masterPassword = "";
+
+  fetch(PASSWORD_SCRIPT_URL)
+    .then(res => res.text())
+    .then(text => { masterPassword = text.trim(); })
+    .catch(err => console.error("Lỗi khi tải mật khẩu:", err));
+
+  window._reloaders = {}; 
+  const classIds = ['T2K4', 'T2K5', 'T2K6', 'T3K4', 'T5K4', 'T5K5', 'T5K6', 'T6K1', 'T6K4', 'T6K5'];
+
+  function toggleAttendanceFields() {
+    const type = document.getElementById('selType').value;
+    const attFields = document.getElementById('attendanceFields');
+    if (type === 'Điểm danh') {
+      attFields.style.display = 'flex';
+      document.getElementById('selWeek').required = true;
+      document.getElementById('linkProof').required = true;
+    } else {
+      attFields.style.display = 'none';
+      document.getElementById('selWeek').required = false;
+      document.getElementById('linkProof').required = false;
+    }
+  }
+
+  function makeLinksClickable(text) {
+    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    return text.replace(urlRegex, function(url) {
+      return `<a href="${url}" target="_blank" style="color: #2b6cb0; font-weight: bold; text-decoration: underline;">[Xem Minh Chứng]</a>`;
+    });
+  }
+
+  // Hàm Mở rộng / Thu gọn chi tiết
+  function toggleDetails(id) {
+    const detailsDiv = document.getElementById(id);
+    const btn = document.getElementById(`btn-${id}`);
+    if (detailsDiv) {
+      detailsDiv.classList.toggle('active');
+      if (detailsDiv.classList.contains('active')) {
+        btn.innerText = 'Thu gọn ▴';
+      } else {
+        btn.innerText = 'Xem thêm ▾';
+      }
+    }
+  }
+
+  function toggleReplyForm(chapter, safeCommentId) {
+    const form = document.getElementById(`reply-form-${chapter}-${safeCommentId}`);
+    if (form) form.classList.toggle('active');
+  }
+
+  function markResolved(chapter, parentId) {
+    if (!masterPassword) {
+      alert("Hệ thống chưa tải xong mật khẩu hoặc link tải mật khẩu bị lỗi. Vui lòng thử lại sau giây lát.");
+      return;
+    }
+
+    const pass = prompt("DÀNH CHO GIẢNG VIÊN:\nVui lòng nhập mật khẩu quản lý để chuyển trạng thái thành Đã giải quyết:");
+    if (pass === null) return; 
+    
+    if (pass === masterPassword) {
+      const formData = new URLSearchParams();
+      formData.append('chapter', chapter);
+      formData.append('name', 'Hệ thống');
+      formData.append('email', '');
+      formData.append('comment', '[ĐÃ GIẢI QUYẾT] Giảng viên đã xem xét và giải quyết.');
+      formData.append('parentId', parentId);
+
+      fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
+        .then(() => {
+          alert("Chuyển trạng thái thành công!");
+          if (window._reloaders[chapter]) window._reloaders[chapter]();
+        })
+        .catch(() => alert('Lỗi kết nối khi cập nhật trạng thái.'));
+    } else {
+      alert("Sai mật khẩu! Không thể thay đổi trạng thái.");
+    }
+  }
+
+  function submitReply(event, chapter, originalParentId) {
+    event.preventDefault();
+
+    const form = event.target;
+    const nameInput = form.querySelector('.reply-name');
+    const textInput = form.querySelector('.reply-text');
+    const submitBtn = form.querySelector('.btn-submit');
+    
+    submitBtn.innerText = 'Đang gửi...';
+    submitBtn.disabled = true;
+
+    const formData = new URLSearchParams();
+    formData.append('chapter', chapter);
+    formData.append('name', nameInput.value);
+    formData.append('email', '');
+    formData.append('comment', textInput.value);
+    formData.append('parentId', originalParentId); 
+
+    fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
+      .then(() => {
+        textInput.value = '';
+        submitBtn.innerText = 'Gửi phản hồi';
+        submitBtn.disabled = false;
+        
+        const container = form.closest('.reply-form-container');
+        if (container) container.classList.remove('active');
+
+        if (window._reloaders[chapter]) window._reloaders[chapter]();
+      })
+      .catch(() => {
+        alert('Lỗi kết nối khi gửi phản hồi.');
+        submitBtn.innerText = 'Gửi phản hồi';
+        submitBtn.disabled = false;
+      });
+  }
+
+  function setupClassSection(chapter) {
+    const listId = `list-${chapter}`;
+
+    function loadComments() {
+      const fetchUrl = `${scriptURL}?chapter=${encodeURIComponent(chapter)}&t=${new Date().getTime()}`;
+
+      fetch(fetchUrl)
+        .then(res => res.json())
+        .then(data => {
+          const commentsByParent = {};
+          
+          data.forEach(c => {
+            const id = c.id || c.time; 
+            c.id = id;
+            c.safeId = id.toString().replace(/[^a-zA-Z0-9]/g, '_');
+            const parentKey = (c.parentId && c.parentId !== "null" && c.parentId !== "") ? c.parentId : "root";
+            
+            if (!commentsByParent[parentKey]) {
+              commentsByParent[parentKey] = [];
+            }
+            commentsByParent[parentKey].push(c);
+          });
+
+          if (commentsByParent["root"]) commentsByParent["root"].reverse();
+
+          function renderCommentsTree(parentId, level) {
+            const children = commentsByParent[parentId];
+            if (!children || children.length === 0) return '';
+
+            let html = '';
+            children.forEach(c => {
+              const formattedComment = makeLinksClickable(c.comment);
+              
+              let isResolved = false;
+              if (level === 0 && commentsByParent[c.id]) {
+                isResolved = commentsByParent[c.id].some(child => child.comment.includes("[ĐÃ GIẢI QUYẾT]"));
+              }
+
+              let statusBadge = "";
+              let resolveBtn = "";
+              
+              if (level === 0) {
+                if (isResolved) {
+                  statusBadge = `<span class="badge badge-resolved">Đã giải quyết</span>`;
+                } else {
+                  statusBadge = `<span class="badge badge-unresolved">Chưa giải quyết</span>`;
+                  resolveBtn = `<button class="btn-status" onclick="markResolved('${chapter}', '${c.id}')">✔ Chuyển sang Đã giải quyết</button>`;
+                }
+                
+                // MÃ CHO LEVEL 0 (Thắc mắc gốc của sinh viên: Dạng thu gọn)
+                const safeToggleId = `details-${chapter}-${c.safeId}`;
+                html += `
+                  <div class="comment-node comment-level-0">
+                    
+                    <!-- Phần hiển thị rút gọn -->
+                    <div class="comment-summary" onclick="toggleDetails('${safeToggleId}')">
+                      <div class="comment-summary-left">
+                        <strong style="color: #d9534f; font-size: 1.05rem;">${c.name}</strong> 
+                        ${statusBadge}
+                      </div>
+                      <button type="button" class="btn-toggle-details" id="btn-${safeToggleId}">Xem thêm ▾</button>
+                    </div>
+                    
+                    <!-- Phần nội dung chi tiết ẩn đi -->
+                    <div class="comment-details" id="${safeToggleId}">
+                      <div style="font-size: 0.85em; color: #888; margin-top: 5px;">Thời gian gửi: ${c.time}</div>
+                      <div style="margin-top: 8px; white-space: pre-wrap; line-height: 1.5; color: #333;">${formattedComment}</div>
+                      
+                      <div style="margin-top: 12px; margin-bottom: 5px;">
+                        <button class="btn-reply" onclick="toggleReplyForm('${chapter}', '${c.safeId}')">↩ Trả lời sinh viên</button>
+                        ${resolveBtn}
+                      </div>
+
+                      <div class="reply-form-container" id="reply-form-${chapter}-${c.safeId}">
+                        <form class="form-group" onsubmit="submitReply(event, '${chapter}', '${c.id}')">
+                          <input type="text" class="reply-name" value="Giảng viên" required>
+                          <textarea class="reply-text" placeholder="Nhập phản hồi..." rows="2" required></textarea>
+                          <button type="submit" class="btn-submit" style="background-color: #0056b3; width:auto;">Gửi phản hồi</button>
+                        </form>
+                      </div>
+                      
+                      <!-- Các phản hồi của Giảng viên -->
+                      <div class="comment-children">
+                        ${renderCommentsTree(c.id, level + 1)}
+                      </div>
+                    </div>
+                  </div>
+                `;
+              } else {
+                // MÃ CHO LEVEL > 0 (Phản hồi của giảng viên: Hiển thị dạng text không cần đóng gói thu gọn)
+                html += `
+                  <div class="comment-node comment-level-${level}" style="margin-bottom: 12px;">
+                    <strong style="color: #2b6cb0;">${c.name}</strong> 
+                    <span style="font-size: 0.8em; color: #888; margin-left: 10px;">${c.time}</span>
+                    <div style="margin-top: 5px; white-space: pre-wrap; line-height: 1.5; color: #333;">${formattedComment}</div>
+                    <div class="comment-children">
+                      ${renderCommentsTree(c.id, level + 1)}
+                    </div>
+                  </div>
+                `;
+              }
+            });
+            return html;
+          }
+
+          const finalHtml = renderCommentsTree("root", 0);
+          document.getElementById(listId).innerHTML = finalHtml || '<i style="color:#777;">Chưa có thắc mắc nào.</i>';
+        })
+        .catch(() => {
+          document.getElementById(listId).innerHTML = '<i style="color:red;">Đang chờ phản hồi từ máy chủ...</i>';
+        });
+    }
+
+    window._reloaders[chapter] = loadComments;
+    loadComments();
+  }
+
+  classIds.forEach(chapter => {
+    setupClassSection(chapter);
+  });
+
+  document.getElementById('studentForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    const chapter = document.getElementById('selClass').value;
+    const type = document.getElementById('selType').value;
+    const name = document.getElementById('stuName').value;
+    const email = document.getElementById('stuEmail').value;
+    const detail = document.getElementById('stuDetail').value;
+    
+    let finalComment = `[Vấn đề: ${type}]\n`;
+    if (type === 'Điểm danh') {
+      const week = document.getElementById('selWeek').value;
+      const link = document.getElementById('linkProof').value;
+      finalComment += `[${week}]\n🔗 Link minh chứng: ${link}\n`;
+    }
+    finalComment += `\nChi tiết: ${detail}`;
+
+    const submitBtn = this.querySelector('button');
+    submitBtn.innerText = 'Đang gửi dữ liệu...';
+    submitBtn.disabled = true;
+
+    const formData = new URLSearchParams();
+    formData.append('chapter', chapter);
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('comment', finalComment);
+    formData.append('parentId', '');
+
+    fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
+      .then(() => {
+        alert("Gửi thắc mắc thành công! Hệ thống sẽ hiển thị nội dung bên dưới.");
+        this.reset();
+        toggleAttendanceFields(); 
+        submitBtn.innerText = 'Gửi Thắc Mắc';
+        submitBtn.disabled = false;
+        
+        if (window._reloaders[chapter]) window._reloaders[chapter]();
+      })
+      .catch(() => {
+        alert('Lỗi kết nối khi gửi dữ liệu.');
+        submitBtn.innerText = 'Gửi Thắc Mắc';
+        submitBtn.disabled = false;
+      });
+  });
+
+</script>
+
+</body>
+</html>

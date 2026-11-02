@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Mục lục học phần XSTK</title>
+
+  <!-- MathJax để hiển thị công thức toán -->
+  <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #222;
+      margin: 40px;<ul>
+            <li>Bước 1: Nhận dạng bài toán (Ước lượng tham số cho kỳ vọng, phương sai, tỷ lệ) </li>
+            <li>Bước 2: Chọn thống kê và chỉ ra quy thuật phân phối của mẫu</li>
+            <li>Bước 3: Xác định các giá trị quan sát \(n, \alpha, t_{\alpha }^{n}, t_{\alpha/2}^{n},z_{\alpha }, z_{\alpha/2}\)</li>
+            <li>Bước 4: Xác định các khoảng tin cậy trái, phải, đối xứng tùy vào yêu cầu của đề bài.</li>
+        </ul> 
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+    }
+    h2 {
+      color: #0055aa;
+      margin-top: 40px;
+    }
+    button {
+      background-color: #0055aa;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #003f7f;
+    }
+    .section-content {
+      display: none;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .important-box {
+        background-color: #fff3cd;
+        border: 1px solid #ffeeba;
+        color: #856404;
+        padding: 15px;
+        border-radius: 5px;
+        margin: 15px 0;
+    }
+    .author {
+      text-align: right;
+      font-style: italic;
+      margin-top: 30px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    body{font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:#f7f7fb; padding:20px}
+    .card{background:white;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);max-width:900px;margin:0 auto}
+    label{margin-right:6px}
+    input[type=number]{width:80px;padding:4px;margin-right:10px}
+    button{padding:6px 12px;border:0;background:#2563eb;color:white;border-radius:8px;cursor:pointer}
+    button:active{transform:translateY(1px)}
+  </style>
+
+</head>
+<body>
+
+  <h1>📚 CHƯƠNG IV: Thống kê. Ước lượng tham số </h1>
+  <p class="author">
+    Biên soạn: <strong>Ts. Khổng Văn Hải</strong><br>
+    Khoa Toán - Tin, Đại học Bách Khoa Hà Nội
+  </p>
+ 
+  <hr>
+
+  <!-- Phần I -->
+   <h2>I. Lý thuyết</h2>
+  <button onclick="toggleSection('theory')">📘 1. Tổng thể và mẫu</button>
+
+  <div id="theory" class="section-content">
+    <h3> Đo xu hướng trung tâm</h3>
+    <ul>
+        <li>Kỳ vọng </li> 
+            <ul>
+                <li> \(E[X]= \dfrac{\sum_{i=1}^{n} x_{i}}{n} \)</li>
+                <li> \(E[X]= \dfrac{\sum_{i=1}^{k} x_{i}n_{i}}{n} \)  </li>
+            </ul>
+        <li>Mode </li>
+            <ul>
+                <p> Giá trị xuất hiện nhiều nhất</p> 
+            </ul>
+        <li> Trung vị (Median)</li>
+            <ul>
+              <p> Giá trị chia tập dữ liệu thành hai phần bằng nhau</p>
+                <li> \( Median(X)= \begin{cases} x_{(n+1)/2} & \text{n lẻ} \\ \dfrac{x_{n/2} + x_{n/2 + 1}}{2} & \text{n chẵn} \end{cases} \) </li>
+            </ul>
+    </ul>
+    
+
+      <h3>Đo độ phân tán</h3>
+  <ul>
+    <li>Range= \( \max(x_i) - \min(x_i) \) </li>
+    <li>Độ chuẩn chuẩn mẫu \(s = \sqrt{\dfrac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n}}\)</li>
+    <li>Độ chuẩn chuẩn mẫu hiệu chỉnh \(s = \sqrt{\dfrac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n-1}}\)</li>
+  </ul>
+
+  <h3>Định tính</h3>
+  <ul> 
+    Tỷ lệ: \( \hat{p} = \dfrac{\text{số phần tử có đặc điểm cần quan tâm}}{\text{tổng số phần tử}} \)
+  </ul>
+
+</div>     <br>
+
+  <button onclick="toggleSection('ltmau')">📘 2. Lý thuyết mẫu</button>
+        <div id="ltmau" class="section-content">
+            <p class="lead">Tính chất:</p>
+            <ul class="bullet">
+            <li>Nếu \(X \sim \mathcal{N}\left(\mu, \sigma^2\right)\) thì \(Y= \dfrac{X-\mu}{\sigma} \sim \mathcal{N}\left(0,1\right)\)</li>
+            <li>Nếu \(X_{i} \sim \mathcal{N}\left(\mu_{i}, \sigma_{i}^2\right)\). Thì \(X_{1}+ X_{i} \sim \mathcal{N}\left(\mu_{1}+\mu_{2}, \sigma^{2}\right)\). Trong đó \(\sigma^{2} = \sigma_{1}^{2}+\sigma_{2}^{2}+2\text{cov}(X_{1},X_{2})\).</li> <br>
+            Nếu \(X_1, X_2\) độc lập thì \(\text{cov}(X_1,X_2)=0\). 
+            </ul>
+ <p>Giả sử lấy mẫu có kích thước \(n\), \(W_{X}=(X_{1}, X_{2}, \dots , X_{n})\) trong đó \(X_{i} \sim X\).</p>
+    
+    <p>Nếu \(X \sim \mathcal{N}\left(\mu, \sigma^2\right)\) thì:</p>
+    
+    <ul>
+        <li>\(\bar{X} \sim \mathcal{N}\left(\mu, \dfrac{\sigma^2}{n}\right)\)</li>
+        <li>\(\dfrac{\bar{X}-\mu}{\sigma}\sqrt{n} \sim \mathcal{N}\left(0,1\right)\)</li>
+        <li>\(\dfrac{\bar{X}-\mu}{S}\sqrt{n} \sim t^{n-1}\) phân phối Student với \(n-1\) bậc tự do.</li> <br>
+           Khi \(n\geq 30\) thì phân phối Student xấp xỉ phân phối chuẩn tắc.
+    </ul>
+  </div> 
+</div>
+
+
+  <!-- Phần II -->
+  <h2>II. Bài toán ước lượng tham số</h2>
+
+ <button onclick="toggleSection('Cacbuoclambtults')"> &#128161   Các bước làm bài toán ước lượng tham số</button>
+ <div id="Cacbuoclambtults" class="section-content">
+        <ul>
+            <li>Bước 1: Nhận dạng bài toán <br> (Ước lượng tham số cho kỳ vọng, phương sai, tỷ lệ)  </li>
+            <li>Bước 2: Chọn thống kê và chỉ ra quy thuật phân phối của mẫu</li>
+            <li>Bước 3: Xác định các giá trị quan sát \(n, \alpha, t_{\alpha }^{n}, t_{\alpha/2}^{n},z_{\alpha }, z_{\alpha/2}\)</li>
+            <li>Bước 4: Xác định các khoảng tin cậy trái, phải, đối xứng tùy vào yêu cầu của đề bài.</li>
+        </ul> 
+        </div>
+        <br>
+
+  <button onclick="toggleSection('ULkyvongphuongsaidabiet')">📘 1. Ước lượng tham số cho kỳ vọng, phương sai đã biết</button>
+      <div id="ULkyvongphuongsaidabiet" class="section-content">
+        <div class="important-box">                        
+          <ol>
+            <strong> Điều kiện </strong>
+            <li>\( X \sim \mathcal{N}(\mu, \sigma^2) \) thì \(n\) tùy ý hoặc \( n \geq 30 \) (mẫu lớn - Dạng 3)   <br></li> 
+              <li> Cơ sở lý thuyết: Nếu \(X \sim \mathcal{N}(\mu, \sigma^2)\), thì \( \dfrac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim \mathcal{N}(0,1) \) </li>
+          </ol>
+          
+        </div>
+        <li> Thống kê \( Z = \dfrac{\bar{X} - \mu}{\sigma/\sqrt{n}} \sim \mathcal{N}(0,1) \) </li> <br>
+        <br>
+         <b> Các khoảng tin cậy cho kỳ vọng \( \mu \):</b>
+        <li> Khoảng tin cậy đối xứng: \( \left( \bar{X} - z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}}, \bar{X} + z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}} \right) \)</li>
+        Độ rộng khoảng tin cậy \( k = 2 z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}} \)  <br> 
+        <em><p style="color: blue;">Thường được dùng trong bài toán tìm kích thước mẫu để sai số nhỏ hơn một đại lượng nào đó. Trong đó sai số của ước lượng là \(\epsilon = z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}}\). </p> </em>
+        
+        <li> Khoảng tin cậy trái: \( \left( -\infty, \bar{X} + z_{\alpha} \dfrac{\sigma}{\sqrt{n}} \right) \)</li>
+        <li> Khoảng tin cậy phải: \( \left( \bar{X} - z_{\alpha} \dfrac{\sigma}{\sqrt{n}}, +\infty \right) \)</li>
+      </div> <br>
+
+  <button onclick="toggleSection('ULkyvongphuongsaichuabiet')">📘 2. Ước lượng tham số cho kỳ vọng, phương sai chưa biết</button>
+      <div id="ULkyvongphuongsaichuabiet" class="section-content">
+        <div class="important-box">                        
+          <strong> Điều kiện </strong>
+          \(\textcolor{red}{ X \sim \mathcal{N}(\mu, \sigma^2)} \)
+        </div> 
+        <li> Thống kê \( Z = \dfrac{\bar{X} - \mu}{S/\sqrt{n}} \sim t^{n-1} \) </li>   
+        <u> Chú ý</u>
+        <ul> 
+          <li> \( S^2 = \dfrac{\sum_{i=1}^{n}(X_i - \bar{X})^2}{n-1} \) là phương sai mẫu hiệu chỉnh.  </li>
+              
+          <li> Khi \( n \geq 30 \) thì phân phối Student xấp xỉ phân phối chuẩn tắc. </li>
+        </ul>
+        <br>
+        <b> Các khoảng tin cậy cho kỳ vọng \( \mu \):</b>
+        <li> Khoảng tin cậy đối xứng: \( \left( \bar{X} - t_{\alpha/2}^{n-1} \dfrac{S}{\sqrt{n}}, \bar{X} + t_{\alpha/2}^{n-1} \dfrac{S}{\sqrt{n}} \right) \)      </li> <br>
+        Độ rộng khoảng tin cậy \( k = 2 t_{\alpha/2}^{n-1} \dfrac{S}{\sqrt{n}} \)
+        <li> Khoảng tin cậy trái: \( \left( -\infty, \bar{X} + t_{\alpha}^{n-1} \dfrac{S}{\sqrt{n}} \right) \) </li>
+        <li> Khoảng tin cậy phải: \( \left( \bar{X} - t_{\alpha}^{n-1} \dfrac{S}{\sqrt{n}} , +\infty \right) \) </li>
+        <br>
+        <div class="important-box">                        
+          <strong> Chú ý</strong>       
+          <ol>
+            <li> Thông thường những bài này thì người ta sẽ cho một mẫu cụ thể và các giá trị mẫu trước (kích thước mẫu, trung mình mẫu, độ lệch chuẩn mẫu hiệu chỉnh, độ lệch chuẩn mẫu chưa hiệu chỉnh (cần chuyển về độ lệch chuẩn mẫu hiệu chỉnh)  </li>
+            <li> Nếu đề bài chỉ cho một bảng dữ liệu, thì ta cần lập công thức tính và ghi kết quả.</li>
+            <li> Cơ sở lý thuyết phần này là 
+              <ol> 
+                <li> <strong> Nếu \(X \sim \mathcal{N}(\mu, \sigma^2)\), thì \( \dfrac{\bar{X} - \mu}{S/\sqrt{n}} \sim t^{n-1} \) với mọi n.</strong> </li> 
+                  <ul>
+                    <li> Nếu n <30 </li> thì ta có thể tra bảng phân phối Student để tìm giá trị \(t_{\alpha}^{n-1}\) hoặc \(t_{\alpha/2}^{n-1}\). </li>
+                    <li> Nếu n ≥ 30 </li> thì ta có thể tra bảng phân phối chuẩn tắc để tìm giá trị \(z_{\alpha}\) hoặc \(z_{\alpha/2}\). </li>
+                  </ul>
+                <li> Nếu không cho thông tin \(X \sim \mathcal{N}\left(0,1\right) \) thì ta cần mẫu có kích thước lớn \( n \geq 30 \) (dạng 3), thì phân phối Student xấp xỉ phân phối chuẩn tắc.         </li>
+              </ol>
+          </ol>
+        </div> 
+      </div> <br>
+
+  <button onclick="toggleSection('ULkyvongmaulon')">📘 3. Ước lượng tham số cho kỳ vọng, mẫu lớn \(n>30\). </button>
+      <div id="ULkyvongmaulon" class="section-content">
+        <div class="important-box">                        
+          <strong> Chú ý</strong>
+          <ul> 
+            <li>ĐK: \( n \geq 30 \). </li>
+            <li>Thông thường người ta sẽ không cho biết phân phối của \( X \). <br>
+              \(\Rightarrow \) Ta chỉ cần viết \(EX=\mu\) và \(VX=\sigma^2\).</li>
+            <li> Cơ sở lý thuyết phần này là <strong> Định lý giới hạn trung tâm</strong>. Nên ta không cần quan tâm đến dạng phân bố của biến ngẫu nhiên X, và chỉ quan tâm đến kích thước mẫu \(n>30 \) .</li>
+          </ul>
+          
+          
+        </div> 
+        <li> Thống kê 
+          <ol>
+            <li> \( Z = \dfrac{\bar{X} - \mu}{\sigma/\sqrt{n}}  \) nếu \(\sigma\) đã biết,</li>
+            <li> hoặc \(Z = \dfrac{\bar{X} - \mu}{S/\sqrt{n}}\) nếu \(\sigma\) chưa biết,</li>
+          </ol>  
+           <br> khi đó \(Z\sim^{*} \mathcal{N}(0,1)\) </li> <br>
+        <br>
+         <b> Các khoảng tin cậy cho kỳ vọng \( \mu \):</b>
+        <li> Khoảng tin cậy đối xứng: \( \left( \bar{X} - z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}}, \bar{X} + z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}} \right) \)</li>
+        Độ rộng khoảng tin cậy \( k = 2 z_{\alpha/2} \dfrac{\sigma}{\sqrt{n}} \) <br> 
+        
+        <li> Khoảng tin cậy trái: \( \left( -\infty, \bar{X} + z_{\alpha} \dfrac{\sigma}{\sqrt{n}} \right) \)</li>
+        <li> Khoảng tin cậy phải: \( \left( \bar{X} - z_{\alpha} \dfrac{\sigma}{\sqrt{n}}, +\infty \right) \)</li>
+      </div> <br>
+
+
+
+  <button onclick="toggleSection('ULtyle')">📘 4. Ước lượng tham số cho tỷ lệ</button>
+      <div id="ULtyle" class="section-content">
+        <div class="important-box">                        
+          <strong> Chú ý </strong> 
+          <ol> 
+            <li> Điều kiện:</li> \( np \geq 5, n(1-p) \geq 5 \)  
+            <li> <strong> Cơ sở lý thuyết: </strong> Định lý giới hạn trung tâm </li>
+          </ol>
+        </div> 
+        
+        <li> Thống kê  \( Z = \dfrac{\hat{p} - p}{\sqrt{\dfrac{p(1-p)}{n}}} \sim \mathcal{N}(0,1) \) </li>
+         <br>
+        <br> 
+        <b> Các khoảng tin cậy cho tỷ lệ \( p \):</b>
+        <li> Khoảng tin cậy đối xứng: \( \left( \hat{p} - z_{\alpha/2} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}}, \hat{p} + z_{\alpha/2} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} \right) \)  <br> 
+          Độ rộng khoảng tin cậy \( k = 2 z_{\alpha/2} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} \)
+        </li>
+        <li> Khoảng tin cậy trái: \( \left(
+                                  \colorbox{yellow}{0},
+                               \hat{p} + z_{\alpha} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} \right) \) </li>
+        <li> Khoảng tin cậy phải: \( \left( \hat{p} - z_{\alpha} \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} , \colorbox{yellow}{1} \right) \) </li> 
+      </div> <br>
+
+
+
+  <!-- Phần II -->
+  <h2>IV. Bài tập rèn luyện</h2>
+
+  <ul>
+    <script>
+      function toggleSection(id) {
+          const section = document.getElementById(id);
+          section.style.display = (section.style.display === "none" || section.style.display === "") ? "block" : "none";
+        }
+    </script>
+
+
+
+    <!-- <li>
+      <button onclick="btbnnlientuc()">Ước lượng tham số cho phương sai </button>
+      <script>
+        function btbnnlientuc() {
+          window.open("C2BNNLT_BT.html", "_self");
+        }
+      </script> 
+    </li> -->
+    <!-- <li> 
+      <button onclick="ppthongdung()">Ước lượng tham số cho tỷ lệ</button>
+      <script>
+        function ppthongdung() {
+          window.open("C2PPThongDung.html", "_self");
+        }
+      </script> 
+    </li> -->
+  </ul>
+  
+
+ <h2> Xem thêm nội dung  <br> 
+    <p><a href="C1PhepThu.html">Chương 1</a>.</p>
+    <p><a href="C2BNN_LT.html">Chương 2</a>.</p>
+    <p><a href="C3Bnnnhieuchieu.html">Chương 3</a>.</p>
+    <p><a href="C4ThongkeUocluongthamsoV2.html">Chương 4</a>.</p>
+    <p><a href="C5Kiemdinhgth.html">Chương 5</a>.</p>    
+ </h2> 
+
+
+</body>
+</html>

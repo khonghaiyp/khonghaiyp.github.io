@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hệ thống Trắc nghiệm - Ts. Khổng Văn Hải</title>
+  
+  <script>
+    MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] }, svg: { fontCache: 'global' } };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    body { font-family: system-ui, -apple-system, sans-serif; background: #f0f4f8; color: #333; margin: 0; padding: 20px; line-height: 1.6; }
+    .container { max-width: 900px; margin: 0 auto; user-select: none; }
+    h1 { text-align: center; color: #004080; font-size: 1.8rem; margin-bottom: 5px; }
+    .author { text-align: center; font-style: italic; color: #555; margin-bottom: 30px; font-size: 0.95rem; }
+    
+    .card { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border-top: 4px solid #0055aa; margin-bottom: 20px; }
+    .card-title { color: #0055aa; margin-top: 0; margin-bottom: 20px; font-size: 1.4rem; border-bottom: 2px solid #eef2f6; padding-bottom: 10px; }
+    
+    input[type="text"], input[type="password"], select { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccd1d9; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
+    label { font-weight: bold; font-size: 14px; display: block; margin-bottom: 5px; color: #444; }
+    
+    .btn { display: inline-block; border: none; padding: 12px 20px; border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; transition: 0.2s; text-align: center; width: 100%; box-sizing: border-box; }
+    .btn-primary { background: #0055aa; color: white; }
+    .btn-primary:hover { background: #004080; }
+    .btn-success { background: #10b981; color: white; }
+    .btn-success:hover { background: #059669; }
+    .btn-danger { background: #ef4444; color: white; }
+    .btn-danger:hover { background: #dc2626; }
+    .btn-outline { background: transparent; border: 1px solid #0055aa; color: #0055aa; }
+    .btn-outline:hover { background: #f0f4f8; }
+
+    .user-info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0; }
+    .user-info-grid p { margin: 5px 0; }
+    .action-buttons { display: flex; gap: 10px; }
+    .action-buttons .btn { width: auto; flex: 1; padding: 10px; font-size: 14px; }
+    
+    .question { background: #fff; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; margin-bottom: 15px; }
+    .question p { font-weight: normal; margin-top: 0; font-size: 1.05rem; }
+    .question p strong { font-weight: bold; }
+    /* Nội dung câu hỏi/đáp án mặc định là chữ thường; chỉ thẻ <strong> mới in đậm. */
+    .question strong { font-weight: bold; }
+    .question label { display: block; margin: 10px 0; cursor: pointer; font-weight: normal; padding: 8px; border-radius: 6px; transition: 0.2s; }
+    .question label:hover { background: #f1f5f9; }
+    
+    .result { font-weight: bold; color: #0056b3; margin-top: 20px; background: #eef2ff; padding: 20px; border-radius: 8px; font-size: 1.2rem; text-align: center; display: none; border: 1px dashed #0055aa; }
+    
+    #timerDisplay { display: none; position: fixed; top: 20px; right: 20px; background: #dc2626; color: white; padding: 10px 20px; border-radius: 8px; font-size: 20px; font-weight: bold; z-index: 1000; box-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+    .warning-text { color: #dc2626; font-size: 13px; font-weight: bold; margin-top: 5px; margin-bottom: 15px; text-align: justify; display: none; background: #fee2e2; padding: 10px; border-radius: 6px; }
+
+    #passwordSection { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc; }
+    
+    @media print { body { display: none !important; } }
+  </style>
+</head>
+<body>
+
+<div id="timerDisplay">⏳ 00:00</div>
+<div class="container">
+  <h1>Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
+  <!-- <p class="author">Khổng Văn Hải - Khoa Toán Tin, ĐHBK Hà Nội</p> -->
+
+  <!-- MÀN HÌNH 1: ĐĂNG NHẬP -->
+  <div id="loginScreen" style="max-width: 450px; margin: 0 auto;">
+    <div class="card">
+      <h2 class="card-title" style="text-align: center;">Đăng nhập hệ thống</h2>
+      <label>Mã số sinh viên:</label>
+      <input type="text" id="txtMSSV" placeholder="Nhập MSSV..." required>
+      <label>Mật khẩu đăng nhập:</label>
+      <input type="password" id="txtPassword" placeholder="Nhập mật khẩu..." required>
+      <button class="btn btn-primary" id="btnLogin" onclick="handleLogin()">Đăng nhập</button>
+      <p id="loginError" style="color: red; text-align: center; display: none; margin-top: 15px; font-weight: bold;"></p>
+    </div>
+  </div>
+
+  <!-- MÀN HÌNH 2: BẢNG ĐIỀU KHIỂN (DASHBOARD) -->
+  <div id="dashboardScreen" style="display: none;">
+    <div class="card">
+      <h2 class="card-title">Thông tin Sinh viên</h2>
+      <div class="user-info-grid">
+        <div>
+          <p>🧑‍🎓 <strong>Họ tên:</strong> <span id="infoName"></span></p>
+          <p>🆔 <strong>MSSV:</strong> <span id="infoMSSV"></span></p>
+        </div>
+        <div>
+          <p>🏫 <strong>Lớp:</strong> <span id="infoClass"></span></p>
+          <p>📧 <strong>Email:</strong> <span id="infoEmail"></span></p>
+        </div>
+      </div>
+      
+      <div class="action-buttons">
+        <button class="btn btn-outline" onclick="togglePasswordSection()">🔑 Đổi mật khẩu</button>
+        <button class="btn btn-danger" onclick="logout()">🚪 Đăng xuất</button>
+      </div>
+
+      <div id="passwordSection">
+        <label>Mật khẩu mới:</label>
+        <input type="password" id="newPassword" placeholder="Nhập mật khẩu mới...">
+        <button class="btn btn-success" id="btnChangePwd" onclick="changePassword()" style="width: auto;">Cập nhật mật khẩu</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2 class="card-title">Chọn Bài Kiểm Tra</h2>
+      <label>Chương:</label>
+      <select id="chapterSelect" onchange="updateSections()">
+        <option value="1">Chương 1: Sự kiện ngẫu nhiên và phép tính xác suất</option>
+        <option value="2">Chương 2: Biến ngẫu nhiên và luật phân phối</option>
+        <option value="3">Chương 3: Biến ngẫu nhiên nhiều chiều</option>
+        <option value="4">Chương 4: Ước lượng tham số</option>
+        <option value="5">Chương 5: Kiểm định giả thuyết thống kê</option>
+      </select>
+
+      <label>Phần bài tập (Tab):</label>
+      <select id="sectionSelect"></select>
+
+      <label style="color: #0055aa; font-size: 15px;">🔒 Mật khẩu bài kiểm tra (Giáo viên cấp):</label>
+      <input type="password" id="txtQuizPassword" placeholder="Nhập mật khẩu bài kiểm tra..." required style="border-color: #0055aa;">
+
+      <label>Chế độ làm bài:</label>
+      <select id="quizMode" onchange="toggleWarning()">
+        <option value="practice">📝 Ôn luyện (Không giới hạn thời gian)</option>
+        <option value="exam">⏰ Thi (Chống gian lận + Có tính giờ)</option>
+      </select>
+      <p id="cheatWarning" class="warning-text">⚠️ Chế độ Thi yêu cầu BẬT TOÀN MÀN HÌNH. Nếu thoát hoặc chuyển cửa sổ, bài thi sẽ tự động nộp ngay lập tức.</p>
+
+      <button class="btn btn-primary" id="btnStartQuiz" onclick="startQuiz()" style="margin-top: 10px;">🚀 Bắt đầu làm bài</button>
+    </div>
+  </div>
+
+  <!-- MÀN HÌNH 3: LÀM BÀI THI -->
+  <div id="quizScreen" style="display: none;">
+    <div class="card" style="background: #e0f2fe; border-top-color: #0ea5e9;">
+      <div style="display: flex; justify-content: space-between; align-items: center; font-weight: bold; color: #0369a1;">
+        <span>👤 <span id="quizUser"></span></span>
+        <span style="text-align: right;">🎯 <span id="quizModeDisplay"></span><br><small id="quizTabDisplay"></small></span>
+      </div>
+    </div>
+    
+    <div id="questionsArea"><h3 style="text-align:center; color:#666;">Đang tải câu hỏi...</h3></div>
+    <button class="btn btn-success" id="btnSubmitQuiz" onclick="submitQuiz(false)" style="display: none; margin-top: 20px; font-size: 1.1rem; padding: 15px;">Nộp bài & Lưu kết quả</button>
+    
+    <div class="result" id="resultArea"></div>
+    <button class="btn btn-outline" id="btnBackToDashboard" onclick="backToDashboard()" style="display: none; margin-top: 15px;">Quay lại trang chủ</button>
+  </div>
+</div>
+
+<script>
+  // =========================================================================
+  const API_URL = 'https://script.google.com/macros/s/AKfycbzZ95X9L21zV2ITAlLBimEdByLwouQGRceLy0JE23T3RVjecVBo2J15HQcikMvQZ1j_/exec'; 
+  const EXAM_TIME_MINUTES = 15; 
+  // =========================================================================
+
+  let student = { id: '', name: '', email: '', className: '', mode: '', tab: '' };
+  let quizData = [];
+  let countdownInterval;
+  let isQuizActive = false;
+  const ALPHABET = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
+
+  const curriculum = {
+    "1": [{ val: "1.0", text: "1.0 - LT sự kiện ngẫu nhiên" }, { val: "1.1", text: "1.1 - Bài tập cơ bản" }, { val: "1.3", text: "1.3 - BT CT cộng, xác suất điều kiện, CT nhân" }, { val: "1.4", text: "1.4 - BT Công thức xác suất toàn phần" }, { val: "1.5", text: "1.5 - BT Công thức Bayes" }],
+    "2": [{ val: "2.0", text: "2.0 - LT Biến ngẫu nhiên và luật phân phối" }, { val: "2.1", text: "2.1 - BT Biến ngẫu nhiên rời rạc" }, { val: "2.2", text: "2.2 - BT Biến ngẫu nhiên liên tục" }],
+    "3": [{ val: "3.0", text: "3.0 - LT Biến ngẫu nhiên nhiều chiều" }, { val: "3.1", text: "3.1 - BT Biến ngẫu nhiên nhiều chiều rời rạc" }, { val: "3.2", text: "3.2 - BT Biến ngẫu nhiên nhiều chiều liên tục" }],
+    "4": [{ val: "4.0", text: "4.0 - LT Ước lượng tham số" }, { val: "4.1", text: "4.1 - BT Ước lượng tham số cho kỳ vọng, phương sai đã biết" }, { val: "4.2", text: "4.2 - BT Ước lượng tham số cho kỳ vọng, phương sai chưa biết" }, { val: "4.3", text: "4.3 - BT Ước lượng tham số cho kỳ vọng, mẫu lớn" },, { val: "4.4", text: "4.4 - BT Ước lượng tham số cho tỷ lệ" }],
+    "5": [{ val: "5.0", text: "5.0 - LT Kiểm định giả thuyết thống kê" }, { val: "5.1", text: "5.1 - BT Kiểm định một mẫu thử" }, { val: "5.2", text: "5.2 - BT Kiểm định hai mẫu thử" }]
+  };
+
+  function updateSections() {
+    const chapter = document.getElementById("chapterSelect").value;
+    const secSelect = document.getElementById("sectionSelect");
+    secSelect.innerHTML = "";
+    (curriculum[chapter] || []).forEach(item => { secSelect.appendChild(new Option(item.text, item.val)); });
+  }
+  updateSections();
+
+  function toggleWarning() { document.getElementById('cheatWarning').style.display = document.getElementById('quizMode').value === 'exam' ? 'block' : 'none'; }
+  function togglePasswordSection() { let sec = document.getElementById('passwordSection'); sec.style.display = sec.style.display === 'block' ? 'none' : 'block'; }
+
+  async function callGoogleAPI(payload) {
+    try {
+      let res = await fetch(API_URL, { 
+        method: 'POST', 
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload) 
+      });
+      return await res.json();
+    } catch (err) { 
+      console.error(err);
+      return { success: false, message: "Lỗi kết nối! Vui lòng kiểm tra lại đường link Web App." }; 
+    }
+  }
+
+  async function handleLogin() {
+    const mssv = document.getElementById('txtMSSV').value.trim();
+    const pwd = document.getElementById('txtPassword').value.trim();
+    const btn = document.getElementById('btnLogin');
+    const err = document.getElementById('loginError');
+
+    if(!mssv || !pwd) { err.textContent = "Vui lòng nhập đủ thông tin!"; err.style.display = 'block'; return; }
+    
+    btn.textContent = "Đang xác thực..."; btn.disabled = true; err.style.display = 'none';
+    let res = await callGoogleAPI({ action: 'login', studentId: mssv, password: pwd });
+
+    if(res.success) {
+      student.id = mssv; student.name = res.studentName; student.email = res.email; student.className = res.className;
+      
+      document.getElementById('infoMSSV').textContent = student.id;
+      document.getElementById('infoName').textContent = student.name;
+      document.getElementById('infoClass').textContent = student.className;
+      document.getElementById('infoEmail').textContent = student.email;
+      
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboardScreen').style.display = 'block';
+    } else {
+      err.textContent = res.message; err.style.display = 'block';
+    }
+    btn.textContent = "Đăng nhập"; btn.disabled = false;
+  }
+
+  function logout() {
+    student = { id: '', name: '', email: '', className: '', mode: '', tab: '' };
+    document.getElementById('txtMSSV').value = ''; document.getElementById('txtPassword').value = '';
+    document.getElementById('dashboardScreen').style.display = 'none';
+    document.getElementById('loginScreen').style.display = 'block';
+  }
+
+  async function changePassword() {
+    const newPwd = document.getElementById('newPassword').value.trim();
+    if(!newPwd) { alert("Nhập mật khẩu mới!"); return; }
+    
+    document.getElementById('btnChangePwd').disabled = true;
+    let res = await callGoogleAPI({ action: 'changePassword', studentId: student.id, newPassword: newPwd });
+
+    if(res.success) { 
+      alert("Cập nhật mật khẩu thành công!"); 
+      document.getElementById('newPassword').value = ''; 
+      togglePasswordSection();
+    } else alert("Lỗi: " + res.message);
+    document.getElementById('btnChangePwd').disabled = false;
+  }
+
+  async function startQuiz() {
+    const quizPwd = document.getElementById('txtQuizPassword').value.trim();
+    if (!quizPwd) { alert("Vui lòng nhập Mật khẩu bài kiểm tra để lấy đề!"); return; }
+
+    const btnStart = document.getElementById('btnStartQuiz');
+    btnStart.textContent = "Đang tải đề..."; btnStart.disabled = true;
+
+    student.mode = document.getElementById('quizMode').value;
+    student.tab = document.getElementById('sectionSelect').value;
+    
+    let res = await callGoogleAPI({ action: 'getQuestions', tabName: student.tab, quizPassword: quizPwd });
+    
+    if(res.success) {
+      document.getElementById('dashboardScreen').style.display = 'none';
+      document.getElementById('quizScreen').style.display = 'block';
+      document.getElementById('resultArea').style.display = 'none';
+      document.getElementById('btnBackToDashboard').style.display = 'none';
+      
+      document.getElementById('quizUser').textContent = `${student.id} - ${student.name} (${student.className})`;
+      document.getElementById('quizTabDisplay').textContent = `Mã bài tập: ${student.tab}`;
+      
+      if (student.mode === 'exam') {
+        document.getElementById('quizModeDisplay').textContent = `Thi (${EXAM_TIME_MINUTES} phút)`;
+        let elem = document.documentElement;
+        if (elem.requestFullscreen) elem.requestFullscreen().catch(e => console.log(e));
+      } else {
+        document.getElementById('quizModeDisplay').textContent = "Ôn luyện (Không tính giờ)";
+      }
+
+      quizData = res.data; renderQuiz(); isQuizActive = true; 
+      if (student.mode === 'exam') startTimer(EXAM_TIME_MINUTES);
+    } else {
+      alert(res.message); 
+    }
+    
+    btnStart.textContent = "🚀 Bắt đầu làm bài"; btnStart.disabled = false;
+  }
+
+  function renderQuiz() {
+    const container = document.getElementById('questionsArea');
+    if(quizData.length === 0) { container.innerHTML = `<p style="text-align:center">Chưa có dữ liệu câu hỏi cho phần này.</p>`; document.getElementById('btnBackToDashboard').style.display = 'block'; return; }
+
+    let html = '';
+    quizData.forEach((q, qIndex) => {
+      let qNum = qIndex < 9 ? '0' + (qIndex + 1) : (qIndex + 1);
+      
+      // Đếm số lượng đáp án đúng để quyết định hiển thị Radio hay Checkbox
+      let correctCount = q.options.filter(opt => opt.isCorrect).length;
+      let isMulti = correctCount > 1;
+      let inputType = isMulti ? "checkbox" : "radio";
+      let multiHint = isMulti ? ' <span style="color:#ef4444; font-size:0.9rem; font-weight:normal;">(Chọn nhiều đáp án)</span>' : '';
+
+      html += `<div class="question" data-qid="q${qIndex}">
+                  <p><strong>Câu ${qNum}.</strong> ${q.text}${multiHint}</p>`;
+      
+      q.options.forEach((opt, oIndex) => {
+        html += `<label><input type="${inputType}" name="q${qIndex}" value="${opt.isCorrect}"> ${ALPHABET[oIndex]}. ${opt.text}</label>`;
+      });
+      html += `</div>`;
+    });
+
+    container.innerHTML = html;
+    document.getElementById('btnSubmitQuiz').style.display = 'block';
+    if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+  }
+
+  function startTimer(minutes) {
+    let time = minutes * 60;
+    document.getElementById('timerDisplay').style.display = 'block';
+    countdownInterval = setInterval(() => {
+      let m = parseInt(time / 60, 10); let s = parseInt(time % 60, 10);
+      document.getElementById('timerDisplay').textContent = `⏳ ${m < 10 ? "0"+m : m}:${s < 10 ? "0"+s : s}`;
+      if (--time < 0) { clearInterval(countdownInterval); alert("Hết giờ làm bài!"); submitQuiz(true, ' (Hết giờ)'); }
+    }, 1000);
+  }
+
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === 'hidden' && isQuizActive && student.mode === 'exam') { submitQuiz(true, ' (Vi phạm chuyển Tab)'); alert("CẢNH BÁO! Bài thi tự động nộp do chuyển Tab."); }
+  });
+  document.addEventListener("fullscreenchange", () => {
+    if (!document.fullscreenElement && isQuizActive && student.mode === 'exam') { submitQuiz(true, ' (Vi phạm thoát Toàn màn hình)'); alert("CẢNH BÁO! Bài thi tự động nộp do thoát Toàn Màn Hình."); }
+  });
+  document.addEventListener('contextmenu', e => { if (isQuizActive && student.mode === 'exam') e.preventDefault(); });
+  document.addEventListener('copy', e => { if (isQuizActive && student.mode === 'exam') e.preventDefault(); });
+  document.addEventListener('keydown', (e) => {
+    if (isQuizActive && student.mode === 'exam' && e.key === 'PrintScreen') { submitQuiz(true, ' (Chụp màn hình)'); alert("Cấm chụp màn hình!"); e.preventDefault(); }
+  });
+
+  async function submitQuiz(isAutoSubmit = false, violationTag = '') {
+    if (!isQuizActive) return; 
+    isQuizActive = false; 
+    
+    const btn = document.getElementById('btnSubmitQuiz');
+    btn.textContent = "Đang lưu hệ thống..."; btn.disabled = true;
+    if (countdownInterval) { clearInterval(countdownInterval); document.getElementById('timerDisplay').style.display = 'none'; }
+
+    let score = 0; let selectedAnswersList = []; 
+    
+    quizData.forEach((q, qIndex) => {
+      let isQuestionCorrect = true; 
+      let hasSelected = false;
+      let selOpts = []; 
+      
+      const inputs = document.querySelectorAll(`input[name="q${qIndex}"]`);
+      inputs.forEach((input, oIndex) => {
+        if (input.checked) {
+          hasSelected = true;
+          selOpts.push(ALPHABET[oIndex]);
+          // Chọn phải đáp án sai => Sai cả câu
+          if (input.value !== "true") isQuestionCorrect = false; 
+        } else {
+          // Bỏ sót đáp án đúng => Sai cả câu
+          if (input.value === "true") isQuestionCorrect = false; 
+        }
+        input.disabled = true; 
+      });
+
+      if (!hasSelected) isQuestionCorrect = false; // Không chọn gì = Sai
+      if (isQuestionCorrect) score++;
+      if (selOpts.length > 0) selectedAnswersList.push((qIndex + 1) + selOpts.join(''));
+    });
+
+    let tag = isAutoSubmit ? violationTag : (student.mode === 'exam' ? ' (Thi)' : ' (Ôn luyện)');
+    let res = await callGoogleAPI({ 
+      action: 'submitResult', tabName: student.tab, studentId: student.id, 
+      fullName: student.name + tag, scoreText: `${score}/${quizData.length}`, selectedAnswers: selectedAnswersList.join(' ') 
+    });
+
+    if(res.success) {
+      const resDiv = document.getElementById('resultArea');
+      resDiv.style.display = 'block';
+      resDiv.innerHTML = `${isAutoSubmit ? "⚠️ BÀI THI BỊ KẾT THÚC DO VI PHẠM/HẾT GIỜ!<br>" : "🎉 Bài làm đã được ghi nhận!<br>"}Bạn trả lời đúng: <strong>${score}/${quizData.length}</strong> câu.`;
+      resDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      btn.style.display = 'none'; 
+      document.getElementById('btnBackToDashboard').style.display = 'inline-block';
+    } else {
+      alert("Lỗi lưu điểm: " + res.message); 
+      btn.textContent = "Thử nộp lại"; btn.disabled = false; isQuizActive = true;
+    }
+  }
+
+  function backToDashboard() {
+    document.getElementById('quizScreen').style.display = 'none';
+    document.getElementById('dashboardScreen').style.display = 'block';
+    document.getElementById('questionsArea').innerHTML = '';
+  }
+</script>
+</body>
+</html>

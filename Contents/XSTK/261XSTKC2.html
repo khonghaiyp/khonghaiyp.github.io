@@ -1,0 +1,1422 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <title>Mục lục học phần XSTK</title>
+
+  <!-- MathJax để hiển thị công thức toán -->
+  <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script> -->
+  <script id="MathJax-script" async
+          src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<!-- Cấu hình MathJax để bật dấu $ -->
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],  <!-- Cho phép cả $ và \( -->
+        displayMath: [['$$', '$$'], ['\\[', '\\]']] <!-- Công thức nằm riêng 1 dòng -->
+      }
+    };
+  </script>          
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f8f9fa;
+      color: #222;
+      margin: 40px;
+      line-height: 1.6;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+    }
+    h2 {
+      color: #0055aa;
+      margin-top: 40px;
+    }
+    button {
+      background-color: #0055aa;
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: 0.2s;
+    }
+    button:hover {
+      background-color: #003f7f;
+    }
+    .section-content {
+      display: none;
+      background: #fff;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .important-box {
+    background-color: #fff3cd;
+    border: 1px solid #ffeeba;
+    color: #856404;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 15px 0;
+    }
+    .author {
+      text-align: right;
+      font-style: italic;
+      margin-top: 30px;
+    }
+    .properties-box {
+      background-color: #f9f9f9;
+      border-left: 4px solid #27ae60;
+      padding: 15px 25px;
+      margin-bottom: 30px;
+      max-width: 700px;
+    }
+  </style>
+
+  <style>
+    .example {
+      background-color: #f8f9fa;
+      border-left: 4px solid #007bff;
+      padding: 15px 20px;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    .example-title {
+      font-weight: bold;
+      color: #007bff;
+      margin-bottom: 10px;
+    }
+    .example-box {
+        background-color: #f9f9f9;
+        border-left: 4px solid #3498db;
+        padding: 15px;
+        margin-bottom: 30px;
+    }
+    table {
+        border-collapse: collapse;
+        width: 100%;
+        max-width: 600px;
+        margin-top: 15px;
+        text-align: center;
+    }
+    th, td {
+        border: 1px solid #bdc3c7;
+        padding: 12px;
+    }
+    th {
+        background-color: #ecf0f1;
+        font-weight: bold;
+        width: 60px;
+    }
+    .math {
+        font-style: italic;
+        font-weight: bold;
+    }
+  </style>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    body{font-family:system-ui, -apple-system, "Segoe UI", Roboto, Arial; background:#f7f7fb; padding:20px}
+    .card{background:white;border-radius:12px;padding:18px;box-shadow:0 6px 18px rgba(0,0,0,0.06);max-width:900px;margin:0 auto}
+    label{margin-right:6px}
+    input[type=number]{width:80px;padding:4px;margin-right:10px}
+    button{padding:6px 12px;border:0;background:#2563eb;color:white;border-radius:8px;cursor:pointer}
+    button:active{transform:translateY(1px)}
+  </style>
+
+</head>
+<body>
+
+  <h1>📚 CHƯƠNG II: BIẾN NGẪU NHIÊN VÀ LUẬT PHÂN PHỐI XÁC SUẤT. </h1>
+  <p class="author">
+    Biên soạn: <strong>Ts. Khổng Văn Hải</strong><br>
+    Khoa Toán - Tin, Đại học Bách Khoa Hà Nội
+  </p>
+ 
+  <hr>
+
+  <!-- Phần I -->
+  <h2>1. Biến ngẫu nhiên</h2>
+<button onclick="toggleSection('ChuongIBnn')">Ẩn / Hiện nội dung</button> 
+  <div id="ChuongIBnn" class="section-content"> 
+
+  <h3>1.1. Khái niệm</h3>
+  <p class="lead">
+        Biến ngẫu nhiên là một hàm số xác định trên không gian mẫu \(\Omega\) của một phép thử ngẫu nhiên, ánh xạ mỗi kết quả của phép thử vào một giá trị thực.
+            \[ \begin{align*}
+        X: \mathcal{S} & \to \mathbb{R} \\  
+        \omega &\mapsto X(\omega)
+    \end{align*} \]
+      </p>   
+
+<button onclick="toggleSection('1.1vidu1')">Ví dụ 1</button>
+  <div id="1.1vidu1" class="section-content">
+    <p> Xét phép thử tung một đồng xu hai mặt. Ta có thể định nghĩa biến ngẫu nhiên \(X\) như sau:
+      \[
+        X(\omega) = \begin{cases}
+          1 & \text{nếu } \omega = \text{ngửa} \\
+          0 & \text{nếu } \omega = \text{sấp} 
+        \end{cases}
+      \]   </p>
+  </div>
+
+<button onclick="toggleSection('1.1vidu2')">Ví dụ 2</button>  
+  <div id="1.1vidu2" class="section-content">
+    <p> Xét phép thử tung một đồng xu hai mặt. Ta có thể định nghĩa biến ngẫu nhiên \(X\) như sau:
+      \[
+        X(\omega) = \begin{cases}
+          2 & \text{nếu } \omega = NN \\
+          1 & \text{nếu } \omega = SN,NS \\
+          0 & \text{nếu } \omega = SS  
+        \end{cases}
+      \]   </p>
+  </div>
+<br>  
+
+
+
+
+
+
+<button onclick="toggleSection('1.1chuy1')"> &#128161 Chú ý </button>
+<div id="1.1chuy1" class="section-content">
+<ol style="
+  list-style-type: decimal;
+  line-height: 1.8;
+  padding-left: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;
+  color: #333;
+">
+  <li style="margin-bottom: 10px;">
+    Biến ngẫu nhiên là một hàm số, nhưng giá trị của nó là ngẫu nhiên.
+  </li>
+  <li style="margin-bottom: 10px;">
+    Giá trị của biến ngẫu nhiên được ký hiệu bởi các chữ thường \(x,y,z\) viết là \( (X=x) \) và đây là một sự kiện ngẫu nhiên
+  </li>
+  <li style="margin-bottom: 10px;">
+    Tập hợp  tất cả các giá trị mà biến ngẫu nhiên có thể nhận được gọi là tập giá trị của biến ngẫu nhiên, ký hiệu  \(S_X\)
+  </li>
+  <li style="margin-bottom: 10px;">
+    Nếu biến ngẫu nhiên chỉ nhận các giá trị \(x_1, x_2, \ldots, x_n\) sau  phép thử thì hệ  \(\left\{(X=x_1), (X=x_2), \ldots, (X=x_n) \right\}\) tạo nên một hệ đầy  đủ
+  </li>
+  <li style="margin-bottom: 10px;">
+    Khái niệm  biến ngẫu nhiên  xác định như trên được gọi là biến ngẫu nhiên một chiều \(S_X\subset \mathbb{R}\).
+  </li>
+  
+</ol>
+</div>
+<br>
+
+  <h3>1.2. Phân loại biến ngẫu nhiên</h3>
+
+
+  <button onclick="toggleSection('1.2Phanloaibnn')">Ẩn/ hiển </button>
+    <div id="1.2Phanloaibnn" class="section-content">
+    <strong>Biến ngẫu nhiên rời rạc (Discrete random variable):</strong> Biến ngẫu nhiên có tập giá trị là một tập hữu hạn hoặc đếm được.    <br>
+    <strong> Ví dụ: </strong>  Số lần tung đồng xu cho đến khi xuất hiện mặt ngửa đầu tiên.   <br>
+    <strong>Biến ngẫu nhiên liên tục:</strong> Biến ngẫu nhiên có tập giá trị là một tập vô hạn không đếm được.
+    <ol>
+      <li> Tập giá trị có thể có của biến ngẫu nhiên liên tục có thể lấp đầy  :  một khoảng, đoạn, nửa đoạn, toàn bộ \(\mathbb{R}\) </li> 
+      <li>Có những biến ngẫu nhiên vừa liên tục trên 1 đoạn (khoảng, nửa khoảng) nào đó và rời rạc trên một khoảng nào đó.  <br>
+        Ví dụ: 
+        <li>Lượng mưa trong ngày:
+          <ul>
+            <li> $P(Y = 0) = p > 0$ (Ngày không mưa — rời rạc tại điểm 0).</li>
+            <li>  Nếu có mưa ($Y > 0$), lượng mưa là một đại lượng liên tục nhận giá trị trên $(0, +\infty)$.</li>
+          </ul>
+        </li>
+        <li> Thời gian chờ đèn đỏ
+          <ul>
+            <li> $P(T = 0) = q > 0$ (Đèn đỏ bật — rời rạc tại điểm 0).</li>
+            <li>  Nếu đèn đỏ không bật ($T > 0$), thời gian chờ là một đại lượng liên tục nhận giá trị trên $(0, +\infty)$.</li>
+          </ul>
+
+        </li>
+
+      </li>
+      <li>Chúng ta chỉ xét biến ngẫu nhiên liên tục hoặc biến ngẫu nhiên rởi rạc.</li>
+    </ol>
+    </div>
+  <br>
+
+  
+  <h3>1.3. Hàm của một biến ngẫu nhiên</h3>
+  <p class="lead">
+    Nếu \(X\) là một biến ngẫu nhiên và \(h\) là một hàm số thực, thì \(Y=h(X)\) cũng là một biến ngẫu nhiên và đó được gọi là hàm của biến ngẫu nhiên \(X\).
+  </p>
+  
+<button onclick="toggleSection('chuy')"> &#128161 Chú ý </button>
+<div id="chuy" class="section-content">
+<ol style="
+  list-style-type: decimal;
+  line-height: 1.8;
+  padding-left: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 16px;">
+    <li style="margin-bottom: 10px;">
+      Hàm của biến ngẫu nhiên có thể là một biến ngẫu nhiên rời rạc hoặc liên tục, tùy thuộc vào hàm \(h\) và biến ngẫu nhiên \(X\).
+    </li>
+    <li style="margin-bottom: 10px;">
+      Nếu \(X\) là biến ngẫu nhiên rời rạc khi đó $Y = h(X)$ cũng là biến ngẫu nhiên rời rạc.
+    </li>
+    <li style="margin-bottom: 10px;">
+      Nếu X là biến ngẫu nhiên liên tục,  thì g(.) là hàm liên tục thì \(Y=g(X)\) cũng là biến ngẫu nhiên liên tục.
+    </li>        
+    <li style="margin-bottom: 10px;">
+      Nếu \(X\) là biến ngẫu nhiên liên tục và $h(.)$ là hàm bất kỳ, thì \(Y=h(X)\) có thể là biến ngẫu nhiên không liên tục.
+    </li>         
+</ol>
+</div>
+<br> 
+
+
+
+
+
+<button onclick="toggleSection('1.3vd1')">Ví dụ 1</button>
+    <div id="1.3vd1" class="section-content">
+      <p>Một bài trắc nghiệm tương tác gồm 5 câu hỏi. Giả sử trả lời đúng một câu được cộng
+         5 điểm, trả lời sai một câu bị trừ 2 điểm. Một sinh viên không biết làm nên đã chọn bừa các câu trả lời.</p>
+      <button onclick="toggleSection('1.3vd1sol')">Solution</button>
+        <div id="1.3vd1sol" class="section-content">
+          <p><ul>
+              <li>
+                Gọi $X$ là số câu sinh viên trả lời đúng thì $X$ là biến ngẫu nhiên rời rạc và $\mathcal{S}_{X} = \{0,1,2,3,4,5\}$.
+              </li>
+              <li>
+                Gọi $Y$ là số điểm sinh viên đạt được, thì $Y$ là một hàm của $X$ được xác định bởi
+                $$Y = 5X - 2(5-X) = 7X - 10$$
+                và $Y$ là biến ngẫu nhiên rời rạc với $\mathcal{S}_{Y} = \{-10, -3, 4, 11, 18, 25\}$.
+              </li>
+            </ul>
+          </p>
+        </div>
+    </div>
+
+<button onclick="toggleSection('1.3vd2')">Ví dụ 2</button>
+  <div id="1.3vd2" class="section-content">
+    <p> Một cửa hàng bưu điện tính cước phí cho một bản fax như sau: 10 nghìn đồng cho trang thứ nhất, 9 nghìn đồng cho trang thứ hai, 8 nghìn đồng cho trang thứ ba, 7 nghìn đồng cho trang thứ tư, 6 nghìn đồng cho trang thứ năm. Những bản fax từ 6 đến 10  trang có cước phí là 50 nghìn đồng. Cửa hàng này không nhận những bản fax dài quá 10 trang. </p>
+    <button onclick="toggleSection('1.3vd2sol')">Solution</button>
+        <div id="1.3vd2sol" class="section-content">
+              <p>
+                <ul>
+                  <li>
+                    Gọi $X$ là số trang của một bản fax thì $X$ là một biến ngẫu nhiên rời rạc và $\mathcal{S}_{X}= \left\{1,2, \dots , 10\right\}$.
+                  </li>
+                  <li>
+                    Gọi $Y$ là chi phí phải trả cho một bản fax, thì $Y$ là một hàm của $X$ và được xác định bởi:
+                    \begin{align*}
+                    Y= \begin{cases}
+                    10.5X - 0.5X^{2} & \text{nếu } 1 \leq X \leq 5, \\
+                    50 & \text{nếu } 6 \leq X \leq 10.
+                    \end{cases}
+                    \end{align*}
+                    Khi số trang $X$ nằm trong khoảng từ $\overline{1,5}$ thì số tiền thu được là:
+                    \begin{equation}
+                    \sum_{i=1}^{x} (11-i) = 11x - \frac{x(x+1)}{2} = 10.5x - 0.5x^{2}
+                    \end{equation}
+                  </li>
+                </ul>
+              </p>
+        </div>
+
+    <br>  
+
+  </div>
+  <br>      
+
+  <h3>1.4. Phân phối  xác suất của biến ngẫu nhiên </h3>
+  <strong>Định nghĩa:</strong> Bất kỳ một hình thư nào cho phép biểu diễn mối quan hệ giữa các giá trị của biến ngẫu nhiên và xác suất xảy ra của chúng được gọi là phân phối xác suất của biến ngẫu nhiên đó. <br>
+
+  Trong mục này,  ta  sẽ mô tả phân phối xác suất của biến ngẫu nhiên rời rạc và liên tục bằng các hàm số đặc trưng: 
+  <ul>
+    <li>Hàm khối xác suất (PMF) cho biến ngẫu nhiên rời rạc</li>
+    <li>Hàm mật độ xác suất (PDF) cho biến ngẫu nhiên liên tục</li>
+    <li>Hàm phân bố xác suất (CDF) cho biến ngẫu nhiên rời rạc và liên tục</li>
+  </ul>
+</div>
+<br>
+
+  <h2>2. Biến ngẫu  nhiên rời rạc</h2>
+<button onclick="toggleSection('2bnnroiracfull')"> Ẩn/ Hiện nội dung </button>
+<div id="2bnnroiracfull" class="section-content"> 
+  <button onclick="toggleSection('2.0Dinhnghiabnn')">Định nghĩa</button>
+    <div id="2.0Dinhnghiabnn" class="section-content">
+  <p class="lead">
+    Biến ngẫu nhiên rời rạc là biến ngẫu nhiên có tập giá trị là một tập <strong> hữu hạn </strong> hoặc <strong> vô hạn đếm được</strong>.
+  </p> 
+    </div>
+    <br>
+
+  <button onclick="toggleSection('2.0vidu')">Ví dụ</button>
+    <div id="2.0vidu" class="section-content">
+      <strong>Ví dụ:</strong>
+  <ul> 
+    <li>  Số mặt sấp khi tung 3 đồng xu </li>
+    <li>  Số chấm xuất hiện trên mặt một con xúc xắc khi gieo một lần </li>
+    <li>Số sinh viên vắng mặt trong một lớp học có sĩ số 50</li>
+    <li>Số sản phẩm lỗi trong một lô hàng</li>
+  </ul>
+    </div>
+  <br>
+  
+
+
+<h3>2.1 Hàm(khối) xác suất (PMF)</h3>
+<button onclick="toggleSection('2.1dinhnghia')">Định nghĩa</button>
+  <div id="2.1dinhnghia" class="section-content">
+    <p>
+      <p class="lead">
+  Hàm khối xác suất (PMF) (hàm xác suất)của một biến ngẫu nhiên rời rạc \(X\) là hàm \(p(x)\) xác định bởi:
+  \[
+  P_{X}(x) = P(X = x)
+  \]
+  với \(x\) là một giá trị có thể của \(X\).
+</p>
+    </p>
+  </div>
+<br>
+
+<button onclick="toggleSection('2.1tinhchat')">Tính chất</button>
+  <div id="2.1tinhchat" class="section-content">
+    <p>
+      <strong>Tính chất:</strong>
+      <ul>  
+        <li> \(P_{X}(x) \geq 0\) với mọi \(x\in S_{X}\)</li>
+        <li> \(\displaystyle \sum_{x\in S_{X}} P_{X}(x) = 1\)</li>
+      </ul>
+    </p>
+  </div>
+<br>
+
+
+
+
+<h3>2.2 Bảng phân phối xác suất</h3>
+Bảng phân phối xác suất của biến ngẫu nhiên ròi rạc \(X\) liệt kê tất cả các giá trị có thể của \(X\) cùng với xác suất tương ứng. <br>
+Các giá trị của biến ngẫu nhiên rời rạc \(X\) được liệt kê trong hàng đầu tiên thường được sắp xếp theo thứ tự tăng dần, và xác suất tương ứng \(P(X=x)\) được liệt kê trong hàng thứ hai. <br>
+
+<button onclick="toggleSection('2.2vd1')">Ví dụ 1 </button>
+  <div id="2.2vd1" class="section-content">
+    <p>Tung một đồng xu cân đối và đồng chất 3 lần. Gọi <span class="math">X</span> là số lần xuất hiện mặt ngửa. <span class="math">X</span> là biến ngẫu nhiên rời rạc nhận một số <strong>hữu hạn</strong> giá trị là $\{0, 1, 2, 3\}$.</p>
+            <table>
+            <tr>
+                <th>X</th>
+                <td>0</td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+            </tr>
+            <tr>
+                <th>P(X)</th>
+                <td>1/8</td>
+                <td>3/8</td>
+                <td>3/8</td>
+                <td>1/8</td>
+            </tr>
+        </table>
+  </div>
+
+<button onclick="toggleSection('2.2vd2')">Ví dụ 2</button>
+  <div id="2.2vd2" class="section-content">
+    <p> Tung một đồng xu cân đối liên tiếp cho đến khi xuất hiện mặt ngửa thì dừng lại. Gọi <span class="math">Y</span> là số lần phải tung đồng xu. <span class="math">Y</span> là biến ngẫu nhiên rời rạc nhận <strong>vô hạn (đếm được)</strong> giá trị là {1, 2, 3, ..., n, ...} (Tuân theo phân phối hình học).</p>
+    <table>
+      <tr>
+          <th>Y</th>
+          <td>1</td>
+          <td>2</td>
+          <td>3</td>
+          <td>...</td>
+          <td>n</td>
+          <td>...</td>
+      </tr>
+      <tr>
+          <th>P(Y)</th>
+          <td>1/2</td>
+          <td>1/4</td>
+          <td>1/8</td>
+          <td>...</td>
+          <td>(1/2)<sup>n</sup></td>
+          <td>...</td>
+      </tr>
+    </table>
+  </div>
+<br>
+
+<h3>2.3 Hàm phân phối tích lũy (CDF)</h3>
+Hàm phân phối (tích lũy) của biến ngẫu nhiên rời rạc \(X\) là hàm \(F(x)\) xác định bởi:
+\[
+F(x) = P(X < x) = \sum_{t < x} P_{X}(t)
+\]
+
+<button onclick="toggleSection('3.3chuy')">  Chú ý</button>
+  <div id="3.3chuy" class="section-content">
+    <p>
+      <div class="important-box">
+        Đối với tài liệu nước ngoài hoặc 1 số trường khác , hàm phân phối tích lũy (CDF) của biến ngẫu nhiên rời rạc \(X\) được định nghĩa là: $$F(x) = P(X \leq x) = \sum_{t \leq x} P_{X}(t).$$
+      <strong> Nếu đề bài không nêu rõ, ta sẽ sử dụng định nghĩa $F(x) = P(X < x)$.</strong>
+      </div>
+    </p>
+  </div>
+<br>
+
+
+<button onclick="toggleSection('2.3Tinhchat')">Tính chất của hàm phân phối tích lũy</button> 
+  <div id="2.3Tinhchat" class="section-content">
+      <ul>
+        <li>$0 \leq F_{X}(x) \leq 1$</li>
+        <li>Hàm phân phối tích lũy (CDF) là một hàm không giảm.</li> 
+        <li>$\lim\limits_{x \to -\infty}F_X(x) = 0$ , $\lim\limits_{x \to +\infty}F_X(x) = 1$</li>
+        <li>$P(a \leq X < b) = F_X(b) - F_X(a)$</li>
+        <li> Nếu $X$ là biến ngẫu nhiên rời rạc có tập giá trị hữu hạn có phân phối xác suất cho bởi Bảng 1, với các giá trị được sắp xếp theo thứ tự tăng dần, thì hàm phân phối xác suất là:
+          \[
+          F_X(x) =
+          \begin{cases}
+            0 & \text{nếu } x \leq x_1, \\
+            P_X(x_1) & \text{nếu } x_1 < x \leq x_2, \\
+            P_X(x_1) + P_X(x_2) & \text{nếu } x_2 < x \leq x_3, \\
+            \cdots \\
+            1 & \text{nếu } x > x_n.
+          \end{cases}
+          \tag{2}
+          \] 
+        </li>
+        <li> Nếu $X$ là biến ngẫu nhiên rời rạc có tập giá trị hữu hạn có phân phối xác suất cho bởi Bảng 2, với các giá trị được sắp xếp theo thứ tự tăng dần, thì hàm phân phối xác suất là:
+          \[
+          F_X(x) =
+          \begin{cases}
+            0 & \text{nếu } x \leq x_1, \\
+            P_X(x_1) & \text{nếu } x_1 < x \leq x_2, \\
+            P_X(x_1) + P_X(x_2) & \text{nếu } x_2 < x \leq x_3, \\
+            \cdots \\
+            \displaystyle \sum_{i=1}^{n}P_{X}(x_{i}) & \text{nếu } x_n < x \leq x_{n+1}, \\
+            \cdots \\ & \cdots 
+          \end{cases}
+          \] 
+        </li>
+      </ul>
+
+  </div>
+<br>
+
+<button onclick="toggleSection('2.3vd1')">Ví dụ 1</button>
+  <div id="2.3vd1" class="section-content">
+    <p>Cho hàm phân phối xác suất của biến ngẫu nhiên rời rạc $X$,
+\[
+F_X(x)=
+\begin{cases}
+0 & \text{nếu } x \leq 0, \\
+0,6 & \text{nếu } 0 < x \leq 2, \\
+0,9 & \text{nếu } 2 < x \leq 5, \\
+1 & \text{nếu } x > 5.
+\end{cases}
+\]
+Tìm hàm xác suất của $X$. </p>
+<button onclick="toggleSection('2.3vd1sol')">Solution</button>
+  <div id="2.3vd1sol" class="section-content">
+    <p>
+      <li>Hàm xác suất tại mỗi điểm $0$, $2$ và $5$ là sự thay đổi của hàm phân phối xác suất tại điểm đó. Do đó,
+        \[
+            P_X(0) = 0{,}6 - 0 = 0{,}6; \quad
+            P_X(2) = 0{,}9 - 0{,}6 = 0{,}3; \quad
+            P_X(5) = 1 - 0{,}9 = 0{,}1.
+        \]  Ta có $P(X=0)= P(X \leq 0)-P(X<0)$ </li> 
+      <li> 
+        Vậy,
+        \[
+          P_X(x) =
+          \begin{cases}
+              0{,}6 & \text{nếu } x = 0, \\
+              0{,}3 & \text{nếu } x = 2, \\
+              0{,}1 & \text{nếu } x = 5, \\
+              0     & \text{trong các trường hợp khác}.
+          \end{cases}
+        \]
+      </li>
+    </p>
+  </div>
+<br>
+
+  </div>
+
+<button onclick="toggleSection('2.3vd2')">Ví dụ 2</button>
+  <div id="2.3vd2" class="section-content">
+    <p>Cho biến ngẫu nhiên rời rạc $X$ có bảng phân phối xác suất như sau:</p>
+    <table>
+      <tr>
+        <th>Giá trị của X</th>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <th>$P(X=x)$</th>
+        <td>0.2</td>
+        <td>0.3</td>
+        <td>0.5</td>
+      </tr>
+    </table>
+    <p>Tìm hàm phân phối xác suất của $X$.</p>  
+    <button onclick="toggleSection('2.3vd2sol')">Solution</button>
+      <div id="2.3vd2sol" class="section-content">
+        <p>
+          <li>Hàm phân phối xác suất tại mỗi điểm $1$, $2$ và $3$ là sự thay đổi của hàm phân phối xác suất tại điểm đó. Do đó,
+            \[
+                F_X(1) = 0; \quad
+                F_X(2) = 0{,}2; \quad
+                F_X(3) = 0{,}2 + 0{,}3 = 0{,}5; \quad
+                F_X(4) = 0{,}5 + 0{,}5 = 1.
+            \] </li> 
+          <li> 
+            Vậy,
+            \[
+              F_X(x) =
+              \begin{cases}
+                  0 & \text{nếu } x \leq 1, \\
+                  0{,}2 & \text{nếu } 1 < x \leq 2, \\
+                  0{,}5 & \text{nếu } 2 < x \leq 3, \\
+                  1     & \text{nếu } x > 3.
+              \end{cases}
+            \]
+          </li>
+        </p>
+      </div>
+  </div>
+<br>  
+
+
+
+
+
+<h3>2.4 Các tham số đặc trưng </h3>
+Kỳ vọng và phương sai là hai tham số đặc trưng quan trọng của biến ngẫu nhiên. Ngoài ra, còn có các tham số khác như độ lệch chuẩn, mốt, trung vị và phân vị. <br>
+<ul>
+  <li> Kỳ vọng hay giá trị trung bình là thước đo trung tâm của phân phối xác suất và phương sai là thước đo độ phân tán hoặc độ biến động trong phân phối xác suất. </li>
+  <li> Hai thước đo này không xác định duy nhất một phân phối xác suất. Có nghĩa là, hai phân phối xác suất khác nhau có thể có cùng giá trị trung bình và phương sai.</li>
+  <li>Tuy nhiên, các thước đo này cho ta những hình ảnh đơn giản, hữu ích về phân phối xác suất của biến ngẫu nhiên $X$.</li>
+</ul>
+<h4> 2.4.1 Kỳ vọng (Expected value)</h4>
+<button onclick="toggleSection('2.4.1Dinhnghia')">Định nghĩa</button>
+  <div id="2.4.1Dinhnghia" class="section-content">
+    <p>
+$$E[X] = \sum_{x \in S_X} x \cdot P(X = x)$$
+    </p>
+  </div>
+<br>
+
+<button onclick="toggleSection('2.4tinhchat')">Tính chất</button>
+  <div id="2.4tinhchat" class="section-content">
+    <p>
+      <ul>    
+        <li><i>E(c) = c</i> với <i>c</i> là hằng số.</li>
+        <li><i>E(aX) = aE(X)</i>.</li>
+        <li><i>E(X + b) = E(X) + b</i>.</li>
+        <li>&rArr; <i>E(aX + b) = aE(X) + b</i>.</li>
+        <li>
+            Tổng quát với <i>X</i> là biến ngẫu nhiên rời rạc: <i>E(g(X)) = &sum; g(x<sub>i</sub>)p<sub>i</sub></i>. <br>
+            Ví dụ: <i>E(X<sup>2</sup>) = &sum; x<sub>i</sub><sup>2</sup>p<sub>i</sub></i>.
+        </li>
+        <li><i>E(X + Y) = E(X) + E(Y)</i>.</li>
+        <li>Tổng quát: <i>E[ah(X) + bg(X)] = aE[h(X)] + bE[g(X)]</i>.</li>
+      </ul>
+    </p>
+  </div>
+<br>
+
+<button onclick="toggleSection('2.4.1ynghia')">Một số ý nghĩa của kỳ vọng </button>
+  <div id="2.4.1ynghia" class="section-content">
+    <p>
+      <ul>    
+        <li>Trong cơ học: Nếu ta coi các giá trị $x_i$ của biến ngẫu nhiên là vị trí của các khối lượng trên một thanh ngang, và xác suất $p_i = P(X = x_i)$ là khối lượng đặt tại các vị trí đó: khi đó kỳ vọng chính là trọng tâm của hệ thống đó</li>
+        <li>Trong kinh tế:Trong đầu tư, kỳ vọng biểu thị lợi nhuận trung bình dự kiến của một danh mục tài sản dựa trên các kịch bản thị trường khác nhau: $E[\text{Lợi nhuận}] = \sum (\text{Lợi nhuận kịch bản } i) \times (\text{Xác suất kịch bản } i)$. </li>
+        <li>Trong thống kê: Kỳ vọng là một thước đo trung tâm của phân phối xác suất. </li>
+        <li>
+          <ol>Trong lý thuyết trò chơi: 
+            <li> 
+            Một trò chơi cá cược được gọi là <strong> công bằng </strong> nếu giá trị kỳ vọng của tiền thưởng $E[X] = 0$ (sau khi đã trù phí tham gia).
+            </li>
+            <li> Trong các sòng bạc, giá trị kỳ vọng của người chơi thường là âm, nghĩa là họ sẽ mất tiền theo thời gian dài. </li>
+          </ol>
+        </li>
+        
+
+      </ul>
+    </p>
+  </div>
+<br>
+
+
+<h4> 2.4.2 Phương sai (Variance)</h4>
+<button onclick="toggleSection('2.4.2Dinhnghia')">Định nghĩa</button>
+  <div id="2.4.2Dinhnghia" class="section-content">
+    <p>
+      <strong> Định nghĩa </strong>: Phương sai của biến ngẫu nhiên \(X\), ký hiệu là \(V(X)\), là giá trị trung bình của bình phương độ lệch của các giá trị có thể của \(X\) so với kỳ vọng của nó. <br>
+      Công thức tính phương sai của biến ngẫu nhiên rời rạc \(X\)
+      \[
+      V(X) = E[(X - E[X])^2] = \sum_{x \in S_X} (x - E[X])^2 \cdot P(X = x) = E[X^2] - (E[X])^2
+      \]  
+    </p>
+  </div>
+<br>
+
+
+<button onclick="toggleSection('2.4.2tinhchat2')">Tính chất</button>
+  <div id="2.4.2tinhchat2" class="section-content">
+    <p>  
+      <ul>
+        <li> \(V(X) \geq 0\). V(X)=0 khi và chỉ khi \(X\) là hằng số (hcc). </li>
+        <li> \(V(c) = 0\) với \(c\) là hằng số.</li>
+        <li> \(V(aX) = a^2 V(X)\).</li>
+        <li> Nếu \(X\) và \(Y\) độc lập thì \(V(X + Y) = V(X) + V(Y)\). </li> 
+        <li>Tổng quát  $V(aX+b)=a^2V(X) \, \forall a,b \in \mathbb{R}$</li>
+      </ul>
+    </p>
+  </div>
+<br>
+
+<button onclick="toggleSection('2.4.2ynghia')">Ý nghĩa của phương sai </button>
+  <div id="2.4.2ynghia" class="section-content">
+    <p>
+      <ul>
+        <li> Phương sai thể hiện mức độ phân tán của biến ngẫu nhiên  xung quanh giá trị trung bình $E(X)$, phương sai càng lớn thì độ phân tán dữ liệu càng cao và ngược lại. </li>
+        <li> Trong công nghiệp, $X$ thường là kích cỡ của các sản phẩm. $V(X)$ lúc này biểu thị độ chính xác của các sản phẩm.  </li>
+        <li>Trong chăn nuôi, $X$ thường là chiều cao hay cân nặng của gia súc gia cầm. $V(X)$ lúc này biểu thị độ tăng trưởng đồng đều của các gia súc gia cầm.</li>
+        <li> Trong trồng trọt, $X$ thường là năng suất của giống cây trồng. $V(X)$ lúc này biểu thị mức độ ổn định của năng suất giống cây trồng.</li>
+        <li>Trong kinh tế, $X$ thường là lãi suất thu được của khoản đầu tư. $V(X)$ lúc này sẽ biểu thị cho mức độ rủi ro của đầu tư.</li>
+      </ul>
+    </p>
+  </div>
+<br>
+
+<h4>2.4.3 Độ lệch chuẩn (Standard Deviation)</h4>
+<button onclick="toggleSection('2.4.3Dinhnghia')">Định nghĩa</button>
+  <div id="2.4.3Dinhnghia" class="section-content">
+    <p>
+      Độ lệch chuẩn (standard deviation) của biến ngẫu nhiên \(X\), ký hiệu là \(\sigma(X)\), được định nghĩa như sau:
+      \[
+      \sigma(X) = \sqrt{V(X)}
+      \]
+    </p>
+  </div>
+<br>
+
+<button onclick="toggleSection('2.4.3tinhchat')">Tính chất</button>
+  <div id="2.4.3tinhchat" class="section-content">
+    <p>
+      <ul>
+          <li>Phương sai làm sai lệch đơn vị gốc. </li>
+          <li>Độ lệch chuẩn trả về đơn vị ban đầu. </li>
+      </ul>
+    </p>
+  </div>
+<br>
+
+
+
+
+<h4>2.4.4 Mốt (Mode)  </h4>
+Định nghĩa: Mốt (mode) của biến ngẫu nhiên \(X\), ký hiệu là \(\mathrm{mod}(X)\), là giá trị của \(X\) có xác suất xảy ra lớn nhất. <br>
+- Nếu \(X\) là biến ngẫu nhiên rời rạc thì mốt là giá trị của \(X\) ứng với xác suất lớn nhất. Tức là \(P(X=\mathrm{X}) \geq P(X=k) \forall k \in S_{X}\). <br>
+- Nếu \(X\) là biến ngẫu nhiên liên tục thì mốt là giá trị làm hàm mật độ đạt max. Tức là \(f(\mathrm{X}) \geq f(x) \forall x \in S_{X} \).   
+<h4>3.4.5 Phân vị (Quantile)</h4>
+Định nghĩa : Phân vị (quantile) của biến ngẫu nhiên \(X\), ký hiệu là \(\mathrm{q}_{p}(X)\), là giá trị của \(X\) sao cho xác suất xảy ra của \(X\) nhỏ hơn hoặc bằng giá trị đó là \(p\). <br>
+\[
+P(X \leq \mathrm{q}_{p}(X)) = p
+\]
+</div>
+<br> 
+
+<h2>3. Biến ngẫu nhiên liên tục</h2>
+<button onclick="toggleSection('3BNNLTFull')">Ẩn/Hiện nội dung</button>
+  <div id="3BNNLTFull" class="section-content">
+
+<strong>Định nghĩa:</strong>
+  Biến ngẫu nhiên liên tục là biến ngẫu nhiên có tập giá trị là một tập con của \(\mathbb{R}\) và có thể nhận mọi giá trị trong một khoảng liên tục. 
+
+<strong> Ví dụ</strong>
+<ul>
+    <li> Thời gian hoàn thành công việc </li>
+    <li>Chiều dài của một chi tiết máy</li>
+    <li>Cân nặng của trẻ sơ sinh</li>
+</ul>
+<strong>  Dẫu hiệu nhân biết:  </strong>
+<ul>
+    <li>Biến ngẫu nhiên liên tục chỉ có thể đo được. </li>
+    <li>Miền giá trị của biến ngẫu nhiên liên tục có thể lấp đầy một khoảng, một đoan, nửa khoảng, toàn bộ $\mathbb{R}$</li>
+</ul>
+<button onclick="toggleSection('3.1hamphanphoi')"> 3.1 Hàm phân phối tích lũy </button>
+  <div id="3.1hamphanphoi" class="section-content">
+    <p>
+      Phần này giống biến ngẫu nhiên rời rạc: <br>
+      <strong> Định nghĩa </strong>
+      \[
+      F_{X}(x) = P(X< x) , \forall x \in \mathbb{R}
+      \]
+      <strong>Tính chất </strong>
+      <ul>
+          <li> $0 \leq F_X(x) \leq 1$.</li>
+          <li> $\lim\limits_{x \to -\infty}F_X(x) = 0$ , $\lim\limits_{x \to +\infty}F_X(x) = 1$.</li>
+          <li>$F_X(x)$ là hàm không giảm: $\forall a < b , F_X(a) \leq F_X(b)$.</li>
+          <li> $P(a \leq X < b) = F_X(b) - F_X(a)$.</li>
+          <li>Nếu $X$ là biến ngẫu nhiên liên tục thì $F_{X}(x)$  là hàm liên tục.</li>
+          <li> $P(X=x) =0 \forall x \in  \mathbb{R} $. </li>
+      </ul>
+    </p>
+  </div>
+<br>
+
+
+<button onclick="toggleSection('3.2hammatdo')">3.2 Hàm mật độ xác suất </button>
+  <div id="3.2hammatdo" class="section-content">
+    <p>
+      <button onclick="toggleSection('3.2Dinhnghia')">Định nghĩa </button>
+        <div id="3.2Dinhnghia" class="section-content">
+          Giả sử $X$ là một biến ngẫu nhiên liên tục có hàm phân phối xác suât $F_{X}(x).$ Nếu tồn tại hàm $f_{X}(x)$ sao cho
+          \[
+          F_{X}(x)= P(X< x) = \int_{- \infty }^{x} f_{X}(u)du, x \in \mathbb{R}
+          \]  
+          thì $f_{X}(x)$ được gọi làm hàm mật độ xác suất của biến ngẫu nhiên liên tục X.
+        </div>
+      <br>
+      <button onclick="toggleSection('3.2tinhchat')">Tính chất</button>
+        <div id="3.2tinhchat" class="section-content">
+          <ul>
+            <li>$\int\limits_{-\infty}^{+\infty}f_X(x)dx=1$;</li>
+          <li>$P(a\leq X < b) =P(a< X < b)=P(a < X \leq b) =P(a\leq X \leq b) = \int\limits_a^b f_X(x)dx$ </li>
+          <li>Hàm phân phối xác suất: $F_X(x)=P(X< x)=\int\limits_{-\infty}^x f_X(t)dt$. <br>
+          Từ đó suy ra nếu $X$ là biến ngẫu nhiên liên tục có hàm mật độ $f_{X}(x)$ thì  $f_X(x)=F_X'(x).$  </li> 
+          </ul>
+        </div>
+        <br> 
+
+        <button onclick="toggleSection('3.2vd1')">Ví dụ 1</button>
+          <div id="3.2vd1" class="section-content">
+            <p> Cho hàm số $f_X(x) = a.\sin 2x$. Tìm $a$ để hàm này trở thành hàm mật độ xác suất của một biến ngẫu nhiên nhận giá trị trong $ \left[0,\dfrac{\pi}{2}\right] $. 
+            </p>
+
+            <button onclick="toggleSection('3.2vd1hd')">Solution</button>
+              <div id="3.2vd1hd" class="section-content">
+                <p>
+                  Để hàm này trở thành hàm mật độ xác suất của một biến ngẫu nhiên nhận giá trị trong
+                  $ \left[0,\dfrac{\pi}{2}\right] $.
+                  \[
+                    f_X(x)= 
+                    \begin{cases}
+                      a\sin 2x, & x \in \left[0,\dfrac{\pi}{2}\right] \\
+                      \quad 0, & x \notin \left[0,\dfrac{\pi}{2}\right].
+                    \end{cases} 
+                  \]
+                  Do $\sin 2x \geq 0$ với mọi $x \in  \left[0,\frac{\pi}{2}\right] $ nên $a \geq 0$. Ta có:
+                  $1=\int_{-\infty}^{+\infty}f_X(x)dx=\int_{0}^{\frac{\pi}{2}}a\sin 2xdx=a$.    Vậy $a = 1$.
+                </p>
+              </div>
+            <br>
+          </div>
+      
+
+        <button onclick="toggleSection('3.2vd2')">Ví dụ 2</button>
+          <div id="3.2vd2" class="section-content"> 
+      Tuổi thọ của một loài côn trùng là biến ngẫu nhiên $X$(tháng tuổi) có hàm mật độ xác suất
+      \[
+      f_X(x)=\begin{cases}
+      ax^2(4-x^2) & x \in \left[0,2\right]\\ 
+      \quad 0 & x \notin  \left[0,2\right] .\end{cases}
+      \]
+      <ol type="1">
+          <li>Xác định $a$.</li>
+          <li>Tính $P(0 \leq X \leq 1) , P(X>1)$</li>
+          <li>Xác định hàm phân phối xác suất $F_X(x)$ </li>
+          <li>Cho $Y=2X+1$.  Xác định hàm mật độ và hàm phân phối của biến ngẫu nhiên Y.</li>
+      </ol>
+      <button onclick="toggleSection('3.2vd2sol')">Solution</button>
+        <div id="3.2vd2sol" class="section-content">
+          <p>
+            <ol type="1">
+                <li>
+                  Do $ax^2(4-x^2)\geq 0$ với $\forall x \in \left[0;2\right]$ nên $a \geq 0$. <br> 
+                  Ta có $1=\int\limits_{-\infty}^{+\infty}f_X(x)dx=\int\limits_0^2 ax^2(4-x^2)dx=a \dfrac{64}{15} \Rightarrow a=\dfrac{15}{64}$.
+                </li>
+                <li> $P(0 \leq X \leq 1)=\int\limits_0^1f_X(x)dx=\int\limits_0^1 ax^2(4-x^2)dx=a \dfrac{17}{15}=\dfrac{17}{64}=0,266$. 
+      $P(X>1)=\int\limits_1^{+\infty}f_X(x)dx=\int\limits_1^2 ax^2(4-x^2)dx=\dfrac{47}{64}=0,734$.
+                </li>
+                <li>
+                  Hàm phân phối $F_X(x)=\int\limits_{-\infty}^xf_X(t)dt$\\
+      $x< 0$ suy ra $F_X(x)=\int\limits_{-\infty}^xf_X(t)dt=\int\limits_{-\infty}^x0dt=0$. <br>
+      $0\leq x \leq 2$ suy ra $F_X(x)=\int\limits_{-\infty}^xf_X(t)dt=\int\limits_0^x at^2(4-t^2)dt = \dfrac{15}{64} (\dfrac{4x^3}{3} - \dfrac{x^5}{5})$. <br>
+      $x>2$ suy ra $F_X(x)=\int\limits_{-\infty}^x f_X(t)dt = \int\limits_0^2 at^2(4-t^2) dt = 1$.<br> 
+                </li>
+                <li> Ta có $F_{Y}(y) = P(Y < y) = P(2X+1 < y) = P(X< \dfrac{y-1}{1}= F_{X}  \left(\dfrac{y-1}{2}\right) $
+                  Do đó 
+                  \[ 
+                  F_{Y}(y) =
+                    \begin{cases}
+                    0 & \text{ nếu } y< 1\\
+                    \dfrac{15}{64}  \left(\dfrac{4}{3}  \left(\dfrac{y-1}{2}\right)^{3}    - \dfrac{1}{5}  \left(\dfrac{y-1}{2}\right)^{5} \right)   & \text{ nếu } 1 \leq y \leq 5 \\
+                    1 & \text{nếu }  y >5 \\
+                    \end{cases}
+                  \]
+                  Hàm mật độ xác suất
+                    \[
+                    f_{Y}(y) = \dfrac{dF_{Y}(y)}{dy} = \dfrac{15}{64}  \left(2  \left(\dfrac{y-1}{2}\right)^{2}  - \dfrac{1}{2}  \left(\dfrac{y-1}{2}\right)^{4} \right) \mathbb{1}_{[1,5]}(y)
+                    \]
+                </li>
+            </ol>
+          </p>
+        </div>
+      <br>
+
+      </div> 
+      <br>
+
+    </p>
+  </div>
+<br>
+
+
+<button onclick="toggleSection('3.3Thamsodactrung')">3.3 Các tham số đặc trưng</button>
+  <div id="3.3Thamsodactrung" class="section-content">
+  <h4> Kỳ vọng</h4>
+  <strong>Định nghĩa</strong>
+  \[
+    E(X)=\int\limits_{-\infty}^{+\infty}x f_X(x)dx
+  \]
+  Tổng quát: 
+  \[
+    E(h(X))=\int\limits_{-\infty}^{+\infty}h(x) f_X(x)dx
+  \]
+  <strong> Tính chất:</strong>
+  Giống như phần biến ngẫu nhiên rời rạc. 
+
+  <h4> Phương sai</h4>
+  <strong> Định nghĩa</strong>
+  \[
+  V(X)= E \left(X- E[X]\right)^{2}= EX^{2} -  \left(EX\right)^{2}.
+  \]
+  <strong>Tổng quát</strong>
+  \[
+    V(h(X))=Eh(X)^{2} -  \left(Eh(X)\right)^{2}.
+  \]
+
+
+  <strong>Ví dụ 1:</strong> 
+  Cho $X$ là một biến ngẫu nhiên liên tục có hàm mật độ xác suất $f(x)$ được xác định như sau:$$f(x) = \begin{cases} 2x & \text{nếu } 0 \le x \le 1 \\ 0 & \text{trái lại} \end{cases}$$Hãy tính kỳ vọng (giá trị trung bình) của biến ngẫu nhiên $X$, ký hiệu là $E(X)$.
+  <br>   
+  <strong>Solution:</strong>
+  Kỳ vọng là 
+  $$E(X) = \int_{-\infty}^{+\infty} x f(x)= E(X) = \int_{0}^{1} x \cdot (2x) \, dx=  dx= \left[ \frac{2x^3}{3} \right]_{0}^{1}= \dfrac{2}{3}. $$ 
+  
+  <h4> Mode</h4>
+  <strong>Định nghĩa</strong>
+  \[\text{Mode}{X} = \displaystyle  \arg \max _{x \in S_{X}} f(x) =  \left\{x_{0} \in S_{X} \mid  f(x_{0}) \geq f(x) \forall x \in  S_{X}  \right\} \]
+  Tức là Mode$X$ là giá trị của $X$ sao cho $f(x)$ đạt giá trị cực trị địa phương. <br>
+  <strong>Ví dụ:</strong>
+  <ol type="">
+      <li>$f_{X}(x) = \dfrac{1}{\sqrt{2 \pi} \sigma}e^{-(x-\mu)^{2}/\sigma^{2}}, \text{Mode}(X)= \mu$</li> 
+      <li>$f(x)= e^{-\lambda x} \mathbb{1}_{\mathbb{R}^{+}}$. Khi đó $\text{Mode}(X) =0.$</li>
+      <li> Cho biến ngẫu nhiên liên tục $X$ có hàm mật độ xác suất:$f(x) = \begin{cases} 6x(1-x) & \text{nếu } 0 \le x \le 1 \\ 0 & \text{trái lại} \end{cases}$ khi đó Mode(X)= $1/2$ </li>
+  </ol>
+
+  <h4> Trung vị </h4>
+  <strong>Định nghĩa:</strong> Trung vị của biến ngẫu nhiên \(X\), ký hiệu \(\mathrm{med}(X)\), là giá trị chia phân phối của \(X\) thành hai phần có xác suất bằng nhau.
+    \[
+      P\!\big(X<\mathrm{med}X\big)=P\!\big(X\ge \mathrm{med}X\big)=\tfrac{1}{2}
+    \]
+  
+  </div>
+  <br>
+  </div>
+<br>
+
+<h2>4. Các phân phối đặc biệt </h2> 
+<button onclick="toggleSection('ppdacbiet')">📘 Xem / Ẩn phần lý thuyết</button>
+
+<div id="ppdacbiet" class="section-content">
+    <h3>1. Phân phối đều rời rạc</h3>  
+        <button onclick="toggleSection('ppdeuroirac')">📘 Xem / Ẩn phần lý thuyết</button>
+        <div id="ppdeuroirac" class="section-content">
+
+            <p class="lead">Biến ngẫu nhiên rời rạc \(X\) được gọi là tuân theo luật phân phối đều rời rạc trên đoạn \(a,b\) ký hiệu \(X \sim U([a,b])\), nếu có: \(\;P(X=k)= \dfrac{1}{b-a+1} \forall k \in \left\{a,a+1, \ldots, b \right\} \). 
+            </p> 
+
+            <p class="lead">Tính chất:</p>
+            <ul class="bullet">
+                <li>Kỳ vọng: \(\;E[X]=\dfrac{a+b}{2}\).</li>
+                <li>Phương sai: \(\;V[X]=\dfrac{(b-a+1)^2-1}{12}\).</li>
+                <li>Mode: \(\mathrm{mode}(X) =k \quad \forall k \in  \left(a,a+1, \dots ,b \right) \). <br> 
+                    Chú ý: \(\lfloor x \rfloor \) là số nguyên lớn nhất không vượt quá x. Ví dụ \(\lfloor 2.1\rfloor= 2, \lfloor -0.5 \rfloor= -1 \) 
+                </li>   
+            </ul>
+        </div> 
+
+
+    <h3>2. Phân phối nhị thức</h3>
+        <button onclick="toggleSection('ppnhithuc')">📘 Xem / Ẩn phần lý thuyết</button>
+        <div id="ppnhithuc" class="section-content">
+            <p class="lead">Biến ngẫu nhiên rời rạc \(X\) được gọi là tuân theo luật phân phối nhị thức (binomial distribution) với tham số \(n,p\), ký hiệu \(X \sim B(n,p)\), nếu có: \(\;P(X=k)=C^{k}_{n}p^{k}q^{\,n-k},\; q=1-p,\; k\in\{0,1,\ldots,n\}\).</p> 
+
+            <p class="note">Trong đó \(q=1-p\), \(k\in\overline{0,n}=\{0,1,2,\ldots,n\} \).</p>  
+
+            <p class="lead">Tính chất:</p>
+            <ul class="bullet">
+                <li>Kỳ vọng: \(\;E(X)=np\).</li>
+                <li>Phương sai: \(\;V(X)=npq=np(1-p)\).</li>
+                <li>Mode: \(\mathrm{mode}(X) =
+                        \begin{cases}
+                            \lfloor (n+1)p\rfloor , & \text{nếu } (n+1)p \notin \mathbb{Z} \\
+                            (n+1)p-1 \text{ hoặc } (n+1)p, & \text{nếu } (n+1)p \in \mathbb{Z}.
+                        \end{cases}  \). <br>
+                    Chú ý: \(\lfloor x \rfloor \) là số nguyên lớn nhất không vượt quá x. Ví dụ \(\lfloor 2.1\rfloor= 2, \lfloor -0.5 \rfloor= -1 \) 
+                </li>   
+            </ul>
+        
+            <div class="card">
+                <h4>Đồ thị P(X = k) — Phân phối Nhị thức (dạng điểm)</h4>
+                <div>
+                <label for="n">n =</label>
+                <input id="n" type="number" value="10" min="0" step="1" />
+
+                <label for="p">p =</label>
+                <input id="p" type="number" value="0.3" min="0" max="1" step="0.01" />
+
+                <label for="maxk">Hiển thị k tới</label>
+                <input id="maxk" type="number" value="10" min="0" step="1" />
+
+                <button id="draw">Vẽ đồ thị</button>
+                </div>
+
+                <canvas id="pmfChart"></canvas>
+            </div>
+
+            <script>
+                function binomialCoeff(n, k){
+                if(k<0||k>n) return 0;
+                if(k===0||k===n) return 1;
+                k=Math.min(k,n-k);
+                let c=1;
+                for(let i=1;i<=k;i++) c=c*(n-(k-i))/i;
+                return c;
+                }
+
+                function binomialPMF(n,p,k){
+                if(k<0||k>n) return 0;
+                return binomialCoeff(n,k)*Math.pow(p,k)*Math.pow(1-p,n-k);
+                }
+
+                const ctx=document.getElementById('pmfChart').getContext('2d');
+                let chart=new Chart(ctx,{
+                type:'line',
+                data:{labels:[],datasets:[{label:'P(X=k)',data:[],borderColor:'rgba(54,162,235,1)',fill:false,showLine:false,pointRadius:5,pointBackgroundColor:'rgba(54,162,235,0.8)'}]},
+                options:{
+                    responsive:true,
+                    scales:{x:{title:{display:true,text:'k'}},y:{title:{display:true,text:'P(X=k)'},beginAtZero:true}},
+                    plugins:{legend:{display:false}}
+                }
+                });
+
+                function draw(){
+                const n=+document.getElementById('n').value;
+                const p=+document.getElementById('p').value;
+                const maxk=+document.getElementById('maxk').value;
+                const labels=[],data=[];
+                for(let k=0;k<=maxk;k++){
+                    labels.push(k);
+                    data.push(binomialPMF(n,p,k));
+                }
+                chart.data.labels=labels;
+                chart.data.datasets[0].data=data;
+                chart.update();
+                }
+
+                document.getElementById('draw').addEventListener('click',draw);
+                draw();
+            </script>
+        </div>
+    <h3>3. Phân phối Poisson</h3>
+        <button onclick="toggleSection('pppoisson')">📘 Xem / Ẩn phần lý thuyết</button>
+        <div id="pppoisson" class="section-content">
+
+            <p class="lead">Biến ngẫu nhiên rời rạc \(X\) được gọi là tuân theo luật phân phối Poisson với tham số \(\lambda\), ký hiệu \(X\sim P(\lambda)\), nếu có: \(\;P(X=k)=\dfrac{\lambda^{k}}{k!}\,e^{-\lambda},\; k\in\{0,1,2,\ldots\}\).</p>
+
+            <p>Trong đó \(\lambda\) là số kết quả trung bình trên mỗi đơn vị thời gian/không gian.</p>
+
+            <p class="lead">Tính chất:</p>
+                <ul class="bullet">
+                    <li>Các phép thử đếm số lần xảy ra sự kiện trong khoảng thời gian/không gian nhất định thường được mô hình hóa bằng Poisson.</li>
+                    <li>Kỳ vọng: \(\;E(X)=\lambda\). </li>
+                    <li>Phương sai: \(\;V(X)=\lambda\) và độ lệch chuẩn \(\sigma(X)=\sqrt{\lambda}\).</li>
+                    <li> \( \mathrm{mode}(X)= 
+                        \begin{cases}
+                            \lfloor \lambda \rfloor & \text{ nếu }  \lambda  \notin \mathbb{Z} \\
+                            \lambda \text{ hoặc } \lambda -1 & \text{ nếu }  \lambda  \in \mathbb{Z}
+                        \end{cases}
+                        \) </li>
+                    <li>Hàm phân phối tích lũy: \(\;F_X(x)=e^{-\lambda}\sum_{k=0}^{\lfloor x \rfloor}\dfrac{\lambda^{k}}{k!}\).</li>
+                </ul>
+            <h4> Xấp xỉ phân phối nhị thức bởi phân phối Poisson:</h4>
+            Cho \( X\sim \mathcal{B}(n,p)\), trong đó \( n \to \infty , p \to 0 \) miễn sao cho \(np \to \lambda  \) hữu hạn khi đó \(P(X=k) \approx P(Y= k)\) với \(Y \sim \mathcal{P}(\lambda ) \)
+        </div>
+
+ <h3>4. Phân phối hình học (Geometric distribution)</h3>
+         <button onclick="toggleSection('pphinhhoc')">📘 Xem / Ẩn phần lý thuyết</button>
+        <div id="pphinhhoc" class="section-content">
+            <p class="lead">Giả sử mỗi lần thử độc lập có xác suất thành công bằng \(p\) với \(0 < p\le 1\).</p>
+
+            <div class="box">
+                <p><strong>Định nghĩa 1 — Số lần thử đến thành công đầu tiên (\(k=1,2,\dots\)):</strong></p>
+
+                <div class="formula">
+                \[ P(X = k) = (1-p)^{\,k-1}\,p,\qquad k=1,2,\dots \]
+                </div>
+
+                <p class="small">Khi \(X\) đếm số lần thử (bao gồm lần thành công), thì</p>
+                <div class="formula">
+                \[ E(X)=\frac{1}{p},\qquad\mathrm{Var}(X)=\frac{1-p}{p^2}. \]
+                </div>
+            </div>
+
+            <div class="box">
+                <p><strong>Định nghĩa 2 — Số thất bại trước thành công đầu tiên ( \(k=0,1,2,\dots\)):</strong></p>
+
+                <div class="formula">
+                \[ P(Y = k) = (1-p)^{\,k}\,p,\qquad k=0,1,2,\dots \]
+                </div>
+
+                <p class="small">Khi \(Y\) đếm số thất bại trước lần thành công, thì</p>
+                <div class="formula">
+                \[ E(Y)=\frac{1-p}{p},\qquad\mathrm{Var}(Y)=\frac{1-p}{p^2}. \]
+                </div>
+            </div>
+
+            <p>Hai định nghĩa trên chỉ khác nhau bởi một dịch vị (nếu \(X\) theo định nghĩa 1 và \(Y\) theo định nghĩa 2 thì \(X=Y+1\)).</p>
+
+            <h4>Ví dụ nhanh</h4>
+            <ul>
+                <li>Nếu \(p=0.2\) và \(X\) theo định nghĩa 1: \(E(X)=1/0.2=5\).</li>
+                <li>Nếu \(p=0.2\) và \(Y\) theo định nghĩa 2: \(E(Y)=(1-0.2)/0.2=4\).</li>
+            </ul>
+
+            <hr>
+    </div>
+
+    <h3>5. Phân phối đều liên tục</h3>  
+         <button onclick="toggleSection('ppdeulientuc')">📘 Xem / Ẩn phần lý thuyết</button>
+        <div id="ppdeulientuc" class="section-content">    
+            <p class="lead">Biến ngẫu nhiên liên tục  \(X\) được gọi là tuân theo luật phân phối đều liên tục trên đoạn \( [a,b], (a < b) \) ký hiệu \(X \sim U([a,b])\), nếu  X có hàm mật độ xác suất: </p> 
+                \[ f_{X}(x) =\dfrac{1}{b-a} \mathbb{1}_{[a,b]}(x) =\begin{cases} 
+                        \dfrac{1}{b-a} , & \text{ nếu } x \in [a,b] \\
+                        0, & \text{ nếu } x \notin [a,b]. 
+                    \end{cases}  \]
+            <p class="lead">Tính chất:</p>
+            <ul class="bullet">
+                <li>Kỳ vọng: \(\;E[X]=\dfrac{a+b}{2}\).</li>
+                <li>Phương sai: \(\;V[X]=\dfrac{(b-a)^2}{12}\).</li>
+            </ul>
+        </div>
+
+  <h3>6. Phân phối chuẩn</h3>
+         <button onclick="toggleSection('ppchuan')">📘 Xem / Ẩn phần lý thuyết</button>
+        <div id="ppchuan" class="section-content">   
+            <p class="lead">
+                Biến ngẫu nhiên liên tục \(X\) có phân phối chuẩn với tham số \(\mu,\sigma^{2}\), ký hiệu \(X\sim N(\mu,\sigma^{2})\), nếu hàm mật độ có dạng:
+            </p>
+
+            <div class="center">
+                \[
+                f(x) = \frac{1}{\sigma \sqrt{2\pi}} \exp\!\left(-\frac{(x-\mu)^{2}}{2\sigma^{2}}\right),\quad x\in\mathbb{R}.
+                \]
+            </div>
+
+            <p class="lead">Tính chất:</p>
+            <ul class="eq">
+                <li>\(E(X)=\mu\).</li>
+                <li>\(V(X)=\sigma^{2}\).</li>
+                <li>Nếu \(X\sim N(\mu,\sigma^{2})\) thì \(Z=\dfrac{X-\mu}{\sigma}\sim N(0,1)\) (chuẩn hóa).</li>
+            </ul>
+
+            <p class="lead">
+                Với \( Z \sim N(0,1)\) (phân phối chuẩn tắc), hàm mật độ là \(\varphi(x)=\dfrac{1}{\sqrt{2\pi}}e^{-x^{2}/2}\).
+            </p>
+
+            <p class="lead">
+                Hàm phân phối tích lũy chuẩn tắc: \(\Phi(x)=\dfrac{1}{\sqrt{2\pi}}\displaystyle\int_{-\infty}^{x} e^{-t^{2}/2}\,dt\).
+            </p>
+
+            <p class="lead"> Với \(X\sim N(\mu,\sigma^{2})\):</p>
+            <ul class="eq">
+                <li>\(P(X<\beta)=\Phi\!\left(\dfrac{\beta-\mu}{\sigma}\right)\).</li>
+                <li>\(P(X>\alpha)=1-\Phi\!\left(\dfrac{\alpha-\mu}{\sigma}\right)=\Phi\!\left(-\dfrac{\alpha-\mu}{\sigma}\right)\).</li>
+                <li>\( P(\alpha < X < \beta) = \Phi\!\left(\dfrac{\beta-\mu}{\sigma}\right) - \Phi\!\left(\dfrac{\alpha-\mu}{\sigma}\right)  \).</li>
+                <li>\( P( | X-\mu| < c) = 2 \Phi\!\left(\dfrac{c}{\sigma}  \right) -1 \). </li>
+                <li>\(\Phi(x) + \Phi(-1)=1 \forall x \in \mathbb{R}\)</li>
+                <li> <b> Chú ý: </b> \(\Phi(x) = 0.5 +\phi(x) \) trong đó \( \phi(x) = \int_{0}^{x} \dfrac{e^{-t^2}/2}{\sqrt{2\pi}}dt.\)</li>  
+            </ul>
+            
+            <h4> Tính \( P(a < X < b) = \int_{a}^{b}f(x) dx \) và biểu diễn trên trục tọa độ </h4>
+                <div id="canvasWrap">
+                    <canvas id="plot" width="820" height="360"></canvas>
+                    <div class="controls">
+                    <label>a = <input id="aVal" type="number" step="0.1" value="-0.5"></label>
+                    <label>b = <input id="bVal" type="number" step="0.1" value="1.0"></label>
+                    <label>μ = <input id="muVal" type="number" step="0.1" value="0"></label>
+                    <label>σ = <input id="sigmaVal" type="number" step="0.1" value="1"></label>
+                    <button id="redraw">Vẽ lại</button>
+                    </div>
+                </div>
+
+                <script>
+                (function(){
+                const canvas = document.getElementById('plot');
+                const ctx = canvas.getContext('2d');
+                const W = canvas.width, H = canvas.height;
+
+                const pad = {l:60, r:30, t:20, b:50};
+                const plotW = W - pad.l - pad.r; const plotH = H - pad.t - pad.b;
+
+                function pdf(x, mu, sigma){
+                    const s = sigma*Math.sqrt(2*Math.PI);
+                    return Math.exp(-0.5*((x-mu)/sigma)*((x-mu)/sigma))/s;
+                }
+
+                function clear(){ ctx.clearRect(0,0,W,H); ctx.fillStyle='white'; ctx.fillRect(0,0,W,H); }
+
+                function drawAxes(){
+                    ctx.strokeStyle = '#333'; ctx.lineWidth=1;
+                    // x axis
+                    ctx.beginPath(); ctx.moveTo(pad.l, H-pad.b); ctx.lineTo(W-pad.r, H-pad.b); ctx.stroke();
+                    // y axis
+                    ctx.beginPath(); ctx.moveTo(pad.l, pad.t); ctx.lineTo(pad.l, H-pad.b); ctx.stroke();
+                    // ticks on x
+                    ctx.font='12px sans-serif'; ctx.fillStyle='#222'; ctx.textAlign='center';
+                }
+
+                function mapX(x, xmin, xmax){
+                    return pad.l + (x - xmin)/(xmax - xmin) * plotW;
+                }
+                function mapY(y, ymax){
+                    // y in [0, ymax] -> map to [H-pad.b, pad.t]
+                    return H - pad.b - (y / ymax) * plotH;
+                }
+
+                function draw(mu, sigma, a, b){
+                    clear();
+                    // choose x range mu-4sigma .. mu+4sigma
+                    const xmin = mu - 4*sigma; const xmax = mu + 4*sigma;
+                    // compute max of pdf (at mu)
+                    const ymax = pdf(mu, mu, sigma) * 1.05;
+
+                    // draw filled curve base (light blue shading for full curve area)
+                    const samples = 500;
+                    const xs = new Array(samples);
+                    const ys = new Array(samples);
+                    for(let i=0;i<samples;i++){
+                    const x = xmin + (i/(samples-1))*(xmax-xmin);
+                    xs[i]=x; ys[i]=pdf(x, mu, sigma);
+                    }
+
+                    // fill the entire curve (very subtle)
+                    ctx.beginPath();
+                    ctx.moveTo(mapX(xs[0],xmin,xmax), mapY(0,ymax));
+                    for(let i=0;i<samples;i++) ctx.lineTo(mapX(xs[i],xmin,xmax), mapY(ys[i],ymax));
+                    ctx.lineTo(mapX(xs[samples-1],xmin,xmax), mapY(0,ymax));
+                    ctx.closePath();
+                    ctx.fillStyle = 'rgba(180,235,255,0.35)';
+                    ctx.fill();
+
+                    // highlight area between a and b
+                    const left = Math.max(a, xmin); const right = Math.min(b, xmax);
+                    // build path only between left..right
+                    const leftIndex = 0; const rightIndex = samples-1;
+                    ctx.beginPath();
+                    // move to left at y=0
+                    ctx.moveTo(mapX(left,xmin,xmax), mapY(0,ymax));
+                    for(let i=0;i<samples;i++){
+                    const x = xs[i]; if(x < left) continue; if(x > right) break;
+                    ctx.lineTo(mapX(x,xmin,xmax), mapY(pdf(x,mu,sigma),ymax));
+                    }
+                    ctx.lineTo(mapX(right,xmin,xmax), mapY(0,ymax));
+                    ctx.closePath();
+                    ctx.fillStyle = 'rgba(120,195,255,0.65)';
+                    ctx.fill();
+
+                    // draw the curve outline
+                    ctx.beginPath();
+                    for(let i=0;i<samples;i++){
+                    const x = xs[i]; const y = ys[i];
+                    const px = mapX(x,xmin,xmax); const py = mapY(y,ymax);
+                    if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+                    }
+                    ctx.strokeStyle = 'rgba(20,140,230,0.95)'; ctx.lineWidth=2.5; ctx.stroke();
+
+                    // axes and ticks
+                    ctx.strokeStyle='#333'; ctx.lineWidth=1; ctx.beginPath();
+                    // x axis already present - add ticks at integer positions near mu
+                    const step = 1; ctx.fillStyle='#333'; ctx.textAlign='center'; ctx.font='12px sans-serif';
+                    for(let xTick=Math.ceil(xmin); xTick<=Math.floor(xmax); xTick+=step){
+                    const px = mapX(xTick, xmin, xmax);
+                    ctx.beginPath(); ctx.moveTo(px, H-pad.b); ctx.lineTo(px, H-pad.b+6); ctx.stroke();
+                    ctx.fillText(xTick, px, H-pad.b+20);
+                    }
+
+                    // draw vertical lines at a and b
+                    function drawVert(xVal, label){
+                    const px = mapX(xVal, xmin, xmax);
+                    ctx.beginPath(); ctx.setLineDash([6,6]); ctx.moveTo(px, pad.t); ctx.lineTo(px, H-pad.b); ctx.strokeStyle='rgba(30,90,160,0.8)'; ctx.lineWidth=1.2; ctx.stroke(); ctx.setLineDash([]);
+                    // small filled rectangle at x axis
+                    ctx.fillStyle='rgba(30,90,160,0.9)'; ctx.fillRect(px-2, H-pad.b-1, 4, 8);
+                    // label
+                    ctx.font='13px sans-serif'; ctx.textAlign='center'; ctx.fillStyle='#0b3b6a';
+                    ctx.fillText(label, px, H-pad.b+36);
+                    }
+                    drawVert(a, 'a'); drawVert(b, 'b');
+
+                    // title / y label
+                    ctx.save(); ctx.translate(18, H/2); ctx.rotate(-Math.PI/2); ctx.textAlign='center'; ctx.fillStyle='#333'; ctx.font='13px sans-serif'; ctx.fillText('f(x)',0,0); ctx.restore();
+
+                    // x label
+                    ctx.font='13px sans-serif'; ctx.textAlign='right'; ctx.fillStyle='#333'; ctx.fillText('x', W-pad.r, H-pad.b+36);
+
+                    // show numeric probability approx (simple Riemann sum)
+                    let prob = 0; const dx = (xmax-xmin)/(samples-1);
+                    for(let i=0;i<samples;i++){ if(xs[i]>=left && xs[i]<=right) prob += pdf(xs[i],mu,sigma)*dx; }
+                    ctx.font='13px sans-serif'; ctx.textAlign='left'; ctx.fillStyle='#114066';
+                    ctx.fillText('P(a < X < b) ≈ ' + prob.toFixed(4), pad.l, pad.t+14);
+                }
+
+                // initial draw
+                const aInput = document.getElementById('aVal');
+                const bInput = document.getElementById('bVal');
+                const muInput = document.getElementById('muVal');
+                const sigmaInput = document.getElementById('sigmaVal');
+                function redraw(){
+                    const a = parseFloat(aInput.value);
+                    const b = parseFloat(bInput.value);
+                    const mu = parseFloat(muInput.value);
+                    const sigma = Math.max(0.0001, parseFloat(sigmaInput.value));
+                    draw(mu,sigma,a,b);
+                }
+                document.getElementById('redraw').addEventListener('click', redraw);
+                redraw();
+                })();
+                </script>
+
+              <script>
+                function bangppchuantac() {
+                  window.open("standard_normal_table.html", "_blank");
+                }
+              </script>
+              <button onclick="bangppchuantac()">Bảng tra cứu phân phối chuẩn tắc</button>
+
+
+
+        </div>
+ <h3>7. Phân phối mũ</h3>
+         <button onclick="toggleSection('ppmu')">📘 Xem / Ẩn phần lý thuyết</button>
+        <div id="ppmu" class="section-content">   
+            <p>Biến ngẫu nhiên \( X \) được gọi là tuân theo luật phân phối mũ 
+            (<em>exponential distribution</em>), với tham số \( \lambda \, (\lambda > 0) \) 
+            nếu nó có hàm mật độ xác suất có dạng:</p>
+
+            \[
+            f_X(x) =
+            \begin{cases}
+            \lambda e^{-\lambda x}, & \text{nếu } x \ge 0,\\
+            0, & \text{nếu } x < 0.
+            \end{cases}
+            \]
+
+            <p><strong>Tính chất:</strong></p>
+
+            <ul>
+                <li>
+                    Hàm phân phối xác suất:
+                    \[
+                    F_X(x) =
+                    \begin{cases}
+                    1 - e^{-\lambda x}, & \text{nếu } x \ge 0,\\
+                    0, & \text{nếu } x < 0.
+                    \end{cases}
+                    \]
+                </li>
+                <li> \( E[X] = \dfrac{1}{\lambda} \) </li>
+                <li> \( V[X] = \dfrac{1}{\lambda^2} \) </li>
+            </ul> 
+        </div>
+
+
+
+
+
+</div>
+
+  <h2>5. Các dạng bài tập điển hình</h2>
+  <ul>
+    <li> Tìm tham số \(k\) trong một biểu thức của hàm mật độ hay hàm phâm phối.  </li>
+    <li> Cho trước thông tin về biến ngẫu nhiên \(X\) ( mật độ, hàm phân phối). Và cho \(Y=f(X)\). Tìm hàm mật độ ( phân phối) xác suất  của biến ngẫu nhiên Y.</li>
+    <li> Tìm kỳ vọng, phương sai của một biến ngẫu nhiên khi biết hàm mật độ  hoặc hàm phân phối. </li>
+  </ul>
+
+
+
+ 
+  <!-- Phần II -->
+  <h2>6. Bài tập rèn luyện</h2>
+  <ul>
+    <li> <button onclick="btbnnroirac()">Bài tập biến ngẫu nhiên rời rạc</button>
+      <script>
+        function toggleSection(id) {
+          const section = document.getElementById(id);
+          section.style.display = (section.style.display === "none" || section.style.display === "") ? "block" : "none";
+        }
+
+        function btbnnroirac() {
+          window.open("C2BNNRR_BT.html", "_blank");
+        //   window.open("Contents/XSTK/C2BT.html", "_self");
+        }
+      </script>
+    </li>
+    <li>
+      <button onclick="btbnnlientuc()">Bài tập biến ngẫu nhiên liên tục</button>
+      <script>
+        function btbnnlientuc() {
+          window.open("C2BNNLT_BT.html", "_self");
+        }
+      </script> 
+    </li>
+    <li> 
+      <button onclick="ppthongdung()">Bài tập: Một số phân phối xác suất thông dung</button>
+      <script>
+        function ppthongdung() {
+          window.open("C2PPThongDung.html", "_self");
+        }
+      </script> 
+    </li>
+  </ul>
+  
+
+
+
+
+<!-- <script>
+  function backToHome() {
+    window.open("../../index.html", "_self");
+  }
+</script>
+
+<button onclick="backToHome()">⬅ Quay lại Trang chính</button> -->
+
+ <h2> Xem thêm nội dung  <br> 
+    <p><a href="C1PhepThu.html">Chương 1</a>.</p>
+    <p><a href="C2BNN_LT.html">Chương 2</a>.</p>
+    <p><a href="C3Bnnnhieuchieu.html">Chương 3</a>.</p>
+    <p><a href="C4ThongkeUocluongthamsoV2.html">Chương 4</a>.</p>
+    <p><a href="C5Kiemdinhgth.html">Chương 5</a>.</p>    
+ </h2> 
+
+
+</body>
+</html>

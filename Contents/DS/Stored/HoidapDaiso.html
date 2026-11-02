@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hỏi đáp đại số</title>
+
+  <!-- MathJax để hiển thị công thức toán -->
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],  <!-- Cho phép cả $ và \( -->
+        displayMath: [['$$', '$$'], ['\\[', '\\]']] <!-- Công thức nằm riêng 1 dòng -->
+      }
+    };
+  </script>  
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f4f6f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+      margin-bottom: 30px;
+    }
+    .chapter-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      border-top: 4px solid #0055aa;
+    }
+    h2 {
+      color: #0055aa;
+      margin-top: 0;
+    }
+    .btn-toggle {
+      background-color: #e2e8f0;
+      color: #2b6cb0;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      transition: 0.2s;
+      margin-bottom: 10px;
+    }
+    .btn-toggle:hover {
+      background-color: #cbd5e0;
+    }
+    
+    /* MẶC ĐỊNH ẨN KHUNG BÌNH LUẬN */
+    .section-content {
+      display: none;
+      margin-top: 15px;
+      padding-top: 20px;
+      border-top: 2px dashed #e2e8f0;
+    }
+    /* KHI CÓ CLASS 'active' SẼ HIỆN RA (KHẮC PHỤC LỖI TOGLE) */
+    .section-content.active {
+      display: block !important;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    input[type="text"], textarea {
+      padding: 12px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-family: inherit;
+    }
+    .btn-submit {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #0056b3;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 160px;
+      font-weight: bold;
+    }
+    .btn-submit:hover {
+      background-color: #004494;
+    }
+    .comments-list {
+      margin-top: 20px;
+      background: #f8fafc;
+      padding: 15px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    .comment-item {
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .comment-item:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .file-link {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 5px 12px;
+      background-color: #edf2f7;
+      color: #2b6cb0;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 0.85em;
+      font-weight: bold;
+      border: 1px solid #cbd5e0;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Hỏi đáp học phần Đại số</h1>
+
+  <!-- ================= CHƯƠNG 1 ================= -->
+  <div class="chapter-box">
+    <h2>Chương 1: Logic. Tập hợp. Ánh xạ. Số phức.</h2>
+    <p>Nội dung bài giảng chương 1 nằm ở đây...</p>
+    
+    <button class="btn-toggle" onclick="toggleSection('Chuong1')">💬 Ẩn / Hiện Bình luận</button>
+    
+    <div id="Chuong1" class="section-content">
+      <form id="formChuong1" class="form-group">
+        <input type="text" id="nameChuong1" placeholder="Họ và tên sinh viên..." required>
+        <textarea id="textChuong1" placeholder="Nhập câu hỏi (hỗ trợ công thức Toán \(P(A\vert{}B)\))..." rows="3" required></textarea>
+        
+        <button type="submit" class="btn-submit">Gửi câu hỏi</button>
+      </form>
+      <div id="listChuong1" class="comments-list"><i>Đang tải dữ liệu...</i></div>
+    </div>
+  </div>
+
+  <!-- ================= CHƯƠNG 2 ================= -->
+  <div class="chapter-box">
+    <h2>Chương 2: Ma trận, định thức, hệ  phương trình tuyến tính </h2>
+    <p>Nội dung bài giảng chương 2 nằm ở đây...</p>
+    
+    <button class="btn-toggle" onclick="toggleSection('Chuong2')">💬 Ẩn / Hiện Bình luận</button>
+    
+    <div id="Chuong2" class="section-content">
+      <form id="formChuong2" class="form-group">
+        <input type="text" id="nameChuong2" placeholder="Họ và tên sinh viên..." required>
+        <textarea id="textChuong2" placeholder="Nhập câu hỏi..." rows="3" required></textarea>
+        
+        <button type="submit" class="btn-submit">Gửi câu hỏi</button>
+      </form>
+      <div id="listChuong2" class="comments-list"><i>Đang tải dữ liệu...</i></div>
+    </div>
+  </div>
+
+  
+  <!-- ================= CHƯƠNG 3 ================= -->
+  <div class="chapter-box">
+    <h2>Chương 3: Không gian vector </h2>
+    <p>Nội dung bài giảng chương 3 nằm ở đây...</p>
+    
+    <button class="btn-toggle" onclick="toggleSection('Chuong2')">💬 Ẩn / Hiện Bình luận</button>
+    
+    <div id="Chuong3" class="section-content">
+      <form id="formChuong3" class="form-group">
+        <input type="text" id="nameChuong3" placeholder="Họ và tên sinh viên..." required>
+        <textarea id="textChuong3" placeholder="Nhập câu hỏi..." rows="3" required></textarea>
+        
+        <button type="submit" class="btn-submit">Gửi câu hỏi</button>
+      </form>
+      <div id="listChuong3" class="comments-list"><i>Đang tải dữ liệu...</i></div>
+    </div>
+  </div>
+
+
+  
+  <!-- ================= CHƯƠNG 4 ================= -->
+  <div class="chapter-box">
+    <h2>Chương 4: Ánh xạ tuyến tính</h2>
+    <p>Nội dung bài giảng chương 4 nằm ở đây...</p>
+    
+    <button class="btn-toggle" onclick="toggleSection('Chuong4')">💬 Ẩn / Hiện Bình luận</button>
+    
+    <div id="Chuong4" class="section-content">
+      <form id="formChuong4" class="form-group">
+        <input type="text" id="nameChuong4" placeholder="Họ và tên sinh viên..." required>
+        <textarea id="textChuong4" placeholder="Nhập câu hỏi..." rows="3" required></textarea>
+        
+        <button type="submit" class="btn-submit">Gửi câu hỏi</button>
+      </form>
+      <div id="listChuong4" class="comments-list"><i>Đang tải dữ liệu...</i></div>
+    </div>
+  </div>
+
+  
+  <!-- ================= CHƯƠNG 5 ================= -->
+  <div class="chapter-box">
+    <h2>Chương 5: Dạng song tuyến tính, dạng toàn phương, không gian Euclide, đường và mặt bậc hai</h2>
+    <p>Nội dung bài giảng chương 5 nằm ở đây...</p>
+    
+    <button class="btn-toggle" onclick="toggleSection('Chuong5')">💬 Ẩn / Hiện Bình luận</button>
+    
+    <div id="Chuong5" class="section-content">
+      <form id="formChuong5" class="form-group">
+        <input type="text" id="nameChuong5" placeholder="Họ và tên sinh viên..." required>
+        <textarea id="textChuong5" placeholder="Nhập câu hỏi..." rows="3" required></textarea>
+        
+        <button type="submit" class="btn-submit">Gửi câu hỏi</button>
+      </form>
+      <div id="listChuong5" class="comments-list"><i>Đang tải dữ liệu...</i></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= JAVASCRIPT XỬ LÝ ================= -->
+<script>
+  // =====================================================================
+  // DÁN ĐƯỜNG LINK GOOGLE APPS SCRIPT VÀO GIỮA 2 DẤU NHÁY ĐƠN DƯỚI ĐÂY:
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbzTx9hhMQybtZsAuIajdf95hHxuP9yGM74QtOgCjkpYPR1vlt5oPUxnWFhDvP5r7tdqHA/exec';
+  // =====================================================================
+
+  // Hàm ẩn/hiện mục bình luận an toàn
+  function toggleSection(id) {
+    const section = document.getElementById(id);
+    if (section) {
+      section.classList.toggle('active');
+    }
+  }
+
+  // Hàm thiết lập hệ thống comment cho Google Sheets (Có chia Tab)
+  function setupCommentSystem(config) {
+    const { chapter, formId, nameId, textId, fileId, listId } = config;
+
+    function loadComments() {
+      fetch(`${scriptURL}?chapter=${encodeURIComponent(chapter)}`)
+        .then(res => res.json())
+        .then(data => {
+          let html = '';
+          data.reverse().forEach(c => {
+            let fileHTML = '';
+            if (c.fileUrl && c.fileUrl.startsWith('http')) {
+              fileHTML = `<div><a href="${c.fileUrl}" target="_blank" class="file-link">📎 Xem tệp đính kèm</a></div>`;
+            }
+
+            html += `<div class="comment-item">
+                        <strong style="color: #2b6cb0;">${c.name}</strong> 
+                        <span style="font-size: 0.85em; color: #888; margin-left: 10px;">${c.time}</span>
+                        <div style="margin-top: 5px; white-space: pre-wrap;">${c.comment}</div>
+                        ${fileHTML}
+                     </div>`;
+          });
+          document.getElementById(listId).innerHTML = html || '<i>Chưa có bình luận nào ở chương này.</i>';
+          
+          // Dịch công thức Toán sau khi tải xong bình luận
+          if (window.MathJax && MathJax.typesetPromise) {
+            MathJax.typesetPromise();
+          }
+        })
+        .catch(() => {
+          document.getElementById(listId).innerHTML = '<i style="color:red;">Lỗi kết nối. Vui lòng kiểm tra lại link scriptURL.</i>';
+        });
+    }
+
+    document.getElementById(formId).addEventListener('submit', function(e) {
+      e.preventDefault();
+      
+      const name = document.getElementById(nameId).value;
+      const comment = document.getElementById(textId).value;
+      const fileInput = document.getElementById(fileId);
+      const file = fileInput ? fileInput.files[0] : null;
+      const submitBtn = this.querySelector('button');
+      
+      submitBtn.innerText = 'Đang gửi...';
+      submitBtn.disabled = true;
+
+      const formData = new URLSearchParams();
+      formData.append('chapter', chapter); // Gửi tên Tab Google Sheets
+      formData.append('name', name);
+      formData.append('comment', comment);
+
+      function sendData(data) {
+        fetch(scriptURL, { method: 'POST', body: data, mode: 'no-cors' })
+        .then(() => {
+          document.getElementById(textId).value = '';
+          if (fileInput) fileInput.value = '';
+          submitBtn.innerText = 'Gửi câu hỏi';
+          submitBtn.disabled = false;
+          setTimeout(loadComments, 1000); 
+        })
+        .catch(() => {
+          alert('Có lỗi xảy ra khi gửi bài.');
+          submitBtn.innerText = 'Gửi câu hỏi';
+          submitBtn.disabled = false;
+        });
+      }
+
+      // Xử lý gửi file (nếu có)
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          formData.append('fileData', evt.target.result);
+          formData.append('fileName', file.name);
+          formData.append('fileType', file.type);
+          sendData(formData);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        sendData(formData);
+      }
+    });
+
+    // Tự động tải dữ liệu ban đầu
+    loadComments();
+  }
+
+  // --- KÍCH HOẠT HỆ THỐNG CHO TỪNG CHƯƠNG ---
+  // Tham số 'chapter' chính là tên Tab (Trang tính) trong file Google Sheets của thầy.
+  setupCommentSystem({ chapter: 'Chuong1', formId: 'formChuong1', nameId: 'nameChuong1', textId: 'textChuong1', fileId: 'fileChuong1', listId: 'listChuong1' });
+  setupCommentSystem({ chapter: 'Chuong2', formId: 'formChuong2', nameId: 'nameChuong2', textId: 'textChuong2', fileId: 'fileChuong2', listId: 'listChuong2' });
+  setupCommentSystem({ chapter: 'Chuong3', formId: 'formChuong3', nameId: 'nameChuong3', textId: 'textChuong3', fileId: 'fileChuong3', listId: 'listChuong3' });
+  setupCommentSystem({ chapter: 'Chuong4', formId: 'formChuong4', nameId: 'nameChuong4', textId: 'textChuong4', fileId: 'fileChuong4', listId: 'listChuong4' });
+  setupCommentSystem({ chapter: 'Chuong5', formId: 'formChuong5', nameId: 'nameChuong5', textId: 'textChuong5', fileId: 'fileChuong5', listId: 'listChuong5' });
+</script>
+
+</body>
+</html>

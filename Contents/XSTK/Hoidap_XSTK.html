@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hỏi đáp Xác suất Thống kê</title>
+
+  <!-- MathJax để hiển thị công thức toán -->
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],  
+        displayMath: [['$$', '$$'], ['\\[', '\\]']] 
+      }
+    };
+  </script>  
+
+  <style>
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      background-color: #f4f6f9;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+      margin-bottom: 30px;
+    }
+    .chapter-box {
+      background: #fff;
+      border-radius: 10px;
+      padding: 25px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+      border-top: 4px solid #0055aa;
+    }
+    h2 {
+      color: #0055aa;
+      margin-top: 0;
+    }
+    .btn-toggle {
+      background-color: #e2e8f0;
+      color: #2b6cb0;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: bold;
+      transition: 0.2s;
+      margin-bottom: 10px;
+    }
+    .btn-toggle:hover {
+      background-color: #cbd5e0;
+    }
+    
+    .section-content {
+      display: none;
+      margin-top: 15px;
+      padding-top: 20px;
+      border-top: 2px dashed #e2e8f0;
+    }
+    .section-content.active {
+      display: block !important;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    input[type="text"], textarea {
+      padding: 12px;
+      font-size: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-family: inherit;
+    }
+    .btn-submit {
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #0056b3;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 160px;
+      font-weight: bold;
+    }
+    .btn-submit:hover {
+      background-color: #004494;
+    }
+    .comments-list {
+      margin-top: 20px;
+      background: #fff;
+      padding: 15px;
+      border-radius: 6px;
+      border: 1px solid #e2e8f0;
+    }
+    
+    /* CSS CHO PHẦN BÌNH LUẬN ĐỆ QUY */
+    .comment-node {
+      margin-top: 15px;
+    }
+    .comment-level-0 {
+      border-bottom: 1px solid #e2e8f0;
+      padding-bottom: 15px;
+      margin-bottom: 15px;
+    }
+    .comment-level-0:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    .comment-children {
+      margin-left: 20px;
+      padding-left: 15px;
+      border-left: 2px solid #cbd5e0;
+    }
+
+    .file-link {
+      display: inline-block;
+      margin-top: 8px;
+      padding: 5px 12px;
+      background-color: #edf2f7;
+      color: #2b6cb0;
+      text-decoration: none;
+      border-radius: 4px;
+      font-size: 0.85em;
+      font-weight: bold;
+      border: 1px solid #cbd5e0;
+    }
+
+    .btn-reply {
+      background: none;
+      border: none;
+      color: #4a5568;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: bold;
+      padding: 0;
+      margin-top: 8px;
+    }
+    .btn-reply:hover {
+      text-decoration: underline;
+      color: #2b6cb0;
+    }
+    
+    .reply-form-container {
+      display: none;
+      margin-top: 10px;
+      background: #edf2f7;
+      padding: 12px;
+      border-radius: 6px;
+    }
+    .reply-form-container.active {
+      display: block;
+    }
+    .reply-form-container input, .reply-form-container textarea {
+      padding: 8px;
+      font-size: 14px;
+    }
+    .reply-form-container .btn-submit {
+      font-size: 14px;
+      padding: 8px 15px;
+      width: auto;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>Hỏi đáp học phần Xác suất Thống kê</h1>
+
+  <!-- ================= CHƯƠNG 1 ================= -->
+  <div class="chapter-box">
+    <h2>Chương 1: Sự kiện. Quan hệ các sự kiện.</h2>
+    <p>Nội dung bài giảng chương 1...</p>
+    <button class="btn-toggle" onclick="toggleSection('Chuong1')">💬 Ẩn / Hiện Bình luận</button>
+    
+    <div id="Chuong1" class="section-content">
+      <form id="formChuong1" class="form-group">
+        <input type="text" id="nameChuong1" placeholder="Họ và tên sinh viên..." required>
+        <textarea id="textChuong1" placeholder="Nhập câu hỏi (hỗ trợ công thức Toán \(P(A\vert{}B)\))..." rows="3" required></textarea>
+        <button type="submit" class="btn-submit">Gửi câu hỏi</button>
+      </form>
+      <div id="listChuong1" class="comments-list"><i>Đang tải dữ liệu...</i></div>
+    </div>
+  </div>
+
+  <!-- ================= CHƯƠNG 2 ================= -->
+  <div class="chapter-box">
+    <h2>Chương 2: Biến ngẫu nhiên</h2>
+    <p>Nội dung bài giảng chương 2...</p>
+    <button class="btn-toggle" onclick="toggleSection('Chuong2')">💬 Ẩn / Hiện Bình luận</button>
+    
+    <div id="Chuong2" class="section-content">
+      <form id="formChuong2" class="form-group">
+        <input type="text" id="nameChuong2" placeholder="Họ và tên sinh viên..." required>
+        <textarea id="textChuong2" placeholder="Nhập câu hỏi..." rows="3" required></textarea>
+        <button type="submit" class="btn-submit">Gửi câu hỏi</button>
+      </form>
+      <div id="listChuong2" class="comments-list"><i>Đang tải dữ liệu...</i></div>
+    </div>
+  </div>
+
+  <!-- ================= CHƯƠNG 3 ================= -->
+  <div class="chapter-box">
+    <h2>Chương 3: Biến ngẫu nhiên nhiều chiều</h2>
+    <p>Nội dung bài giảng chương 3...</p>
+    <button class="btn-toggle" onclick="toggleSection('Chuong3')">💬 Ẩn / Hiện Bình luận</button>
+    
+    <div id="Chuong3" class="section-content">
+      <form id="formChuong3" class="form-group">
+        <input type="text" id="nameChuong3" placeholder="Họ và tên sinh viên..." required>
+        <textarea id="textChuong3" placeholder="Nhập câu hỏi..." rows="3" required></textarea>
+        <button type="submit" class="btn-submit">Gửi câu hỏi</button>
+      </form>
+      <div id="listChuong3" class="comments-list"><i>Đang tải dữ liệu...</i></div>
+    </div>
+  </div>
+
+  <!-- ================= CHƯƠNG 4 ================= -->
+  <div class="chapter-box">
+    <h2>Chương 4: Ước lượng thống kê</h2>
+    <p>Nội dung bài giảng chương 4...</p>
+    <button class="btn-toggle" onclick="toggleSection('Chuong4')">💬 Ẩn / Hiện Bình luận</button>
+    
+    <div id="Chuong4" class="section-content">
+      <form id="formChuong4" class="form-group">
+        <input type="text" id="nameChuong4" placeholder="Họ và tên sinh viên..." required>
+        <textarea id="textChuong4" placeholder="Nhập câu hỏi..." rows="3" required></textarea>
+        <button type="submit" class="btn-submit">Gửi câu hỏi</button>
+      </form>
+      <div id="listChuong4" class="comments-list"><i>Đang tải dữ liệu...</i></div>
+    </div>
+  </div>
+
+  <!-- ================= CHƯƠNG 5 ================= -->
+  <div class="chapter-box">
+    <h2>Chương 5: Kiểm định giả thuyết thống kê</h2>
+    <p>Nội dung bài giảng chương 5...</p>
+    <button class="btn-toggle" onclick="toggleSection('Chuong5')">💬 Ẩn / Hiện Bình luận</button>
+    
+    <div id="Chuong5" class="section-content">
+      <form id="formChuong5" class="form-group">
+        <input type="text" id="nameChuong5" placeholder="Họ và tên sinh viên..." required>
+        <textarea id="textChuong5" placeholder="Nhập câu hỏi..." rows="3" required></textarea>
+        <button type="submit" class="btn-submit">Gửi câu hỏi</button>
+      </form>
+      <div id="listChuong5" class="comments-list"><i>Đang tải dữ liệu...</i></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ================= JAVASCRIPT XỬ LÝ ================= -->
+<script>
+  // Đã cập nhật Script URL mới nhất của bạn
+  const scriptURL = 'https://script.google.com/macros/s/AKfycbxmKUQAZkIfPUG51BMAn6nl-dbR_D32ehzA1Xtd8lVEEa7-_hXWAJRoCttvObBh-deGOw/exec';
+  
+  window._reloaders = {}; 
+
+  function toggleSection(id) {
+    const section = document.getElementById(id);
+    if (section) section.classList.toggle('active');
+  }
+
+  // Mở đóng khung phản hồi dựa trên safeId (ID đã loại bỏ ký tự đặc biệt)
+  function toggleReplyForm(chapter, safeCommentId) {
+    const form = document.getElementById(`reply-form-${chapter}-${safeCommentId}`);
+    if (form) form.classList.toggle('active');
+  }
+
+  // Hàm Gửi Phản Hồi
+  function submitReply(event, chapter, originalParentId) {
+    event.preventDefault();
+    const form = event.target;
+    const nameInput = form.querySelector('.reply-name');
+    const textInput = form.querySelector('.reply-text');
+    const submitBtn = form.querySelector('.btn-submit');
+    
+    submitBtn.innerText = 'Đang gửi...';
+    submitBtn.disabled = true;
+
+    const formData = new URLSearchParams();
+    formData.append('chapter', chapter);
+    formData.append('name', nameInput.value);
+    formData.append('comment', textInput.value);
+    formData.append('parentId', originalParentId); // Vẫn gửi lên Google Sheet thời gian gốc để khớp dữ liệu
+
+    fetch(scriptURL, { method: 'POST', body: formData, mode: 'no-cors' })
+      .then(() => {
+        nameInput.value = '';
+        textInput.value = '';
+        submitBtn.innerText = 'Gửi phản hồi';
+        submitBtn.disabled = false;
+        
+        if (window._reloaders[chapter]) {
+          window._reloaders[chapter]();
+        }
+      })
+      .catch(() => {
+        alert('Có lỗi xảy ra khi gửi phản hồi.');
+        submitBtn.innerText = 'Gửi phản hồi';
+        submitBtn.disabled = false;
+      });
+  }
+
+  function setupCommentSystem(config) {
+    const { chapter, formId, nameId, textId, fileId, listId } = config;
+
+    function loadComments() {
+      fetch(`${scriptURL}?chapter=${encodeURIComponent(chapter)}`)
+        .then(res => res.json())
+        .then(data => {
+          const commentsByParent = {};
+          
+          data.forEach(c => {
+            const id = c.id || c.time; 
+            c.id = id;
+            // Tạo một safeId để làm thuộc tính ID HTML (chỉ lấy số và chữ, bỏ dấu cách, gạch chéo, hai chấm...)
+            c.safeId = id.toString().replace(/[^a-zA-Z0-9]/g, '_');
+            
+            const parentKey = (c.parentId && c.parentId !== "null" && c.parentId !== "") ? c.parentId : "root";
+            
+            if (!commentsByParent[parentKey]) {
+              commentsByParent[parentKey] = [];
+            }
+            commentsByParent[parentKey].push(c);
+          });
+
+          if (commentsByParent["root"]) {
+            commentsByParent["root"].reverse();
+          }
+
+          // Hàm đệ quy vẽ cây bình luận
+          function renderCommentsTree(parentId, level) {
+            const children = commentsByParent[parentId];
+            if (!children || children.length === 0) return '';
+
+            let html = '';
+            children.forEach(c => {
+              let fileHTML = '';
+              if (c.fileUrl && c.fileUrl.startsWith('http')) {
+                fileHTML = `<div><a href="${c.fileUrl}" target="_blank" class="file-link">📎 Xem tệp đính kèm</a></div>`;
+              }
+
+              const nameColor = level === 0 ? '#0056b3' : '#2b6cb0';
+
+              html += `
+                <div class="comment-node comment-level-${level}">
+                  <strong style="color: ${nameColor};">${c.name}</strong> 
+                  <span style="font-size: 0.8em; color: #888; margin-left: 10px;">${c.time}</span>
+                  <div style="margin-top: 5px; white-space: pre-wrap;">${c.comment}</div>
+                  ${fileHTML}
+                  
+                  <button class="btn-reply" onclick="toggleReplyForm('${chapter}', '${c.safeId}')">↩ Phản hồi</button>
+
+                  <div class="reply-form-container" id="reply-form-${chapter}-${c.safeId}">
+                    <form class="form-group" onsubmit="submitReply(event, '${chapter}', '${c.id}')">
+                      <input type="text" class="reply-name" placeholder="Họ và tên..." required>
+                      <textarea class="reply-text" placeholder="Nhập câu trả lời..." rows="2" required></textarea>
+                      <button type="submit" class="btn-submit">Gửi</button>
+                    </form>
+                  </div>
+                  
+                  <div class="comment-children">
+                    ${renderCommentsTree(c.id, level + 1)}
+                  </div>
+                </div>
+              `;
+            });
+            return html;
+          }
+
+          const finalHtml = renderCommentsTree("root", 0);
+          document.getElementById(listId).innerHTML = finalHtml || '<i>Chưa có bình luận nào ở chương này.</i>';
+          
+          if (window.MathJax && MathJax.typesetPromise) {
+            MathJax.typesetPromise();
+          }
+        })
+        .catch(() => {
+          document.getElementById(listId).innerHTML = '<i style="color:red;">Lỗi kết nối hoặc đang chờ phản hồi từ máy chủ.</i>';
+        });
+    }
+
+    window._reloaders[chapter] = loadComments;
+
+    // Gửi bình luận gốc
+    document.getElementById(formId).addEventListener('submit', function(e) {
+      e.preventDefault();
+      const name = document.getElementById(nameId).value;
+      const comment = document.getElementById(textId).value;
+      const fileInput = document.getElementById(fileId);
+      const file = fileInput ? fileInput.files[0] : null;
+      const submitBtn = this.querySelector('button');
+      
+      submitBtn.innerText = 'Đang gửi...';
+      submitBtn.disabled = true;
+
+      const formData = new URLSearchParams();
+      formData.append('chapter', chapter);
+      formData.append('name', name);
+      formData.append('comment', comment);
+      formData.append('parentId', ''); // Gốc thì không có parentId
+
+      function sendData(data) {
+        fetch(scriptURL, { method: 'POST', body: data, mode: 'no-cors' })
+        .then(() => {
+          document.getElementById(textId).value = '';
+          if (fileInput) fileInput.value = '';
+          submitBtn.innerText = 'Gửi câu hỏi';
+          submitBtn.disabled = false;
+          setTimeout(loadComments, 1000); 
+        })
+        .catch(() => {
+          alert('Có lỗi xảy ra khi gửi bài.');
+          submitBtn.innerText = 'Gửi câu hỏi';
+          submitBtn.disabled = false;
+        });
+      }
+
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          formData.append('fileData', evt.target.result);
+          formData.append('fileName', file.name);
+          formData.append('fileType', file.type);
+          sendData(formData);
+        };
+        reader.readAsDataURL(file);
+      } else {
+        sendData(formData);
+      }
+    });
+
+    loadComments();
+  }
+
+  // Khởi tạo các chương
+  setupCommentSystem({ chapter: 'XS_C1', formId: 'formChuong1', nameId: 'nameChuong1', textId: 'textChuong1', fileId: 'fileChuong1', listId: 'listChuong1' });
+  setupCommentSystem({ chapter: 'XS_C2', formId: 'formChuong2', nameId: 'nameChuong2', textId: 'textChuong2', fileId: 'fileChuong2', listId: 'listChuong2' });
+  setupCommentSystem({ chapter: 'XS_C3', formId: 'formChuong3', nameId: 'nameChuong3', textId: 'textChuong3', fileId: 'fileChuong3', listId: 'listChuong3' });
+  setupCommentSystem({ chapter: 'XS_C4', formId: 'formChuong4', nameId: 'nameChuong4', textId: 'textChuong4', fileId: 'fileChuong4', listId: 'listChuong4' });
+  setupCommentSystem({ chapter: 'XS_C5', formId: 'formChuong5', nameId: 'nameChuong5', textId: 'textChuong5', fileId: 'fileChuong5', listId: 'listChuong5' });
+</script>
+
+</body>
+</html>
