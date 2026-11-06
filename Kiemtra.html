@@ -3,7 +3,24 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hệ thống Trắc nghiệm - Ts. Khổng Văn Hải</title>
+  <title>Kiểm tra </title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',Roboto,Arial,sans-serif;background:#eef5ff;color:#16324f;line-height:1.6}
+    header{background:linear-gradient(135deg,#0b5ed7,#1e90ff);color:#fff;text-align:center;padding:36px 16px 24px}
+    header h1{font-size:2rem;margin-bottom:6px}
+    header p{opacity:.9}
+    nav{background:#0a4aa8;display:flex;justify-content:center;flex-wrap:wrap;position:sticky;top:0;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+    nav a{color:#dbeafe;text-decoration:none;padding:14px 32px;font-weight:600;border-bottom:4px solid transparent;transition:.2s}
+    nav a:hover{background:#0d5bc9;color:#fff}
+    nav a.active{color:#fff;background:#1e90ff;border-bottom-color:#fff}
+    main{max-width:900px;margin:28px auto;padding:0 16px}
+    .card{background:#fff;border-radius:12px;padding:28px;box-shadow:0 4px 14px rgba(11,94,215,.12);border-left:6px solid #1e90ff}
+    .card h2{color:#0b5ed7;margin-bottom:12px}
+    .card ul{margin:12px 0 0 22px}
+    footer{text-align:center;color:#4b6584;padding:24px;font-size:.9rem}
+  </style>
+
   
   <script>
     MathJax = { tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] }, svg: { fontCache: 'global' } };
@@ -13,7 +30,8 @@
   <style>
     body { font-family: system-ui, -apple-system, sans-serif; background: #f0f4f8; color: #333; margin: 0; padding: 20px; line-height: 1.6; }
     .container { max-width: 900px; margin: 0 auto; user-select: none; }
-    h1 { text-align: center; color: #004080; font-size: 1.8rem; margin-bottom: 5px; }
+    /* h1 { text-align: center; color: #004080; font-size: 1.8rem; margin-bottom: 5px; } */
+    h1 { text-align: center; color: #003366; margin-bottom: 10px; }
     .author { text-align: center; font-style: italic; color: #555; margin-bottom: 30px; font-size: 0.95rem; }
     
     .card { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border-top: 4px solid #0055aa; margin-bottom: 20px; }
@@ -40,7 +58,6 @@
     .question { background: #fff; border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; margin-bottom: 15px; }
     .question p { font-weight: normal; margin-top: 0; font-size: 1.05rem; }
     .question p strong { font-weight: bold; }
-    /* Nội dung câu hỏi/đáp án mặc định là chữ thường; chỉ thẻ <strong> mới in đậm. */
     .question strong { font-weight: bold; }
     .question label { display: block; margin: 10px 0; cursor: pointer; font-weight: normal; padding: 8px; border-radius: 6px; transition: 0.2s; }
     .question label:hover { background: #f1f5f9; }
@@ -116,17 +133,25 @@
     @media print { body { display: none !important; } }
   </style>
 </head>
+<h1>Lớp thầy Khổng Văn Hải</h1>
+</header>
+<nav><a href="Diemdanh.html" > Điểm danh</a>
+     <a href="Thacmac.html" > Thắc mắc</a>
+     <a href="Hoidap.html" >Hỏi đáp</a>
+     <a href="Kiemtra.html" class="active">Kiểm tra</a>
+</nav>
+<body>
+<body>
 <body>
 
 <div id="timerDisplay">⏳ 00:00</div>
 <div class="container">
-  <h1>Hệ Thống Trắc Nghiệm Trực Tuyến</h1>
-  <!-- <p class="author">Khổng Văn Hải - Khoa Toán Tin, ĐHBK Hà Nội</p> -->
+  
 
   <!-- MÀN HÌNH 1: ĐĂNG NHẬP -->
   <div id="loginScreen" style="max-width: 450px; margin: 0 auto;">
     <div class="card">
-      <h2 class="card-title" style="text-align: center;">Đăng nhập hệ thống</h2>
+      <h2 class="card-title" style="text-align: center;">🔐 Đăng nhập hệ thống</h2>
       <label>Mã số sinh viên:</label>
       <input type="text" id="txtMSSV" placeholder="Nhập MSSV..." required>
       <label>Mật khẩu đăng nhập:</label>
@@ -144,6 +169,8 @@
       <p id="loginError" style="color: red; text-align: center; display: none; margin-top: 15px; font-weight: bold;"></p>
     </div>
   </div>
+
+
 
   <!-- MÀN HÌNH 2: BẢNG ĐIỀU KHIỂN (DASHBOARD) -->
   <div id="dashboardScreen" style="display: none;">
@@ -183,16 +210,22 @@
 
     <div class="card">
       <h2 class="card-title">Chọn Bài Kiểm Tra</h2>
-      <label>Chương:</label>
-      <select id="chapterSelect" onchange="updateSections()">
-        <option value="1">Chương 1: Sự kiện ngẫu nhiên và phép tính xác suất</option>
-        <option value="2">Chương 2: Biến ngẫu nhiên và luật phân phối</option>
-        <option value="3">Chương 3: Biến ngẫu nhiên nhiều chiều</option>
-        <option value="4">Chương 4: Ước lượng tham số</option>
-        <option value="5">Chương 5: Kiểm định giả thuyết thống kê</option>
+      
+      <!-- Bước 1: Chọn môn học -->
+      <label>Môn học:</label>
+      <select id="subjectSelect" onchange="updateChapters()">
+        <option value="gt1">Giải tích 1</option>
+        <option value="gt3">Giải tích 3</option>
+        <option value="xstk" selected>Xác suất thống kê</option>
+        <option value="algebra">Đại số</option>
       </select>
 
-      <label>Phần bài tập (Tab):</label>
+      <!-- Bước 2: Chọn chương -->
+      <label>Chương:</label>
+      <select id="chapterSelect" onchange="updateSections()"></select>
+
+      <!-- Bước 3: Chọn mục nội dung -->
+      <label>Mục nội dung (Phần bài tập/Tab):</label>
       <select id="sectionSelect"></select>
 
       <label style="color: #0055aa; font-size: 15px;">🔒 Mật khẩu bài kiểm tra (Giáo viên cấp):</label>
@@ -228,11 +261,7 @@
 
 <script>
   // =========================================================================
-  // Một Web App GAS mới xử lý toàn bộ các action:
-  // login (trả thêm studentSheetName), changePassword, resetPassword, getQuestions, submitResult.
-  // URL này là URL sau khi Deploy mã GAS đã tích hợp mà thầy vừa cung cấp.
   const API_URL = 'https://script.google.com/macros/s/AKfycbx3g8Eg_upf04MSFaGPenEBI-j0zMJhM-myaSFEgfHCpJZdr5i-bUSxE9UoDoot5FYf2g/exec';
-
   const EXAM_TIME_MINUTES = 15;
   // =========================================================================
 
@@ -242,26 +271,145 @@
   let isQuizActive = false;
   const ALPHABET = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
-  const curriculum = {
-    "1": [{ val: "1.0", text: "1.0 - LT sự kiện ngẫu nhiên" }, { val: "1.1", text: "1.1 - Bài tập cơ bản" }, { val: "1.3", text: "1.3 - BT CT cộng, xác suất điều kiện, CT nhân" }, { val: "1.4", text: "1.4 - BT Công thức xác suất toàn phần" }, { val: "1.5", text: "1.5 - BT Công thức Bayes" }],
-    "2": [{ val: "2.0", text: "2.0 - LT Biến ngẫu nhiên và luật phân phối" }, { val: "2.1", text: "2.1 - BT Biến ngẫu nhiên rời rạc" }, { val: "2.2", text: "2.2 - BT Biến ngẫu nhiên liên tục" }],
-    "3": [{ val: "3.0", text: "3.0 - LT Biến ngẫu nhiên nhiều chiều" }, { val: "3.1", text: "3.1 - BT Biến ngẫu nhiên nhiều chiều rời rạc" }, { val: "3.2", text: "3.2 - BT Biến ngẫu nhiên nhiều chiều liên tục" }],
-    "4": [{ val: "4.0", text: "4.0 - LT Ước lượng tham số" }, { val: "4.1", text: "4.1 - BT Ước lượng tham số cho kỳ vọng, phương sai đã biết" }, { val: "4.2", text: "4.2 - BT Ước lượng tham số cho kỳ vọng, phương sai chưa biết" }, { val: "4.3", text: "4.3 - BT Ước lượng tham số cho kỳ vọng, mẫu lớn" }, { val: "4.4", text: "4.4 - BT Ước lượng tham số cho tỷ lệ" }],
-    "5": [{ val: "5.0", text: "5.0 - LT Kiểm định giả thuyết thống kê" }, { val: "5.1", text: "5.1 - BT Kiểm định một mẫu thử" }, { val: "5.2", text: "5.2 - BT Kiểm định hai mẫu thử" }]
+  // Cấu trúc phân cấp: Môn học -> Chương -> Mục nội dung
+  const subjectsData = {
+    "gt1": {
+      name: "Giải tích 1",
+      chapters: {
+        "1": {
+          name: "Chương 1: Giới hạn và liên tục",
+          sections: [
+            { val: "GT1C1.1", text: "1.1 - Dãy số và giới hạn dãy số" },
+            { val: "GT1C1.2", text: "1.2 - Hàm số và giới hạn hàm số" }
+          ]
+        },
+        "2": {
+          name: "Chương 2: Đạo hàm và vi phân",
+          sections: [
+            { val: "GT1C2.1", text: "2.1 - Đạo hàm cấp 1 và cấp cao" },
+            { val: "GT1C2.2", text: "2.2 - Quy tắc L'Hopital và ứng dụng" }
+          ]
+        }
+      }
+    },
+    "gt3": {
+      name: "Giải tích 3",
+      chapters: {
+        "1": {
+          name: "Chương 1: Phương trình vi phân",
+          sections: [
+            { val: "GT3C1.1", text: "1.1 - Phương trình vi phân cấp 1" },
+            { val: "GT3C1.2", text: "1.2 - Phương trình vi phân cấp 2" }
+          ]
+        }
+      }
+    },
+    "xstk": {
+      name: "Xác suất thống kê",
+      chapters: {
+        "1": {
+          name: "Chương 1: Sự kiện ngẫu nhiên và phép tính xác suất",
+          sections: [
+            { val: "1.0", text: "1.0 - LT sự kiện ngẫu nhiên" },
+            { val: "1.1", text: "1.1 - Bài tập cơ bản" },
+            { val: "1.3", text: "1.3 - BT CT cộng, xác suất điều kiện, CT nhân" },
+            { val: "1.4", text: "1.4 - BT Công thức xác suất toàn phần" },
+            { val: "1.5", text: "1.5 - BT Công thức Bayes" }
+          ]
+        },
+        "2": {
+          name: "Chương 2: Biến ngẫu nhiên và luật phân phối",
+          sections: [
+            { val: "2.0", text: "2.0 - LT Biến ngẫu nhiên và luật phân phối" },
+            { val: "2.1", text: "2.1 - BT Biến ngẫu nhiên rời rạc" },
+            { val: "2.2", text: "2.2 - BT Biến ngẫu nhiên liên tục" }
+          ]
+        },
+        "3": {
+          name: "Chương 3: Biến ngẫu nhiên nhiều chiều",
+          sections: [
+            { val: "3.0", text: "3.0 - LT Biến ngẫu nhiên nhiều chiều" },
+            { val: "3.1", text: "3.1 - BT Biến ngẫu nhiên nhiều chiều rời rạc" },
+            { val: "3.2", text: "3.2 - BT Biến ngẫu nhiên nhiều chiều liên tục" }
+          ]
+        },
+        "4": {
+          name: "Chương 4: Ước lượng tham số",
+          sections: [
+            { val: "4.0", text: "4.0 - LT Ước lượng tham số" },
+            { val: "4.1", text: "4.1 - BT Ước lượng tham số cho kỳ vọng, phương sai đã biết" },
+            { val: "4.2", text: "4.2 - BT Ước lượng tham số cho kỳ vọng, phương sai chưa biết" },
+            { val: "4.3", text: "4.3 - BT Ước lượng tham số cho kỳ vọng, mẫu lớn" },
+            { val: "4.4", text: "4.4 - BT Ước lượng tham số cho tỷ lệ" }
+          ]
+        },
+        "5": {
+          name: "Chương 5: Kiểm định giả thuyết thống kê",
+          sections: [
+            { val: "5.0", text: "5.0 - LT Kiểm định giả thuyết thống kê" },
+            { val: "5.1", text: "5.1 - BT Kiểm định một mẫu thử" },
+            { val: "5.2", text: "5.2 - BT Kiểm định hai mẫu thử" }
+          ]
+        }
+      }
+    },
+    "algebra": {
+      name: "Đại số",
+      chapters: {
+        "1": {
+          name: "Chương 1: Ma trận - Định thức",
+          sections: [
+            { val: "DSC1.1", text: "1.1 - Tính định thức" },
+            { val: "DSC1.2", text: "1.2 - Phép toán ma trận và ma trận nghịch đảo" }
+          ]
+        },
+        "2": {
+          name: "Chương 2: Hệ phương trình tuyến tính",
+          sections: [
+            { val: "DSC2.1", text: "2.1 - Giải hệ phương trình bằng phương pháp Gauss" },
+            { val: "DSC2.2", text: "2.2 - Không gian véc tơ" }
+          ]
+        }
+      }
+    }
   };
 
+  function updateChapters() {
+    const subjectKey = document.getElementById("subjectSelect").value;
+    const chapterSelect = document.getElementById("chapterSelect");
+    chapterSelect.innerHTML = "";
+    
+    const subjectObj = subjectsData[subjectKey];
+    if (subjectObj && subjectObj.chapters) {
+      Object.keys(subjectObj.chapters).forEach(chapKey => {
+        let chap = subjectObj.chapters[chapKey];
+        chapterSelect.appendChild(new Option(chap.name, chapKey));
+      });
+    }
+    updateSections();
+  }
+
   function updateSections() {
-    const chapter = document.getElementById("chapterSelect").value;
+    const subjectKey = document.getElementById("subjectSelect").value;
+    const chapterKey = document.getElementById("chapterSelect").value;
     const secSelect = document.getElementById("sectionSelect");
     secSelect.innerHTML = "";
-    (curriculum[chapter] || []).forEach(item => { secSelect.appendChild(new Option(item.text, item.val)); });
+
+    const subjectObj = subjectsData[subjectKey];
+    if (subjectObj && subjectObj.chapters && subjectObj.chapters[chapterKey]) {
+      let sections = subjectObj.chapters[chapterKey].sections || [];
+      sections.forEach(item => {
+        secSelect.appendChild(new Option(item.text, item.val));
+      });
+    }
   }
-  updateSections();
+
+  // Khởi tạo danh sách chương và mục khi tải trang
+  updateChapters();
 
   function toggleWarning() { document.getElementById('cheatWarning').style.display = document.getElementById('quizMode').value === 'exam' ? 'block' : 'none'; }
   function togglePasswordSection() { let sec = document.getElementById('passwordSection'); sec.style.display = sec.style.display === 'block' ? 'none' : 'block'; }
 
-  // Gọi một trong hai Web App GAS và đọc phản hồi theo dạng JSON.
   async function callGoogleAPI(payload) {
     try {
       const response = await fetch(API_URL, {
@@ -396,13 +544,10 @@
       student.name = res.studentName || '';
       student.email = res.email || '';
       student.className = res.className || '';
-      // GAS trả về tên tab lớp chứa MSSV. classTabName là tên thay thế tương thích.
       student.studentSheetName = String(
         res.studentSheetName || res.classTabName || ''
       ).trim();
 
-      // Không cho bắt đầu bài kiểm tra nếu GAS chưa xác định được tab lớp,
-      // tránh ghi kết quả với nhãn "Chưa xác định tab".
       if (!student.studentSheetName) {
         err.textContent = 'Đăng nhập thành công nhưng máy chủ chưa trả về tên tab lớp. Thầy/cô cần cập nhật phiên bản GAS mới và đăng nhập lại.';
         err.style.display = 'block';
@@ -412,7 +557,6 @@
         return;
       }
 
-      // Nếu danh sách không có cột Lớp riêng, dùng tên tab làm tên lớp.
       if (!student.className) student.className = student.studentSheetName;
 
       document.getElementById('infoMSSV').textContent = student.id;
@@ -443,13 +587,6 @@
     document.getElementById('dashboardScreen').style.display = 'none';
     document.getElementById('loginScreen').style.display = 'block';
     resetPasswordVisibility('txtPassword');
-  }
-
-  function togglePasswordSection() {
-    const section = document.getElementById('passwordSection');
-    const opening = section.style.display !== 'block';
-    section.style.display = opening ? 'block' : 'none';
-    if (!opening) clearPasswordFields();
   }
 
   function clearPasswordFields() {
@@ -545,7 +682,6 @@
     quizData.forEach((q, qIndex) => {
       let qNum = qIndex < 9 ? '0' + (qIndex + 1) : (qIndex + 1);
       
-      // Đếm số lượng đáp án đúng để quyết định hiển thị Radio hay Checkbox
       let correctCount = q.options.filter(opt => opt.isCorrect).length;
       let isMulti = correctCount > 1;
       let inputType = isMulti ? "checkbox" : "radio";
@@ -607,31 +743,23 @@
         if (input.checked) {
           hasSelected = true;
           selOpts.push(ALPHABET[oIndex]);
-          // Chọn phải đáp án sai => Sai cả câu
           if (input.value !== "true") isQuestionCorrect = false; 
         } else {
-          // Bỏ sót đáp án đúng => Sai cả câu
           if (input.value === "true") isQuestionCorrect = false; 
         }
         input.disabled = true; 
       });
 
-      if (!hasSelected) isQuestionCorrect = false; // Không chọn gì = Sai
+      if (!hasSelected) isQuestionCorrect = false;
       if (isQuestionCorrect) score++;
       if (selOpts.length > 0) selectedAnswersList.push((qIndex + 1) + selOpts.join(''));
     });
 
-    // Nhãn kết quả được lưu cùng họ tên trong cột Họ tên của bảng kết quả.
-    // Nộp tự động do hết giờ/vi phạm được phân loại là "Lỗi khi làm bài".
-    const violationReason = String(violationTag || '')
-      .replace(/[()]/g, '')
-      .trim();
+    const violationReason = String(violationTag || '').replace(/[()]/g, '').trim();
 
     let resultStatus;
     if (isAutoSubmit) {
-      resultStatus = violationReason
-        ? `Lỗi khi làm bài: ${violationReason}`
-        : 'Lỗi khi làm bài';
+      resultStatus = violationReason ? `Lỗi khi làm bài: ${violationReason}` : 'Lỗi khi làm bài';
     } else {
       resultStatus = student.mode === 'exam' ? 'Thi' : 'Ôn luyện';
     }
@@ -645,8 +773,7 @@
       return;
     }
 
-    const resultFullName =
-      `${student.name} - ${student.className || studentListTab} (${studentListTab}) - (${resultStatus})`;
+    const resultFullName = `${student.name} - ${student.className || studentListTab} (${studentListTab}) - (${resultStatus})`;
 
     let res = await callGoogleAPI({
       action: 'submitResult',

@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hỏi đáp </title>
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    body{font-family:'Segoe UI',Roboto,Arial,sans-serif;background:#eef5ff;color:#16324f;line-height:1.6}
+    header{background:linear-gradient(135deg,#0b5ed7,#1e90ff);color:#fff;text-align:center;padding:36px 16px 24px}
+    header h1{font-size:2rem;margin-bottom:6px}
+    header p{opacity:.9}
+    nav{background:#0a4aa8;display:flex;justify-content:center;flex-wrap:wrap;position:sticky;top:0;box-shadow:0 2px 6px rgba(0,0,0,.15)}
+    nav a{color:#dbeafe;text-decoration:none;padding:14px 32px;font-weight:600;border-bottom:4px solid transparent;transition:.2s}
+    nav a:hover{background:#0d5bc9;color:#fff}
+    nav a.active{color:#fff;background:#1e90ff;border-bottom-color:#fff}
+    main{max-width:900px;margin:28px auto;padding:0 16px}
+    .card{background:#fff;border-radius:12px;padding:28px;box-shadow:0 4px 14px rgba(11,94,215,.12);border-left:6px solid #1e90ff}
+    .card h2{color:#0b5ed7;margin-bottom:12px}
+    .card ul{margin:12px 0 0 22px}
+    footer{text-align:center;color:#4b6584;padding:24px;font-size:.9rem}
+  </style>
+
+  <script>
+    MathJax = {
+      tex: { inlineMath: [['$', '$'], ['\\(', '\\)']], displayMath: [['$$', '$$'], ['\\[', '\\]']] }
+    };
+  </script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+
+  <style>
+    body { font-family: "Segoe UI", Arial, sans-serif; background-color: #f4f6f9; color: #333; margin: 0; padding: 20px; line-height: 1.6; }
+    .container { max-width: 400px; margin: 40px auto; }
+    /* h1 { text-align: center; color: #003366; margin-bottom: 25px; } */
+    h1 { text-align: center; color: #003366; margin-bottom: 10px; }
+    
+    /* .card { background: #fff; padding: 25px; border-radius: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-top: 4px solid #0055aa; margin-bottom: 25px; } */
+    .card { background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); border-top: 4px solid #0055aa; margin-bottom: 20px; }
+    
+    input[type="text"], input[type="password"], textarea, select {
+      width: 100%; padding: 12px; font-size: 15px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-family: inherit; margin-bottom: 15px;
+    }
+    label { font-weight: bold; margin-bottom: 5px; display: block; color: #003366;}
+    
+    .btn { padding: 10px 20px; font-size: 15px; border: none; border-radius: 6px; cursor: pointer; font-weight: bold; transition: 0.2s; }
+    .btn-primary { background-color: #0055aa; color: white; }
+    .btn-primary:hover { background-color: #003366; }
+    .btn-success { background-color: #10b981; color: white; }
+    .btn-success:hover { background-color: #059669; }
+    .btn-danger { background-color: #ef4444; color: white; }
+    .btn-danger:hover { background-color: #dc2626; }
+    .btn-outline { background: transparent; border: 1px solid #0055aa; color: #0055aa; }
+    .btn-outline:hover { background: #e0f2fe; }
+
+    /* MENU THÔNG TIN SINH VIÊN (DROPDOWN) */
+    .profile-container { position: relative; display: inline-block; }
+    .profile-icon { background: #e0f2fe; color: #0055aa; padding: 10px 18px; border-radius: 30px; cursor: pointer; font-weight: bold; border: 1px solid #bae6fd; transition: 0.2s; display: flex; align-items: center; gap: 8px;}
+    .profile-icon:hover { background: #bae6fd; }
+    
+    .profile-dropdown { 
+      display: none; 
+      position: absolute; 
+      right: 0; 
+      top: 100%; 
+      margin-top: 8px; 
+      background: white; 
+      min-width: 260px; 
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15); 
+      border-radius: 8px; 
+      border: 1px solid #e2e8f0; 
+      z-index: 1000; 
+      padding: 20px; 
+    }
+    
+    /* Hiển thị menu khi di chuột vào phần profile-container */
+    .profile-container:hover .profile-dropdown { display: block; }
+    
+    .profile-info p { margin: 0 0 8px 0; font-size: 14px; color: #334155; border-bottom: 1px dashed #e2e8f0; padding-bottom: 5px; }
+    .profile-info p:last-child { border-bottom: none; }
+    .profile-info strong { color: #0055aa; }
+    
+    .profile-actions { margin-top: 15px; border-top: 1px solid #e2e8f0; padding-top: 15px; display: flex; flex-direction: column; gap: 10px; }
+    .profile-actions .btn { width: 100%; }
+
+    /* CÁC THÀNH PHẦN KHÁC */
+    .selection-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .qa-header { background: #0055aa; color: white; padding: 15px; border-radius: 8px 8px 0 0; margin: -25px -25px 20px -25px; font-size: 18px; font-weight: bold; text-align: center;}
+    .form-group { display: flex; flex-direction: column; gap: 12px; }
+    .anonymous-check { display: flex; align-items: center; gap: 8px; font-size: 14px; color: #475569; cursor: pointer; }
+    .anonymous-check input { width: auto; cursor: pointer; margin: 0; }
+
+    .comments-list { margin-top: 20px; background: #fff; padding: 15px; border-radius: 6px; border: 1px solid #e2e8f0; }
+    .comment-node { margin-top: 15px; }
+    .comment-level-0 { border-bottom: 1px solid #e2e8f0; padding-bottom: 15px; margin-bottom: 15px; }
+    .comment-level-0:last-child { border-bottom: none; margin-bottom: 0; padding-bottom: 0; }
+    .comment-children { margin-left: 20px; padding-left: 15px; border-left: 2px solid #cbd5e0; }
+    /* Danh sách được chuyển tự động từ môi trường LaTeX itemize / enumerate */
+    .comment-content ul.latex-itemize,
+    .comment-content ol.latex-enumerate {
+      margin: 8px 0 8px 22px;
+      padding-left: 18px;
+    }
+    .comment-content ul.latex-itemize li,
+    .comment-content ol.latex-enumerate li { margin: 4px 0; padding-left: 3px; }
+    .comment-content ul.latex-itemize { list-style-type: disc; }
+    .comment-content ul.latex-itemize ul.latex-itemize { list-style-type: circle; }
+    .comment-content ul.latex-itemize ul.latex-itemize ul.latex-itemize { list-style-type: square; }
+    /* Kiểu đánh số của enumerate theo cấp lồng nhau, giống LaTeX: 1. -> (a) -> i. -> A. */
+    .comment-content ol.latex-enumerate.enum-level-1 { list-style-type: decimal; }
+    .comment-content ol.latex-enumerate.enum-level-2 { list-style-type: lower-alpha; }
+    .comment-content ol.latex-enumerate.enum-level-3 { list-style-type: lower-roman; }
+    .comment-content ol.latex-enumerate.enum-level-4 { list-style-type: upper-alpha; }
+
+    /* Nút Ẩn/Hiện mật khẩu */
+    .pwd-wrap { position: relative; margin-bottom: 15px; }
+    .pwd-wrap input[type="password"], .pwd-wrap input[type="text"] { margin-bottom: 0; padding-right: 88px; }
+    .pwd-toggle {
+      position: absolute; right: 6px; top: 50%; transform: translateY(-50%);
+      background: #e0f2fe; color: #0055aa; border: 1px solid #bae6fd; border-radius: 5px;
+      padding: 5px 10px; font-size: 13px; font-weight: bold; cursor: pointer; font-family: inherit;
+    }
+    .pwd-toggle:hover { background: #bae6fd; }
+
+    .btn-reply { background: none; border: none; color: #4a5568; cursor: pointer; font-size: 13px; font-weight: bold; padding: 0; margin-top: 8px; }
+    .btn-reply:hover { text-decoration: underline; color: #2b6cb0; }
+    .reply-form-container { display: none; margin-top: 10px; background: #f1f5f9; padding: 12px; border-radius: 6px; }
+    .reply-form-container.active { display: block; }
+    
+    @media (max-width: 600px) { .selection-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<h1>Lớp thầy Khổng Văn Hải</h1>
+</header>
+<nav><a href="Diemdanh.html" > Điểm danh</a>
+     <a href="Thacmac.html" > Thắc mắc</a>
+     <a href="Hoidap.html" class="active">Hỏi đáp</a>
+     <a href="Kiemtra.html">Kiểm tra</a>
+</nav>
+<body>
+<body>
+
+<div class="container">
+
+  <div class="card" id="authCard">
+    <!-- MÀN HÌNH ĐĂNG NHẬP -->
+    <div id="loginSection">
+      <h3 style="margin-top: 0; color: #0055aa; text-align: center;">🔐 Đăng nhập hệ thống</h3>
+      <label>Mã số sinh viên:</label>
+      <input type="text" id="txtMSSV" placeholder="Nhập MSSV..." required>
+      <label>Mật khẩu đăng nhập:</label>
+      <div class="pwd-wrap"><input type="password" id="txtPassword" placeholder="Nhập mật khẩu..." required>
+        <button type="button" class="pwd-toggle" onclick="togglePasswordVisibility(this)" aria-label="Hiện mật khẩu">👁 Hiện</button>
+      </div>
+      <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+        <button class="btn btn-primary" id="btnLogin" onclick="handleLogin()" style="flex: 1;">Đăng nhập</button>
+        <button class="btn btn-outline" onclick="toggleForgotPassword()">Quên mật khẩu?</button>
+      </div>
+      
+      <div id="forgotPasswordPanel" style="display: none; padding: 15px; background: #eff6ff; border-radius: 8px; border: 1px solid #bfdbfe;">
+        <p style="margin-top:0; font-size: 14px;">Nhập MSSV vào ô trên rồi nhấn nút bên dưới. Mật khẩu mới sẽ được gửi về Email sinh viên.</p>
+        <button class="btn btn-success" id="btnResetPwd" onclick="requestPasswordReset()">📧 Gửi mật khẩu mới</button>
+      </div>
+      <p id="authError" style="color: red; margin-bottom: 0; display: none; font-weight: bold; text-align: center;"></p>
+    </div>
+
+    <!-- MÀN HÌNH SAU KHI ĐĂNG NHẬP -->
+    <div id="userSection" style="display: none;">
+      
+      <!-- MENU THÔNG TIN (Di chuột để hiện chức năng) -->
+      <div style="display: flex; justify-content: flex-end; margin-bottom: 20px;">
+        <div class="profile-container">
+          <div class="profile-icon">
+            🧑‍🎓 <span id="lblShortName"></span> ▼
+          </div>
+          <div class="profile-dropdown">
+            <div class="profile-info">
+              <p><strong>Họ tên:</strong> <span id="lblStudentName"></span></p>
+              <p><strong>MSSV:</strong> <span id="lblStudentMSSV"></span></p>
+              <p><strong>Lớp:</strong> <span id="lblStudentClass"></span></p>
+              <p><strong>Email:</strong> <span id="lblStudentEmail"></span></p>
+            </div>
+            <div class="profile-actions">
+              <button class="btn btn-outline" onclick="toggleChangePwdPanel()">🔑 Đổi mật khẩu</button>
+              <button class="btn btn-danger" onclick="handleLogout()">🚪 Đăng xuất</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- BẢNG ĐỔI MẬT KHẨU (Sẽ hiện ra khi bấm nút trong menu) -->
+      <div id="changePasswordPanel" style="display: none; margin-bottom: 20px; padding: 15px; background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px;">
+        <h4 style="margin-top:0;">Thay đổi mật khẩu</h4>
+        <div class="pwd-wrap"><input type="password" id="txtNewPassword" placeholder="Nhập mật khẩu mới..."><button type="button" class="pwd-toggle" onclick="togglePasswordVisibility(this)" aria-label="Hiện mật khẩu">Hiện</button></div>
+        <div class="pwd-wrap"><input type="password" id="txtConfirmPassword" placeholder="Xác nhận mật khẩu mới..."><button type="button" class="pwd-toggle" onclick="togglePasswordVisibility(this)" aria-label="Hiện mật khẩu">Hiện</button></div>
+        <button class="btn btn-success" id="btnChangePwd" onclick="handleChangePassword()">Cập nhật mật khẩu</button>
+      </div>
+
+      <h3 style="color: #0055aa; border-bottom: 2px solid #e2e8f0; padding-bottom: 10px;">📚 Lựa chọn phần Hỏi đáp</h3>
+      <div class="selection-grid">
+        <div>
+          <label>1. Chọn Môn học:</label>
+          <select id="selSubject" onchange="updateChapterList()">
+            <option value="">-- Vui lòng chọn môn --</option>
+            <option value="GT1">Giải tích 1</option>
+            <option value="GT3">Giải tích 3</option>
+            <option value="DS">Đại số</option>
+            <option value="XSTK">Xác suất thống kê</option>
+          </select>
+        </div>
+        <div>
+          <label>2. Chọn Chương:</label>
+          <select id="selChapter" onchange="loadQA()" disabled>
+            <option value="">-- Chọn môn học trước --</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" id="qaContentSection" style="display: none;">
+    <div class="qa-header" id="qaTitle">Đang tải...</div>
+    
+    <form class="form-group" onsubmit="submitMainComment(event)">
+      <textarea id="txtMainComment" placeholder="Nhập câu hỏi (hỗ trợ công thức Toán dạng \(P(A\vert{}B)\))..." rows="3" required></textarea>
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <label class="anonymous-check">
+          <input type="checkbox" id="chkAnonMain"> 🕵️ Hỏi ẩn danh
+        </label>
+        <button type="submit" id="btnSubmitMain" class="btn btn-primary">Gửi câu hỏi</button>
+      </div>
+    </form>
+    
+    <div id="commentsListContainer" class="comments-list"><i>Vui lòng chọn môn và chương để xem thảo luận...</i></div>
+  </div>
+
+</div>
+
+<script>
+  const AUTH_API_URL = 'https://script.google.com/macros/s/AKfycbzpdSioGGyDgIPgXWrON-w02wzWdAR32NaNN0ZDiCoC9Kjo0_cFqr3nxyAkmFQjRVK4/exec';
+  const COMMENT_API_URL = 'https://script.google.com/macros/s/AKfycbyQB-oQl5lbB0rMJ-1zNfURqRS8pQRTRGD4_X9L0syEpeCSIFFR6t4iv-iYyq0AImb8gA/exec';
+
+  let currentUser = null;
+  let currentActiveTopicId = ''; 
+
+  const curriculum = {
+    "GT1": [
+      { id: "C1", name: "Chương 1: Phép tính vi phân hàm một biến số" },
+      { id: "C2", name: "Chương 2: Phép tính tích phân hàm một biến số " },
+      { id: "C3", name: "Chương 3: Hàm nhiều biến" }
+    ],
+    "GT3": [
+      { id: "C1", name: "Chương 1: Chuỗi số" },
+      { id: "C2", name: "Chương 2: Phương trình vi phân" },
+      { id: "C3", name: "Chương 3: Phương pháp biến đổi Laplace" }
+    ],
+    "DS": [
+      { id: "C1", name: "Chương 1: Logic. Tập hợp. Ánh xạ. Số phức" },
+      { id: "C2", name: "Chương 2: Ma trận - Định thức- Hệ  phương trình tuyến tính " },
+      { id: "C3", name: "Chương 3: Không gian vector" },
+      { id: "C4", name: "Chương 4: Ánh xạ tuyến tính" },
+      { id: "C5", name: "Chương 5: Dạng song tuyến tính, dạng toàn phương, không gian Euclide, đường và mặt bậc hai" }
+    ],
+    "XSTK": [
+      { id: "C1", name: "Chương 1: Sự kiện ngẫu nhiên và phép tính xác suất" },
+      { id: "C2", name: "Chương 2: Biến ngẫu nhiên và phân phối xác suất" },
+      { id: "C3", name: "Chương 3: Biến ngẫu nhiên nhiều chiều" },
+      { id: "C4", name: "Chương 4: Ước lượng tham số" },
+      { id: "C5", name: "Chương 5: Kiểm định giả thuyết thống kê" },
+      { id: "C6", name: "Chương 6: Quy hoạch thực nghiệm" }
+    ]
+  };
+
+  async function callApi(targetUrl, payload) {
+    try {
+      const response = await fetch(targetUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      });
+      return await response.json();
+    } catch (err) {
+      console.error("API Error:", err);
+      return { success: false, message: "Lỗi kết nối máy chủ!" };
+    }
+  }
+
+  async function handleLogin() {
+    const mssv = document.getElementById('txtMSSV').value.trim();
+    const pwd = document.getElementById('txtPassword').value.trim();
+    if (!mssv || !pwd) { showAuthError('Nhập MSSV và Mật khẩu!'); return; }
+
+    const btn = document.getElementById('btnLogin');
+    btn.disabled = true; btn.innerText = 'Đang xử lý...';
+    document.getElementById('authError').style.display = 'none';
+
+    const res = await callApi(AUTH_API_URL, { action: 'login', studentId: mssv, password: pwd });
+
+    if (res.success) {
+      currentUser = {
+        id: mssv,
+        name: res.studentName || 'Sinh viên',
+        email: res.email || '',
+        className: res.className || res.studentSheetName || ''
+      };
+      updateAuthUI();
+    } else {
+      showAuthError(res.message || 'Sai thông tin đăng nhập.');
+    }
+    btn.disabled = false; btn.innerText = 'Đăng nhập';
+  }
+
+  function handleLogout() {
+    currentUser = null;
+    document.getElementById('txtMSSV').value = ''; document.getElementById('txtPassword').value = '';
+    document.querySelectorAll('.pwd-wrap').forEach(w => { const i = w.querySelector('input'); i.type = 'password'; w.querySelector('.pwd-toggle').innerText = 'Hiện'; });
+    document.getElementById('qaContentSection').style.display = 'none';
+    document.getElementById('selSubject').value = '';
+    updateChapterList();
+    updateAuthUI();
+  }
+
+  function updateAuthUI() {
+    const isLogged = currentUser !== null;
+    document.getElementById('loginSection').style.display = isLogged ? 'none' : 'block';
+    document.getElementById('userSection').style.display = isLogged ? 'block' : 'none';
+
+    if (isLogged) {
+      // Cập nhật tên hiển thị ở thanh thu gọn
+      document.getElementById('lblShortName').innerText = currentUser.name;
+      
+      // Cập nhật thông tin chi tiết trong dropdown
+      document.getElementById('lblStudentName').innerText = currentUser.name;
+      document.getElementById('lblStudentMSSV').innerText = currentUser.id;
+      document.getElementById('lblStudentClass').innerText = currentUser.className;
+      document.getElementById('lblStudentEmail').innerText = currentUser.email;
+    }
+  }
+
+  function toggleForgotPassword() {
+    const p = document.getElementById('forgotPasswordPanel'); p.style.display = p.style.display === 'none' ? 'block' : 'none';
+  }
+  function toggleChangePwdPanel() {
+    const p = document.getElementById('changePasswordPanel'); 
+    p.style.display = p.style.display === 'none' ? 'block' : 'none';
+  }
+  function showAuthError(msg) {
+    const e = document.getElementById('authError'); e.innerText = msg; e.style.display = 'block';
+  }
+
+  async function requestPasswordReset() {
+    const mssv = document.getElementById('txtMSSV').value.trim();
+    if (!mssv) { alert("Nhập MSSV trước!"); return; }
+    if (!confirm(`Tạo mật khẩu mới cho ${mssv}?`)) return;
+    const btn = document.getElementById('btnResetPwd'); btn.disabled = true; btn.innerText = 'Đang gửi...';
+    const res = await callApi(AUTH_API_URL, { action: 'resetPassword', studentId: mssv });
+    alert(res.message); btn.disabled = false; btn.innerText = '📧 Gửi mật khẩu mới';
+  }
+
+  async function handleChangePassword() {
+    const n = document.getElementById('txtNewPassword').value; const c = document.getElementById('txtConfirmPassword').value;
+    if (!n || !c) { alert('Nhập đủ 2 ô!'); return; }
+    if (n !== c) { alert('Mật khẩu không khớp!'); return; }
+    const res = await callApi(AUTH_API_URL, { action: 'changePassword', studentId: currentUser.id, newPassword: n });
+    alert(res.message);
+    if(res.success) { document.getElementById('txtNewPassword').value = ''; document.getElementById('txtConfirmPassword').value = ''; toggleChangePwdPanel(); }
+  }
+
+  function updateChapterList() {
+    const subj = document.getElementById('selSubject').value;
+    const selChap = document.getElementById('selChapter');
+    selChap.innerHTML = '<option value="">-- Chọn chương --</option>';
+    
+    if (!subj) {
+      selChap.disabled = true;
+      document.getElementById('qaContentSection').style.display = 'none';
+      return;
+    }
+    
+    selChap.disabled = false;
+    curriculum[subj].forEach(chap => {
+      selChap.appendChild(new Option(chap.name, chap.id));
+    });
+    document.getElementById('qaContentSection').style.display = 'none';
+  }
+
+  function loadQA() {
+    const subj = document.getElementById('selSubject');
+    const chap = document.getElementById('selChapter');
+    
+    if (!subj.value || !chap.value) return;
+
+    currentActiveTopicId = `${subj.value}_${chap.value}`;
+    
+    document.getElementById('qaTitle').innerText = `${subj.options[subj.selectedIndex].text} - ${chap.options[chap.selectedIndex].text}`;
+    document.getElementById('qaContentSection').style.display = 'block';
+    
+    fetchComments();
+  }
+
+
+  // Chuyển nội dung văn bản có cú pháp LaTeX itemize thành HTML.
+  // Hỗ trợ nhiều item, itemize lồng nhau và vẫn giữ nguyên cú pháp công thức cho MathJax.
+  function escapeCommentHtml(value) {
+    return String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  // ===== Chuyển môi trường LaTeX itemize / enumerate sang HTML (ul / ol) =====
+  // Hỗ trợ nhiều item, lồng nhau (kể cả lẫn itemize trong enumerate và ngược lại)
+  // và giữ nguyên cú pháp công thức cho MathJax.
+  const LIST_ENV = '(itemize|enumerate)';
+  const LIST_TOKEN_SRC = '\\\\begin\\s*\\{\\s*' + LIST_ENV + '\\s*\\}|\\\\end\\s*\\{\\s*' + LIST_ENV + '\\s*\\}';
+
+  function findListEnd(source, start) {
+    const token = new RegExp(LIST_TOKEN_SRC, 'g');
+    token.lastIndex = start;
+    let depth = 1;
+    let match;
+    while ((match = token.exec(source)) !== null) {
+      if (match[0].startsWith('\\begin')) {
+        depth++;
+      } else if (--depth === 0) {
+        return { contentEnd: match.index, end: token.lastIndex };
+      }
+    }
+    return null;
+  }
+
+  function splitTopLevelItems(source) {
+    const items = [];
+    const marker = new RegExp(LIST_TOKEN_SRC + '|\\\\item(?![a-zA-Z])', 'g');
+    let depth = 0;
+    let currentStart = null;
+    let match;
+
+    while ((match = marker.exec(source)) !== null) {
+      const token = match[0];
+      if (token.startsWith('\\begin')) {
+        depth++;
+      } else if (token.startsWith('\\end')) {
+        depth = Math.max(0, depth - 1);
+      } else if (depth === 0) {
+        if (currentStart !== null) {
+          items.push(source.slice(currentStart, match.index).trim());
+        } else if (source.slice(0, match.index).trim()) {
+          items.push(source.slice(0, match.index).trim());
+        }
+        currentStart = marker.lastIndex;
+      }
+    }
+
+    if (currentStart !== null) {
+      const last = source.slice(currentStart).trim();
+      if (last) items.push(last);
+    } else if (source.trim()) {
+      items.push(source.trim());
+    }
+    return items;
+  }
+
+  // enumLevel: cấp lồng nhau của enumerate (để chọn kiểu đánh số 1. / a. / i. / A.)
+  function convertLatexLists(source, enumLevel = 0) {
+    const beginPattern = new RegExp('\\\\begin\\s*\\{\\s*' + LIST_ENV + '\\s*\\}', 'g');
+    let result = '';
+    let cursor = 0;
+    let match;
+
+    while ((match = beginPattern.exec(source)) !== null) {
+      const block = findListEnd(source, beginPattern.lastIndex);
+      if (!block) {
+        // Thiếu \end{...}: giữ nguyên phần còn lại.
+        result += source.slice(cursor);
+        return result;
+      }
+
+      result += source.slice(cursor, match.index);
+      const type = match[1];
+      const inner = source.slice(beginPattern.lastIndex, block.contentEnd);
+      const items = splitTopLevelItems(inner);
+
+      if (type === 'enumerate') {
+        const lvl = Math.min(enumLevel + 1, 4);
+        result += '<ol class="latex-enumerate enum-level-' + lvl + '">';
+        for (const item of items) result += '<li>' + convertLatexLists(item, enumLevel + 1) + '</li>';
+        result += '</ol>';
+      } else {
+        result += '<ul class="latex-itemize">';
+        for (const item of items) result += '<li>' + convertLatexLists(item, enumLevel) + '</li>';
+        result += '</ul>';
+      }
+
+      cursor = block.end;
+      beginPattern.lastIndex = block.end;
+    }
+
+    result += source.slice(cursor);
+    return result;
+  }
+
+  function renderCommentContent(rawText) {
+    const text = escapeCommentHtml(rawText).replace(/\r\n?/g, '\n');
+    return convertLatexLists(text)
+      .replace(/\n?(<\/?(?:ul|ol|li)[ >][^>]*>|<\/?(?:ul|ol|li)>)\n?/g, '$1') // bỏ xuống dòng thừa quanh danh sách
+      .replace(/\n/g, '<br>');
+  }
+
+  // ===== Ẩn / Hiện mật khẩu =====
+  function togglePasswordVisibility(btn) {
+    const input = btn.parentElement.querySelector('input');
+    const show = input.type === 'password';
+    input.type = show ? 'text' : 'password';
+    btn.innerText = show ? 'Ẩn' : 'Hiện';
+    btn.setAttribute('aria-label', show ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+  }
+
+  function fetchComments() {
+    const listDiv = document.getElementById('commentsListContainer');
+    listDiv.innerHTML = '<i>Đang tải dữ liệu...</i>';
+    
+    fetch(`${COMMENT_API_URL}?chapter=${encodeURIComponent(currentActiveTopicId)}`)
+      .then(res => res.json())
+      .then(data => {
+        const commentsByParent = {};
+        data.forEach(c => {
+          c.safeId = (c.id || c.time).toString().replace(/[^a-zA-Z0-9]/g, '_');
+          const pKey = (c.parentId && c.parentId !== "null" && c.parentId !== "") ? c.parentId : "root";
+          if (!commentsByParent[pKey]) commentsByParent[pKey] = [];
+          commentsByParent[pKey].push(c);
+        });
+
+        if (commentsByParent["root"]) commentsByParent["root"].reverse();
+
+        function renderTree(parentId, level) {
+          const children = commentsByParent[parentId];
+          if (!children) return '';
+          let html = '';
+          children.forEach(c => {
+            const nameColor = level === 0 ? '#0056b3' : '#2b6cb0';
+            const classInfo = c.className ? ` <span style="font-size:0.8em; color:#888;">[Lớp: ${c.className}]</span>` : '';
+            html += `
+              <div class="comment-node comment-level-${level}">
+                <strong style="color: ${nameColor};">${c.name}</strong>${classInfo}
+                <span style="font-size: 0.8em; color: #888; margin-left: 10px;">${c.time || ''}</span>
+                <div class="comment-content" style="margin-top: 5px; white-space: normal;">${renderCommentContent(c.comment)}</div>
+                
+                <button class="btn-reply" onclick="toggleReplyForm('${c.safeId}')">↩ Phản hồi</button>
+
+                <div class="reply-form-container" id="reply-form-${c.safeId}">
+                  <form class="form-group" onsubmit="submitReply(event, '${c.id || c.time}', '${c.email || ''}', '${c.name || ''}')">
+                    <textarea class="reply-text" placeholder="Nhập câu trả lời..." rows="2" required style="margin-bottom:8px;"></textarea>
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                      <label class="anonymous-check"><input type="checkbox" class="reply-anon"> Ẩn danh</label>
+                      <button type="submit" class="btn btn-primary" style="padding: 6px 15px;">Gửi</button>
+                    </div>
+                  </form>
+                </div>
+                <div class="comment-children">${renderTree(c.id || c.time, level + 1)}</div>
+              </div>`;
+          });
+          return html;
+        }
+
+        listDiv.innerHTML = renderTree("root", 0) || '<i>Chưa có câu hỏi nào trong chương này. Hãy là người đầu tiên!</i>';
+        if (window.MathJax && MathJax.typesetPromise) MathJax.typesetPromise();
+      })
+      .catch(() => { listDiv.innerHTML = '<i style="color:red;">Lỗi kết nối máy chủ!</i>'; });
+  }
+
+  function toggleReplyForm(safeId) {
+    document.getElementById(`reply-form-${safeId}`).classList.toggle('active');
+  }
+
+  async function submitMainComment(event) {
+    event.preventDefault();
+    const textInput = document.getElementById('txtMainComment');
+    const isAnon = document.getElementById('chkAnonMain').checked;
+    const btn = document.getElementById('btnSubmitMain');
+    
+    btn.disabled = true; btn.innerText = 'Đang gửi...';
+
+    const payload = {
+      action: 'addComment',
+      chapter: currentActiveTopicId,
+      name: isAnon ? 'Ẩn danh' : currentUser.name,
+      email: currentUser.email,
+      studentId: currentUser.id,
+      className: currentUser.className,
+      comment: textInput.value,
+      parentId: ''
+    };
+
+    const res = await callApi(COMMENT_API_URL, payload);
+    if (res.success || res.status === 'OK') {
+      textInput.value = ''; fetchComments();
+    } else { alert('Lỗi: ' + res.message); }
+    
+    btn.disabled = false; btn.innerText = 'Gửi câu hỏi';
+  }
+
+  async function submitReply(event, parentId, parentEmail, parentName) {
+    event.preventDefault();
+    const form = event.target;
+    const textInput = form.querySelector('.reply-text');
+    const isAnon = form.querySelector('.reply-anon').checked;
+    const btn = form.querySelector('button[type="submit"]');
+    
+    btn.disabled = true; btn.innerText = '...';
+
+    const payload = {
+      action: 'addComment',
+      chapter: currentActiveTopicId,
+      name: isAnon ? 'Ẩn danh' : currentUser.name,
+      email: currentUser.email,
+      studentId: currentUser.id,
+      className: currentUser.className,
+      comment: textInput.value,
+      parentId: parentId,
+      notifyTargetEmail: parentEmail || '',
+      notifyTargetName: parentName || ''
+    };
+
+    const res = await callApi(COMMENT_API_URL, payload);
+    if (res.success || res.status === 'OK') { fetchComments(); } 
+    else { alert('Lỗi: ' + res.message); btn.disabled = false; btn.innerText = 'Gửi'; }
+  }
+</script>
+
+</body>
+</html>
