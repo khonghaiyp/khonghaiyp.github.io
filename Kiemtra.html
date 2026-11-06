@@ -51,7 +51,68 @@
     .warning-text { color: #dc2626; font-size: 13px; font-weight: bold; margin-top: 5px; margin-bottom: 15px; text-align: justify; display: none; background: #fee2e2; padding: 10px; border-radius: 6px; }
 
     #passwordSection { display: none; margin-top: 15px; padding-top: 15px; border-top: 1px dashed #ccc; }
-    
+
+    .password-input-wrap {
+      display: flex;
+      align-items: stretch;
+      gap: 8px;
+      margin-bottom: 15px;
+    }
+    .password-input-wrap input {
+      flex: 1;
+      min-width: 0;
+      margin-bottom: 0;
+    }
+    .toggle-password-btn {
+      flex: 0 0 auto;
+      padding: 0 13px;
+      border: 1px solid #cbd5e1;
+      border-radius: 6px;
+      background: #f8fafc;
+      color: #334155;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .toggle-password-btn:hover { background: #e2e8f0; }
+    .forgot-password-toggle {
+      display: block;
+      width: 100%;
+      margin-top: 12px;
+      border: 0;
+      background: transparent;
+      color: #0055aa;
+      font-size: 14px;
+      font-weight: 700;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+    #forgotPasswordPanel {
+      display: none;
+      margin-top: 14px;
+      padding: 15px;
+      border: 1px solid #bfdbfe;
+      border-radius: 8px;
+      background: #eff6ff;
+    }
+    #forgotPasswordPanel p { margin: 0 0 12px; font-size: 13px; color: #334155; }
+    #reset-password-message {
+      display: none;
+      margin: 12px 0 0 !important;
+      font-weight: 600;
+      line-height: 1.5;
+      overflow-wrap: anywhere;
+    }
+    .password-help { margin: -5px 0 12px; color: #64748b; font-size: 12px; }
+    button:disabled { opacity: .65; cursor: wait; }
+
+    @media (max-width: 560px) {
+      body { padding: 12px; }
+      .card { padding: 20px; }
+      .user-info-grid { grid-template-columns: 1fr; }
+      .action-buttons { flex-direction: column; }
+      .action-buttons .btn { width: 100%; }
+      #timerDisplay { top: 8px; right: 8px; font-size: 16px; padding: 7px 12px; }
+    }
     @media print { body { display: none !important; } }
   </style>
 </head>
@@ -69,8 +130,17 @@
       <label>Mã số sinh viên:</label>
       <input type="text" id="txtMSSV" placeholder="Nhập MSSV..." required>
       <label>Mật khẩu đăng nhập:</label>
-      <input type="password" id="txtPassword" placeholder="Nhập mật khẩu..." required>
+      <div class="password-input-wrap">
+        <input type="password" id="txtPassword" placeholder="Nhập mật khẩu..." required autocomplete="current-password">
+        <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('txtPassword', this)">👁 Hiện</button>
+      </div>
       <button class="btn btn-primary" id="btnLogin" onclick="handleLogin()">Đăng nhập</button>
+      <button type="button" class="forgot-password-toggle" onclick="toggleForgotPassword()">Quên mật khẩu?</button>
+      <div id="forgotPasswordPanel">
+        <p>Nhập MSSV ở ô phía trên, sau đó nhấn nút bên dưới. Hệ thống sẽ tạo mật khẩu mới gồm 6 chữ số và gửi đến email của bạn. Mật khẩu hiện tại sẽ được thay thế.</p>
+        <button type="button" class="btn btn-success" id="resetPasswordButton" onclick="requestPasswordReset()">📧 Gửi mật khẩu mới về email</button>
+        <p id="reset-password-message" role="status" aria-live="polite"></p>
+      </div>
       <p id="loginError" style="color: red; text-align: center; display: none; margin-top: 15px; font-weight: bold;"></p>
     </div>
   </div>
@@ -96,35 +166,34 @@
       </div>
 
       <div id="passwordSection">
-        <label>Mật khẩu mới:</label>
-        <input type="password" id="newPassword" placeholder="Nhập mật khẩu mới...">
+        <label for="newPassword">Mật khẩu mới:</label>
+        <div class="password-input-wrap">
+          <input type="password" id="newPassword" placeholder="Nhập mật khẩu mới..." autocomplete="new-password">
+          <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('newPassword', this)">👁 Hiện</button>
+        </div>
+        <label for="confirmNewPassword">Xác nhận lại mật khẩu mới:</label>
+        <div class="password-input-wrap">
+          <input type="password" id="confirmNewPassword" placeholder="Nhập lại mật khẩu mới..." autocomplete="new-password" onkeypress="handlePasswordEnter(event)">
+          <button type="button" class="toggle-password-btn" onclick="togglePasswordVisibility('confirmNewPassword', this)">👁 Hiện</button>
+        </div>
+        <p class="password-help">Hai ô mật khẩu phải trùng khớp mới có thể cập nhật.</p>
         <button class="btn btn-success" id="btnChangePwd" onclick="changePassword()" style="width: auto;">Cập nhật mật khẩu</button>
       </div>
     </div>
 
     <div class="card">
       <h2 class="card-title">Chọn Bài Kiểm Tra</h2>
-      <label>Môn học:</label>
-      <select id="subjectSelect" onchange="updateChapters()">
-        <option value="">-- Chọn môn học --</option>
-        <option value="gt1">Giải tích 1</option>
-        <option value="gt3">Giải tích 3</option>
-        <option value="daiso">Đại số</option>
-        <option value="xstk">Xác suất thống kê</option>
-      </select>
-
       <label>Chương:</label>
-      <select id="chapterSelect" onchange="updateSections()" disabled>
-        <option value="">-- Chọn môn học trước --</option>
+      <select id="chapterSelect" onchange="updateSections()">
+        <option value="1">Chương 1: Sự kiện ngẫu nhiên và phép tính xác suất</option>
+        <option value="2">Chương 2: Biến ngẫu nhiên và luật phân phối</option>
+        <option value="3">Chương 3: Biến ngẫu nhiên nhiều chiều</option>
+        <option value="4">Chương 4: Ước lượng tham số</option>
+        <option value="5">Chương 5: Kiểm định giả thuyết thống kê</option>
       </select>
 
-      <label>Mục nhỏ:</label>
-      <select id="sectionSelect" disabled>
-        <option value="">-- Chọn chương trước --</option>
-      </select>
-      <p id="curriculumNotice" style="color:#64748b; font-size:13px; margin-top:-8px; margin-bottom:15px;">
-        Vui lòng chọn môn học, sau đó chọn chương và mục nhỏ.
-      </p>
+      <label>Phần bài tập (Tab):</label>
+      <select id="sectionSelect"></select>
 
       <label style="color: #0055aa; font-size: 15px;">🔒 Mật khẩu bài kiểm tra (Giáo viên cấp):</label>
       <input type="password" id="txtQuizPassword" placeholder="Nhập mật khẩu bài kiểm tra..." required style="border-color: #0055aa;">
@@ -159,210 +228,40 @@
 
 <script>
   // =========================================================================
-  const API_URL = 'https://script.google.com/macros/s/AKfycbzZ95X9L21zV2ITAlLBimEdByLwouQGRceLy0JE23T3RVjecVBo2J15HQcikMvQZ1j_/exec'; 
-  const EXAM_TIME_MINUTES = 15; 
+  // Một Web App GAS mới xử lý toàn bộ các action:
+  // login (trả thêm studentSheetName), changePassword, resetPassword, getQuestions, submitResult.
+  // URL này là URL sau khi Deploy mã GAS đã tích hợp mà thầy vừa cung cấp.
+  const API_URL = 'https://script.google.com/macros/s/AKfycbx3g8Eg_upf04MSFaGPenEBI-j0zMJhM-myaSFEgfHCpJZdr5i-bUSxE9UoDoot5FYf2g/exec';
+
+  const EXAM_TIME_MINUTES = 15;
   // =========================================================================
 
-  let student = { id: '', name: '', email: '', className: '', mode: '', subject: '', subjectName: '', chapter: '', chapterName: '', sectionName: '', tab: '' };
+  let student = { id: '', name: '', email: '', className: '', studentSheetName: '', mode: '', tab: '' };
   let quizData = [];
   let countdownInterval;
   let isQuizActive = false;
   const ALPHABET = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'];
 
-  // CẤU HÌNH CHƯƠNG TRÌNH ĐÀO TẠO
-  // Mỗi mục nhỏ có:
-  //   val: tên tab Google Sheets dùng để lấy câu hỏi (giữ nguyên mã tab hiện tại).
-  //   text: tên hiển thị cho sinh viên.
-  // Với các môn chưa khai báo chương/mục nhỏ, bổ sung dữ liệu vào mảng chapters.
   const curriculum = {
-    gt1: {
-      name: "Giải tích 1",
-      chapters: [] // Bổ sung chương và mục nhỏ của Giải tích 1 tại đây.
-    },
-    gt3: {
-      name: "Giải tích 3",
-      chapters: [] // Bổ sung chương và mục nhỏ của Giải tích 3 tại đây.
-    },
-    daiso: {
-      name: "Đại số",
-      chapters: [
-        {
-          val: "1",
-          text: "Chương 1:Logic, tập hợp, ánh xạ, số phức",
-          sections: [
-            { val: "DS1.1", text: "1.1 - Logic" },
-            { val: "DS1.3", text: "1.2 - Tập hợp" },
-            { val: "DS1.4", text: "1.3 - Ánh xạ" },
-            { val: "DS1.5", text: "1.5 - Số phức" }
-          ]
-        },
-        {
-          val: "2",
-          text: "Chương 2:Ma trận, định thức, hệ  phương trình tuyến tính",
-          sections: [
-            { val: "DS2.1", text: "2.1 - Ma trận." },
-            { val: "DS2.2", text: "2.2 - Định thức" },
-            { val: "DS2.3", text: "2.3 - Hạng của ma trận" },
-            { val: "DS2.4", text: "2.4 - Hệ phương trình" }
-          ]
-        },    
-        {
-          val: "3",
-          text: "Chương 3:Không gian vector",
-          sections: [
-            { val: "DS3.1", text: "3.1 - Khái niệm không gian vector, không gian vector con" },
-            { val: "DS3.2", text: "3.2 - Cơ sở và tọa độ trong không gian vector hữu hạn chiều" }
-          ]
-        },         
-        {
-          val: "4",
-          text: "Chương 4:Ma trận, định thức, hệ  phương trình tuyến tính",
-          sections: [
-            { val: "DS4.1", text: "4.1 - Dạng song tuyến tính, dạng toàn phương" },
-            { val: "DS4.2", text: "4.2 - Không gian Euclide" }
-          ]
-        },     
-        {
-          val: "5",
-          text: "Chương 5:Dạng song tuyến tính, dạng toàn phương, không gian Euclide, đường và mặt bậc hai",
-          sections: [
-            { val: "DS5.1", text: "5.1 - Dạng song tuyến tính, dạng toàn phương" },
-            { val: "DS5.2", text: "5.2 - Không gian Euclide" },
-            { val: "DS5.3", text: "5.3 - Đường và mặt bậc hai" }
-          ]
-        },                                 
-      ] // Bổ sung chương và mục nhỏ của Đại số tại đây.
-    },
-    xstk: {
-      name: "Xác suất thống kê",
-      chapters: [
-        {
-          val: "1",
-          text: "Chương 1: Sự kiện ngẫu nhiên và phép tính xác suất",
-          sections: [
-            { val: "1.0", text: "1.0 - LT sự kiện ngẫu nhiên" },
-            { val: "1.1", text: "1.1 - Bài tập cơ bản" },
-            { val: "1.3", text: "1.3 - BT CT cộng, xác suất điều kiện, CT nhân" },
-            { val: "1.4", text: "1.4 - BT Công thức xác suất toàn phần" },
-            { val: "1.5", text: "1.5 - BT Công thức Bayes" }
-          ]
-        },
-        {
-          val: "2",
-          text: "Chương 2: Biến ngẫu nhiên và luật phân phối",
-          sections: [
-            { val: "2.0", text: "2.0 - LT Biến ngẫu nhiên và luật phân phối" },
-            { val: "2.1", text: "2.1 - BT Biến ngẫu nhiên rời rạc" },
-            { val: "2.2", text: "2.2 - BT Biến ngẫu nhiên liên tục" }
-          ]
-        },
-        {
-          val: "3",
-          text: "Chương 3: Biến ngẫu nhiên nhiều chiều",
-          sections: [
-            { val: "3.0", text: "3.0 - LT Biến ngẫu nhiên nhiều chiều" },
-            { val: "3.1", text: "3.1 - BT Biến ngẫu nhiên nhiều chiều rời rạc" },
-            { val: "3.2", text: "3.2 - BT Biến ngẫu nhiên nhiều chiều liên tục" }
-          ]
-        },
-        {
-          val: "4",
-          text: "Chương 4: Ước lượng tham số",
-          sections: [
-            { val: "4.0", text: "4.0 - LT Ước lượng tham số" },
-            { val: "4.1", text: "4.1 - BT Ước lượng tham số cho kỳ vọng, phương sai đã biết" },
-            { val: "4.2", text: "4.2 - BT Ước lượng tham số cho kỳ vọng, phương sai chưa biết" },
-            { val: "4.3", text: "4.3 - BT Ước lượng tham số cho kỳ vọng, mẫu lớn" },
-            { val: "4.4", text: "4.4 - BT Ước lượng tham số cho tỷ lệ" }
-          ]
-        },
-        {
-          val: "5",
-          text: "Chương 5: Kiểm định giả thuyết thống kê",
-          sections: [
-            { val: "5.0", text: "5.0 - LT Kiểm định giả thuyết thống kê" },
-            { val: "5.1", text: "5.1 - BT Kiểm định một mẫu thử" },
-            { val: "5.2", text: "5.2 - BT Kiểm định hai mẫu thử" }
-          ]
-        }
-      ]
-    }
+    "1": [{ val: "1.0", text: "1.0 - LT sự kiện ngẫu nhiên" }, { val: "1.1", text: "1.1 - Bài tập cơ bản" }, { val: "1.3", text: "1.3 - BT CT cộng, xác suất điều kiện, CT nhân" }, { val: "1.4", text: "1.4 - BT Công thức xác suất toàn phần" }, { val: "1.5", text: "1.5 - BT Công thức Bayes" }],
+    "2": [{ val: "2.0", text: "2.0 - LT Biến ngẫu nhiên và luật phân phối" }, { val: "2.1", text: "2.1 - BT Biến ngẫu nhiên rời rạc" }, { val: "2.2", text: "2.2 - BT Biến ngẫu nhiên liên tục" }],
+    "3": [{ val: "3.0", text: "3.0 - LT Biến ngẫu nhiên nhiều chiều" }, { val: "3.1", text: "3.1 - BT Biến ngẫu nhiên nhiều chiều rời rạc" }, { val: "3.2", text: "3.2 - BT Biến ngẫu nhiên nhiều chiều liên tục" }],
+    "4": [{ val: "4.0", text: "4.0 - LT Ước lượng tham số" }, { val: "4.1", text: "4.1 - BT Ước lượng tham số cho kỳ vọng, phương sai đã biết" }, { val: "4.2", text: "4.2 - BT Ước lượng tham số cho kỳ vọng, phương sai chưa biết" }, { val: "4.3", text: "4.3 - BT Ước lượng tham số cho kỳ vọng, mẫu lớn" }, { val: "4.4", text: "4.4 - BT Ước lượng tham số cho tỷ lệ" }],
+    "5": [{ val: "5.0", text: "5.0 - LT Kiểm định giả thuyết thống kê" }, { val: "5.1", text: "5.1 - BT Kiểm định một mẫu thử" }, { val: "5.2", text: "5.2 - BT Kiểm định hai mẫu thử" }]
   };
 
-  function setSelectPlaceholder(select, text) {
-    select.innerHTML = "";
-    const option = new Option(text, "");
-    option.disabled = true;
-    option.selected = true;
-    select.appendChild(option);
-  }
-
-  // Chọn môn học -> nạp danh sách chương của môn đó.
-  function updateChapters() {
-    const subjectId = document.getElementById("subjectSelect").value;
-    const chapterSelect = document.getElementById("chapterSelect");
-    const sectionSelect = document.getElementById("sectionSelect");
-    const notice = document.getElementById("curriculumNotice");
-
-    setSelectPlaceholder(chapterSelect, "-- Chọn chương --");
-    setSelectPlaceholder(sectionSelect, "-- Chọn chương trước --");
-    chapterSelect.disabled = true;
-    sectionSelect.disabled = true;
-
-    if (!subjectId || !curriculum[subjectId]) {
-      setSelectPlaceholder(chapterSelect, "-- Chọn môn học trước --");
-      notice.textContent = "Vui lòng chọn môn học, sau đó chọn chương và mục nhỏ.";
-      return;
-    }
-
-    const chapters = curriculum[subjectId].chapters || [];
-    if (chapters.length === 0) {
-      setSelectPlaceholder(chapterSelect, "Chưa cấu hình chương cho môn học này");
-      notice.textContent = `Môn ${curriculum[subjectId].name} đã có trong danh sách, nhưng chưa được khai báo chương và mục nhỏ.`;
-      return;
-    }
-
-    chapterSelect.disabled = false;
-    chapters.forEach(chapter => {
-      chapterSelect.appendChild(new Option(chapter.text, chapter.val));
-    });
-    notice.textContent = `Đã tải ${chapters.length} chương của môn ${curriculum[subjectId].name}.`;
-    updateSections();
-  }
-
-  // Chọn chương -> nạp các mục nhỏ (tên tab Google Sheets).
   function updateSections() {
-    const subjectId = document.getElementById("subjectSelect").value;
-    const chapterId = document.getElementById("chapterSelect").value;
+    const chapter = document.getElementById("chapterSelect").value;
     const secSelect = document.getElementById("sectionSelect");
-    const notice = document.getElementById("curriculumNotice");
-
-    setSelectPlaceholder(secSelect, "-- Chọn mục nhỏ --");
-    secSelect.disabled = true;
-
-    if (!subjectId || !chapterId || !curriculum[subjectId]) return;
-
-    const chapter = (curriculum[subjectId].chapters || []).find(item => item.val === chapterId);
-    if (!chapter || !chapter.sections || chapter.sections.length === 0) {
-      setSelectPlaceholder(secSelect, "Chưa cấu hình mục nhỏ cho chương này");
-      notice.textContent = "Chương này chưa có mục nhỏ được khai báo.";
-      return;
-    }
-
-    chapter.sections.forEach(item => {
-      secSelect.appendChild(new Option(item.text, item.val));
-    });
-    secSelect.disabled = false;
-    notice.textContent = `${chapter.text} — có ${chapter.sections.length} mục nhỏ.`;
+    secSelect.innerHTML = "";
+    (curriculum[chapter] || []).forEach(item => { secSelect.appendChild(new Option(item.text, item.val)); });
   }
-
-  // Khởi tạo các hộp chọn ở trạng thái chờ người dùng chọn môn học.
-  setSelectPlaceholder(document.getElementById("chapterSelect"), "-- Chọn môn học trước --");
-  setSelectPlaceholder(document.getElementById("sectionSelect"), "-- Chọn chương trước --");
+  updateSections();
 
   function toggleWarning() { document.getElementById('cheatWarning').style.display = document.getElementById('quizMode').value === 'exam' ? 'block' : 'none'; }
   function togglePasswordSection() { let sec = document.getElementById('passwordSection'); sec.style.display = sec.style.display === 'block' ? 'none' : 'block'; }
 
+  // Gọi một trong hai Web App GAS và đọc phản hồi theo dạng JSON.
   async function callGoogleAPI(payload) {
     try {
       const response = await fetch(API_URL, {
@@ -371,8 +270,6 @@
         body: JSON.stringify(payload)
       });
 
-      // Đọc dạng text trước để có thể báo lỗi rõ ràng nếu Apps Script trả về HTML
-      // (ví dụ: Web App chưa cấp quyền hoặc URL triển khai không đúng).
       const responseText = await response.text();
       let result;
       try {
@@ -381,7 +278,7 @@
         console.error('Phản hồi không phải JSON:', responseText);
         return {
           success: false,
-          message: `Máy chủ không trả về JSON (HTTP ${response.status}). Hãy kiểm tra quyền truy cập và URL triển khai Google Apps Script.`
+          message: `Máy chủ không trả về JSON hợp lệ (HTTP ${response.status}). Hãy kiểm tra URL Web App và quyền triển khai.`
         };
       }
 
@@ -396,8 +293,81 @@
       console.error('Lỗi gọi Google Apps Script:', err);
       return {
         success: false,
-        message: `Không kết nối được Google Apps Script: ${err.message || err}. Kiểm tra Internet và URL Web App.`
+        message: `Không kết nối được Web App: ${err.message || err}. Hãy kiểm tra URL và kết nối Internet.`
       };
+    }
+  }
+
+  function togglePasswordVisibility(inputId, button) {
+    const input = document.getElementById(inputId);
+    const show = input.type === 'password';
+    input.type = show ? 'text' : 'password';
+    button.textContent = show ? '🙈 Ẩn' : '👁 Hiện';
+    button.setAttribute('aria-label', show ? 'Ẩn mật khẩu' : 'Hiện mật khẩu');
+  }
+
+  function resetPasswordVisibility(inputId) {
+    const input = document.getElementById(inputId);
+    if (input) input.type = 'password';
+    const wrap = input && input.closest('.password-input-wrap');
+    const button = wrap && wrap.querySelector('.toggle-password-btn');
+    if (button) button.textContent = '👁 Hiện';
+  }
+
+  function toggleForgotPassword() {
+    const panel = document.getElementById('forgotPasswordPanel');
+    const message = document.getElementById('reset-password-message');
+    const opening = panel.style.display !== 'block';
+    panel.style.display = opening ? 'block' : 'none';
+    message.style.display = 'none';
+    message.textContent = '';
+    if (opening) document.getElementById('txtMSSV').focus();
+  }
+
+  async function requestPasswordReset() {
+    const studentId = document.getElementById('txtMSSV').value.trim();
+    const button = document.getElementById('resetPasswordButton');
+    const message = document.getElementById('reset-password-message');
+
+    message.style.display = 'block';
+    if (!studentId) {
+      message.style.color = '#c0392b';
+      message.textContent = 'Vui lòng nhập MSSV ở ô Mã số sinh viên phía trên.';
+      document.getElementById('txtMSSV').focus();
+      return;
+    }
+
+    const confirmed = window.confirm(
+      'Hệ thống sẽ tạo mật khẩu mới gồm 6 chữ số và gửi đến email đã đăng ký của MSSV này. Mật khẩu hiện tại sẽ bị thay thế. Bạn có muốn tiếp tục?'
+    );
+    if (!confirmed) return;
+
+    button.disabled = true;
+    button.textContent = 'Đang gửi yêu cầu...';
+    message.style.color = '#a16207';
+    message.textContent = 'Đang xử lý yêu cầu...';
+
+    try {
+      const result = await callGoogleAPI({
+        action: 'resetPassword',
+        studentId: studentId
+      });
+
+      if (result.success) {
+        message.style.color = '#15803d';
+        message.textContent = result.message ||
+          'Nếu MSSV tồn tại và email hợp lệ, mật khẩu mới sẽ được gửi đến email đã đăng ký. Vui lòng kiểm tra cả Spam/Thư rác.';
+      } else {
+        message.style.color = '#b91c1c';
+        message.textContent = result.message || 'Không thể xử lý yêu cầu. Vui lòng thử lại sau.';
+      }
+    } catch (error) {
+      console.error('Lỗi reset mật khẩu:', error);
+      message.style.color = '#b91c1c';
+      message.textContent = 'Không kết nối được máy chủ tài khoản. Vui lòng thử lại sau.';
+    } finally {
+      button.disabled = false;
+      button.textContent = '📧 Gửi mật khẩu mới về email';
     }
   }
 
@@ -407,83 +377,139 @@
     const btn = document.getElementById('btnLogin');
     const err = document.getElementById('loginError');
 
-    if(!mssv || !pwd) { err.textContent = "Vui lòng nhập đủ thông tin!"; err.style.display = 'block'; return; }
-    
-    btn.textContent = "Đang xác thực..."; btn.disabled = true; err.style.display = 'none';
-    let res = await callGoogleAPI({ action: 'login', studentId: mssv, password: pwd });
+    if (!mssv || !pwd) {
+      err.textContent = 'Vui lòng nhập đủ thông tin!';
+      err.style.display = 'block';
+      return;
+    }
 
-    if(res.success) {
-      student.id = mssv; student.name = res.studentName; student.email = res.email; student.className = res.className;
-      
+    btn.textContent = 'Đang xác thực...';
+    btn.disabled = true;
+    err.style.display = 'none';
+
+    const res = await callGoogleAPI({
+      action: 'login', studentId: mssv, password: pwd
+    });
+
+    if (res.success) {
+      student.id = mssv;
+      student.name = res.studentName || '';
+      student.email = res.email || '';
+      student.className = res.className || '';
+      // GAS trả về tên tab lớp chứa MSSV. classTabName là tên thay thế tương thích.
+      student.studentSheetName = String(
+        res.studentSheetName || res.classTabName || ''
+      ).trim();
+
+      // Không cho bắt đầu bài kiểm tra nếu GAS chưa xác định được tab lớp,
+      // tránh ghi kết quả với nhãn "Chưa xác định tab".
+      if (!student.studentSheetName) {
+        err.textContent = 'Đăng nhập thành công nhưng máy chủ chưa trả về tên tab lớp. Thầy/cô cần cập nhật phiên bản GAS mới và đăng nhập lại.';
+        err.style.display = 'block';
+        student = { id: '', name: '', email: '', className: '', studentSheetName: '', mode: '', tab: '' };
+        btn.textContent = 'Đăng nhập';
+        btn.disabled = false;
+        return;
+      }
+
+      // Nếu danh sách không có cột Lớp riêng, dùng tên tab làm tên lớp.
+      if (!student.className) student.className = student.studentSheetName;
+
       document.getElementById('infoMSSV').textContent = student.id;
       document.getElementById('infoName').textContent = student.name;
       document.getElementById('infoClass').textContent = student.className;
       document.getElementById('infoEmail').textContent = student.email;
-      
+
       document.getElementById('loginScreen').style.display = 'none';
       document.getElementById('dashboardScreen').style.display = 'block';
+      document.getElementById('txtPassword').value = '';
+      resetPasswordVisibility('txtPassword');
     } else {
-      err.textContent = res.message; err.style.display = 'block';
+      err.textContent = res.message || 'Đăng nhập không thành công.';
+      err.style.display = 'block';
     }
-    btn.textContent = "Đăng nhập"; btn.disabled = false;
+
+    btn.textContent = 'Đăng nhập';
+    btn.disabled = false;
   }
 
   function logout() {
-    student = { id: '', name: '', email: '', className: '', mode: '', subject: '', subjectName: '', chapter: '', chapterName: '', sectionName: '', tab: '' };
-    isQuizActive = false;
-    isSubmitting = false;
-    document.getElementById('txtMSSV').value = ''; document.getElementById('txtPassword').value = '';
+    student = { id: '', name: '', email: '', className: '', studentSheetName: '', mode: '', tab: '' };
+    document.getElementById('txtMSSV').value = '';
+    document.getElementById('txtPassword').value = '';
+    document.getElementById('loginError').style.display = 'none';
+    document.getElementById('forgotPasswordPanel').style.display = 'none';
+    document.getElementById('reset-password-message').style.display = 'none';
     document.getElementById('dashboardScreen').style.display = 'none';
     document.getElementById('loginScreen').style.display = 'block';
+    resetPasswordVisibility('txtPassword');
+  }
+
+  function togglePasswordSection() {
+    const section = document.getElementById('passwordSection');
+    const opening = section.style.display !== 'block';
+    section.style.display = opening ? 'block' : 'none';
+    if (!opening) clearPasswordFields();
+  }
+
+  function clearPasswordFields() {
+    ['newPassword', 'confirmNewPassword'].forEach(id => {
+      document.getElementById(id).value = '';
+      resetPasswordVisibility(id);
+    });
+  }
+
+  function handlePasswordEnter(event) {
+    if (event.key === 'Enter') changePassword();
   }
 
   async function changePassword() {
     const newPwd = document.getElementById('newPassword').value.trim();
-    if(!newPwd) { alert("Nhập mật khẩu mới!"); return; }
-    
-    document.getElementById('btnChangePwd').disabled = true;
-    let res = await callGoogleAPI({ action: 'changePassword', studentId: student.id, newPassword: newPwd });
+    const confirmPwd = document.getElementById('confirmNewPassword').value.trim();
+    const button = document.getElementById('btnChangePwd');
 
-    if(res.success) { 
-      alert("Cập nhật mật khẩu thành công!"); 
-      document.getElementById('newPassword').value = ''; 
-      togglePasswordSection();
-    } else alert("Lỗi: " + res.message);
-    document.getElementById('btnChangePwd').disabled = false;
+    if (!newPwd || !confirmPwd) {
+      alert('Vui lòng nhập đầy đủ mật khẩu mới và xác nhận lại mật khẩu!');
+      return;
+    }
+    if (newPwd !== confirmPwd) {
+      alert('Hai mật khẩu không khớp. Vui lòng kiểm tra lại!');
+      document.getElementById('confirmNewPassword').focus();
+      return;
+    }
+
+    button.disabled = true;
+    button.textContent = 'Đang cập nhật...';
+
+    const result = await callGoogleAPI({
+      action: 'changePassword',
+      studentId: student.id,
+      newPassword: newPwd
+    });
+
+    if (result.success) {
+      alert('Cập nhật mật khẩu thành công!');
+      clearPasswordFields();
+      document.getElementById('passwordSection').style.display = 'none';
+    } else {
+      alert('Lỗi: ' + (result.message || 'Không thể cập nhật mật khẩu.'));
+    }
+
+    button.disabled = false;
+    button.textContent = 'Cập nhật mật khẩu';
   }
 
   async function startQuiz() {
     const quizPwd = document.getElementById('txtQuizPassword').value.trim();
-    const subjectSelect = document.getElementById('subjectSelect');
-    const chapterSelect = document.getElementById('chapterSelect');
-    const sectionSelect = document.getElementById('sectionSelect');
-
-    if (!subjectSelect.value) { alert("Vui lòng chọn môn học!"); return; }
-    if (!chapterSelect.value) { alert("Vui lòng chọn chương!"); return; }
-    if (!sectionSelect.value) { alert("Vui lòng chọn mục nhỏ!"); return; }
     if (!quizPwd) { alert("Vui lòng nhập Mật khẩu bài kiểm tra để lấy đề!"); return; }
-
-    const subjectConfig = curriculum[subjectSelect.value];
-    const chapterConfig = subjectConfig.chapters.find(item => item.val === chapterSelect.value);
-    const sectionConfig = chapterConfig.sections.find(item => item.val === sectionSelect.value);
 
     const btnStart = document.getElementById('btnStartQuiz');
     btnStart.textContent = "Đang tải đề..."; btnStart.disabled = true;
 
     student.mode = document.getElementById('quizMode').value;
-    student.subject = subjectSelect.value;
-    student.subjectName = subjectConfig.name;
-    student.chapter = chapterSelect.value;
-    student.chapterName = chapterConfig.text;
-    student.sectionName = sectionConfig.text;
-    student.tab = sectionSelect.value;
-
-    // Giữ nguyên đúng cấu trúc payload của Apps Script phiên bản ban đầu.
-    let res = await callGoogleAPI({
-      action: 'getQuestions',
-      tabName: student.tab,
-      quizPassword: quizPwd
-    });
+    student.tab = document.getElementById('sectionSelect').value;
+    
+    let res = await callGoogleAPI({ action: 'getQuestions', tabName: student.tab, quizPassword: quizPwd });
     
     if(res.success) {
       document.getElementById('dashboardScreen').style.display = 'none';
@@ -492,7 +518,7 @@
       document.getElementById('btnBackToDashboard').style.display = 'none';
       
       document.getElementById('quizUser').textContent = `${student.id} - ${student.name} (${student.className})`;
-      document.getElementById('quizTabDisplay').textContent = `${student.subjectName} / ${student.chapterName} / ${student.sectionName} (Mã: ${student.tab})`;
+      document.getElementById('quizTabDisplay').textContent = `Mã bài tập: ${student.tab}`;
       
       if (student.mode === 'exam') {
         document.getElementById('quizModeDisplay').textContent = `Thi (${EXAM_TIME_MINUTES} phút)`;
@@ -561,105 +587,86 @@
     if (isQuizActive && student.mode === 'exam' && e.key === 'PrintScreen') { submitQuiz(true, ' (Chụp màn hình)'); alert("Cấm chụp màn hình!"); e.preventDefault(); }
   });
 
-  let isSubmitting = false;
-
   async function submitQuiz(isAutoSubmit = false, violationTag = '') {
-    if (!isQuizActive || isSubmitting) return;
-
-    // Chặn gửi nhiều lần trong khi đang chờ máy chủ phản hồi.
-    isQuizActive = false;
-    isSubmitting = true;
-
+    if (!isQuizActive) return; 
+    isQuizActive = false; 
+    
     const btn = document.getElementById('btnSubmitQuiz');
-    const originalButtonText = btn.textContent;
-    btn.textContent = "Đang gửi và lưu kết quả...";
-    btn.disabled = true;
+    btn.textContent = "Đang lưu hệ thống..."; btn.disabled = true;
+    if (countdownInterval) { clearInterval(countdownInterval); document.getElementById('timerDisplay').style.display = 'none'; }
 
-    if (countdownInterval) {
-      clearInterval(countdownInterval);
-      countdownInterval = null;
-      document.getElementById('timerDisplay').style.display = 'none';
-    }
-
-    let score = 0;
-    const selectedAnswersList = [];
-
-    // Tính điểm và thu thập lựa chọn, nhưng CHƯA khóa đáp án.
-    // Chỉ khóa sau khi Apps Script xác nhận đã lưu thành công.
+    let score = 0; let selectedAnswersList = []; 
+    
     quizData.forEach((q, qIndex) => {
-      let isQuestionCorrect = true;
+      let isQuestionCorrect = true; 
       let hasSelected = false;
-      const selOpts = [];
-
+      let selOpts = []; 
+      
       const inputs = document.querySelectorAll(`input[name="q${qIndex}"]`);
       inputs.forEach((input, oIndex) => {
         if (input.checked) {
           hasSelected = true;
           selOpts.push(ALPHABET[oIndex]);
-          if (input.value !== "true") isQuestionCorrect = false;
-        } else if (input.value === "true") {
-          isQuestionCorrect = false;
+          // Chọn phải đáp án sai => Sai cả câu
+          if (input.value !== "true") isQuestionCorrect = false; 
+        } else {
+          // Bỏ sót đáp án đúng => Sai cả câu
+          if (input.value === "true") isQuestionCorrect = false; 
         }
+        input.disabled = true; 
       });
 
-      if (!hasSelected) isQuestionCorrect = false;
+      if (!hasSelected) isQuestionCorrect = false; // Không chọn gì = Sai
       if (isQuestionCorrect) score++;
-      if (selOpts.length > 0) {
-        selectedAnswersList.push((qIndex + 1) + selOpts.join(''));
-      }
+      if (selOpts.length > 0) selectedAnswersList.push((qIndex + 1) + selOpts.join(''));
     });
 
-    const tag = isAutoSubmit
-      ? violationTag
-      : (student.mode === 'exam' ? ' (Thi)' : ' (Ôn luyện)');
+    // Nhãn kết quả được lưu cùng họ tên trong cột Họ tên của bảng kết quả.
+    // Nộp tự động do hết giờ/vi phạm được phân loại là "Lỗi khi làm bài".
+    const violationReason = String(violationTag || '')
+      .replace(/[()]/g, '')
+      .trim();
 
-    // Payload submitResult được giữ nguyên như phiên bản Apps Script ban đầu.
-    const payload = {
+    let resultStatus;
+    if (isAutoSubmit) {
+      resultStatus = violationReason
+        ? `Lỗi khi làm bài: ${violationReason}`
+        : 'Lỗi khi làm bài';
+    } else {
+      resultStatus = student.mode === 'exam' ? 'Thi' : 'Ôn luyện';
+    }
+
+    const studentListTab = String(student.studentSheetName || '').trim();
+    if (!studentListTab) {
+      alert('Không xác định được tab lớp của sinh viên. Vui lòng đăng xuất, cập nhật GAS mới và đăng nhập lại trước khi nộp bài.');
+      btn.textContent = 'Nộp bài & Lưu kết quả';
+      btn.disabled = false;
+      isQuizActive = true;
+      return;
+    }
+
+    const resultFullName =
+      `${student.name} - ${student.className || studentListTab} (${studentListTab}) - (${resultStatus})`;
+
+    let res = await callGoogleAPI({
       action: 'submitResult',
       tabName: student.tab,
       studentId: student.id,
-      fullName: student.name + tag,
+      fullName: resultFullName,
       scoreText: `${score}/${quizData.length}`,
       selectedAnswers: selectedAnswersList.join(' ')
-    };
+    });
 
-    try {
-      const res = await callGoogleAPI(payload);
-
-      if (res && res.success === true) {
-        // Máy chủ đã xác nhận lưu thành công: lúc này mới khóa các lựa chọn.
-        document.querySelectorAll('#questionsArea input').forEach(input => {
-          input.disabled = true;
-        });
-
-        const resDiv = document.getElementById('resultArea');
-        resDiv.style.display = 'block';
-        resDiv.innerHTML = `${isAutoSubmit ? "⚠️ BÀI THI BỊ KẾT THÚC DO VI PHẠM/HẾT GIỜ!<br>" : "🎉 Bài làm đã được ghi nhận!<br>"}Bạn trả lời đúng: <strong>${score}/${quizData.length}</strong> câu.`;
-        resDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
-        btn.style.display = 'none';
-        document.getElementById('btnBackToDashboard').style.display = 'inline-block';
-        isQuizActive = false;
-      } else {
-        const reason = (res && res.message)
-          ? res.message
-          : 'Apps Script không xác nhận kết quả đã được lưu.';
-        alert(`Chưa gửi được kết quả. Bài làm vẫn được giữ nguyên để bạn thử gửi lại.\n\nChi tiết: ${reason}`);
-        btn.textContent = 'Gửi lại kết quả';
-        btn.disabled = false;
-        isQuizActive = true;
-      }
-    } catch (err) {
-      console.error('Lỗi khi nộp bài:', err);
-      alert(`Có lỗi khi gửi bài: ${err.message || err}. Bài làm vẫn được giữ nguyên, bạn có thể thử gửi lại.`);
-      btn.textContent = 'Gửi lại kết quả';
-      btn.disabled = false;
-      isQuizActive = true;
-    } finally {
-      isSubmitting = false;
-      // Khi gửi thành công, nút đã được ẩn; khi thất bại, nút được bật lại.
-      if (btn.style.display !== 'none' && btn.textContent === originalButtonText) {
-        btn.textContent = 'Nộp bài & Lưu kết quả';
-      }
+    if(res.success) {
+      const resDiv = document.getElementById('resultArea');
+      resDiv.style.display = 'block';
+      resDiv.innerHTML = `${isAutoSubmit ? "⚠️ BÀI THI BỊ KẾT THÚC DO VI PHẠM/HẾT GIỜ!<br>" : "🎉 Bài làm đã được ghi nhận!<br>"}Bạn trả lời đúng: <strong>${score}/${quizData.length}</strong> câu.`;
+      resDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      btn.style.display = 'none'; 
+      document.getElementById('btnBackToDashboard').style.display = 'inline-block';
+    } else {
+      alert("Lỗi lưu điểm: " + res.message); 
+      btn.textContent = "Thử nộp lại"; btn.disabled = false; isQuizActive = true;
     }
   }
 
