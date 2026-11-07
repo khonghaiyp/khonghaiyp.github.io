@@ -65,6 +65,27 @@
     .reply-form-container.active { display: block; }
     .reply-form-container input, .reply-form-container textarea { padding: 8px; font-size: 14px; }
     .reply-form-container .btn-submit { font-size: 14px; padding: 8px 15px; background-color: #0056b3; }
+
+    /* ===== TỔNG QUAN THẮC MẮC ===== */
+    .summary-box { background:#fff; border:1px solid #bee3f8; border-radius:8px; padding:15px; margin-bottom:20px; }
+    .summary-stats { display:flex; gap:12px; flex-wrap:wrap; margin-bottom:10px; }
+    .stat { flex:1; min-width:180px; padding:10px 14px; border-radius:8px; background:#edf2f7; font-size:14px; }
+    .stat b { display:block; font-size:1.7rem; line-height:1.2; }
+    .stat-total b { color:#2b6cb0; }
+    .stat-unresolved { background:#fffaf0; }
+    .stat-unresolved b { color:#dd6b20; }
+    .unresolved-title { font-weight:bold; color:#c05621; margin:8px 0; }
+    .unresolved-item { display:flex; justify-content:space-between; align-items:flex-start; gap:10px; padding:10px 12px; border:1px solid #fbd38d; border-left:4px solid #f6993f; background:#fffaf0; border-radius:6px; margin-bottom:8px; }
+    .unresolved-item .u-class { font-size:12px; color:#2b6cb0; font-weight:bold; }
+    .unresolved-item .u-name { font-weight:bold; color:#d9534f; }
+    .unresolved-item .u-time { font-size:12px; color:#888; margin-left:8px; }
+    .unresolved-item .u-preview { font-size:13.5px; color:#444; margin-top:2px; white-space:pre-wrap; word-break:break-word; }
+    .btn-goto { background:#fff; border:1px solid #cbd5e0; border-radius:6px; padding:5px 12px; font-size:13px; font-weight:bold; color:#2b6cb0; cursor:pointer; white-space:nowrap; }
+    .btn-goto:hover { background:#e2e8f0; }
+    .view-picker { background:#fff; border:1px solid #e2e8f0; border-radius:8px; padding:15px; margin-bottom:20px; display:flex; flex-direction:column; gap:8px; }
+    .class-box { display:none; }
+    .class-box.active { display:block; }
+    .view-hint { text-align:center; color:#777; font-style:italic; padding:20px; }
   </style>
 </head>
 <h1>Lớp thầy Khổng Văn Hải</h1>
@@ -82,10 +103,21 @@
   <!-- ================= FORM ĐIỀN THẮC MẮC DÀNH CHO SINH VIÊN ================= -->
   <div class="chapter-box box-student">
     <h2>Gửi Thắc Mắc Mới (Dành cho Sinh viên)</h2>
+
+    <!-- TỔNG QUAN: tổng số thắc mắc, số chưa giải quyết, liệt kê từng thắc mắc chưa giải quyết -->
+    <div class="summary-box" id="summaryBox">
+      <div class="summary-stats">
+        <div class="stat stat-total">Tổng số thắc mắc đã gửi<b id="statTotal">...</b></div>
+        <div class="stat stat-unresolved">Số thắc mắc chưa giải quyết<b id="statUnresolved">...</b></div>
+      </div>
+      <div class="unresolved-title">Danh sách thắc mắc chưa giải quyết:</div>
+      <div id="unresolvedList"><i style="color:#777;">Đang tải dữ liệu...</i></div>
+    </div>
+
     <form id="studentForm" class="form-group">
       
       <label style="font-weight: bold; margin-bottom: -5px;">Bước 1: Chọn lớp của bạn</label>
-      <select id="selClass" required>
+      <select id="selClass" required onchange="showClass(this.value)">
         <option value="" disabled selected>-- Chọn lớp học --</option>
         <option value="T2K4">Lớp Lý thuyết-Bài tập - Mã 173929 - Thứ 2 K4</option>
         <option value="T2K5">Lớp Lý thuyết-Bài tập - Mã 173930 - Thứ 2 K5</option>
@@ -147,17 +179,35 @@
   <hr style="margin: 40px 0; border: 1px dashed #ccc;">
   <h1 style="color: #d9534f; margin-bottom: 30px;">Tiến Độ Giải Quyết (Theo Lớp)</h1>
 
+  <div class="view-picker">
+    <label for="selView" style="font-weight:bold;">Chọn lớp để xem tất cả thắc mắc của lớp đó</label>
+    <select id="selView" onchange="showClass(this.value)">
+      <option value="" selected>-- Chọn lớp học --</option>
+        <option value="T2K4">Lớp Lý thuyết-Bài tập - Mã 173929 - Thứ 2 K4</option>
+        <option value="T2K5">Lớp Lý thuyết-Bài tập - Mã 173930 - Thứ 2 K5</option>
+        <option value="T2K6">Lớp Lý thuyết-Bài tập - Mã 173931 - Thứ 2 K6</option>
+        <option value="T3K4">Lớp Lý thuyết-Bài tập - Mã 173539 - Thứ 3 K4</option>
+        <option value="T5K4">Lớp Bài tập - Mã 171840 - Thứ 5 K4</option>
+        <option value="T5K5">Lớp Bài tập - Mã 171854 - Thứ 5 K5</option>
+        <option value="T5K6">Lớp Bài tập - Mã 171853 - Thứ 5 K6</option>
+        <option value="T6K1">Lớp Bài tập - Mã 765592 - Thứ 6 K1</option>
+        <option value="T6K4">Lớp Lý thuyết-Bài tập - Mã 174586 - Thứ 6 K4</option>
+        <option value="T6K5">Lớp Lý thuyết-Bài tập - Mã 174587 - Thứ 6 K5</option>
+    </select>
+  </div>
+  <div id="viewHint" class="view-hint">Hãy chọn lớp ở trên để xem các thắc mắc của lớp.</div>
+
   <!-- ================= DANH SÁCH CÁC LỚP ================= -->
-  <div class="chapter-box"><h2>Lớp Lý thuyết-Bài tập - 173929 - Thứ 2 K4</h2><div id="list-T2K4" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
-  <div class="chapter-box"><h2>Lớp Lý thuyết-Bài tập - 173930 - Thứ 2 K5</h2><div id="list-T2K5" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
-  <div class="chapter-box"><h2>Lớp Lý thuyết-Bài tập - 173931 - Thứ 2 K6</h2><div id="list-T2K6" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
-  <div class="chapter-box"><h2>Lớp Lý thuyết-Bài tập - 173539 - Thứ 3 K4</h2><div id="list-T3K4" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
-  <div class="chapter-box"><h2>Lớp Bài tập - 171840 - Thứ 5 K4</h2><div id="list-T5K4" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
-  <div class="chapter-box"><h2>Lớp Bài tập - 171854 - Thứ 5 K5</h2><div id="list-T5K5" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
-  <div class="chapter-box"><h2>Lớp Bài tập - 171853 - Thứ 5 K6</h2><div id="list-T5K6" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
-  <div class="chapter-box"><h2>Lớp Bài tập - 765592 - Thứ 6 K1</h2><div id="list-T6K1" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
-  <div class="chapter-box"><h2>Lớp Lý thuyết-Bài tập - 174586 - Thứ 6 K4</h2><div id="list-T6K4" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
-  <div class="chapter-box"><h2>Lớp Lý thuyết-Bài tập - 174587 - Thứ 6 K5</h2><div id="list-T6K5" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box class-box" id="box-T2K4"><h2>Lớp Lý thuyết-Bài tập - 173929 - Thứ 2 K4</h2><div id="list-T2K4" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box class-box" id="box-T2K5"><h2>Lớp Lý thuyết-Bài tập - 173930 - Thứ 2 K5</h2><div id="list-T2K5" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box class-box" id="box-T2K6"><h2>Lớp Lý thuyết-Bài tập - 173931 - Thứ 2 K6</h2><div id="list-T2K6" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box class-box" id="box-T3K4"><h2>Lớp Lý thuyết-Bài tập - 173539 - Thứ 3 K4</h2><div id="list-T3K4" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box class-box" id="box-T5K4"><h2>Lớp Bài tập - 171840 - Thứ 5 K4</h2><div id="list-T5K4" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box class-box" id="box-T5K5"><h2>Lớp Bài tập - 171854 - Thứ 5 K5</h2><div id="list-T5K5" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box class-box" id="box-T5K6"><h2>Lớp Bài tập - 171853 - Thứ 5 K6</h2><div id="list-T5K6" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box class-box" id="box-T6K1"><h2>Lớp Bài tập - 765592 - Thứ 6 K1</h2><div id="list-T6K1" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box class-box" id="box-T6K4"><h2>Lớp Lý thuyết-Bài tập - 174586 - Thứ 6 K4</h2><div id="list-T6K4" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
+  <div class="chapter-box class-box" id="box-T6K5"><h2>Lớp Lý thuyết-Bài tập - 174587 - Thứ 6 K5</h2><div id="list-T6K5" class="comments-list"><i>Đang tải dữ liệu...</i></div></div>
 
 </div>
 
@@ -175,6 +225,66 @@
 
   window._reloaders = {}; 
   const classIds = ['T2K4', 'T2K5', 'T2K6', 'T3K4', 'T5K4', 'T5K5', 'T5K6', 'T6K1', 'T6K4', 'T6K5'];
+
+
+  // ====== DỮ LIỆU TỔNG HỢP & HIỂN THỊ THEO LỚP ======
+  const classLabels = {};
+  document.querySelectorAll('#selView option[value]').forEach(o => { if (o.value) classLabels[o.value] = o.textContent.trim(); });
+  const classStats = {}; // chapter -> { total, unresolved: [...] }
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+  }
+
+  function updateSummary() {
+    const loaded = classIds.filter(id => classStats[id]);
+    let total = 0, unresolved = [];
+    loaded.forEach(id => {
+      total += classStats[id].total;
+      classStats[id].unresolved.forEach(u => unresolved.push({ chapter: id, ...u }));
+    });
+    const stillLoading = loaded.length < classIds.length;
+    document.getElementById('statTotal').innerText = total + (stillLoading ? '…' : '');
+    document.getElementById('statUnresolved').innerText = unresolved.length + (stillLoading ? '…' : '');
+
+    const box = document.getElementById('unresolvedList');
+    if (unresolved.length === 0) {
+      box.innerHTML = stillLoading ? '<i style="color:#777;">Đang tải dữ liệu...</i>'
+                                   : '<i style="color:#38a169;">🎉 Hiện không có thắc mắc nào chưa giải quyết.</i>';
+      return;
+    }
+    box.innerHTML = unresolved.map(u => `
+      <div class="unresolved-item">
+        <div>
+          <div class="u-class">${escapeHtml(classLabels[u.chapter] || u.chapter)}</div>
+          <div><span class="u-name">${escapeHtml(u.name)}</span><span class="u-time">${escapeHtml(u.time)}</span></div>
+          <div class="u-preview">${escapeHtml(u.preview)}</div>
+        </div>
+        <button type="button" class="btn-goto" onclick="gotoComment('${u.chapter}', '${u.safeId}')">Xem ▸</button>
+      </div>`).join('');
+  }
+
+  function showClass(chapter) {
+    document.querySelectorAll('.class-box').forEach(b => b.classList.remove('active'));
+    const hint = document.getElementById('viewHint');
+    if (chapter && document.getElementById('box-' + chapter)) {
+      document.getElementById('box-' + chapter).classList.add('active');
+      hint.style.display = 'none';
+    } else {
+      hint.style.display = 'block';
+    }
+    document.getElementById('selView').value = chapter || '';
+    const f = document.getElementById('selClass');
+    if (chapter && f.value !== chapter) f.value = chapter;
+  }
+
+  function gotoComment(chapter, safeId) {
+    showClass(chapter);
+    const details = document.getElementById(`details-${chapter}-${safeId}`);
+    if (details && !details.classList.contains('active')) toggleDetails(details.id);
+    const box = document.getElementById('box-' + chapter);
+    (details || box).scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
 
   function toggleAttendanceFields() {
     const type = document.getElementById('selType').value;
@@ -305,6 +415,17 @@
 
           if (commentsByParent["root"]) commentsByParent["root"].reverse();
 
+          // Thống kê cho phần tổng quan
+          const rootList = commentsByParent["root"] || [];
+          classStats[chapter] = {
+            total: rootList.length,
+            unresolved: rootList
+              .filter(c => !(commentsByParent[c.id] || []).some(ch => ch.comment.includes("[ĐÃ GIẢI QUYẾT]")))
+              .map(c => ({ id: c.id, safeId: c.safeId, name: c.name, time: c.time,
+                           preview: String(c.comment).split('\n').filter(l => l.trim() && !/^🔗/.test(l)).slice(0,3).join('\n').replace(/https?:\/\/\S+/g,'[link]').slice(0,200) }))
+          };
+          updateSummary();
+
           function renderCommentsTree(parentId, level) {
             const children = commentsByParent[parentId];
             if (!children || children.length === 0) return '';
@@ -390,6 +511,7 @@
         })
         .catch(() => {
           document.getElementById(listId).innerHTML = '<i style="color:red;">Đang chờ phản hồi từ máy chủ...</i>';
+          if (!classStats[chapter]) { classStats[chapter] = { total: 0, unresolved: [] }; updateSummary(); }
         });
     }
 
@@ -433,6 +555,7 @@
       .then(() => {
         alert("Gửi thắc mắc thành công! Hệ thống sẽ hiển thị nội dung bên dưới.");
         this.reset();
+        showClass(chapter);
         toggleAttendanceFields(); 
         submitBtn.innerText = 'Gửi Thắc Mắc';
         submitBtn.disabled = false;
