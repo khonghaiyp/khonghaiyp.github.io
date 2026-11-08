@@ -24,7 +24,10 @@ input,select{width:100%;padding:8px;border:1px solid var(--bd);border-radius:8px
 .chip{padding:3px 10px;border-radius:999px;font-size:13px}
 .msg{margin-top:10px;font-size:14px}.err{color:#d92d20}
 .wrap{overflow:hidden;padding:8px}
-.room{width:max-content;transform-origin:top left}
+.room{width:max-content;transform-origin:top left;display:flex;flex-direction:column}
+.room.flip{flex-direction:column-reverse}
+.room.flip .board{margin:6px 0 0}
+.vb.on{background:var(--c1);color:var(--c1t);border-color:var(--c1t)}
 .board{text-align:center;background:var(--empty);border-radius:6px;padding:2px;margin-bottom:6px;font-size:12px;color:var(--mut)}
 .rows{display:flex;gap:6px;align-items:flex-start}
 .row,.lab{display:flex;flex-direction:column;gap:4px;align-items:stretch}
@@ -49,9 +52,9 @@ input,select{width:100%;padding:8px;border:1px solid var(--bd);border-radius:8px
 .tline{position:absolute;left:0;height:0;border-top:3px solid var(--mut);opacity:.7;pointer-events:none}
 .bt{padding:7px 12px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx);cursor:pointer;font-size:14px}
 body.present #inputs,body.present #bar,body.present #msg{display:none!important}
-#ex{display:none}
-body.present #ex{display:block;position:fixed;top:calc(8px + env(safe-area-inset-top,0px));right:8px;opacity:.35;z-index:5}
-body.present #ex:hover{opacity:1}
+#pc{display:none}
+body.present #pc{display:flex;gap:6px;position:fixed;top:calc(8px + env(safe-area-inset-top,0px));right:8px;opacity:.35;z-index:5}
+body.present #pc:hover{opacity:1}
 body.present #box{border:none;background:transparent;margin-top:0!important}
 body.present{padding:6px;overflow:hidden}
 .k0{background:var(--c1);color:var(--c1t)}.k1{background:var(--c2);color:var(--c2t)}.k2{background:var(--c3);color:var(--c3t)}
@@ -62,8 +65,8 @@ body.present{padding:6px;overflow:hidden}
 <h1>Sơ đồ chỗ ngồi đánh số zigzag</h1>
 <div class="card">
   <div class="grid">
-    <label>Số dãy (m)<input id="m" type="number" min="1" max="20" value="3"></label>
-    <label>Số bàn mỗi dãy (n)<input id="n" type="number" min="1" max="30" value="15"></label>
+    <label>Số dãy (m)<input id="m" type="number" min="1" max="20" value="4"></label>
+    <label>Số bàn mỗi dãy (n)<input id="n" type="number" min="1" max="30" value="5"></label>
     <label>Số sinh viên mỗi bàn<input id="k" type="number" min="1" max="6" value="2"></label>
     <label>Số bậc (1 = phẳng)<select id="tr"><option>1</option><option>2</option><option>3</option><option>4</option></select></label>
     <label id="w1" hidden>Bậc I kết thúc ở bàn số<input id="e1" type="number" min="1" value="1"></label>
@@ -75,8 +78,10 @@ body.present{padding:6px;overflow:hidden}
   <div class="grid" id="cls" style="margin-top:10px"></div>
 </div>
 </div>
-<button class="bt" id="ex">Thoát</button>
+<div id="pc"><button class="bt vb on" data-f="0">⬇ Từ bảng xuống</button><button class="bt vb" data-f="1">⬆ Từ cuối lên bảng</button><button class="bt" id="ex">Thoát</button></div>
 <div id="bar" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+  <button class="bt vb on" data-f="0">⬇ Nhìn từ bảng xuống</button>
+  <button class="bt vb" data-f="1">⬆ Nhìn từ cuối lớp lên bảng</button>
   <button class="bt" id="pb">Chế độ trình chiếu</button>
   <button class="bt" id="dl" hidden>Tải PDF (1 slide)</button>
   <div class="legend" id="legend" style="margin:0"></div>
@@ -120,7 +125,9 @@ function tiers(n){
   out.push({name:'Bậc '+RM[T-1],from:prev+1,to:n});
   return out;
 }
-let dirty=false;
+let dirty=false, flip=false;
+function setFlip(v){flip=v;document.querySelectorAll('.vb').forEach(b=>b.classList.toggle('on',(b.dataset.f==='1')===v));render()}
+document.querySelectorAll('.vb').forEach(b=>b.onclick=()=>setFlip(b.dataset.f==='1'));
 function setDefaults(){
   const n=Math.max(1,+$('n').value||1),T=+$('tr').value;
   for(let i=1;i<=3;i++){
@@ -161,27 +168,28 @@ function render(){
   last={m,n,k,tabs,sizes,err};
   const msg=$('msg');msg.className='msg'+(err?' err':'');msg.textContent=text;
   const TR=tiers(n), ends=new Set(TR.slice(0,-1).map(q=>q.to));
+  $('room').classList.toggle('flip',flip);
   let h='';
-  for(let r=0;r<m;r++){
-    const down=r%2===0;
-    h+=`<div class="row"><div class="rh">Dãy ${r+1} ${down?'↓':'↑'}</div>`;
+  const rowOrder=Array.from({length:m},(_,i)=>flip?m-1-i:i);
+  rowOrder.forEach(r=>{
+    const down=r%2===0, cells=[];
     for(let t=0;t<n;t++){
       const tab=down?t:n-1-t, idx=r*n+t, asc=((r*(n-1)+t)%2===0);
-      const list=asc?tabs[idx]:[...tabs[idx]].reverse();
+      let list=asc?tabs[idx]:[...tabs[idx]].reverse();
+      if(flip)list=[...list].reverse();
       const seats=list.map(o=>o?`<div class="s k${o[0]}"><b>${o[1]}</b></div>`
         :`<div class="s"><b>–</b></div>`).join('');
-      h+=`<div class="tb${ends.has(tab+1)?' tend':''}">${seats}</div>`;
+      cells[tab]=`<div class="tb${(flip?ends.has(tab):ends.has(tab+1))?' tend':''}">${seats}</div>`;
     }
-    h+='</div>';
-  }
-  const tc=TR.length>1?`<div class="tcol"><div class="rh"></div>${TR.map((q,i)=>{const c=q.to-q.from+1;return `<div class="t${i<TR.length-1?' tend':''}" style="height:${c*28+(c-1)*4}px"><b>${q.name}</b> <i>bàn ${q.from}–${q.to}</i></div>`}).join('')}</div>`:'';
-  $('out').innerHTML=tc+`<div class="lab"><div class="rh">Bàn</div>${Array.from({length:n},(_,i)=>`<div class="n${ends.has(i+1)?' tend':''}">${i+1}</div>`).join('')}</div>`+h+infoCol(sizes);
-  document.querySelectorAll('.row').forEach((row,r)=>{
-    if(r%2===1){[...row.children].slice(1).reverse().forEach(e=>row.appendChild(e));}
+    h+=`<div class="row"><div class="rh">Dãy ${r+1} ${(down!==flip)?'↓':'↑'}</div>${(flip?[...cells].reverse():cells).join('')}</div>`;
   });
-  const rowsEl=$('out'),info=rowsEl.querySelector('.info'),labs=rowsEl.querySelectorAll('.lab .n');
+  const TV=flip?[...TR].reverse():TR;
+  const tc=TR.length>1?`<div class="tcol"><div class="rh"></div>${TV.map((q,i)=>{const c=q.to-q.from+1;return `<div class="t${i<TV.length-1?' tend':''}" style="height:${c*28+(c-1)*4}px"><b>${q.name}</b> <i>bàn ${q.from}–${q.to}</i></div>`}).join('')}</div>`:'';
+  const nums=Array.from({length:n},(_,i)=>i+1);if(flip)nums.reverse();
+  $('out').innerHTML=tc+`<div class="lab"><div class="rh">Bàn</div>${nums.map(v=>`<div class="n${(flip?ends.has(v-1):ends.has(v))?' tend':''}" data-n="${v}">${v}</div>`).join('')}</div>`+h+infoCol(sizes);
+  const rowsEl=$('out'),info=rowsEl.querySelector('.info');
   TR.slice(0,-1).forEach(q=>{
-    const el=labs[q.to-1],ln=document.createElement('div');ln.className='tline';
+    const el=rowsEl.querySelector(`.lab .n[data-n="${flip?q.to+1:q.to}"]`),ln=document.createElement('div');ln.className='tline';
     ln.style.top=(el.offsetTop+el.offsetHeight+8)+'px';
     ln.style.width=((info?info.offsetLeft-8:rowsEl.offsetWidth))+'px';
     rowsEl.appendChild(ln);
@@ -224,14 +232,15 @@ function drawSlide(){
   x.fillStyle='#1d2330';x.font=`700 54px ${F}`;x.textBaseline='middle';
   x.fillText($('ttl').value||'Sơ đồ chỗ ngồi',50,56);
   const top=110, bottom=H-30, left=50, right=W-50, ip=420, gr=right-ip-20;
-  x.fillStyle='#eceef2';x.fillRect(left,top,right-left,32);
+  const by=flip?H-30-32:top;
+  x.fillStyle='#eceef2';x.fillRect(left,by,right-left,32);
   x.fillStyle='#667085';x.font=`500 22px ${F}`;x.textAlign='center';
-  x.fillText('Bảng / Bục giảng',(left+right)/2,top+17);
+  x.fillText('Bảng / Bục giảng',(left+right)/2,by+17);
   const TR=tiers(n), nt=TR.length, tg=16, xl=nt>1?44:0, ends=new Set(TR.slice(0,-1).map(q=>q.to));
-  const gy=top+44, labw=64, rh=34, gap=5, cgap=18;
-  const yOf=t=>{let b=0;ends.forEach(e=>{if(e<=t)b++});return gy+rh+t*(th+gap)+b*tg};
+  const gy=flip?top:top+44, bot=flip?bottom-44:bottom, labw=64, rh=34, gap=5, cgap=18;
+  const yOf=t=>{let b=0;ends.forEach(e=>{if(flip?t>=n-e:t>=e)b++});return gy+rh+t*(th+gap)+b*tg};
   const maxc=Math.max(k,...tabs.map(t=>t.length));
-  const th=Math.min(70,(bottom-gy-rh-(n-1)*gap-(nt-1)*tg)/n);
+  const th=Math.min(70,(bot-gy-rh-(n-1)*gap-(nt-1)*tg)/n);
   const sw=Math.min(84,((gr-left-xl-labw-m*cgap)/m-8)/maxc-3);
   const cw=maxc*(sw+3)+8;
   const total=xl+labw+m*(cw+cgap), ox=left+Math.max(0,(gr-left-total)/2);
@@ -240,14 +249,15 @@ function drawSlide(){
   for(let t=0;t<n;t++){
     const ty=yOf(t);
     x.fillStyle='#eceef2';x.fillRect(ox+xl,ty,labw-12,th);
-    x.fillStyle='#1d2330';x.font=`700 ${Math.min(30,th*.55)}px ${F}`;x.fillText(t+1,ox+xl+(labw-12)/2,ty+th/2);
+    x.fillStyle='#1d2330';x.font=`700 ${Math.min(30,th*.55)}px ${F}`;x.fillText(flip?n-t:t+1,ox+xl+(labw-12)/2,ty+th/2);
   }
-  for(let r=0;r<m;r++){
-    const cx=ox+xl+labw+r*(cw+cgap), down=r%2===0;
-    x.fillStyle='#1d2330';x.font=`700 26px ${F}`;x.fillText(`Dãy ${r+1} ${down?'↓':'↑'}`,cx+cw/2,gy+rh/2);
+  for(let pr=0;pr<m;pr++){
+    const r=flip?m-1-pr:pr, cx=ox+xl+labw+pr*(cw+cgap), down=r%2===0;
+    x.fillStyle='#1d2330';x.font=`700 26px ${F}`;x.fillText(`Dãy ${r+1} ${(down!==flip)?'↓':'↑'}`,cx+cw/2,gy+rh/2);
     for(let t=0;t<n;t++){
-      const j=down?t:n-1-t, idx=r*n+j, asc=((r*(n-1)+j)%2===0);
-      const list=asc?tabs[idx]:[...tabs[idx]].reverse();
+      const tab=flip?n-1-t:t, j=down?tab:n-1-tab, idx=r*n+j, asc=((r*(n-1)+j)%2===0);
+      let list=asc?tabs[idx]:[...tabs[idx]].reverse();
+      if(flip)list=[...list].reverse();
       const ty=yOf(t);
       const w0=list.length*(sw+3)-3, sx=cx+(cw-w0)/2;
       list.forEach((o,j)=>{
@@ -260,8 +270,9 @@ function drawSlide(){
   }
   if(nt>1){
     const gx2=ox+xl+labw+m*(cw+cgap)-cgap;
-    TR.forEach((q,i)=>{
-      const y0=yOf(q.from-1), y1=yOf(q.to-1)+th;
+    (flip?[...TR].reverse():TR).forEach((q,i)=>{
+      const p0=flip?n-q.to:q.from-1, p1=flip?n-q.from:q.to-1;
+      const y0=yOf(p0), y1=yOf(p1)+th;
       x.fillStyle='#eceef2';x.fillRect(ox,y0,xl-8,y1-y0);
       x.save();x.translate(ox+(xl-8)/2,(y0+y1)/2);x.rotate(-Math.PI/2);x.textAlign='center';
       x.fillStyle='#1d2330';x.font=`700 22px ${F}`;x.fillText(q.name,0,-9,y1-y0-10);
