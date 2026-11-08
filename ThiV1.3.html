@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sơ đồ chỗ ngồi zigzag</title>
+<style>
+:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+--bg:#f6f7f9;--card:#fff;--tx:#1d2330;--mut:#667085;--bd:#d9dde5;--empty:#eceef2;
+--c1:#cfe3ff;--c1t:#12407a;--c2:#ffd9c2;--c2t:#7a3412;--c3:#d4f1d8;--c3t:#1b5a28}
+@media(prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#14171d;--card:#1d222b;--tx:#e8ebf0;--mut:#9aa3b2;--bd:#343b48;--empty:#262c37;
+--c1:#1f3c63;--c1t:#cfe3ff;--c2:#6a3a1f;--c2t:#ffd9c2;--c3:#24502d;--c3t:#d4f1d8}}
+:root[data-theme="dark"]{--bg:#14171d;--card:#1d222b;--tx:#e8ebf0;--mut:#9aa3b2;--bd:#343b48;--empty:#262c37;
+--c1:#1f3c63;--c1t:#cfe3ff;--c2:#6a3a1f;--c2t:#ffd9c2;--c3:#24502d;--c3t:#d4f1d8}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;padding:16px}
+h1{font-size:20px;margin:0 0 12px}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:14px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+label{display:block;font-size:13px;color:var(--mut)}
+input,select{width:100%;padding:8px;border:1px solid var(--bd);border-radius:8px;background:var(--bg);color:var(--tx);font-size:15px;margin-top:3px}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chip{padding:3px 10px;border-radius:999px;font-size:13px}
+.msg{margin-top:10px;font-size:14px}.err{color:#d92d20}
+.wrap{overflow:hidden;padding:8px}
+.room{width:max-content;transform-origin:top left}
+.board{text-align:center;background:var(--empty);border-radius:6px;padding:2px;margin-bottom:6px;font-size:12px;color:var(--mut)}
+.rows{display:flex;gap:6px;align-items:flex-start}
+.row,.lab{display:flex;flex-direction:column;gap:4px;align-items:stretch}
+.rh{font-weight:600;font-size:12px;height:18px;line-height:18px;text-align:center;white-space:nowrap}
+.lab{width:30px}.lab .rh{color:var(--mut)}
+.lab div.n{height:28px;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:13px;background:var(--empty);border-radius:6px}
+.tb{height:28px;padding:2px;display:flex;gap:2px}
+.s{min-width:28px;padding:1px;border-radius:4px;text-align:center;background:var(--empty);color:var(--mut);display:flex;flex-direction:column;justify-content:center}
+.s b{font-size:14px;line-height:1.1}.s i{font-style:normal;font-size:9px;opacity:.85;line-height:1}
+.cbox{padding:8px 10px;border-radius:10px;display:grid;gap:6px}
+.cbox label{color:inherit;opacity:.9}
+.cbox input{background:var(--card);color:var(--tx)}
+.info{display:flex;flex-direction:column;gap:6px;width:150px;margin-left:8px}
+.ib{border-radius:8px;padding:6px 8px;font-size:12px;line-height:1.4;overflow-wrap:anywhere}
+.ib span{opacity:.8}
+[hidden]{display:none!important}
+.rows{position:relative}
+.tend{margin-bottom:12px}
+.tcol{display:flex;flex-direction:column;gap:4px;width:26px}
+.tcol .t{writing-mode:vertical-rl;transform:rotate(180deg);text-align:center;font-size:11px;line-height:1.15;background:var(--empty);border-radius:6px;overflow:hidden;color:var(--tx)}
+.tcol .t i{font-style:normal;color:var(--mut);font-size:10px}
+.tline{position:absolute;left:0;height:0;border-top:3px solid var(--mut);opacity:.7;pointer-events:none}
+.bt{padding:7px 12px;border:1px solid var(--bd);border-radius:8px;background:var(--card);color:var(--tx);cursor:pointer;font-size:14px}
+body.present #inputs,body.present #bar,body.present #msg{display:none!important}
+#ex{display:none}
+body.present #ex{display:block;position:fixed;top:calc(8px + env(safe-area-inset-top,0px));right:8px;opacity:.35;z-index:5}
+body.present #ex:hover{opacity:1}
+body.present #box{border:none;background:transparent;margin-top:0!important}
+body.present{padding:6px;overflow:hidden}
+.k0{background:var(--c1);color:var(--c1t)}.k1{background:var(--c2);color:var(--c2t)}.k2{background:var(--c3);color:var(--c3t)}
+</style>
+</head>
+<body>
+<div id="inputs">
+<h1>Sơ đồ chỗ ngồi đánh số zigzag</h1>
+<div class="card">
+  <div class="grid">
+    <label>Số dãy (m)<input id="m" type="number" min="1" max="20" value="4"></label>
+    <label>Số bàn mỗi dãy (n)<input id="n" type="number" min="1" max="30" value="5"></label>
+    <label>Số sinh viên mỗi bàn<input id="k" type="number" min="1" max="6" value="2"></label>
+    <label>Số bậc (1 = phẳng)<select id="tr"><option>1</option><option>2</option><option>3</option><option>4</option></select></label>
+    <label id="w1" hidden>Bậc I kết thúc ở bàn số<input id="e1" type="number" min="1" value="1"></label>
+    <label id="w2" hidden>Bậc II kết thúc ở bàn số<input id="e2" type="number" min="1" value="1"></label>
+    <label id="w3" hidden>Bậc III kết thúc ở bàn số<input id="e3" type="number" min="1" value="1"></label>
+    <label>Tiêu đề slide<input id="ttl" type="text" value="Sơ đồ chỗ ngồi"></label>
+    <label>Số lớp (p)<select id="p"><option>1</option><option>2</option><option selected>3</option></select></label>
+  </div>
+  <div class="grid" id="cls" style="margin-top:10px"></div>
+</div>
+</div>
+<button class="bt" id="ex">Thoát</button>
+<div id="bar" style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+  <button class="bt" id="pb">Chế độ trình chiếu</button>
+  <button class="bt" id="dl" hidden>Tải PDF (1 slide)</button>
+  <div class="legend" id="legend" style="margin:0"></div>
+</div>
+<div class="msg" id="msg"></div>
+<div class="card wrap" id="box" style="margin-top:10px"><div class="room" id="room"><div class="board">Bảng / Bục giảng</div><div class="rows" id="out"></div></div></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script>
+const $=id=>document.getElementById(id);
+const defs=[40,35,30];
+function buildClassInputs(){
+  const p=+$('p').value, g=c=>[...document.querySelectorAll(c)].map(e=>e.value);
+  const on=g('.cn'), om=g('.cm'), ot=g('.ct');
+  $('cls').innerHTML='';
+  for(let i=0;i<p;i++){
+    const box=document.createElement('div');
+    box.className='cbox k'+i;
+    box.innerHTML=`<b>Thông tin lớp ${i+1}</b>
+      <label>Số sinh viên<input type="number" min="0" class="cn" value="${on[i]||defs[i]}"></label>
+      <label>Mã lớp học<input type="text" class="cm" value="${om[i]||''}" placeholder="VD: INT1001"></label>
+      <label>Lớp thi<input type="text" class="ct" value="${ot[i]||''}" placeholder="VD: Thi 01"></label>`;
+    box.querySelectorAll('input').forEach(e=>e.oninput=render);
+    $('cls').appendChild(box);
+  }
+  render();
+}
+function val(c,i){const e=document.querySelectorAll(c)[i];return e?e.value.trim():''}
+function infoText(i,x){
+  const ma=val('.cm',i),th=val('.ct',i);
+  return `Lớp ${i+1}`+(ma?` · Mã: ${ma}`:'')+(th?` · Lớp thi: ${th}`:'')+` · ${x} SV`;
+}
+let last=null;
+function tiers(n){
+  const T=Math.min(+$('tr').value||1,n), RM=['I','II','III','IV'];
+  if(T<=1)return [{name:'',from:1,to:n}];
+  const out=[];let prev=0;
+  for(let i=1;i<T;i++){
+    const v=Math.min(Math.max(prev+1,+$('e'+i).value||prev+1),n-(T-i));
+    out.push({name:'Bậc '+RM[i-1],from:prev+1,to:v});prev=v;
+  }
+  out.push({name:'Bậc '+RM[T-1],from:prev+1,to:n});
+  return out;
+}
+let dirty=false;
+function setDefaults(){
+  const n=Math.max(1,+$('n').value||1),T=+$('tr').value;
+  for(let i=1;i<=3;i++){
+    $('w'+i).hidden=!(i<T);
+    if(!dirty)$('e'+i).value=Math.max(1,Math.round(i*n/Math.max(T,1)));
+  }
+}
+function infoLines(i,x){
+  return [['Mã lớp',val('.cm',i)||'(chưa nhập)'],['Lớp thi',val('.ct',i)||'(chưa nhập)'],['Sĩ số',x+' SV']];
+}
+function infoCol(sizes){
+  return `<div class="info"><div class="rh">Thông tin lớp</div>`+sizes.map((x,i)=>
+    `<div class="ib k${i}">`+infoLines(i,x).map(l=>`<div><span>${l[0]}:</span> <b>${l[1]}</b></div>`).join('')+`</div>`).join('')+`</div>`;
+}
+function render(){
+  const m=Math.max(1,+$('m').value||1), n=Math.max(1,+$('n').value||1), k=Math.max(1,+$('k').value||1);
+  const sizes=[...document.querySelectorAll('.cn')].map(e=>Math.max(0,+e.value||0));
+  const S=sizes.reduce((a,b)=>a+b,0), T=m*n, cap=T*k;
+  const tabs=Array.from({length:T},()=>[]);
+  let text='',err=false;
+  // các lớp ngồi liên tiếp: hết chỗ ở bàn hiện tại mới sang bàn kế tiếp
+  const ex=Math.max(0,S-T*k);
+  if(ex>T){
+    err=true;text=`Thiếu chỗ: ${S} sinh viên, dù mỗi bàn tăng thêm 1 (tối đa ${T*(k+1)} chỗ) vẫn không đủ. Hãy tăng số dãy hoặc số bàn.`;
+  }else{
+    const owner=[];sizes.forEach((sz,ci)=>{for(let j=1;j<=sz;j++)owner.push([ci,j])});
+    let pos=0;
+    for(let i=0;i<T;i++){
+      // chỉ tăng thêm 1 chỗ ở đúng số bàn còn thiếu, là các bàn cuối của sơ đồ
+      const cap=k+(i>=T-ex?1:0);
+      for(let q=0;q<cap;q++)tabs[i].push(owner[pos++]||null);
+    }
+    const used=tabs.filter(x=>x.some(Boolean)).length;
+    text=ex>0?`Thiếu bàn nên ${ex} bàn cuối được ngồi thêm 1 sinh viên (${k+1} SV), các bàn còn lại ${k} SV. Dùng ${used}/${T} bàn, tổng ${S} sinh viên.`
+             :`Mỗi bàn ${k} sinh viên, các lớp ngồi liên tiếp. Dùng ${used}/${T} bàn (thừa ${T-used} bàn), tổng ${S} sinh viên.`;
+  }
+  tabs.forEach(x=>{if(!x.length)for(let c=0;c<k;c++)x.push(null)});
+  last={m,n,k,tabs,sizes,err};
+  const msg=$('msg');msg.className='msg'+(err?' err':'');msg.textContent=text;
+  const TR=tiers(n), ends=new Set(TR.slice(0,-1).map(q=>q.to));
+  let h='';
+  for(let r=0;r<m;r++){
+    const down=r%2===0;
+    h+=`<div class="row"><div class="rh">Dãy ${r+1} ${down?'↓':'↑'}</div>`;
+    for(let t=0;t<n;t++){
+      const tab=down?t:n-1-t, idx=r*n+t, asc=((r*(n-1)+t)%2===0);
+      const list=asc?tabs[idx]:[...tabs[idx]].reverse();
+      const seats=list.map(o=>o?`<div class="s k${o[0]}"><b>${o[1]}</b></div>`
+        :`<div class="s"><b>–</b></div>`).join('');
+      h+=`<div class="tb${ends.has(tab+1)?' tend':''}">${seats}</div>`;
+    }
+    h+='</div>';
+  }
+  const tc=TR.length>1?`<div class="tcol"><div class="rh"></div>${TR.map((q,i)=>{const c=q.to-q.from+1;return `<div class="t${i<TR.length-1?' tend':''}" style="height:${c*28+(c-1)*4}px"><b>${q.name}</b> <i>bàn ${q.from}–${q.to}</i></div>`}).join('')}</div>`:'';
+  $('out').innerHTML=tc+`<div class="lab"><div class="rh">Bàn</div>${Array.from({length:n},(_,i)=>`<div class="n${ends.has(i+1)?' tend':''}">${i+1}</div>`).join('')}</div>`+h+infoCol(sizes);
+  document.querySelectorAll('.row').forEach((row,r)=>{
+    if(r%2===1){[...row.children].slice(1).reverse().forEach(e=>row.appendChild(e));}
+  });
+  const rowsEl=$('out'),info=rowsEl.querySelector('.info'),labs=rowsEl.querySelectorAll('.lab .n');
+  TR.slice(0,-1).forEach(q=>{
+    const el=labs[q.to-1],ln=document.createElement('div');ln.className='tline';
+    ln.style.top=(el.offsetTop+el.offsetHeight+8)+'px';
+    ln.style.width=((info?info.offsetLeft-8:rowsEl.offsetWidth))+'px';
+    rowsEl.appendChild(ln);
+  });
+  fit();
+}
+function fit(){
+  const room=$('room'),box=$('box');
+  room.style.transform='none';room.style.marginLeft='0';
+  const w=room.offsetWidth,h=room.offsetHeight;
+  let sc=(box.clientWidth-16)/w;
+  if(document.body.classList.contains('present')){
+    const top=box.getBoundingClientRect().top+scrollY;
+    sc=Math.min(sc,(innerHeight-top-24)/h);
+  }
+  sc=Math.min(sc,2);
+  const pr=document.body.classList.contains('present');
+  room.style.marginLeft=pr?Math.max(0,(box.clientWidth-16-w*sc)/2)+'px':'0';
+  room.style.transform=`scale(${sc})`;
+  box.style.height=(h*sc+16)+'px';
+}
+function setPresent(on){
+  document.body.classList.toggle('present',on);
+  scrollTo(0,0);
+  if(on){try{document.documentElement.requestFullscreen&&document.documentElement.requestFullscreen().catch(()=>{})}catch(e){}}
+  else if(document.fullscreenElement){try{document.exitFullscreen()}catch(e){}}
+  fit();
+}
+$('pb').onclick=()=>setPresent(true);
+$('ex').onclick=()=>setPresent(false);
+addEventListener('keydown',e=>{if(e.key==='Escape'&&document.body.classList.contains('present'))setPresent(false)});
+addEventListener('resize',fit);
+let dlApi=null;
+if(window.claude&&claude.use){claude.use('downloads').then(d=>{if(d){dlApi=d;$('dl').hidden=false}}).catch(()=>{})}
+function drawSlide(){
+  const {m,n,k,tabs,sizes}=last, W=1920,H=1080, cv=document.createElement('canvas');
+  cv.width=W;cv.height=H;const x=cv.getContext('2d');
+  const fill=['#cfe3ff','#ffd9c2','#d4f1d8'], ink=['#12407a','#7a3412','#1b5a28'], F='"Segoe UI",Roboto,Arial,sans-serif';
+  x.fillStyle='#fff';x.fillRect(0,0,W,H);
+  x.fillStyle='#1d2330';x.font=`700 54px ${F}`;x.textBaseline='middle';
+  x.fillText($('ttl').value||'Sơ đồ chỗ ngồi',50,56);
+  const top=110, bottom=H-30, left=50, right=W-50, ip=420, gr=right-ip-20;
+  x.fillStyle='#eceef2';x.fillRect(left,top,right-left,32);
+  x.fillStyle='#667085';x.font=`500 22px ${F}`;x.textAlign='center';
+  x.fillText('Bảng / Bục giảng',(left+right)/2,top+17);
+  const TR=tiers(n), nt=TR.length, tg=16, xl=nt>1?44:0, ends=new Set(TR.slice(0,-1).map(q=>q.to));
+  const gy=top+44, labw=64, rh=34, gap=5, cgap=18;
+  const yOf=t=>{let b=0;ends.forEach(e=>{if(e<=t)b++});return gy+rh+t*(th+gap)+b*tg};
+  const maxc=Math.max(k,...tabs.map(t=>t.length));
+  const th=Math.min(70,(bottom-gy-rh-(n-1)*gap-(nt-1)*tg)/n);
+  const sw=Math.min(84,((gr-left-xl-labw-m*cgap)/m-8)/maxc-3);
+  const cw=maxc*(sw+3)+8;
+  const total=xl+labw+m*(cw+cgap), ox=left+Math.max(0,(gr-left-total)/2);
+  x.textAlign='center';x.font=`700 ${Math.min(30,th*.5)}px ${F}`;
+  x.fillStyle='#667085';x.font=`600 24px ${F}`;x.fillText('Bàn',ox+xl+labw/2-6,gy+rh/2);
+  for(let t=0;t<n;t++){
+    const ty=yOf(t);
+    x.fillStyle='#eceef2';x.fillRect(ox+xl,ty,labw-12,th);
+    x.fillStyle='#1d2330';x.font=`700 ${Math.min(30,th*.55)}px ${F}`;x.fillText(t+1,ox+xl+(labw-12)/2,ty+th/2);
+  }
+  for(let r=0;r<m;r++){
+    const cx=ox+xl+labw+r*(cw+cgap), down=r%2===0;
+    x.fillStyle='#1d2330';x.font=`700 26px ${F}`;x.fillText(`Dãy ${r+1} ${down?'↓':'↑'}`,cx+cw/2,gy+rh/2);
+    for(let t=0;t<n;t++){
+      const j=down?t:n-1-t, idx=r*n+j, asc=((r*(n-1)+j)%2===0);
+      const list=asc?tabs[idx]:[...tabs[idx]].reverse();
+      const ty=yOf(t);
+      const w0=list.length*(sw+3)-3, sx=cx+(cw-w0)/2;
+      list.forEach((o,j)=>{
+        const px=sx+j*(sw+3);
+        x.fillStyle=o?fill[o[0]]:'#eceef2';x.fillRect(px,ty+4,sw,th-8);
+        x.fillStyle=o?ink[o[0]]:'#98a2b3';x.font=`700 ${Math.min(34,th*.55)}px ${F}`;
+        x.fillText(o?o[1]:'–',px+sw/2,ty+th/2+1);
+      });
+    }
+  }
+  if(nt>1){
+    const gx2=ox+xl+labw+m*(cw+cgap)-cgap;
+    TR.forEach((q,i)=>{
+      const y0=yOf(q.from-1), y1=yOf(q.to-1)+th;
+      x.fillStyle='#eceef2';x.fillRect(ox,y0,xl-8,y1-y0);
+      x.save();x.translate(ox+(xl-8)/2,(y0+y1)/2);x.rotate(-Math.PI/2);x.textAlign='center';
+      x.fillStyle='#1d2330';x.font=`700 22px ${F}`;x.fillText(q.name,0,-9,y1-y0-10);
+      x.fillStyle='#667085';x.font=`500 17px ${F}`;x.fillText(`bàn ${q.from}–${q.to}`,0,13,y1-y0-10);x.restore();
+      if(i<nt-1){const ly=y1+(tg+gap)/2;x.strokeStyle='#667085';x.lineWidth=3;x.beginPath();x.moveTo(ox,ly);x.lineTo(gx2,ly);x.stroke()}
+    });
+  }
+  x.textAlign='left';
+  let py=gy;
+  x.fillStyle='#1d2330';x.font=`700 26px ${F}`;x.fillText('Thông tin lớp',right-ip,py+rh/2);py+=rh;
+  sizes.forEach((sz,i)=>{
+    const ls=infoLines(i,sz), bh=ls.length*40+24;
+    x.fillStyle=fill[i];x.fillRect(right-ip,py,ip,bh);
+    ls.forEach((l,j)=>{
+      x.fillStyle=ink[i];x.font=`500 28px ${F}`;x.fillText(l[0]+':',right-ip+16,py+32+j*40);
+      const lw=x.measureText(l[0]+': ').width;
+      x.font=`700 28px ${F}`;x.fillText(l[1],right-ip+16+lw,py+32+j*40,ip-32-lw);
+    });
+    py+=bh+14;
+  });
+  return cv;
+}
+$('dl').onclick=async()=>{
+  if(!last||last.err){alert('Hãy sửa lỗi thiếu chỗ trước khi tải PDF.');return}
+  const cv=drawSlide(), {jsPDF}=window.jspdf;
+  const pdf=new jsPDF({orientation:'landscape',unit:'mm',format:[297,167.0625]});
+  pdf.addImage(cv.toDataURL('image/jpeg',0.92),'JPEG',0,0,297,167.0625);
+  try{await dlApi.save({filename:'so-do-cho-ngoi.pdf',data:pdf.output('blob')})}
+  catch(e){if(e&&e.code!=='declined')alert('Không tải được PDF: '+(e.message||e))}
+};
+['m','k','ttl'].forEach(id=>$(id).oninput=render);
+$('n').oninput=()=>{setDefaults();render()};
+$('tr').onchange=()=>{dirty=false;setDefaults();render()};
+['e1','e2','e3'].forEach(id=>$(id).oninput=()=>{dirty=true;render()});
+$('p').onchange=buildClassInputs;
+setDefaults();
+buildClassInputs();
+</script>
+</body>
+</html>
